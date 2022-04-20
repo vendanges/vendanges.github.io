@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>WSL Debian 构建开发环境 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>WSL Debian 构建开发环境</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/WSL/" rel="tag">WSL</a> <a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>通过在 Microsoft Store 中搜索 WSL 并下载 Debian 版本后，我们可以通过使用 <code>cat /etc/os-release</code> 来查看当前版本信息。</p>
+<p>主要是 <code>VERSION_CODENAME</code> 这一行，获取到之后我们可以通过 <a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/">阿里巴巴开源镜像站-OPSX镜像站-阿里云开发者社区 (aliyun.com)</a> 来添加国内镜像的使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本文只是通过 ```cat /etc/os-release``` 来获取当前 debian 系统信息，读者环境可能不同，一切以你所执行他所输出的信息为准。</span><br></pre></td></tr></table></figure>
+
+<p>之后，我们先通过 <code>nano /etc/apt/sources.list</code> 编辑源文件配置，注释掉原来内容并添加下述阿里云源：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/debian/ bullseye main non-free contrib</span><br><span class="line">deb-src http://mirrors.aliyun.com/debian/ bullseye main non-free contrib</span><br><span class="line">deb http://mirrors.aliyun.com/debian-security/ bullseye-security main</span><br><span class="line">deb-src http://mirrors.aliyun.com/debian-security/ bullseye-security main</span><br><span class="line">deb http://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib</span><br><span class="line">deb-src http://mirrors.aliyun.com/debian/ bullseye-updates main non-free contrib</span><br><span class="line">deb http://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib</span><br><span class="line">deb-src http://mirrors.aliyun.com/debian/ bullseye-backports main non-free contrib</span><br></pre></td></tr></table></figure>
+
+<p>然后我们执行 <code>sudo apt update</code> 来进行更新软件源信息，并通过 <code>sudo apt upgrade</code> 来获取新的软件包版本。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220311044557.png"></p>
+<p>我们还需要构建 Python 3.7.0 的开发环境，在此之前我们可以在 <a target="_blank" rel="noopener" href="https://www.python.org/downloads/source/">Python 源代码版本 |Python.org</a> 中选择自己需要的 Python 版本并进行下载，本文所演示的是 3.7.0</p>
+<p>在 <code>/bin</code> 目录下执行 <code>curl.exe -O https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz</code>，然后 <code>tar -xf Python3.7.0.tar.xz</code> 来进行解压（然后删除该压缩包），之后我们还需要通过 <code>apt-get install build-essential</code> 来下载 Debian 所需要的开发工具包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开始构建 Python 之前，为了保证之后的 pip 可以正常运行，我们需要通过 [兹利布主页 (zlib.net)](http://www.zlib.net/) 来获取最新的 zlib，通过 ```curl``` 下载后使用 ```./configure``` 和 ```make``` 以及 ```make install``` 进行构建</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为了保证之后的 ```pip``` 可以正常的安装，我们还需要通过 ```sudo apt-get install openssl``` 来安装 openssl ，然后进入到 Python 目录执行 ```./configure --with-ssl``` 和 ```make``` 以及 ```sudo make install``` 重新进行编译。</span><br></pre></td></tr></table></figure>
+
+<p>进入到 <code>Python3.7.0</code> 文件中，执行 <code>./configure --with-zlib-dir=/usr/local/lib</code> 和 <code>./configure --enable-optimizations</code> 然后开始编译 <code>make -j 8</code> 和 <code>make altinstall</code> 然后运行 python3.7 即可。</p>
+<p>之后我们通过 <code>whereis python3</code> 来获取 python3.7 的文件位置，并通过 PyCharm 中的 <code>setting - Project Interpreter - Add</code> 来进行添加即可。</p>
+<h2 id="Php"><a href="#Php" class="headerlink" title="Php"></a>Php</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220311061157.png"></p>
+<p>安装 PHP 7.4 环境我们可以使用 <code> apt-get install php7.4 libapache2-mod-php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-curl php7.4-intl php7.4-xsl php7.4- mbstring php7.4-zip php7.4-bcmath php7.4-soap php-xdebug php-imagick php7.4-redis</code> 来进行安装一些基础的操作，同样的如果后续 <code>composer</code> 报错我们也依然可以通过 <code>apt</code> 来进行安装。</p>
+<p>如果你是 Phper 那么使用 WSL 在 PhpStorm 中进行交互就没有 PyCharm 那么丝滑，但同样的 PhpStorm 也支持 WSL 的开发，我们只需要在 WSL 中通过 composer 进行构建项目，之后选择项目目录即可。同样的我们也可以通过 <code>\\wsl</code> 目录来解决 composer 等项目的连接问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">为了避免其他相关问题，我们还需要通过 ```sudo apt install php-mysql``` 来解决之后的数据库映射问题，如果你需要 SQLite 数据库，还需要使用 ```php</span><br><span class="line">sudo apt-get install php-sqlite3``` 来进行安装。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同样的你也可以去参考下 <a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/phpstorm/how-to-use-wsl-development-environment-in-product.html">WSL |PhpStorm (jetbrains.com)</a> 的官方文档来进行使用。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/wsl/1.WSL%20Debian%20%E6%9E%84%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 数据类型 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 数据类型</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="整型-2147483648-2147483647"><a href="#整型-2147483648-2147483647" class="headerlink" title="整型 (-2147483648~2147483647)"></a>整型 (-2147483648~2147483647)</h3><h4 id="十进制数"><a href="#十进制数" class="headerlink" title="十进制数"></a>十进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192651547_861907332.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$data = 1;</span></span><br><span class="line"><span class="meta">			echo &quot;$data&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="八进制数-在八进制中，必须在数字前面加上“0”"><a href="#八进制数-在八进制中，必须在数字前面加上“0”" class="headerlink" title="八进制数[^在八进制中，必须在数字前面加上“0”]"></a>八进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192705555_1928129641.png">[^在八进制中，必须在数字前面加上“0”]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = <span class="number">0123</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="十六进制数-需在数值前面加上“0x”"><a href="#十六进制数-需在数值前面加上“0x”" class="headerlink" title="十六进制数[^需在数值前面加上“0x”]"></a>十六进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192724212_804639731.png">[^需在数值前面加上“0x”]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$data</span> = <span class="number">0x1B</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="零"><a href="#零" class="headerlink" title="零"></a>零<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192737557_1375215459.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="负数"><a href="#负数" class="headerlink" title="负数"></a>负数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192749013_10925325.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = -<span class="number">50</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><h4 id="普通浮点型"><a href="#普通浮点型" class="headerlink" title="普通浮点型"></a>普通浮点型<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192801645_1242869560.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$data = 3.14;</span></span><br><span class="line"><span class="meta">			echo &quot;$data&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="精度-3-3e4"><a href="#精度-3-3e4" class="headerlink" title="精度 (3.3e4)"></a>精度 (3.3e4)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192814045_305884521.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$two</span> = <span class="number">3.3e4</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$two</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="最大精度-（1-8e308"><a href="#最大精度-（1-8e308" class="headerlink" title="最大精度 （1.8e308)!"></a>最大精度 （1.8e308)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192827020_1401640066.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$three</span> = <span class="number">1.8e308</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$three</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符串（”String”）"><a href="#字符串（”String”）" class="headerlink" title="字符串（”String”）"></a>字符串（”String”）</h3><h4 id="输出单个字符串"><a href="#输出单个字符串" class="headerlink" title="输出单个字符串"></a>输出单个字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192839805_2095327151.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$one = &quot;Hello,&quot;;</span></span><br><span class="line"><span class="meta">			echo &quot;$one&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="组合字符串"><a href="#组合字符串" class="headerlink" title="组合字符串"></a>组合字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192850956_1352099515.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$one</span> = <span class="string">&quot;Hello,&quot;</span>;</span><br><span class="line">	<span class="variable">$two</span> = <span class="string">&quot;World&quot;</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$one</span></span></span><br><span class="line"><span class="string">		<span class="subst">$two</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串特殊字符输出"><a href="#字符串特殊字符输出" class="headerlink" title="字符串特殊字符输出"></a><strong>字符串特殊字符输出</strong></h4><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\n</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>tap</td>
+</tr>
+<tr>
+<td>\\</td>
+<td>反斜线</td>
+</tr>
+<tr>
+<td>\$</td>
+<td>美元符号</td>
+</tr>
+<tr>
+<td>\“</td>
+<td>双引号</td>
+</tr>
+</tbody></table>
+<p><strong>输出单引号</strong><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193013587_872688941.png"><br><?php
+    $one = "Hello,";
+    $two = "World";
+        echo "$one
+        $two";
+?></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		echo &#x27;吾有一\&#x27;单引号&#x27;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>输出\<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193030577_528651459.png"></strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		echo &#x27;吾有一\\&#x27;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果使用“\‘转义其他字符，则“\”也会显示，使用双引号和单引号的主要区别是。单引号定义的字符串中出现的变量和转义序列不会被变量值替代；而双引号中使用的变量名在显示变量的值。</p>
+<h3 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = true;</span></span><br><span class="line"><span class="meta">		$b = false;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="True"><a href="#True" class="headerlink" title="True"></a>True<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193046369_2133883735.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = true;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="False"><a href="#False" class="headerlink" title="False"></a>False</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = false;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>布尔型主要有两个值，分别为“false” and “false”，在PHP中，这两个值是没有大小写限制的，可以使用“TRUE” and “FALSE” or “true” and “false”两种写法，本文使用小写。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193224793_648643830.png"></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&quot;key1&quot; =&gt; &quot;Hello&quot;, &quot;key2&quot; =&gt; &quot;World&quot;);</span><br><span class="line">		$one = (array)$arrayName;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><h4 id="One-0-1-2"><a href="#One-0-1-2" class="headerlink" title="One (0,1,2)"></a>One (0,1,2)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193523304_200936301.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$one = array(0,1,2);</span></span><br><span class="line"><span class="meta">s			var_dump($one);</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Two-0-gt-0-1-gt-1"><a href="#Two-0-gt-0-1-gt-1" class="headerlink" title="Two (0 &gt; 0, 1 &gt; 1)"></a>Two (0 &gt; 0, 1 &gt; 1)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193503914_1045206889.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$two = array(&quot;One&quot; &gt; &quot;one&quot;,&quot;Two&quot; &gt; &quot;two&quot;,&quot;Three&quot; &gt; &quot;three&quot;);</span></span><br><span class="line"><span class="meta">		var_dump($two);</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>数组可以在变量中存储多个值，使用<strong>var_dump</strong>方法可以返回<strong>数据的类型和值</strong></p>
+<h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><h4 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">one</span> </span>&#123;</span><br><span class="line">		<span class="comment">// class code</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="定义对象"><a href="#定义对象" class="headerlink" title="定义对象"></a>定义对象</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">one</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 对象 = 关键词 对象();</span></span><br><span class="line">		<span class="variable">$data</span> = <span class="keyword">new</span> <span class="title function_ invoke__">data</span>(); <span class="comment">// 初始化</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="调取对象数据"><a href="#调取对象数据" class="headerlink" title="调取对象数据"></a>调取对象数据<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193544297_1360035719.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		class person &#123;</span></span><br><span class="line"><span class="meta">			function one() &#123;</span></span><br><span class="line"><span class="meta">				echo &quot;Hello,world！&quot;;</span></span><br><span class="line"><span class="meta">			&#125;</span></span><br><span class="line"><span class="meta">		&#125;</span></span><br><span class="line"><span class="meta">		$person = new person();</span></span><br><span class="line"><span class="meta">		$person -&gt; one();</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;</td>
+<td>转义</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>new</td>
+<td>初始化对象</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>class</td>
+<td>定义类</td>
+<td></td>
+</tr>
+<tr>
+<td>function</td>
+<td>新建对象功能</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/4.PHP%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

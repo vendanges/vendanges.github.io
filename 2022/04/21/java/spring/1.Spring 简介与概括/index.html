@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="Spring-简介"><a href="#Spring-简介" class="headerlink" title="Spring 简介"></a>Spring 简介</h2><p>Spring 框架可以在任何类型的部署平台为基于Java Web现代的企业应用程序而提供的全面编程和配置模型。是当前主流的Java开发框架之一，为企业级应用开发提供了丰富的使用功能。</p>
+<h2 id="Spring-的意思"><a href="#Spring-的意思" class="headerlink" title="Spring 的意思"></a>Spring 的意思</h2><p>在Spring的官方API帮助文档中，有一句官方的表述是：<br>”Spring 在不同的上下文中表示不同的事物，他可以用于指代Spring Framework项目的本身，而Spirng的意识是寓意，<strong>这一切都是从这里开始的</strong>。随着时间的流逝，其他的Spring项目已经在Spring Framework基础上进行构建，通常人们说到Spirng的时候，他们将会表示整个项目的系列。如<strong>果有人跟你说的是Spring boot，那他一定不是泛指所有Spring项目，而是单指Spring boot这一系列。</strong>“</p>
+<h2 id="Spring-概括"><a href="#Spring-概括" class="headerlink" title="Spring 概括"></a>Spring 概括</h2><p>Spring是一个轻量级的开发框架，最初由Rod Johnson编写，在2003年6月首次在Apache 2.0许可证下发布，象征着Spring在那刻前正式开源，之后有很多开发者加入到一起来进行维护和开发，而Spring创建的主要目的就是解决企业应用开发的业务逻辑层的问题，是一个分层的<code>轻量级开源框架（且一站式）</code></p>
+<h3 id="Spring-体系结构"><a href="#Spring-体系结构" class="headerlink" title="Spring 体系结构"></a>Spring 体系结构</h3><h4 id="Spring-常用结构"><a href="#Spring-常用结构" class="headerlink" title="Spring 常用结构"></a>Spring 常用结构</h4><h4 id="Spirng-本书所使用的结构"><a href="#Spirng-本书所使用的结构" class="headerlink" title="Spirng 本书所使用的结构"></a>Spirng 本书所使用的结构</h4><h4 id="Data-Access-Integration-x2F-World-Wide-Web（数据访问和集成-x2F-Web）"><a href="#Data-Access-Integration-x2F-World-Wide-Web（数据访问和集成-x2F-Web）" class="headerlink" title="Data Access - Integration &#x2F; World Wide Web（数据访问和集成&#x2F;Web）"></a>Data Access - Integration &#x2F; World Wide Web（数据访问和集成&#x2F;Web）</h4><h5 id="Data-Access-x2F-Integration"><a href="#Data-Access-x2F-Integration" class="headerlink" title="Data Access &#x2F; Integration"></a>Data Access &#x2F; Integration</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JDBC</td>
+<td>提供了一个JDBC的抽象层</td>
+<td>消除了繁琐的JDBC编码和数据库厂商特有的错误代码解析</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>对流行的对象关系映射API的集成(Object-Relational apping)，包括JPA、Hibenate</td>
+<td>使用Spring-ORM可将这些O&#x2F;R映射框架与Spring提供的所有功能结合使用</td>
+</tr>
+<tr>
+<td>OXM</td>
+<td>提供了一个支持对象&#x2F;XML映射的抽象层实现</td>
+<td>如JAXB、Castor、XML Beans、JiBX、XStream等</td>
+</tr>
+<tr>
+<td>JMS</td>
+<td>指Java消息传递服务，包含了用于生产和使用的消息功能</td>
+<td>自Spring 4.1以后，提供那个了与Spring-messaging模块的集成</td>
+</tr>
+</tbody></table>
+<h5 id="World-Wide-Web"><a href="#World-Wide-Web" class="headerlink" title="World Wide Web"></a>World Wide Web</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web-Socket</td>
+<td>提供了对WebSocket-based的支持</td>
+<td>在Web应用中可以实现Web前端全双工通信的协议。</td>
+</tr>
+<tr>
+<td>Web-Servlet（webmvc）</td>
+<td>包含了用于Web应用程序的Spring MVC和 REST Web Services实现</td>
+<td>提供了Spring下的MVC框架可以使全领域模型代码和web表单完全的分离，与Spring框架和其他所有功能进行集成</td>
+</tr>
+<tr>
+<td>Web</td>
+<td>提供了基本的Web开发集成功能</td>
+<td>多文件上传功能、使用Servlet监听器初始化一个Ioc容器以及Web应用上下文</td>
+</tr>
+<tr>
+<td>Portlet (Spring-webmvc-portlet)</td>
+<td>提供Portlet环境中使用MVC的实现，并反映了Spring-webmvc的模块功能</td>
+<td></td>
+</tr>
+<tr>
+<td>Webflux</td>
+<td>是一个非阻塞式函数Reactive Web框架</td>
+<td>可用于建立异步、非阻塞、事件驱动服务，并拥有很好的扩展性</td>
+</tr>
+</tbody></table>
+<h4 id="AAIM（Aop、Aspects、Instrumentation、Messaging）"><a href="#AAIM（Aop、Aspects、Instrumentation、Messaging）" class="headerlink" title="AAIM（Aop、Aspects、Instrumentation、Messaging）"></a>AAIM（Aop、Aspects、Instrumentation、Messaging）</h4><h5 id="面向切面编程（AOP）-和-使用容器（Instrumentation）"><a href="#面向切面编程（AOP）-和-使用容器（Instrumentation）" class="headerlink" title="面向切面编程（AOP） 和 使用容器（Instrumentation）"></a>面向切面编程（AOP） 和 使用容器（Instrumentation）</h5><p>该层主要有AOP、Aspects、Instrumentation、Messaging四个模块，其主要模块响应的功能有：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AOP</td>
+<td>提供了一个符合APO要求的面向切面的编程实现</td>
+<td>允许在定义方法拦截器和切入点，可将代码按照功能进行分离，方便干净的进行解藕</td>
+</tr>
+<tr>
+<td>Aspects</td>
+<td>是一个强大且成熟的面向切面编程（AOP）框架</td>
+<td>提供了AspectJ的集成功能</td>
+</tr>
+<tr>
+<td>Instrumentation</td>
+<td>提供了类植入（Instrumentation）支持和类的加载器实现，而Instrumentation提供了一种虚拟机级别的支持的AOP实现方式</td>
+<td>无需对JDK进行改动或升级，可实现AOP的某些功能</td>
+</tr>
+</tbody></table>
+<h5 id="消息（Spring-Messaging）"><a href="#消息（Spring-Messaging）" class="headerlink" title="消息（Spring-Messaging）"></a>消息（Spring-Messaging）</h5><p>Messaging是Spring 4.0所增加的信息模块“Spring-messaging”，其主要提供了对信息传递的结构体系和协议支持，且支持为STOMP、WebSocket等子协议时候使用。</p>
+<h4 id="Spring-核心容器"><a href="#Spring-核心容器" class="headerlink" title="Spring 核心容器"></a>Spring 核心容器</h4><p>Spring的核心容器是其他模块建立的基础部分，主要由<code>Spring-core、Spring-beans、Spring-Context、Spring-context-support、Spring-expression（Spring表达式语言）</code>模块所组成：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Spring-core</td>
+<td>提供了框架的基本组成部分</td>
+<td>控制反转（ioc，Inversion of Control）、依赖注入（DI，Dependency Injection）</td>
+</tr>
+<tr>
+<td>Spring-Beans</td>
+<td>是工厂模式的经典实现，主要移除了编码式的单列需要，可从配置和以来从实际编码逻辑中耦合</td>
+<td>提供了BeanFactory</td>
+</tr>
+<tr>
+<td>Spring-context</td>
+<td>主要建立在core、Beans之上，提供了一个框架式的对象访问方式，<strong>是一个访问定义、配置、任何对象的媒介</strong></td>
+<td>context</td>
+</tr>
+<tr>
+<td></td>
+<td>Spring-context-support</td>
+<td>支持整合得到第三方库到Spring应用程序上下文，用于高速缓存（EhCache,JCache）和任务调度（COmmonJ，Quartz）的支持。</td>
+</tr>
+<tr>
+<td>Spring-expression</td>
+<td>提供了强大的表达式语言，用于在运行时查询和操作对象图 ，是JSP2.1规范中定义统一表达式语言扩展（Unified EL）</td>
+<td>支持set和get属性值、属性赋值、方法调用、访问数组集合等索引内容，逻辑运算符、命名变量、通过名字从 &#96;&#96;&#96;Spring-Ioc容器检索对象，支持列表投影、选及其常见列表聚合</td>
+</tr>
+</tbody></table>
+<h5 id="Spring-Beans-工厂模式"><a href="#Spring-Beans-工厂模式" class="headerlink" title="Spring-Beans 工厂模式"></a>Spring-Beans 工厂模式</h5><p>Spring-Beans工厂模式主要是代替了Java中的<code>new 的实例化操作</code>，  虽然这样做会做多一点工作，但是会增加整个项目的可扩展性。也就是说，当需要实例化类或方法的时候，<code>new</code>的工作会由一个<code>class</code>类所执行，所以在本类之中可以直接使用工厂模式进行开发。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring/1.Spring%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E6%A6%82%E6%8B%AC/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

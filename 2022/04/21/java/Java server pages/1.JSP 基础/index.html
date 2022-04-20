@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JSP 基础 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JSP 基础</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>JSP即Java Server Pages 即“JAVA 服务器页面”，是一种动态网页技术，由Sun Microsystems公司所倡导的一种动态网页技术标准。JSP主要实在传统网页HTML文件中插入JAVA程序代码块，和JSP标记，从而形成的*.jsp文件，主要应用在跨平台，可通过各种系统中运行。</p>
+<h2 id="什么是JSP文件"><a href="#什么是JSP文件" class="headerlink" title="什么是JSP文件"></a>什么是JSP文件</h2><p>JSP文件即Java Server Pages保存的文件格式，在一个JSP文件之中可以拥有普通的HTML标记，JSP规定的标记以及JAVA程序。其保存的扩展名也是”.jsp”，保存名称可以由字母、下划线、数字等组成。</p>
+<h2 id="JSP-运行原理"><a href="#JSP-运行原理" class="headerlink" title="JSP 运行原理"></a>JSP 运行原理</h2><p>当WEB Server上的页面被客户端进行请求时，WEB上的JSP文件将会被JSP引擎将JSP文件<strong>转译</strong>成Java文件，并将Java文件编译成字节码文件。而字节码在服务端上创建一个Java Servlet服务连接器对象，然后执行该对象。同时发送一个HTML页面到客户端响应的请求。<br>当JSP页面被再次请求时，JSP引擎为每个客户端启动一个线程并将执行的对应服务连接器（Java Servlet）请求。（这也是JSP响应速度比较快的原因之一，可以理解为浏览器缓存一样的技术）</p>
+<h3 id="Jsp引擎处理流程"><a href="#Jsp引擎处理流程" class="headerlink" title="Jsp引擎处理流程"></a>Jsp引擎处理流程</h3><h4 id="1-HTML"><a href="#1-HTML" class="headerlink" title="1.HTML"></a>1.HTML</h4><p>将JSP页面中的静态元素即HTML代码块直接发欧式那个客户端浏览器进行显示；</p>
+<h4 id="2-HTML-gt-JAVA"><a href="#2-HTML-gt-JAVA" class="headerlink" title="2.HTML -&gt; JAVA"></a>2.HTML -&gt; JAVA</h4><p>将JSP页面中的动态元素即Java和JSP代码块进行必要的处理，然后将需要显示的结果发送给客户端浏览器。</p>
+<h3 id="创建一个JSP文件"><a href="#创建一个JSP文件" class="headerlink" title="创建一个JSP文件"></a>创建一个JSP文件</h3><h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4><p>首先启动Eclipse ，之后选择File -&gt; New -&gt; Other</p>
+<p>然后选择Web -&gt; Dynamic Web Project</p>
+<p>填写后信息在Mawen项目构建目录中选中WebContent中右击New -&gt; Jsp File输入名称后即可完成项目的创建。</p>
+<h4 id="编写的一个JSP页面"><a href="#编写的一个JSP页面" class="headerlink" title="编写的一个JSP页面"></a>编写的一个JSP页面</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+<p>需要用上述代码块让Java Server Pages来识别该文件和代码是Jsp项目文件，否则将无法输出或输出的不是预期项目。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello,world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>有前端基础的读者会发现JSP还支持简单的HTML语句，在JSP之中，我们可以在<code>&lt;body&gt;</code>中加入需要的Java Server Pages代码块，也可以使用基本的Html元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;center&gt;&lt;p&gt;Hello,world!&lt;/p&gt;&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>以上是完整的Java Script Pages代码块实例</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/Java%20server%20pages/1.JSP%20%E5%9F%BA%E7%A1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

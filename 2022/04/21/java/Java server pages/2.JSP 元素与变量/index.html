@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JSP 元素 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JSP 元素</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Java Server pages 语言元素之中，可一份为注释、成员变量、程序片、方法等都可以被称之为Java Server pages元素。其中成员变量的元素为“**&lt;%! %&gt;<strong>”，而局部变量为“</strong>&lt;% %&gt;”**。</p>
+<h2 id="Java-Server-pages-注释"><a href="#Java-Server-pages-注释" class="headerlink" title="Java Server pages 注释"></a>Java Server pages 注释</h2><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%--</span><br><span class="line">	创建一个字符串成类型成员变量 <span class="string">&quot;content&quot;</span></span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	输出成员变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(content);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>在Java Server pages语言之中，注释可以使用<code>&lt;%-- --%&gt;</code>进行注释，Jsp引擎将JSP注释当作是该语言之中真正的注释，在编译JSP页面时候将会忽略注释代码行，因此当编译后用户访问JSP页面是无法查看其JSP注释的。由于Java Server pages语言属于非脚本语言，所以Java Server pages也支持“<code>\\</code>”注释。</p>
+<h2 id="成员变量-lt"><a href="#成员变量-lt" class="headerlink" title="成员变量 (&lt;%!)"></a>成员变量 (&lt;%!)</h2><h3 id="创建成员变量"><a href="#创建成员变量" class="headerlink" title="创建成员变量"></a>创建成员变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>Java Server pages语言可以使用<code>&lt;%! %&gt;</code>来创建Jsp成员变量，凡是在标记符<code>&lt;%! %&gt;</code>中的变量都将被称之为“<strong>成员变量</strong>”，可以是Java Server pages语言当前允许的任何数据类型。</p>
+<h3 id="调用成员变量"><a href="#调用成员变量" class="headerlink" title="调用成员变量"></a>调用成员变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%--</span><br><span class="line">	创建一个字符串成类型成员变量 <span class="string">&quot;content&quot;</span></span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	输出成员变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(content);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>通过创建Java Server pages中的成员变量，然后根据使用Java Server pages 程序片（<code>&lt;% %&gt;</code>）来调用刚刚的字符串类型成员变量（<code>content</code>），然后我们输出成员变量:</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">    out.println(content);</span><br><span class="line">&amp;&gt;</span><br></pre></td></tr></table></figure>
+<p>来输出<code>content</code>成员变量中的字符串类型成员变量</p>
+<h2 id="局部变量-lt"><a href="#局部变量-lt" class="headerlink" title="局部变量 (&lt;%)"></a>局部变量 (&lt;%)</h2><h3 id="创建与输出局部变量"><a href="#创建与输出局部变量" class="headerlink" title="创建与输出局部变量"></a>创建与输出局部变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	局部变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="comment">// 创建整数型变量&quot;num&quot;，默认值为“10”</span></span><br><span class="line">	<span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">	<span class="comment">// num 整数类变量+1.</span></span><br><span class="line">	num++;</span><br><span class="line">	out.println(<span class="string">&quot;num = &quot;</span> + num);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>凡是在Java Server pages内声明的变量都被Java Server pages语言的成员方法，在<strong>整个方法JSP内有效</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;%–</td>
+<td>注释</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>&#x2F;&#x2F;</td>
+<td>注释</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;%!</td>
+<td>成员变量</td>
+<td>变量</td>
+</tr>
+<tr>
+<td>&lt;%</td>
+<td>局部变量</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/Java%20server%20pages/2.JSP%20%E5%85%83%E7%B4%A0%E4%B8%8E%E5%8F%98%E9%87%8F/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

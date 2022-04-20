@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring Boot and Thymeleaf 常量与文字处理（Literals and Text operations） | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring Boot and Thymeleaf 常量与文字处理（Literals and Text operations）</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a> <a class="article__tag-none-link" href="/tags/spring-boot/" rel="tag">spring boot</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="Literals"><a href="#Literals" class="headerlink" title="Literals"></a>Literals</h2><p>在Thymeleaf中，我们将Literals翻译为类型，即Thymeleaf中和其他语言一样，共包含了字符串、数字、 布尔、操作符等四种数据类型，本章将会对这四种数据类型做出实例及相关解释和实现。</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串即你输入的任何字母都叫字符串类型，英文即 String，代表着字符串类型，按道理讲常见的各种字母和数字都可被字符串所海纳。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf String&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;p&gt;Hello,world&lt;span th:text=&quot;&#x27;The on html+thymeleaf file&#x27;&quot;&gt;The one html file&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>之所以上图输出的文字是红色的，也许可能是因为 &#x2F;css&#x2F;style.css的原因，读者可自行进行编写，如你可以编写一个 ：</p>
+<blockquote>
+<p>p {color: green}</p>
+</blockquote>
+<p>让生活多一点乐趣与对生活更或者世界的向往，看开一切，展开心扉，无所畏惧，你将变得更加美好。</p>
+<h4 id="String-var"><a href="#String-var" class="headerlink" title="String + var"></a>String + var</h4><p>Thymeleaf还支持数据类型与变量格式化的内容，即在一个<code>&quot;&quot;</code>下输出信息，这个支持方便了很多，支持的也很多，语法为：</p>
+<h5 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf Literals&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;p th:text=&quot;|Welcome to Thymeleaf, $&#123;data&#125;!|&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="urlController-java"><a href="#urlController-java" class="headerlink" title="urlController.java"></a>urlController.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">urlController</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;index&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getindex</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">        model.addAttribute(<span class="string">&quot;data&quot;</span>,<span class="string">&quot;Thymeleaf&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>数字（int），即0~9个数字组合的一种数据，这种你可以随便组合比如<code>7758258</code>这些，当然我也不用太过多的介绍，我相信读者们都有一定的数据类型基础，毕竟学各种语言的时候都会学习到数据类型，本次我们将会使用Thylemeaf来实现一个数字类型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf String&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;p&gt;Hello,world  &lt;span th:text=&quot;2020&quot;&gt;The one html file&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h4><p>在众多语言之中，算数运算符和数据类型一样，都是一个必经之路，所以本文不做过多演示，刚好今天是2021年1月6日，晚 01:18:07 点，就利用算数运算符祝大家2021年新年快乐吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf String&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;p&gt;Hello,world  &lt;span th:text=&quot;2020 + 1&quot;&gt;The one html file&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="String-算数运算符"><a href="#String-算数运算符" class="headerlink" title="String + 算数运算符"></a>String + 算数运算符</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf Literals&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;p th:text=&quot;&#x27;Hello,&#x27; + $&#123;data&#125; + &#x27;!&#x27;&quot;&gt;The one html file&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>在Thymeleaf模板引擎之中，我们可以通过数据类型和算数运算符进行叠加（虽然用的是字符串类型），通过算数运算符将数据类型与变量相加将会得到组合后的结果。</p>
+<h3 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h3><p>布尔也是开发语言三件套之一，通常布尔用于判断和各种循环条件之中，本书将会使用Thymeleaf模板引擎来实现布尔的一系列操作：</p>
+<blockquote>
+<p>在Thymeleaf模板引擎之中，布尔的写法是有区别的如**&lt;div th:if&#x3D;“${data} &#x3D;&#x3D; ‘thymeleaf’”&lt;div th:if&#x3D;”${data&#x3D;’Thymeleaf’”**，两种写法其中第一种写法即布尔在<code>大阔号外</code>的即将会由Thymeleaf负责处理，如果将布尔写在大阔号内将会由OGNL&#x2F;SpringEL引擎负责处理：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf boolean&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;div th:if=&quot;$&#123;data&#125;==&#x27;Thymeleaf&#x27;&quot;&gt;</span><br><span class="line">        &lt;p&gt;Thymeleaf....if $data 变量正确&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="if-and-unless"><a href="#if-and-unless" class="headerlink" title="if and unless"></a>if and unless</h4><p>本书通过if and unless来实现判断data变量是否为空作为案例，如data变量为空则输出不为空等信息，实现方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf boolean&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;div th:if=&quot;$&#123;data&#125; == true&quot;&gt;</span><br><span class="line">        &lt;p&gt;The true urlController $data&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div th:unless=&quot;$&#123;data&#125; == true&quot;&gt;</span><br><span class="line">        &lt;p&gt;The false urlController $data&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>在Thymeleaf之中，th:if与th:unless的意思和功能是不同的，通常为th:is是<code>条件成立时执行的内容</code>而th:unless则是<code>条件不成立时执行的内容</code></p>
+<h2 id="Text-operations"><a href="#Text-operations" class="headerlink" title="Text operations"></a>Text operations</h2><h3 id="算数运算符-1"><a href="#算数运算符-1" class="headerlink" title="算数运算符"></a>算数运算符</h3><p>算数运算符之中，主要包含和使用<code>+、-、*、/、%</code>等算数符号，在此的过程之中，将会由<strong>OGNL引擎来代替Thymeleaf标准表达式引擎执行</strong>，显然这也是另一个写法，通常算数运算符包含在大阔号中的将会由OGNL引擎代替，而写在大阔号外的则由Thymeleaf引擎执 ，算数运算符和其他开发语言中的相差无几，本书将不详述，有兴趣的读者可自行了解</p>
+<h3 id="比较器"><a href="#比较器" class="headerlink" title="比较器"></a>比较器</h3><p>在Thymeleaf之中，比较器和上述的算数运算符不同，比较器的写法可能与其他开发语言不同，如：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>gt</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>it</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>ge</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>le</td>
+</tr>
+<tr>
+<td>!</td>
+<td>not</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;</td>
+<td>eq</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>neq&#x2F;ne</td>
+</tr>
+</tbody></table>
+<h4 id="index-html-1"><a href="#index-html-1" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf comparator&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;div th:if=&quot;$&#123;data&#125; eq &#x27;Thymeleaf&#x27;&quot;&gt;</span><br><span class="line">        &lt;p&gt;urlController comparator eq(==) Thymeleaf&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="默认表达式"><a href="#默认表达式" class="headerlink" title="默认表达式"></a>默认表达式</h3><p>在Thymeleaf之中，与其说是默认表达式不如说是 if……else的在称，其意思为，如当前指定的变量与条件不符则默认输出指定信息或变量，这个很类似于else ：</p>
+<h4 id="urlController-java-1"><a href="#urlController-java-1" class="headerlink" title="urlController.java"></a>urlController.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">urlController</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;index&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getindex</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">        <span class="type">data</span> <span class="variable">dataone</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">data</span>(<span class="literal">null</span>    ,<span class="number">20</span>);</span><br><span class="line">        model.addAttribute(<span class="string">&quot;data&quot;</span>,dataone);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="data-java"><a href="#data-java" class="headerlink" title="data.java"></a>data.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">data</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">data</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="index-html-2"><a href="#index-html-2" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf Elvis&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;div th:object=&quot;$&#123;data&#125;&quot;&gt;</span><br><span class="line">        &lt;p&gt;Name: &lt;span th:text=&quot;*&#123;name&#125;?: &#x27;(No name? Are you ok?)&#x27;&quot;&gt;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="原型文本默认表达式"><a href="#原型文本默认表达式" class="headerlink" title="原型文本默认表达式"></a>原型文本默认表达式</h3><p>原型文本默认表达式在Thymeleaf官方文档中的名称叫做<code>(The No-Operation token)</code>即“禁止操作令牌”，其主要由令牌下划线符号<code>&quot;_&quot;</code>来表示，这样看起来代码简洁而美丽且大方(虽然IDE开发环境中会报错，但依然好看)：</p>
+<h4 id="index-html-3"><a href="#index-html-3" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf Elvis&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;div th:object=&quot;$&#123;data&#125;&quot;&gt;</span><br><span class="line">        &lt;p&gt;Name: &lt;span th:text=&quot;*&#123;name&#125; ?: _&quot;&gt;No name?Are you ok?&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>这样的写法即约等于了 <code>&lt;p&gt;Name: &lt;span th:text=&quot;*&#123;name&#125;?: &#39;(No name? Are you ok?)&#39;&quot;&gt;&lt;/span&gt;&lt;/p&gt;</code>即默认表达式，使用原型文本默认表达式不仅代码美观且大气，还显得格外诱人。</p>
+<h3 id="数据转换与格式化"><a href="#数据转换与格式化" class="headerlink" title="数据转换与格式化"></a>数据转换与格式化</h3><p>Thymeleaf提供数据转换与格式化的表达式，通过数据的转换来让其变成字符串类型（String），无论变量数据是什么格式，都将被转化为字符串类型，本书例子我们会将数字类型转换为字符串类型：</p>
+<h4 id="inde-html"><a href="#inde-html" class="headerlink" title="inde.html"></a>inde.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">    &lt;link th:href=&quot;@&#123;/css/style.css&#125;&quot; href=&quot;../static/css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf The No-Operation token&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;td th:text=&quot;$&#123;&#123;data.age&#125;&#125;&quot;&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>原本的data.age本是数字类型，但通过两个大阔号即<code>&#123;&#123;……&#125;&#125;</code>可让其自动转换&#x2F;格式化为字符串类型。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20boot/8.Spring%20boot%20and%20Thymeleaf%20%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>HBase 与分布式数据库概述 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>HBase 与分布式数据库概述</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/hbase/" rel="tag">hbase</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>分布式数据库系统（Distributed Database System, DDBS），研究开始于 20实际70年代中期。随着数据库应用需求的扩展和信息技术特别是计算机网络与数字通信技术的飞速发展，集中式的单体数据库系统已经无法适应这样的环境。</p>
+<h2 id="DDBS-起源"><a href="#DDBS-起源" class="headerlink" title="DDBS 起源"></a>DDBS 起源</h2><h3 id="集中式数据库痛点"><a href="#集中式数据库痛点" class="headerlink" title="集中式数据库痛点"></a>集中式数据库痛点</h3><ol>
+<li><p>对于集中式数据库，主要的不足体现在数据按照需要在网络上分布存储，假设采用集中式处理，将会造成附加成本和通信的开销。</p>
+</li>
+<li><p>应用集中在一台计算机或服务器中运行，一旦发生故障将会导致整个系统的运行，可靠性受到威胁。</p>
+</li>
+<li><p>集中式的处理导致系统规模和配置不够灵活，可扩展性较差，这种情况下数据库应用普遍构建于网络上。</p>
+</li>
+</ol>
+<blockquote>
+<p>在 2004 年左右或之前，英国国家计算机中心(United Kingodom National Computing Centre, UK-NCC) 专门对分布式数据库进行了分析和预测，并表明：“在未来 10 年后计算机科学发展的主要方向之一”。</p>
+<p>在 2021 年的今天很明显证实了这一点</p>
+</blockquote>
+<h3 id="信息孤岛-Information-Island"><a href="#信息孤岛-Information-Island" class="headerlink" title="信息孤岛 (Information Island)"></a>信息孤岛 (Information Island)</h3><p>例如大型互联网公司、政府机关等单位中，这些组织内都有一个自己所维护的数据库，比如开发部门(bj-dev)，行政部门(sz-adm)，这些数据库通常是已经分布的了。</p>
+<p>在这种情况下，企业的整个信息资源就被分割成了信息孤岛，而分布式数据库的主要作用就是将信息孤岛连接起来。</p>
+<p>做个比较明显的比喻就是分布式系统可以明显的体现出组织的系统架构，本地是数据本地保存或维护，同时也可以在需要时存取异地数据，而这种操作被称之为分布式数据库。</p>
+<p>世界上第一个分布式数据库是 SDD-1（System for Distributed Database），由 CCA（Computer Corporation of Amerca）</p>
+<h2 id="DDBS-发展"><a href="#DDBS-发展" class="headerlink" title="DDBS 发展"></a>DDBS 发展</h2><h3 id="初期"><a href="#初期" class="headerlink" title="初期"></a>初期</h3><p>分布式数据库系统在 20实际 70 年代末时期诞生，在 80 年代进入了成当阶段，因为计算机功能的增强以及成本的下降，使得计算机广遍普及。也随着计算机网络的发展，降低了数据网络的传输费用，以及个人计算机的出现在计算机局域网的广泛发展。</p>
+<p>这些都是分布式数据库系统的研制和实现所提供了必要的基础条件，无论是在民用还是军用领域中，各国都在分布式数据库系统的研究投入了大量的人力、物理和财力。</p>
+<h4 id="德国与美国"><a href="#德国与美国" class="headerlink" title="德国与美国"></a>德国与美国</h4><p>例如德国的斯图加特大学所研制的 POREL 历经 11 年，投资 450w 德元，美国的 IBM 公司 20 世纪 70 年代由 San Jose 实验室所研制的 System R。</p>
+<blockquote>
+<p>San Jose 实验室后来更名为 IBM Almaden 研究中心。</p>
+</blockquote>
+<h4 id="西欧"><a href="#西欧" class="headerlink" title="西欧"></a>西欧</h4><p>美国加利副尼亚大学伯克利分校（Universiry of Californaia, Berkeley）研制的分布式 1n-gres 和荷兰阿姆斯特丹大学所研制的 Ingres，在 Unix&#x2F;PDP 上实现。</p>
+<p>法国 IN-RIA 所研制的 SIRIUS-DELTA 系统和 IMAG 研究中心所研制的 MICROBE 系统。</p>
+<h4 id="国内"><a href="#国内" class="headerlink" title="国内"></a>国内</h4><p>中国对分布数据库系统在 20 世纪 80 年代初期，国内一些科研单位和高等院校先后建立和实现了几个各具特色的分布式数据库，在这其中有中国科学院数学与系统科学研究院设计，和上海大学以及华东师范大学所合作实现的 C-POREL</p>
+<p>以及上海大学和华东师范大学所合作实现的 C-POREL，以及武汉大学所研制的 WDDBS 和 WOODDBS ，东北大学研制的 DMU&#x2F;FO 系统等。</p>
+<h3 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h3><p>在 1987 年，关系数据库最早的设计者之一 C.J.Date，在 “Distributed Database: A Closer Look” 中提出完全的、真正的分布式数据库管理系统所应该遵循的 12 条规则。</p>
+<ol>
+<li><p><strong>本地自治性</strong> (Local Autonomy)<br>本地站点的独立性 (Local site independence)，每个本地站点都可以作为一个独立、资质的集中的分布式数据库系统，并负责安全、并发控制、备份和恢复。</p>
+</li>
+<li><p><strong>中央站点独立性</strong> (Central site independence)<br>不依赖于中心站点（No Reliance On Central Site），网络中没有站带你依赖于中心站点或其他任何站点，所有的站点都具备相同的功能。</p>
+</li>
+<li><p><strong>可连续操作性</strong> (Continuous Operation)<br>失败的独立（Failure independence）即故障的对系统无影响，即使在节点故障的网络情况下，系统也可以连续运行。</p>
+</li>
+<li><p><strong>数据位置透明性和独立性</strong> (Location Transparency and Location Independ-ence)<br>位置的独立性 (Location Transparency)，用户不需要知道数据的位置就可以检索这些数据。</p>
+</li>
+<li><p><strong>数据分片的独立性</strong> (Fragmmentation Independence)<br>分裂的透明度（Fragmentation transparency）数据碎片对用户来说是独立的，用户只能看到一个逻辑数据库，用户不知道数据库片段的名称可以检索他们。</p>
+</li>
+<li><p><strong>数据复制的独立性</strong> (Fragrnentation Independence)<br>复制的透明度（Replication transparency）用户只能看到一个逻辑数据库，分布式数据库系统独立的选择访问数据库片段，对于用户来说分布式数据库系统可以独立管理所有片段。</p>
+</li>
+<li><p><strong>分布式查询处理</strong> (Distributed Query Processing)<br>分布式查询可能在多个不同的数据库站点执行，查询优化是分布式数据库独立执行的。</p>
+</li>
+<li><p><strong>分布式事务管理</strong> (Distributed Transanction Management)<br>一个事务可以在不同的站点上进行数据的更新，并且该事物是透明执行的。</p>
+</li>
+<li><p><strong>硬件独立性</strong> (Hardware Independence)<br>是指系统必须在任何硬件平台上运行。</p>
+</li>
+<li><p><strong>操作系统独立性</strong> (Operatnig System Independence)<br>该系统必须在任何操作系统中运行。</p>
+</li>
+<li><p><strong>网络系统的独立性</strong> (Operating System Independence)<br>必须在任何网络平台上运行。</p>
+</li>
+<li><p><strong>数据库管理系统独立性</strong> (DBMS Independenece)<br>系统必须支持任何厂商的数据库产品</p>
+</li>
+</ol>
+<p>上述的 12 条是真正的分布式数据管理系统所应该遵循的 12 条规则，这也被行业而广泛的接受，有助于规划一个特定的分布式数据库系统的功能，从而也有助与区分一个真正普遍意义上的分布式数据库系统。</p>
+<h3 id="商业化"><a href="#商业化" class="headerlink" title="商业化"></a>商业化</h3><p>20世纪90年代开始，分布式数据库开始进入商业化应用阶段，数据库厂商不断推出和改进自己的分布式数据库产品，来适应客户的需求和扩大市场份额。</p>
+<p>对于分布式数据库系统，还需要网络技术的相互渗透和有机融合后得出的结果，他不仅带来了新的技术，还有了自己特色的理论基础和固有的技术难度，这就导致了分布式数据库系统的应用被延迟。</p>
+<p>而对于现在，一些商业化的数据库产品如 ORACLE、IBM DB2、SYBASE、Microsoft SQL Server 以及 MySQL 等大都提供了对分布式数据库的支持（虽然支持的程度不同）</p>
+<h3 id="本世纪的发展"><a href="#本世纪的发展" class="headerlink" title="本世纪的发展"></a>本世纪的发展</h3><p>随着 21 世纪下 Web 2.0 的兴起使得互联网上的站点数据大量增长从而促进了搜索引擎技术的萌芽，之后的 Google 或 百度等的数据也有海量的趋势增长。</p>
+<h4 id="BigTable-与-GFS"><a href="#BigTable-与-GFS" class="headerlink" title="BigTable 与 GFS"></a>BigTable 与 GFS</h4><p>对于这些流量的日益增长，传统的分布式数据库已经不在适用，相应的也出现了新的分布式海量数据的组织和管理方式。在这其中 Google 所设计的 BigTable 用于管理结构化数据。</p>
+<p>Big Table 通过利用 Google 分布式文件系统 (Google File System) 来实现数据的分布式存储和管理。</p>
+<blockquote>
+<p>Big Table 使用与 PB （Petabyte, 1PB&#x3D;10E15B），则表示拥有 1500000000000000 千万亿级数据处理和上千台的数据分布，因此他具有高可测量、高可用和高效以及高可靠的特点。</p>
+</blockquote>
+<h5 id="多级映射结构"><a href="#多级映射结构" class="headerlink" title="多级映射结构"></a>多级映射结构</h5><p>BigTable 不是关系型数据库而是多级映射的数据库结构，这种结果用于面向大规模的数据处理且容错性较强的自我管理系统，拥有 TB（Terabyte，万亿字节） 级的内存和 PB（Petabyte，千万亿字节	） 级的存储能力，每秒可以处理百万次的读写操作。</p>
+<blockquote>
+<p>虽然 BigTable 不支持关系型数据查询，但是却是建立在 GFS&#x2F;MapReduce 基础上的分布式存储大规模结构化数据的优秀的解决方案。</p>
+</blockquote>
+<h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><p>不同于 BigTable，HBase 利用了 Hadoop 分布式文件系统来管理和存储数据，同样不同于一般的关系数据库，他还是一个适合于非结构化数据存储的数据库，HBase 主要用于需要随机访问、实时读写大量数据的场景中。</p>
+<h2 id="Not-Only-SQL"><a href="#Not-Only-SQL" class="headerlink" title="Not Only SQL"></a>Not Only SQL</h2><h3 id="关系型数据库的痛点"><a href="#关系型数据库的痛点" class="headerlink" title="关系型数据库的痛点"></a>关系型数据库的痛点</h3><p>对于关系型数据库，如 MySQL 或 Oracle 这样主流的关系性数据库而言，一个站点的表最为核心的就是用户的数据表，而当用户表达到 KB（Kilobyte，千字节）的情况下。</p>
+<p>对单条数据的检索就会花上数秒或分钟级别的查询时间，而实际情况下会变得更加复杂，假设在查询的过程中又有几十个或几百个数据插入、编辑或删除等，一此时数据的查询的延迟将会轻易达到分钟级别。</p>
+<p>在或者，需要查询的数据可能还需要设计到联合查询之类的操作，或者更为复杂的关联查询，则会造成数据库的性能大幅度的下降。</p>
+<h3 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/90539616823.png"></p>
+<p>在 CAP 理论提出之前，很多的研究人员尝试将关系型数据库做成分布式架构的数据库，将数据的压力平坦分流到多个数据服务器上，而这期间很难保证原子性和 ACID</p>
+<blockquote>
+<p>原子性（Atomicity）、一致性（Consistency）、独立性（Isolation）、持久性（Durability）</p>
+<blockquote>
+<p>原子性指一个操作不可中断,要么全部成功,要么全部失败</p>
+</blockquote>
+</blockquote>
+<p>如何平衡原子性和高性能数据库的方式，截至到在 20 世纪 90 年代初期的 Berkerly 大学 Eric Brewer 教授所提出的 CAP （Consistency Availability and Partition tolerance）理论所提出之前，该问题一直是关系型数据库的痛点。</p>
+<p>布鲁尔定理(Brewer’s theorem)也被称之为CAP定理(CAP theorem),主要指出在分布式系统中的：</p>
+<ol>
+<li>一致性(Consistency), 数据一致更新，所有的数据变动都是同步的</li>
+<li>可用性(Availability),每次请求都能获取到正确的响应，拥有良好的响应性能</li>
+<li>分区容错性\可靠性(Partition tolerance),保证服务宕机时其他服务依然可以正常提供服务(系统中任意信息丢失或失败不会影响系统的继续运作)。</li>
+</ol>
+<p>对此 Brewer 教授给出的定理是：“任何分布式系统只可能满足两点，无法兼备三者”，并给出了忠告：“架构师不要将精力浪费在如何设计出兼备三者的完美的分布式系统，而是如何进行取舍”。</p>
+<p>对此通过 CAP 定理,我们得知无法同时满足一致性、可用性、分区容错性这三个特性,因此假设:</p>
+<ol>
+<li><p>CP<br>即 一致性、分区容错性,牺牲掉了可用性保证了一致性,可能会有几个节点不可用,通常适用与银行系统。</p>
+</li>
+<li><p>AP<br>是可用性和分区容错性,舍弃掉了一致性,保障服务可用但可能会造成数据的冲突,可适用流量访问大对系统正常提供服务要求较高的系统;</p>
+</li>
+<li><p>CA<br>一旦集群中一台服务无法正常提供服务则会造成当前集群完全崩溃,适用与挑战者。</p>
+</li>
+</ol>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><p>对 CAP 特性的放弃打来了一种更加新颖的非关系型数据库，和关系型数据库相反，他对事务性的要求并不严格。</p>
+<p>对于非关系型数据库而言，我们假设数据库保证了最终一致性，即信息不会立即同步，而是经过了一定的时间才达到一致性，而不是像传统的关系型数据库，有很大可能会造成性能的下降。</p>
+<h4 id="事务的持久性"><a href="#事务的持久性" class="headerlink" title="事务的持久性"></a>事务的持久性</h4><p>事务的提交可以被分为完全持久或延迟持久（通常被称之为迟缓提交），完全持久事务提交是同步的，假设在日志吸入磁盘后立马就会提交成功并进行发布。</p>
+<p>而对于延迟持久事物的提交是异步的，他只要最终将事务持久性最终写入磁盘即可。完全和延迟事务的类型各有所长，一个服务能够同时包含完全和延迟持久事物，应该根据其业务需求进行设计。</p>
+<h2 id="HBase-概述"><a href="#HBase-概述" class="headerlink" title="HBase 概述"></a>HBase 概述</h2><p>2006 年 Google 技术人员 Fay Chang 发表了 <em>Bigtable: A Distributed Storage System for Structure Data</em>，向人们介绍了分户是数据库，并可以在几台服务器崩溃的情况下继续提供高性能的服务。</p>
+<p>进跟着 2007 年 Powerset inc. 内的技术人员根据该文章研发了 BigTable 的 Java 开源版本，即就是 HBase，虽然刚开始他只是 Hadoop 的一部分。</p>
+<p>不久之后的2008年，HBase 成为了 Apache 的顶级项目，HBase 几乎实现了 BigTable 的所有特性，他也被称为开源的分布式非关系型数据库。</p>
+<p>在随后的 2010 年 HBase 的开发速度打破了一直以来紧跟着 Hadoop 版本一致的管理，这是因为 HBase 的版本发布速度已经超越了 Hadoop。</p>
+<h3 id="Hadoop-与-HBase"><a href="#Hadoop-与-HBase" class="headerlink" title="Hadoop 与 HBase"></a>Hadoop 与 HBase</h3><p>HBase 的存储基于 Hadoop ，他的崛起是因为高性能、高稳定、可管理的大数据应用平台，因此 Hadoop 实现了一个分布式文件系统 HDFS（Hadoop File System），有着高容错的特点，通常用来部署在价格低廉的硬件中，这也意味着基于 Hadoop 的 HBase 拥有着与与生俱来的扩展性吞吐量。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>HBase 所采用的是 Key&#x2F;Value 的存储方式，这也意味着即使处理海量数据，也不会导致数据的下降，反观 HBase 又是一个列式数据库，可以将子字段放在不同的集群中的机器上来分散负载压力。</p>
+<p>而这样的存储结构和分布式的存储方式所带来的问题就是哪怕是存储少量的数据，HBase 并不会很快，但是对于海量数据的时候，他慢的没有关系型数据库慢。</p>
+<p>因此只有在单表数据量超过千万，且高并发环境，对数据分析的需求较弱或者不需要经常使用，那么则需要使用 HBash。</p>
+<h3 id="部署环境"><a href="#部署环境" class="headerlink" title="部署环境"></a>部署环境</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/4220400129300.png"><br>Hbase 从大到小划分为 <code>Master</code> 服务器和 <code>RegionServer</code> 服务器。其中 Master 为注册中心，而 <code>RegionServer</code> 即服务器端。</p>
+<p>RegionServer 所保存的数据是直接存储在 Hadoop 的分布式文件系统中（HDFS）：</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/5507601686823.png"></p>
+<p>而在一个完整的 HBash 环境中，RegionServer 非常依赖 ZooKeeper 服务，如果没有 ZooKeeper 则 HBase 的发展也会收到影响，因为在 HBase 的生态中， ZooKeeper 主要扮演一个类似管家的一个角色，管理了 HBase 所有的 RegionServer 信息（服务治理），其中包括具体的数据段存放在那个 RegionServer 中。</p>
+<blockquote>
+<p>ZooKeeper 提供了配置维护、域名服务、分布式服务、组服务、服务治理等功能</p>
+</blockquote>
+<p>客户端每次于 HBase 连接，就是与 ZooKeeper 通信，查询出需要链接的 RegionServer 需要连接，然后在链接 RegionServer。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/3060745475915.png"></p>
+<h4 id="RegionServer"><a href="#RegionServer" class="headerlink" title="RegionServer"></a>RegionServer</h4><p>RegionServer 是存放 Region 的容器，直观上了解就是服务器上的服务，简单来说一个服务只能安装一个 RegionServer（在未开虚拟化的情况下），当客户端从 ZooKeeper 获取到 RegionServer 的地址后，可以从 RegionServer 获取数据。</p>
+<blockquote>
+<p>客户端从 ZooKeeper 获取到 RegionServer 地之后，也可以从 RegionServer 中获取数据，以及插入、删除等所有操作都是直接操作 REgionServer，<strong>之后的 Master 只负责协调各种工作</strong>。</p>
+</blockquote>
+<p>当 HBash 负载均衡的时候，也有可能从一台 RegionServer 上把 RegionServer 到另一台 RegionServer 上。</p>
+<h5 id="Region"><a href="#Region" class="headerlink" title="Region"></a>Region</h5><p>Region 是一段数据的集合，HBase 表中一般哟更有一个到多个 Region，他不能跨服务器，数据量小的时候一个 Region 足以存储所有数据，但是在数据量打的时候，HBase 会拆分 Region。</p>
+<p>Region 是基于 HDFS 的，他的所有数据存取操作都是调用了 HDFS 的客户端接口来进行实现。</p>
+<h4 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h4><p>Master 在整个 HBase 架构中负责协调各种工作，如建表、删表、移动、合并 Region 等操作，他们的通电就是需要跨越 RegionServer，这个操作由他本身来执行就显得很臃肿和不合适，因此就将这个操作放到了 Master 之上了。</p>
+<p>这类结构的好处在于降低了 Master 的依赖，假设 Master 就诶点一般只有一个到两个，一旦宕机则会对集群造成单点故障，因此在 HBase 中，即使 Master 宕机了，集群依然可以正常工作。</p>
+<h3 id="存储架构"><a href="#存储架构" class="headerlink" title="存储架构"></a>存储架构</h3><h4 id="列（Column）"><a href="#列（Column）" class="headerlink" title="列（Column）"></a>列（Column）</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/3596626466712.png"></p>
+<p>在 HBash 中最基本的存储单位就是列一个列或多个列形成一行 (row)，传统数据库是严格的行列对齐，比如这一行有两列，每列都有多个版本，多个版本的值都存储在单元格 (cell) 中，若干个列又可以被归类为一个列族。</p>
+<h5 id="单元格（Call）"><a href="#单元格（Call）" class="headerlink" title="单元格（Call）"></a>单元格（Call）</h5><p>列族和列并不是唯一能够确定一个值的方式，通过单元格，一个列可以存储多个版本的值，多个版本的值都存储在一个单元格之中，为此通过 <code>version</code> 来进行区分。</p>
+<p>对此唯一可以确定一条结果的表达式应该为：<strong>列族:列:版本号</strong> (rowkey:column family:column:version)</p>
+<h5 id="列族（Column-family）"><a href="#列族（Column-family）" class="headerlink" title="列族（Column family）"></a>列族（Column family）</h5><p>在 HBase 中，若干个列可以组成列族（Column Family），在建表中不需要创建列。这是由于他可变且灵活，在这个过程中唯一需要确定的就是列族。</p>
+<p>如过期时间，数据块缓存以及是否压缩都是定义在列组上，而不是定义在表上或列上。</p>
+<p>同一个表中不同的列组可以有完全不同的属性配置，同一个列组内的列组都会有相同的属性。</p>
+<blockquote>
+<p>原因在于都是在同一个列族之中，而属性是定义在列族上的。</p>
+</blockquote>
+<p>列必须依赖列组的存在，在 HBase 中，一个列的签名会带着他的所属列族，列名称的规范在于 <strong>列族:列名</strong>，如：<em>brother:age、brother:name、parent:age、parent:name</em></p>
+<p>他的主要的作用就是 HBase 会将列族的列尽量放到同一台服务器中，如果要想将列合并在一起，就需要定义相同的列族。</p>
+<blockquote>
+<p>想对于生产环境中，版本号是可以被忽略的，如果不填写版本号将会默认获取最后一个版本的数据返回。</p>
+<p>每个列或单元格的值都被赋予了一个时间戳，这是由系统默认进行并制定的，也可以自定义显示。</p>
+</blockquote>
+<h4 id="行键（Row-Key）"><a href="#行键（Row-Key）" class="headerlink" title="行键（Row Key）"></a>行键（Row Key）</h4><p>每一个行 (row) 都有唯一的行键(row key)，来标定这个行的唯一性，而 row key 和 MySQL、Oracle 中的主键比起来就简单许多，行键是由用户指定的一串不重复的字符串，rowkey 会决定该 row 的存储位置，HBase 无法根据某个 列来进行排序，系统永远根据 rowkey 来进行排序，因此 rowkey 就决定 row 存储顺序的唯一凭证，例如：</p>
+<ol>
+<li>row-1</li>
+<li>row-2</li>
+<li>row-11</li>
+</ol>
+<p>那么经过 HBase 字典排序后则顺序为：</p>
+<ol>
+<li>row-1</li>
+<li>row-11</li>
+<li>row-2</li>
+</ol>
+<p>假设将数据插入 HBase ，用了之前存在的 rowkey，那么之前存在的 value 将会被更新，而之前所存在的 value 将会被存放在 column 的 call （即版本单元格）</p>
+<h5 id="Region-和行的关系"><a href="#Region-和行的关系" class="headerlink" title="Region 和行的关系"></a>Region 和行的关系</h5><p>一个 Region 就是多个行的集合，Region 中的行按照键 (rowkey) 的字典来进行排序。</p>
+<h3 id="高离散"><a href="#高离散" class="headerlink" title="高离散"></a>高离散</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/sql/hbash/1.%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md/3046903189300.png"><br>相对与关系性数据库，HBase 内的行都是离散的，所以一个行里面的列无论被划分到了不同的服务中，行的概念都被进行一定的削弱。</p>
+<p>因为离散存储的关系，在 HBase 中，每个存储或编辑的语句都需要写出数据要被存储到那个单元格，即：<em>表,行,列族:列名</em> 进行定义，也就是说要精准的写出要将数据存储到那位置中。</p>
+<p>而对比关系型数据库，只需要通过 insert 语句来一次性将数据写入在数据库中。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/hbase/2021-11-22-HBase%20and%20distributed%20outline/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

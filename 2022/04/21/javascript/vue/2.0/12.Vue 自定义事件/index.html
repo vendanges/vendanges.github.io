@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 自定义事件 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 自定义事件</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>事件在vue中主要被定义为当你<code>点击</code>他的时候，他会作出什么反映，这就比如我们前几章所介绍的当按下鼠标时，则值每次分别增加<code>1</code>，则这种被称之为“事件”。</p>
+<h2 id="事件命名"><a href="#事件命名" class="headerlink" title="事件命名"></a>事件命名</h2><p>Vue的事件命名不同于 prop，即<code>事件名不存在任何的自动化大小写转换</code>，即触发、监听的事件必须完全匹配这个事件所用的名称，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$emit(&#x27;eventName&#x27;)</span><br></pre></td></tr></table></figure>
+<h2 id="事件定义"><a href="#事件定义" class="headerlink" title="事件定义"></a>事件定义</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615784112_20210315125342607_551491662.png"><br>在Vue 中我们可以通过使用<code>v-on</code>指令或者<code>@</code>来简写作为 DOM 元素的事件绑定，而除此之外我们还可以使用 <code>Vue 事件接口（Eventd interface）</code>中的</p>
+<ol>
+<li>$on (eventName) </li>
+<li>$emit(eventName)</li>
+</ol>
+<p>通过上述 Vue 接口事件，可分别使用<code>$on</code>来进行<strong>监听事件</strong>以及将<code>$emit</code>用于<strong>触发事件</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;event-example&quot;&gt;</span><br><span class="line">        &lt;button-event v-on:event=&quot;eventGo&quot;&gt;&lt;/button-event&gt;</span><br><span class="line">        &lt;button-event v-on:event=&quot;eventGo&quot;&gt;&lt;/button-event&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&#x27;button-event&#x27;, &#123;</span><br><span class="line">        template: &#x27;&lt;button v-on:click=&quot;increaseUp&quot;&gt;&#123;&#123; echo &#125;&#125;&lt;/button&gt;&#x27;,</span><br><span class="line">        data: function() &#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                echo: 0</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            increaseUp: function() &#123;</span><br><span class="line">                this.echo +=1</span><br><span class="line">                this.$emit(&#x27;event&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#event-example&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            total: 0</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            eventGo: function() &#123;</span><br><span class="line">                this.total += 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="v-model-自定义组件"><a href="#v-model-自定义组件" class="headerlink" title="v-model 自定义组件"></a>v-model 自定义组件</h2><h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615810236_20210315194825681_431649878.png"><br>Vue 中<code>v-model</code>指令可以用于在表单或组件上自动创建一个双向的绑定，就为明显的例子无非就是获取表单输入，通过<code>表单输入</code>以及<code>获取表单</code>输入即可是一个<strong>双向绑定</strong>，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;model-input v-model=&quot;number&quot;&gt;&lt;/model-input&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;number&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&#x27;model-input&#x27;, &#123;</span><br><span class="line">        template: `</span><br><span class="line">            &lt;input ref=&quot;input&quot; :value=&quot;value&quot; @input=&quot;$emit(&#x27;input&#x27;,$event.target.value)&quot;&gt;</span><br><span class="line">        `,</span><br><span class="line">        props: [&#x27;value&#x27;],</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            number: null,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多选"><a href="#多选" class="headerlink" title="多选"></a>多选</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615810238_20210315200759314_641727970.png"><br>在上述的流程图中，我们合租要通过使用<code>v-on</code>以及<code>v-show</code>来分别判断鼠标事件以及<code>真假值</code>的判断，当<code>check</code>被点击的时候，则默认将<code>v-show</code>改变为 <code>true</code>状态使得其变得可见，默认为<code>false</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;show-checkbox v-model=&quot;check&quot;&gt;&lt;/show-checkbox&gt;</span><br><span class="line">    &lt;div v-show=&quot;check&quot;&gt;</span><br><span class="line">        以同意相关注册协议</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&#x27;show-checkbox&#x27;, &#123;</span><br><span class="line">        model: &#123;</span><br><span class="line">            prop: &#x27;checked&#x27;,</span><br><span class="line">            event: &#x27;change&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            checked: Boolean</span><br><span class="line">        &#125;,</span><br><span class="line">        template: `</span><br><span class="line">            &lt;input type=&quot;checkbox&quot;</span><br><span class="line">                v-bind:checked=&quot;checked&quot;</span><br><span class="line">                v-on:change=&quot;$emit(&#x27;change&#x27;, $event.target.checked)&quot;</span><br><span class="line">            &gt;</span><br><span class="line">        `</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            check: false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/12.Vue%20%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

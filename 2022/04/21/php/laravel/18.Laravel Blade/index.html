@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel Blade | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel Blade</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Laravel Blade内，官方所提供了一个简洁且优雅的前端模板引擎，他允许你在blade.php文件内写入html以及PHP代码，他因为所有Blade语法都会被编译成正常的PHP代码并缓存，所以速度会稍微快那么一点。除非在此修改，某则Blade模板将不会在此进行编译，在一般的情况下都会将会存放在<code>/resouces/views</code>目录内。</p>
+<h2 id="模板继承"><a href="#模板继承" class="headerlink" title="模板继承"></a>模板继承</h2><p>在Laravel blade内，模板继承是常见的一种，这种写法在Laravel oauth内使用中，其语法和隔壁Thymeleaf模板引擎更加的简单，其中主要分为定义<code>@section</code>以及<code>@yield</code>显示等。Laravel内，以“@”为开头的将会被称之为<code>“指令”</code>，通过指令我们可以实现继承、循环、判断等。</p>
+<h3 id="section……-show-and-yield"><a href="#section……-show-and-yield" class="headerlink" title="@section……@show and @yield"></a>@section……@show and @yield</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228211724552_24845774.png"></p>
+<h4 id="index"><a href="#index" class="headerlink" title="index"></a>index</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;-- index.blade.php --&#125;&#125;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;index - @<span class="keyword">yield</span>(<span class="string">&#x27;title&#x27;</span>)&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        @<span class="title function_ invoke__">section</span>(<span class="string">&#x27;h1&#x27;</span>)</span><br><span class="line">            &lt;p&gt;Hello,world!&lt;/p&gt;</span><br><span class="line">        @show</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="inbar"><a href="#inbar" class="headerlink" title="inbar"></a>inbar</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;inbar.blade.php&#125;&#125;</span><br><span class="line">@<span class="keyword">extends</span>(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;inbar&#x27;</span>)</span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;h1&#x27;</span>,<span class="string">&#x27;Hello,inbar&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在模板继承中，我们主要使用了<code>@yield</code>以及<code>@section</code>指令，其中@yield <strong>用于显示内容</strong> ，而 <strong>@section</strong> 将会被用于定义一部分内容。所以在index.blade.php内，在<code>&lt;title&gt;</code>标签中使用了@yield即显示”title”内容，所以在<code>inbar.blade.php</code>内容由”@section”所指定定义了<code>title -&gt; inbar</code>所以与<code>index、inbar</code>所组合后的<strong>index- inbar</strong>的标题。</p>
+<p>而在index.blade.php<code>@section</code>所定义的将会被<code>@section(&#39;h1&#39;,&#39;Hello,inbar&#39;)</code>所替换，而以后我们将会介绍如何保留<code>@section</code>所替换掉的内容。</p>
+<h3 id="section……-parent……-endsection"><a href="#section……-parent……-endsection" class="headerlink" title="@section……@parent……@endsection"></a>@section……@parent……@endsection</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228214357569_604439134.png"></p>
+<p>在上述一章中我们介绍了<code>@section……@show……@yield</code>，而此次我们将会增加一个，<code>@parent以及@endsection</code>，这两个指令分别是保留所替换掉的@section以及结束本次替换字段。</p>
+<h4 id="index-1"><a href="#index-1" class="headerlink" title="index"></a>index</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;-- index.blade.php --&#125;&#125;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;index - @<span class="keyword">yield</span>(<span class="string">&#x27;title&#x27;</span>)&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        @<span class="title function_ invoke__">section</span>(<span class="string">&#x27;h1&#x27;</span>)</span><br><span class="line">            &lt;p&gt;Hello,world!&lt;/p&gt;</span><br><span class="line">        @show</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="inbar-1"><a href="#inbar-1" class="headerlink" title="inbar"></a>inbar</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;-- inbar.blade.php --&#125;&#125;</span><br><span class="line">@<span class="keyword">extends</span>(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;inbar&#x27;</span>)</span><br><span class="line">@<span class="title function_ invoke__">section</span>(<span class="string">&#x27;h1&#x27;</span>)</span><br><span class="line">    @<span class="built_in">parent</span></span><br><span class="line">    &lt;p&gt;Hello,inbar!&lt;/p&gt;</span><br><span class="line">@endsection</span><br></pre></td></tr></table></figure>
+
+<p>本文我们通过使用 <code>@parent</code> 来保留使用 <code>@section</code> 指令所替换或覆盖的内容，所以通过使用此指令将会保留覆盖的内容。而<code>@section……@endsection</code>将会使用<code>@section……@endsection</code>来结束替换指令，而不是根据上述使用的<code>@section(&#39;h1&#39;,&#39;Hello,inbar&#39;)</code>。</p>
+<h3 id="show-与-endsection"><a href="#show-与-endsection" class="headerlink" title="@show 与 @endsection"></a>@show 与 @endsection</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228220931993_1506667418.png"></p>
+<p>根据官方的解释是在同一模板定义<code>@section</code>时，使用<code>@show</code>，而在子模板即<strong>“扩展布局”</strong>中使用<code>@endsection</code>作为结尾。在本文同一模板即index.blade.php内，写入任何信息即“同一模板”，而如果在除了以<code>index.blade.php</code>外的则是子模板。</p>
+<h2 id="extends"><a href="#extends" class="headerlink" title="@extends"></a>@extends</h2><p>通过上述介绍，读者得知<code>@extends(&#39;index&#39;)</code>用于引入和扩展视图扩展到另外一个视图内，即将<code>inbar.blade.php</code>内使用<code>@extends(&#39;index&#39;)</code>来引入<code>index.blade.php</code>文件。而<code>&#123;&#123;-- code --&#125;&#125;</code>将会用于注释，这与html所使用的<code>&lt;!-- code --&gt;</code>同意。</p>
+<h3 id="with-……-title-（composer）"><a href="#with-……-title-（composer）" class="headerlink" title="with …… title （composer）"></a>with …… title （composer）</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228224358478_863214069.png"></p>
+<p>在Laravel中，我们可以通过使用composer来进行数据的传递以及获取和定义，我们可以通过使用此方法来进行视图（view）、控制器（controller）进行传递。</p>
+<h4 id="web-php"><a href="#web-php" class="headerlink" title="web.php"></a>web.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;inbar&#x27;</span>)-&gt;<span class="title function_ invoke__">with</span>(<span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;Hello,world&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="inbar-blade-php"><a href="#inbar-blade-php" class="headerlink" title="inbar.blade.php"></a>inbar.blade.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;<span class="variable">$title</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="条件与循环语句"><a href="#条件与循环语句" class="headerlink" title="条件与循环语句"></a>条件与循环语句</h2><h3 id="条件语法"><a href="#条件语法" class="headerlink" title="条件语法"></a>条件语法</h3><h4 id="php-……-endphp"><a href="#php-……-endphp" class="headerlink" title="@php …… @endphp"></a>@php …… @endphp</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228230203673_424818097.png"></p>
+<p>在众多的教材以及文档中都会教给大家一段 Laravel Blade引擎模板，所以本文将会以一个i前后顺序来介绍<code>@php……@endphp</code>指令：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$value</span>) === <span class="number">1</span>)</span><br><span class="line">    ……</span><br><span class="line">@<span class="keyword">elseif</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$value</span>) === <span class="number">0</span>)</span><br><span class="line"> ……</span><br><span class="line">@<span class="keyword">else</span></span><br><span class="line">    ……</span><br><span class="line">@<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="if……-elseif……-else……-endif"><a href="#if……-elseif……-else……-endif" class="headerlink" title="@if……@elseif……@else……@endif"></a>@if……@elseif……@else……@endif</h4><p>通过上述code你可能会更加疑惑<code>$value</code>是怎么传过去或怎么定义的，此时你会通过使用控制器、路由、视图中进行定义或传入，也许你可以通过使用<code>with</code>来通过路由进行传递，本文我们告知下最为简单的演示<code>@php……@endphp</code>指令的作用。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@php</span><br><span class="line">    <span class="variable">$var</span> = <span class="keyword">array</span>(<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">@endphp</span><br><span class="line">@<span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$var</span>) === <span class="number">1</span>)</span><br><span class="line">    一个数组</span><br><span class="line">@<span class="keyword">elseif</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$var</span>) &gt;= <span class="number">2</span>)</span><br><span class="line">    大于两个数组</span><br><span class="line">@<span class="keyword">else</span></span><br><span class="line">    都不是</span><br><span class="line">@<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<p>我们通过以上code和流程图的演示，可以明显的表示出<code>@php……@endphp</code>来定义一个并富有两个数组分别为“1、2”。经过判断语法是大于两个数组的，所以自然而然的输出为<strong>“大于两个数组”</strong>。</p>
+<h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><h4 id="for……-foreach"><a href="#for……-foreach" class="headerlink" title="@for……@foreach"></a>@for……@foreach</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/18.laravel%20blade.md/20210228231017638_375148880.png"><br>在Laravel blade模板引擎中，不仅仅为我们提供了一个条件指令<code>@if……@elseif……@else……@endif</code>，自然而然的为开发者提供了一个简单的循环指令<code>@for……@foreach</code>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">for</span>(<span class="variable">$i</span> = <span class="number">0</span>;<span class="variable">$i</span> &lt; <span class="number">10</span>;<span class="variable">$i</span>++)</span><br><span class="line">    共输出 &#123;&#123;<span class="variable">$i</span>&#125;&#125; 次&lt;br&gt;</span><br><span class="line">@<span class="keyword">endfor</span></span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/18.Laravel%20Blade/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

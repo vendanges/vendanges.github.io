@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>SVG defs and filter | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>SVG defs and filter</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/svg/" rel="tag">svg</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在此之前，需要注意的是 SVG 滤镜都会定义在 <code>&lt;defs&gt;</code> 的元素中，而 <code>&lt;fileter&gt;</code>  则是用来定义 SVG 滤镜，本章主要用于来实现 SVG 的阴影，需要使用 <code>&lt;feFlood&gt;</code> 等元素。</p>
+<figure class="highlight svg"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;568&quot;</span> <span class="attr">height</span>=<span class="string">&quot;568&quot;</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 568 568&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">g</span> <span class="attr">filter</span>=<span class="string">&quot;url(#filter0_d_2_4)&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;285&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;280&quot;</span> <span class="attr">r</span>=<span class="string">&quot;198&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;white&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">defs</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">filter</span> <span class="attr">id</span>=<span class="string">&quot;filter0_d_2_4&quot;</span> <span class="attr">x</span>=<span class="string">&quot;0&quot;</span> <span class="attr">y</span>=<span class="string">&quot;0&quot;</span> <span class="attr">width</span>=<span class="string">&quot;1111&quot;</span> <span class="attr">height</span>=<span class="string">&quot;561118&quot;</span> <span class="attr">filterUnits</span>=<span class="string">&quot;userSpaceOnUse&quot;</span> <span class="attr">color-interpolation-filters</span>=<span class="string">&quot;sRGB&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feFlood</span> <span class="attr">flood-opacity</span>=<span class="string">&quot;0&quot;</span> <span class="attr">result</span>=<span class="string">&quot;BackgroundImageFix&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feColorMatrix</span> <span class="attr">in</span>=<span class="string">&quot;SourceAlpha&quot;</span> <span class="attr">type</span>=<span class="string">&quot;matrix&quot;</span> <span class="attr">values</span>=<span class="string">&quot;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0&quot;</span> <span class="attr">result</span>=<span class="string">&quot;hardAlpha&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feMorphology</span> <span class="attr">radius</span>=<span class="string">&quot;22&quot;</span> <span class="attr">operator</span>=<span class="string">&quot;dilate&quot;</span> <span class="attr">in</span>=<span class="string">&quot;SourceAlpha&quot;</span> <span class="attr">result</span>=<span class="string">&quot;effect1_dropShadow_2_4&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feOffset</span> <span class="attr">dx</span>=<span class="string">&quot;-1&quot;</span> <span class="attr">dy</span>=<span class="string">&quot;4&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feGaussianBlur</span> <span class="attr">stdDeviation</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feComposite</span> <span class="attr">in2</span>=<span class="string">&quot;hardAlpha&quot;</span> <span class="attr">operator</span>=<span class="string">&quot;out&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feColorMatrix</span> <span class="attr">type</span>=<span class="string">&quot;matrix&quot;</span> <span class="attr">values</span>=<span class="string">&quot;0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feBlend</span> <span class="attr">mode</span>=<span class="string">&quot;normal&quot;</span> <span class="attr">in2</span>=<span class="string">&quot;BackgroundImageFix&quot;</span> <span class="attr">result</span>=<span class="string">&quot;effect1_dropShadow_2_4&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">feBlend</span> <span class="attr">mode</span>=<span class="string">&quot;normal&quot;</span> <span class="attr">in</span>=<span class="string">&quot;SourceGraphic&quot;</span> <span class="attr">in2</span>=<span class="string">&quot;effect1_dropShadow_2_4&quot;</span> <span class="attr">result</span>=<span class="string">&quot;shape&quot;</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">defs</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>在 <code>&lt;filter&gt;</code> 元素中爬刨除基础问题，剩下的 “filterUnits”和 “color-interpolation-filter” 属性，其中 filterUnits 主要用于指定或定义 width&amp;height 所使用的坐标系统。</p>
+<p>在本章中， filterUnits 主要使用了 userSpaceOnUser，来通过 x,y\width&amp;height  来表示当前系统的坐标中的值或 <code>&lt;filter&gt;</code> 在用户坐标系统中的位置和大小。同时还是用的颜色插值滤镜 color-interpolation-filters 为 “RGB” 颜色。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>元素</th>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>feFlood</td>
+<td>flood-opacity</td>
+<td>定义不透明度以填充滤镜区域</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>result</td>
+<td>分配给 BackgroundImageFix 滤镜</td>
+</tr>
+<tr>
+<td>2</td>
+<td>feColorMatrix</td>
+<td>-</td>
+<td>基于转换列阵对颜色进行变换，通过类似于 r,g,b,t 都需要通过矩阵算法来得出新的颜色</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>type</td>
+<td>在默认情况下 feColorMatrix 指明了运算类型，即 Matrix ，表明一个 5x4 的矩阵会被提供其他关键字的方式待避岙允许不执行复杂矩阵运算下的使用常用颜色</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>在 feColorMatrix 的使用场景下主要用写入颜色的数字列表</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>feMorphology</td>
+<td>主要用于扩散其阴影效果</td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>operator</td>
+<td>该属性下的 out 主要表示定义在图形之外的部分，也就是说在外部扩散阴影</td>
+</tr>
+<tr>
+<td>4</td>
+<td>feOffset</td>
+<td>用于阴影，通过 dx,xy 来进行实现</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>feGaussianBlur</td>
+<td>stdDeviation</td>
+<td>用于模糊阴影</td>
+</tr>
+<tr>
+<td>6</td>
+<td>feComposite</td>
+<td>in2</td>
+<td>使得两个属性配合，通过 <code>&lt;feColorMatrix&gt;</code> 元素下的 result 属性绑定到本元素，在之后通过 operaator 进行扩展</td>
+</tr>
+<tr>
+<td>7</td>
+<td>feBlend</td>
+<td>mode</td>
+<td>使两个对应的对象通过 mode 下的值进行混合</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/svg/2.SVG%20defs%20and%20filter/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

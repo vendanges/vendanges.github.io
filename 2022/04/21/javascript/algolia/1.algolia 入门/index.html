@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>algoliasearch-helper | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>algoliasearch-helper</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/algolia/" rel="tag">algolia</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" rel="tag">搜索引擎</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>algolia 是一个通过 Saas 模式提供网络搜索的产品，在 2012 年创办，主要是在手机上进行离线搜索，并在此之后使用外部托的方式为客户的网站提供了网络搜索服务，以及 REST API 的提供，涵盖了大量主流语言。与同类型的 Elasticsearch 相比起来 Algolia 更加的轻量级，并且与站点达成了高度耦合，不太依赖数据库，而是更加更可自定义的 RESTAPI 的方式进行提供。</p>
+<p>且 algolia 高度活跃在诸如开源社区中获得了一大批开发者的青睐，而本文主要通过 algolia 在原生的 JavaScript 环境下的使用，通常此类都是面向大前端时代下的产物，但通过 algoliasearch-helper.js 可以解决这种尴尬问题。</p>
+<p>在此之前我们需要了解 algoliasearch-helper.js 主要作用，首先需要认识到 helper 主要用于创建基于搜索的应用程序，以此来帮助开发者构建属于自己的应用程序的搜索结构，同时还提供了更加高级的 API 来方便访问高级搜索过滤器。</p>
+<p>通过 algoliasearch-helper 我们可以实现在站点中加入 helper，以及在没有 js 框架的情况下根据 algolia 来来建立根据用户所需的界面。</p>
+<h2 id="获取-API"><a href="#获取-API" class="headerlink" title="获取 API"></a>获取 API</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/javascript/algolia/1.algolia%20%E5%85%A5%E9%97%A8.md/13955620226448.png"><br>首先我们需要在 <a target="_blank" rel="noopener" href="https://www.algolia.com/account/api-keys/">algolia</a> 页面中找到 appliacation 以及 apikey 和 IndexNeame，以保障你在使用前已经构建了索引，即 <a target="_blank" rel="noopener" href="https://www.algolia.com/apps/A2U1XZQM0V/explorer/browse/">IndexName</a>，之后的 algolia 会使用该索引的 json 数据来进行查询。</p>
+<blockquote>
+<p>添加时格式为 json，届时 algolia 会各种提示你进行添加或上传数据</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;针对本年度中旬纽约时报针对中国的境外社交平台舆论攻击分析&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span><span class="string">&quot;LAB&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span><span class="string">&quot;2022/01/11&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;class&quot;</span><span class="punctuation">:</span><span class="string">&quot;会议沙龙&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span><span class="string">&quot;http://src.chnhonker.com/index.php?m=&amp;c=blog&amp;a=view&amp;id=2&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;关于 3.99MB 恶意程序进一步扩展与深入分析&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span><span class="string">&quot;LAB&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span><span class="string">&quot;2022/01/12&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;class&quot;</span><span class="punctuation">:</span><span class="string">&quot;会议沙龙&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span><span class="string">&quot;http://src.chnhonker.com/index.php?m=&amp;c=blog&amp;a=view&amp;id=3&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>为了方便演示我们通过上述两条数据来进行插入，同时使用 Algolia 还需要在项目中使用 algolia-client 来引用 algolia.js 库，需要在页面中引入两行 js 库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>与 Elasticsearch 和 Kibana 类似，Elasticsearch 用于存储搜索和分析，同时 Kibana 用于可视化数据的操作，来作为 Es 学习的第一步，同样的我们需要在 algolia 中 create index，并 add data，通过下述 code 进行输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">id</span>=<span class="string">&quot;jsonecho&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> applicationID = <span class="string">&quot;you_appID&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> apiKey = <span class="string">&quot;you_apiKey&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> index = <span class="string">&quot;you_Index&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> client = <span class="title function_">algoliasearch</span>(applicationID, apiKey);</span><br><span class="line"><span class="keyword">var</span> helper = <span class="title function_">algoliasearchHelper</span>(client, index);</span><br><span class="line"></span><br><span class="line">helper.<span class="title function_">on</span>(<span class="string">&#x27;result&#x27;</span>, <span class="keyword">function</span>(<span class="params">content</span>) &#123;</span><br><span class="line">    <span class="title function_">renderHits</span>(content);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">renderHits</span>(<span class="params">content</span>) &#123;</span><br><span class="line">    $(<span class="string">&#x27;#jsonecho&#x27;</span>).<span class="title function_">html</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(content, <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">helper.<span class="title function_">search</span>();</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>helper.on(&quot;result&quot;)</code> 来输出来自 Algolia 的 Json 数据并使用 <code>helper.search()</code> 来执行一个空搜索。</p>
+<h2 id="解析-API"><a href="#解析-API" class="headerlink" title="解析 API"></a>解析 API</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/javascript/algolia/1.algolia%20%E5%85%A5%E9%97%A8.md/60972916220156.png"><br>根据 algoliasearch-helper.js 官方文档中的例子，我们通过<a target="_blank" rel="noopener" href="https://www.algolia.com/apps/A2U1XZQM0V/explorer/configuration/">Searchable attributes</a> 中设置的 “_highlightResult” 来进行获取数据并解析。</p>
+<p>如果要达到一个搜索的目的，我们需要根据 API 内容中 hits 进行返回数据，以此来获取下文，即构造代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function renderHits(content) &#123;</span><br><span class="line">    $(&#x27;#container&#x27;).html(function() &#123;</span><br><span class="line">        return $.map(content.hits, function(hit) &#123;</span><br><span class="line">            return &#x27;&lt;li&gt;&lt;a href=&#x27; + hit._highlightResult.url.value + &#x27;&gt;&#x27; +hit._highlightResult.name.value + &#x27;&lt;/a&gt;&lt;/li&gt;&#x27;;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(&#x27;#search-box&#x27;).on(&#x27;keyup&#x27;, function() &#123;</span><br><span class="line">    helper.setQuery($(this).val())</span><br><span class="line">        .search();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>并将前端 code 进行绑定，方便解析搜索和显示数据：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> <span class="attr">id</span>=<span class="string">&quot;search-box&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">container</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 search-box 来监听输入更改以达到查询并触发更新的效果，在调用 setQuery 时通过 helper 手动触发搜索，同时也可以为其写入样式，如关键词高亮同样可以为其加上样式。这主要是通过 algolia 所提供的分词效果，与 Elasticsearch 中提供的分词方法类似，都是通过 <code>&lt;em&gt;</code> 元素来进行分词的。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#container</span> <span class="selector-tag">em</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/algolia/1.algolia%20%E5%85%A5%E9%97%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

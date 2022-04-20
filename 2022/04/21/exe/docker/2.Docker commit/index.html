@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Docker commit &amp; Dockerfile | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Docker commit &amp; Dockerfile</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag">虚拟化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>众所周知，容器是在镜像的基础，即一个系统他没有服务、程序他根本不算是一个系统，因此执行 <code>docker run</code> 的时候都会指定哪一个镜像作为容器的基础进行运行，在学习完镜像后，我们也尝试了 Docker hub 上的 Public Repository 给我们带来的便捷，本章我们主要通过 Docker commit 来了解 Docker 的构成。</p>
+<h2 id="Build-image"><a href="#Build-image" class="headerlink" title="Build image"></a>Build image</h2><p>你可以通过 <code>docker run --name webserver -d -p 8081:80 nginx</code> 去构建一个 nginx 服务器，并命名为 <code>webserver</code>，将其映射到宿主机的 <code>8081</code> 端口上，之后你可以访问 <a target="_blank" rel="noopener" href="http://localhost:8081/">欢迎来到nginx！</a> 去查看。</p>
+<p>当构建完成后我们可以通过 <code>docker exec -it webserver bash</code> 中在正常 Linux 服务器上使用同样的操作进入到 <code>/usr/share/nginx/html/</code> 目录下去自定义我们的内容，之后退出即可，当在访问 <a target="_blank" rel="noopener" href="http://localhost:8081/">欢迎来到nginx！</a> 的时候其更改的内容也会变动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这主要涉及到修改了容器的文件，即容器的存储层，你可以通过 ```docker diff``` 看到具体的改动</span><br></pre></td></tr></table></figure>
+<p>之后，我们可以通过 <code>docker commit</code> 命令来将容器的存储层保存下来成为镜像，主要是在容器的基础上加上了存储层，使得有了数据，之后你改动也是直接覆盖存储层上，以后我们更改并运行这个镜像的时候，就会拥有这个容器最后的文件变化。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ docker commit -a &quot;sun.lk&lt;lk.sun@jiangxue.team&gt;&quot; -m &quot;Upgrate:home file of info&quot; webserver nginx:mytest</span><br><span class="line">sha256:56f8734ddc5fd2462a65efb3b9d67c4529f8a8f55e03ebf2cb99211ab6fd506d</span><br></pre></td></tr></table></figure>
+
+<p>上述命令主要通过 <code>docker commit</code> 来提交者信息，其中 <code>-a</code> 参数主要用于描述提交者信息，而 <code>-m</code> 于 github 一样用于描述提交，之后的 <code>webserver</code> 是容器的名字以及 <strong>image:tag</strong> 等，这些你可以在 Docker Desktop 中以图形化或者 <code>docker image ls nginx</code> 的方式进行查看，更多的可以参考 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/container_commit/">docker 容器提交|Docker 文档</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ docker image ls nginx</span><br><span class="line">REPOSITORY   TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">nginx        mytest    56f8734ddc5f   5 minutes ago   142MB</span><br><span class="line">nginx        latest    c316d5a335a5   2 weeks ago     142MB</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当然我们也可以通过 [docker 历史|Docker 文档](https://docs.docker.com/engine/reference/commandline/history/) 文档中记载的 ```docker history``` 来查看历史提交，比如 ```❯ docker history -H nginx:mytest``` 来查看 image 的历史记录</span><br></pre></td></tr></table></figure>
+
+<h3 id="Run-image"><a href="#Run-image" class="headerlink" title="Run image"></a>Run image</h3><p>当定制好 Image 之后，我们可以通过 <code>docker run --name web -d -p 8082:80 nginx:mytest</code> 来进行运行， 将 nginx:mytest 镜像命名为新的服务为 web，并映射到宿主机的 8082 端口，之后访问 <a target="_blank" rel="noopener" href="http://localhost:8082/">localhost:8082</a> 其内容于我们 build image 的数据完美无瑕。</p>
+<p>在 Docker Desktop 中，你可以通过图形化的方式将镜像上传到 Docker Hub 中，这与 GitHub 非常类似，之后你也可以发布属于你自己的容器镜像，供他人使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit 只是非常直观的演示 image&amp;container 的概念，但由于全程黑箱操作，这也意味着他人使用起来也不会立马就知道这个镜像是做什么的，对于之后的维护是非常痛苦的。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>在上述的 “ Run image” 章节中，了解到镜像的制作我无非就是添加文件、配置然后修改、安装、构建、操作的命令携程脚本，之后用脚本构建、定制镜像，以此来解决之前黑箱操作透明性和可读性不强的问题，通过 Dockerfile 就可以很好的解决。</p>
+<p>制作 Dockerfile 之前，我们首先在指定磁盘中建立一个文件夹，并进入到此文件夹中，创建一个新的文本文件，命名为 <strong>Dockerfile</strong> 即可，比如我们要通过 Dockerfile 来实现在 Buid image 章节中的修改 nginx 下的 <code>index.html</code> 文件，我们可以写入：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;&lt;h1&gt;hello,world!&lt;/h1&gt;&#x27;</span> &gt; /usr/share/nginx/html/index.html</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<code>FROM</code>指令主要是指定基础镜像，而之后的<code>RUN</code>则是运行命令，你甚至可以将他当作 <code>shell</code> 脚本去写，更多的你可以参考<a target="_blank" rel="noopener" href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best practices for writing Dockerfiles | Docker Documentation</a>写的非常详细。</p>
+<h3 id="Build-image-1"><a href="#Build-image-1" class="headerlink" title="Build image"></a>Build image</h3><p>之后，在Dockerfile文件所在的目录内运行 <code>❯ docker build -t nginx:mytest-v1 .</code>  需要注意的是，我们使用的 <code>docker build</code> 命令下的 <code>-t</code> 参数主要用于指定 <strong>Name:tag</strong> 然后通过 <code>“.”</code> 来表示当前目录下进行构建。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一般来说 Dockerfile 放置在空目录下或者项目的根目录，然后根据上下文对镜像进行构建，同样的你可以通过 ```-d``` 参数来搭配上下文指定某个文件作为 Dockerfile，在 Docker 中并没有前置性的要求，只不过大家习惯了直接以 Dockerfile 命名的方式。</span><br></pre></td></tr></table></figure>
+
+<p>Docker build 还可支持铜鼓 git repo 进行构建，这将克隆 GitHub 存储库，并将克隆的存储库用作上下文存储库根目录下的 Dockerfile 用作 Dockerfile。您可以使用 或 方案指定任意 Git 存储库，当然者并不拘束于你使用 HTTP 还是 Git 的传g输方式。</p>
+<p>当然 Docker 还不仅仅局限于 HTTP 和 Git 的传输方式，它还支持压缩文件的形势来进行构建，你可以继续查阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/build/">docker build |Docker 文档</a> 获取更多的信息。构建完成后你可以通过 <a target="_blank" rel="noopener" href="http://localhost:8083/">localhost:8083</a> 来进行访问，结果和上面我们使用 Docker commit 方式构建的结果还是一摸一样的。</p>
+<p>对于之后的 Dockerfile 指令，可以通过 <a target="_blank" rel="noopener" href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#from">编写 Dockerfiles |的最佳实践Docker 文档</a> 进行查阅，剩下的指令 :</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Info</th>
+<th>Url</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LABEL</td>
+<td>标签，一个 image 可以拥有多个标签，可以通过标签来组织镜像的记录、许可等信息，同时用于批注容器、卷和网络之间，可以理解为注释</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#dockerfile-instructions">编写 Dockerfiles 的最佳实践Docker 文档</a></td>
+</tr>
+<tr>
+<td>FROM</td>
+<td>编写 Dockerfile 的入口，即指定 image</td>
+<td></td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>构建 Docker image 时所触发的命令</td>
+<td></td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>在启动创建 docker image 时所触发的命令</td>
+<td><a target="_blank" rel="noopener" href="https://qastack.cn/programming/37461868/difference-between-run-and-cmd-in-a-dockerfile">Dockerfile中RUN和CMD之间的区别 (qastack.cn)</a></td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>声明容器运行时所提供的服务端口（仅仅是一个什么声明，在容器运行的时候不会因为他就会开启这个服务端口，但之后使用 <code>docker run -P</code> 时，也许会使用 EXPOSE 的端口）</td>
+<td></td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>设置环境变量，可配合 <code>RUN</code> 进行使用</td>
+<td><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image/dockerfile/env">ENV 设置环境变量 - Docker —— 从入门到实践 (gitbook.io)</a> 比官方文档写的更加直观</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>复制</td>
+<td></td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>复制，<code>COPY</code> 的升级版，可以通过 URI 等形势进行，同时，也可以通过 <code>--chown=&lt;user&gt;:&lt;group&gt;</code> 来改变文件的所属用户的组</td>
+<td></td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>我理解为是 RUN 在容器启动中时所执行的命令的实现</td>
+<td><a target="_blank" rel="noopener" href="https://medium.com/@xyz030206/dockerfile-%E4%B8%AD%E7%9A%84-entrypoint-9653c3b2d2f8">Dockerfile 中的 ENTRYPOINT. ENTRYPOINT是 Dockerfile 定义的一个指令，他的作用类似于…  by Justin Chien  Medium</a> 直观了解 ENTRYPOINT 的作用</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td>为了让数据持久化以及共享容器之间的数据，通过 VOLUME 指令绕过默认的联合文件系统，以正常的文件\目录的形势存储在宿主机上</td>
+<td><a target="_blank" rel="noopener" href="http://docker.baoshu.red/data_management/volume.html">volume详解 · Docker – 从入门到实战 (baoshu.red)</a> or <a target="_blank" rel="noopener" href="http://dockone.io/article/128">深入理解Docker Volume（一） - DockOne.io</a> 配合阅读深入理解</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>指定用户</td>
+<td></td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>工作目录</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/#workdir">Dockerfile reference Docker 文档</a></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/docker/2.Docker%20commit/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

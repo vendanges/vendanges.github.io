@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/25">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/7.Shell 字符串操作/">Shell 字符串操作</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Shell字符串操作是流行的脚本和开发语言之中最为容易和简单的一个，其特点是短小且好用如下：</p>
+<h2 id="变量的长度"><a href="#变量的长度" class="headerlink" title="变量的长度"></a>变量的长度</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;abcd&#x27;</span><br><span class="line">echo $&#123;#var&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="匹配字符串位置-expr-index"><a href="#匹配字符串位置-expr-index" class="headerlink" title="匹配字符串位置(expr index)"></a>匹配字符串位置(expr index)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">one=&#x27;abcdef&#x27;</span><br><span class="line">two=&#x27;b&#x27;</span><br><span class="line">expr index &quot;$one&quot; &quot;$two&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串的提取"><a href="#字符串的提取" class="headerlink" title="字符串的提取 (:)"></a>字符串的提取 (:)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;abcdef&#x27;</span><br><span class="line">one=0</span><br><span class="line">two=3</span><br><span class="line">echo $&#123;var:$one:$two&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h2><h3 id="仅替换第一次出现字符串-x2F"><a href="#仅替换第一次出现字符串-x2F" class="headerlink" title="仅替换第一次出现字符串([@]&#x2F;)"></a>仅替换第一次出现字符串([@]&#x2F;)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;Hello,world&#x27;</span><br><span class="line">echo $&#123;var[@]/world/sun&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换所有字符串-x2F-x2F"><a href="#替换所有字符串-x2F-x2F" class="headerlink" title="替换所有字符串([@]&#x2F;&#x2F;)"></a>替换所有字符串([@]&#x2F;&#x2F;)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;Hello,world,world&#x27;</span><br><span class="line">echo $&#123;var[@]/world/sun&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/6.Shell 打印输出/">Shell 打印输出</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Shell脚本语言之中，主要分为<code>echo</code> 和 <code>print</code>两个输出语法，其中<code>echo</code>最为常见，本章主要介绍<code>echo</code>和<code>print</code>语法的输出和方法：</p>
+<h2 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h2><p>echo语法可以显示普通的字符串、打印变量、方法等，其在Shell中最为常用：</p>
+<h3 id="打印普通字符串"><a href="#打印普通字符串" class="headerlink" title="打印普通字符串"></a>打印普通字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &#x27;Hello,world&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="打印变量"><a href="#打印变量" class="headerlink" title="打印变量"></a>打印变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;Hello,world&#x27;</span><br><span class="line">echo $var</span><br></pre></td></tr></table></figure>
+<h3 id="echo-方法"><a href="#echo-方法" class="headerlink" title="echo 方法"></a>echo 方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>转义</td>
+<td>echo “&quot;Hello,world”</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>开启转义</td>
+<td>echo -e “null”</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>echo -e “null \n”</td>
+</tr>
+<tr>
+<td>\c</td>
+<td>显示不换行</td>
+<td>echo -e “null \c”</td>
+</tr>
+</tbody></table>
+<h2 id="printf"><a href="#printf" class="headerlink" title="printf"></a>printf</h2><p>printf 是在Shell之中不为常用但依然需要用的方法，需要注意的是，printf命令是模仿C程序库（library）中的printf()程序</p>
+<h3 id="输出普通字符串"><a href="#输出普通字符串" class="headerlink" title="输出普通字符串"></a>输出普通字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">printf &#x27;hello,world&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="输出变量"><a href="#输出变量" class="headerlink" title="输出变量"></a>输出变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span>    </span><br><span class="line">var=&#x27;world!&#x27;</span><br><span class="line">printf $var</span><br></pre></td></tr></table></figure>
+<h3 id="printf-方法"><a href="#printf-方法" class="headerlink" title="printf 方法"></a>printf 方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>转义</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>换页</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/5.Shell 基本运算符/">Shell 基本运算符</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="运算符基本格式"><a href="#运算符基本格式" class="headerlink" title="运算符基本格式"></a>运算符基本格式</h2><p>在Shell语言运算符之中，基本格式主要如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">variable_name=`expr val + val`</span><br><span class="line">echo &quot;$one&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="尝试数字进行相加"><a href="#尝试数字进行相加" class="headerlink" title="尝试数字进行相加"></a>尝试数字进行相加</h2><h3 id="数值进行相加"><a href="#数值进行相加" class="headerlink" title="数值进行相加"></a>数值进行相加</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">one=`expr 1 + 1`</span><br><span class="line">echo &quot;$one&quot;</span><br></pre></td></tr></table></figure>
+<p>在编写的过程中需要注意，此时的运算符符号不是通常的<code>&#39;</code>，而是<code>&quot;`&quot;</code></p>
+<h3 id="函数进行相加"><a href="#函数进行相加" class="headerlink" title="函数进行相加"></a>函数进行相加</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">one=10</span><br><span class="line">two=20</span><br><span class="line">val=`expr $one + $two`</span><br><span class="line">echo &quot;$val&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h3 id="算数运算符一览"><a href="#算数运算符一览" class="headerlink" title="算数运算符一览"></a>算数运算符一览</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取于</td>
+</tr>
+</tbody></table>
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;</td>
+<td>赋值</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不相等</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/4.Shell 数组/">Shell 数组</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>一个数组可以用一个名称保存多个值，数组的命名与变量的命名相同。而数组主要是由<code>$</code>来引用的，主要格式可分为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_name &#123;one two three ……&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的创建与输出"><a href="#数组的创建与输出" class="headerlink" title="数组的创建与输出"></a>数组的创建与输出</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>数组的创建和变量一样，不用像PHP一样需要加上<code>“$”</code>，主要格式为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">array_name=(one two three)</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">array_name=(one two three)</span><br><span class="line">echo &quot;第一个键值为 $&#123;array_name[0]&#125;&quot;</span><br><span class="line">echo &quot;第二个键值为 $&#123;array_name[1]&#125;&quot;</span><br><span class="line">echo &quot;第三个键值为 $&#123;array_name[2]&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的函数与方法"><a href="#数组的函数与方法" class="headerlink" title="数组的函数与方法"></a>数组的函数与方法</h2><h3 id="所有元素读取"><a href="#所有元素读取" class="headerlink" title="所有元素读取"></a>所有元素读取</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>TA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>输出所有数组中的数据</td>
+<td><code>array_name[*]</code></td>
+</tr>
+<tr>
+<td>@</td>
+<td>输出所有数组中的数据</td>
+<td><code>array_name[@]</code></td>
+</tr>
+</tbody></table>
+<h3 id="计算数组长度"><a href="#计算数组长度" class="headerlink" title="计算数组长度"></a>计算数组长度</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#</td>
+<td>获取数组的所有长度</td>
+<td>&#96;&#96;&#96;$</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/3.Shell 参数传递/">Shell 参数传递</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>参数可以在Shell脚本执行的时候传递给脚本，就好在你在终端下执行脚本“.&#x2F;test,sh Hello”此时脚本可能会输出信息为”Hello“，如下：</p>
+<h2 id="参数传递格式"><a href="#参数传递格式" class="headerlink" title="参数传递格式"></a>参数传递格式</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;当前执行程序为：$0&quot;;</span><br><span class="line">echo &quot;第二个输入参数为：$1”;</span><br><span class="line">echo “第三个输入参数为：$2”;</span><br></pre></td></tr></table></figure>
+<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;当前执行程序为：$0&quot;;</span><br><span class="line">echo &quot;第二个输入参数为：$1&quot;;</span><br><span class="line">echo &quot;第三个输入参数为：$2&quot;;</span><br></pre></td></tr></table></figure>
+<h2 id="参数传递函数"><a href="#参数传递函数" class="headerlink" title="参数传递函数"></a>参数传递函数</h2><h3 id="显示传递参数个数-（-）"><a href="#显示传递参数个数-（-）" class="headerlink" title="显示传递参数个数 （$#）"></a>显示传递参数个数 （$#）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;当前执行程序为：$0&quot;;</span><br><span class="line">echo &quot;第二个输入参数为：$1&quot;;</span><br><span class="line">echo &quot;第三个输入参数为：$2&quot;;</span><br><span class="line">echo &quot;总共传递参数个数为：$#&quot;;</span><br></pre></td></tr></table></figure>
+<h3 id="列出所有传递参数数据（-）"><a href="#列出所有传递参数数据（-）" class="headerlink" title="列出所有传递参数数据（$*）"></a>列出所有传递参数数据（$*）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;当前执行程序为：$0&quot;;</span><br><span class="line">echo &quot;第二个输入参数为：$1&quot;;</span><br><span class="line">echo &quot;第三个输入参数为：$2&quot;;</span><br><span class="line">echo &quot;总共传递参数数据为：$*&quot;;</span><br></pre></td></tr></table></figure>
+<h3 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0</td>
+<td>当前Shell脚本文件名</td>
+<td></td>
+</tr>
+<tr>
+<td>$!</td>
+<td>最后一个后台命令的进程号</td>
+<td></td>
+</tr>
+<tr>
+<td>$$</td>
+<td>显示当前脚本运行的PID进程号</td>
+<td></td>
+</tr>
+<tr>
+<td>$?</td>
+<td>退出从状态</td>
+<td>0 &#x3D; 正确，0以外的值表示存在错误</td>
+</tr>
+</tbody></table>
+<h4 id="输出与重定向"><a href="#输出与重定向" class="headerlink" title="输出与重定向"></a>输出与重定向</h4><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>one &gt; two</td>
+<td>将one重定向到two中</td>
+<td>&lt;&gt;&gt;&gt;</td>
+</tr>
+<tr>
+<td>two &gt; one</td>
+<td>将输入重定向在one 中</td>
+<td></td>
+</tr>
+<tr>
+<td>one &gt;&gt; two</td>
+<td>将输出以追加方式重定向到two中</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>one &gt;&amp; two</td>
+<td>将输出文件one与tow合并</td>
+<td>&gt;&amp;&lt;&amp;</td>
+</tr>
+<tr>
+<td>two &lt;&amp; one</td>
+<td>将输入文件与two和one合并</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/2.Shell 函数/">Shell 变量</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>外部变量一旦分配给值即创建，而变量客户一包含数字、字符串、字符等几乎所有数据类型，在Shell语言中，变量区分大小写，但可以由字母下划线和一些字符组成。</p>
+<h2 id="Shell-变量规则与变量类型"><a href="#Shell-变量规则与变量类型" class="headerlink" title="Shell 变量规则与变量类型"></a>Shell 变量规则与变量类型</h2><h3 id="变量规则"><a href="#变量规则" class="headerlink" title="变量规则"></a>变量规则</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Variable_name = data        # 创建变量</span><br><span class="line">echo $Variable_name        # 输出变量</span><br></pre></td></tr></table></figure>
+<h3 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>局部变量</td>
+<td>脚本或命令中定义</td>
+<td>仅在当前Shell实例中有效</td>
+</tr>
+<tr>
+<td>环境变量</td>
+<td>所有的程序，包括自身都能访问的变量</td>
+<td></td>
+</tr>
+<tr>
+<td>Shell变量</td>
+<td>Shell变量中有一部分是环境变量有一部分是局部变量</td>
+<td>特殊变量</td>
+</tr>
+<tr>
+<td>在分配值的时候使用“&#x3D;”符号完成，Shell语言规定在初始化变量时候“&#x3D;”符号的任何一侧不允许有空格。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="创建与输出变量"><a href="#创建与输出变量" class="headerlink" title="创建与输出变量"></a>创建与输出变量</h2><p>Shell中的变量与其他语言不同，在Shell中，变量格式以如下方式进行命名：</p>
+<blockquote>
+<p>变量 &#x3D; 数据<br>而不像其他编程语言之中，如PHP的变量则需要加上”$“来标明，Shell变量名称不允许有空格，但允许有下划线（_）或其他符号</p>
+</blockquote>
+<h3 id="创建变量"><a href="#创建变量" class="headerlink" title="创建变量"></a>创建变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! bin/bash</span></span><br><span class="line">user_name=&quot;sun&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="输出变量"><a href="#输出变量" class="headerlink" title="输出变量"></a>输出变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! bin/bash</span></span><br><span class="line">user_name=&quot;sun&quot;</span><br><span class="line">echo $user_name</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量的转义与运算符"><a href="#变量的转义与运算符" class="headerlink" title="变量的转义与运算符"></a>变量的转义与运算符</h2><h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><p>转义在众多开发语言之中都有的一个函数，在Shell中主要可以使用<strong>反斜杠（\）</strong>和**${}**封装来进行转义：</p>
+<h4 id="反斜杠"><a href="#反斜杠" class="headerlink" title="反斜杠"></a>反斜杠</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">name_user=&quot;sun\&quot;top\&quot;&quot;</span><br><span class="line">echo $name_user</span><br></pre></td></tr></table></figure>
+
+<h4 id="封装语句"><a href="#封装语句" class="headerlink" title="封装语句"></a>封装语句</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">name_user=&quot;sun$&#123;top&#125;&quot;</span><br><span class="line">echo $name_user</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接符与变量函数"><a href="#连接符与变量函数" class="headerlink" title="连接符与变量函数"></a>连接符与变量函数</h2><h3 id="链接符"><a href="#链接符" class="headerlink" title="链接符"></a>链接符</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">one=1</span><br><span class="line">two=2</span><br><span class="line">three=$one+$two</span><br><span class="line">echo $three</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量函数"><a href="#变量函数" class="headerlink" title="变量函数"></a>变量函数</h3><h4 id="只读变量-readonly"><a href="#只读变量-readonly" class="headerlink" title="只读变量 (readonly)"></a>只读变量 (readonly)</h4><p>只读变量即从字面意思上的变量，指当前变量仅仅可以进行输出但不可进行写入等操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">one=&quot;hello&quot;</span><br><span class="line">readonly one</span><br><span class="line">one=&quot;world&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除变量-（unset）"><a href="#删除变量-（unset）" class="headerlink" title="删除变量 （unset）"></a>删除变量 （unset）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">one=&quot;hello&quot;</span><br><span class="line">unset one</span><br><span class="line">echo $one</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/10.Shell 文件测试/">Shell 文件测试</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>通常，在实际工作需求之中可能会对正在运行的文件系统进行一些文件的特使，在这种情况下，Shell将会提供常用命令进行实现。</p>
+<h2 id="测试文件是否存在-e"><a href="#测试文件是否存在-e" class="headerlink" title="测试文件是否存在 (-e)"></a>测试文件是否存在 (-e)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">file=&quot;home.jsp&quot;</span><br><span class="line">        if [ -e &quot;$file&quot; ]; then</span><br><span class="line">                echo &quot;文件存在&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;文件不存在&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h2 id="测试目录是否存在（-d）"><a href="#测试目录是否存在（-d）" class="headerlink" title="测试目录是否存在（-d）"></a>测试目录是否存在（-d）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">dir=&quot;Public&quot;</span><br><span class="line">        if [ -d &quot;$dir&quot; ]; then</span><br><span class="line">                echo &quot;文件存在&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;文件不存在&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h3 id="测试当前文件是否对运行的脚本具有读取权限（-r）"><a href="#测试当前文件是否对运行的脚本具有读取权限（-r）" class="headerlink" title="测试当前文件是否对运行的脚本具有读取权限（-r）"></a>测试当前文件是否对运行的脚本具有读取权限（-r）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">public=&quot;test.sh&quot;</span><br><span class="line">        if [ -r &quot;$file&quot; ]; then</span><br><span class="line">                echo &quot;具有写入权限&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;不具有写入权限&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h3 id="引入文件-file-r"><a href="#引入文件-file-r" class="headerlink" title="引入文件(. .\file)r"></a>引入文件(. .\file)r</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">one.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;Hello,one.sh&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">two.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">. ./one.sh</span><br><span class="line">echo &quot;Hello,two.sh&quot;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>测试文件是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>-d</td>
+<td>测试目录是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>-r</td>
+<td>测试当前文件读取权限</td>
+<td></td>
+</tr>
+<tr>
+<td>. .&#x2F;</td>
+<td>引入文件</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/shell/1.Shell 基础/">Shell 基础及代码规范</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>与许多开发或脚本语言一样，许多语言在第一次接触的时候都以“Hello,world”作为入门的第一课，目前我们需要介绍下Shell（命令过程，Shell Script）脚本语言也是一样。</p>
+<h2 id="本书的作用"><a href="#本书的作用" class="headerlink" title="本书的作用"></a>本书的作用</h2><p>本书总体上向读者简述了Shell脚本开发，主要列举了Shell解释其的Bash（Bourne Only Shell），和其他常见的Shell（列如sh、run）。</p>
+<h2 id="Shell语言的用处"><a href="#Shell语言的用处" class="headerlink" title="Shell语言的用处"></a>Shell语言的用处</h2><p>Shell语言是用C语言编写的脚本语言，通常Shell即是命令语言，也是设计型语言。主要用于脚本开发，且经常出现在Linux环境下，大量的减少了相关命令参数（如批量apt-get install、或rm -rf）。</p>
+<h2 id="如何使用Shell"><a href="#如何使用Shell" class="headerlink" title="如何使用Shell"></a>如何使用Shell</h2><p>Shell脚本通常开发完时保存为“.sh”后缀“，并且给文件加上”chmod 777 file.sh“的可读写权限，之后使用”.&#x2F;file.sh“以运行Shell脚本。</p>
+<h2 id="Shell-代码规范"><a href="#Shell-代码规范" class="headerlink" title="Shell 代码规范"></a>Shell 代码规范</h2><h3 id="sha-bang"><a href="#sha-bang" class="headerlink" title="sha-bang"></a>sha-bang</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br></pre></td></tr></table></figure>
+<p>通常，shell脚本文件都以上述注释进行开头，”#!”后面跟着shell解释器所在的完整路径，<strong>该路径主要告诉当前操作系统，该文件是一种命令</strong>，我们主要称他为”sha-bang“即Shell脚本文件的第一行。</p>
+<p>如果”sha-bang“目录不正确，则会出现一种错误的信息，如**”未找到命令”<strong>，通常我们开发完后都将以</strong>”.sh“**来命名。</p>
+<h3 id="输出Hello-world"><a href="#输出Hello-world" class="headerlink" title="输出Hello,world!"></a>输出Hello,world!</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;Hello,world!&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行-sh"><a href="#运行-sh" class="headerlink" title="运行 .sh"></a>运行 .sh</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 test.sh</span><br><span class="line">./test.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;Hello,world&quot;        # 输出&quot;Hello,world!&quot;</span><br></pre></td></tr></table></figure>
+<p> 与其他脚本语言一样，shell作为主流的脚本语言，通常以”#“进行注释，而脚本开发语言Python也和Shell脚本语言一样，使用”#“作为注释。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/rlang/4.数据类型/">R 数据类型与数据结构</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/r-lang/" rel="tag">r lang</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="数据类型和其他函数"><a href="#数据类型和其他函数" class="headerlink" title="数据类型和其他函数"></a>数据类型和其他函数</h2><p>在R语言之中，与其他的语言进行相比，其中主要分为了<strong>数值（numeric）、字符（character）、日期（date）、布尔（logical）</strong>四种等数据类型，我们可以通过不同的函数对直进行判断等。</p>
+<h3 id="is-type-values"><a href="#is-type-values" class="headerlink" title="is.type(values)"></a>is.type(values)</h3><h4 id="is-numeric-（数字型）"><a href="#is-numeric-（数字型）" class="headerlink" title="is.numeric （数字型）"></a>is.numeric （数字型）</h4><p>is.numeric通常的使用语法为<code>is.numeric(values)</code>，即翻译做(values)是不是为<code>numeric</code>即数值型，通常会返回布尔型的数据分别为 true and false，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.numeric</span><span class="punctuation">(</span>one<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.numeric</span><span class="punctuation">(</span>two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">FALSE</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="is-character-字符串"><a href="#is-character-字符串" class="headerlink" title="is.character (字符串)"></a>is.character (字符串)</h4><p>在这里我们需要注意的是，在赋值给two的字符串数据是需要使用<code>&quot;&quot;</code>的，因为他是字符串类型的数据，而不是数值型。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">is.character</span><span class="punctuation">(</span>two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="is-logical-布尔型"><a href="#is-logical-布尔型" class="headerlink" title="is.logical (布尔型)"></a>is.logical (布尔型)</h4><p>由于R语言是严格区分大小写的，如你赋值给t是true，则r会报错，因为他判定这是一个字符串类型，但是你如果是大些的TRUE，他则会判断这是一个布尔型数据如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> t <span class="operator">&lt;-</span> true</span><br><span class="line">Error<span class="operator">:</span> object <span class="string">&#x27;true&#x27;</span> not found</span><br><span class="line"><span class="operator">&gt;</span> t <span class="operator">&lt;-</span> <span class="literal">TRUE</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.logical</span><span class="punctuation">(</span>t<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="class-values"><a href="#class-values" class="headerlink" title="class(values)"></a>class(values)</h3><p>class(values)与is.type(values)的不同之处在于，class(values)则是告诉你该直的数据的类型信息，通过使用class可以查看特定直的数据类型，如：</p>
+<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">class</span><span class="punctuation">(</span>date<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;Date&quot;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%H</td>
+<td>小时</td>
+<td>基础格式</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟</td>
+<td></td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒时</td>
+<td></td>
+</tr>
+<tr>
+<td>%B</td>
+<td>月份</td>
+<td></td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期</td>
+<td></td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>年份</td>
+<td></td>
+</tr>
+<tr>
+<td>%p</td>
+<td>上午和下午</td>
+<td></td>
+</tr>
+<tr>
+<td>%x</td>
+<td>直接显示日期</td>
+<td>完整格式</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>直接显示日期与时间</td>
+<td></td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>完整年份</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="as-integer"><a href="#as-integer" class="headerlink" title="as.integer()"></a>as.integer()</h5><h4 id="character"><a href="#character" class="headerlink" title="character"></a>character</h4><p>在r语言中，时间类型是一个极为特别的，我们可以通过class告诉我们某个直的数据类型，但是如果要输出，我们可以使用r语言中的<code>as.integer</code>函数进行输出，其中的基本格式为</p>
+<blockquote>
+<p>as.integer(strftime(values,’date参数’)</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> date <span class="operator">&lt;-</span> as.Date<span class="punctuation">(</span><span class="string">&quot;2021-1-28&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">as.integer</span><span class="punctuation">(</span>strftime<span class="punctuation">(</span>date<span class="punctuation">,</span><span class="string">&#x27;%Y&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">2021</span></span><br></pre></td></tr></table></figure>
+<p>我们可以根据对照上访的date数据表中的各个参数进行输出，但需要注意的是本书所提供的并不是date的全部参数，而是较为主要和常用的几个参数，读者可自行前往了解即可。</p>
+<h3 id="mode-values"><a href="#mode-values" class="headerlink" title="mode(values)"></a>mode(values)</h3><p>mode与class类似，也是直接告诉我们当前values的类型，通过使用mode\class我们都可以直接查询该values的数据类型，如本次我们以创建的向量为例：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> mode<span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;numeric&quot;</span></span><br></pre></td></tr></table></figure>
+<p>而向量内的数据为<code>1 2 3</code>，所以被输出为数字型。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>在目前流行的语言之中，日R语言的殊绝结构可以说是相当的丰富且不同，主要分为<strong>向量（vector）、列表（list）、因子（factor）、矩阵（matrix）、数组（array）、数据框（data.frame）</strong>等六种类型。</p>
+<h3 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h3><p>向量主要用于存储数值，字符型或逻辑数据的一维数组，执行组合功能的函数<code>c()</code>可以用于创建向量，单个向量中的数据类型是固定的，比如数值型向量中的元素就必须为向量。向量是组成R语言的一种最为常见的数据结构，分为三种类型分别为<code>数值型、字符型、逻辑型</code>等。<br>在R语言之中，创建向量的方式有很多函数都可以进行创建，分别为<code>c()、seq()、rep()</code>等函数可用于进行创建，本次我们将会使用<code>c()</code>进行演示创建向量。</p>
+<h4 id="c"><a href="#c" class="headerlink" title="c()"></a>c()</h4><p>在R语言之中，我们可以使用<code>c()</code>创建一个向量</p>
+<h5 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h5><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span></span><br><span class="line">```  </span><br><span class="line">这个时候我们会发现，所输出的向量也仅仅是输出，那么怎么让他们存储成一个直，我们可以使用赋值（=）即可：</span><br><span class="line">##### 创建并存储</span><br><span class="line">```r</span><br><span class="line"><span class="operator">&gt;</span> a <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<h5 id="输出存储于直中的向量"><a href="#输出存储于直中的向量" class="headerlink" title="输出存储于直中的向量"></a>输出存储于直中的向量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; a[a&gt;0]</span><br><span class="line">[1] 1 2 3</span><br></pre></td></tr></table></figure>
+<h5 id="索引向量"><a href="#索引向量" class="headerlink" title="索引向量"></a>索引向量</h5><p>在R语言之中，我们可以索引向量，这比较类似于Python之中的字典，但又与python中的字典不同：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span>one<span class="operator">=</span><span class="number">1.2</span><span class="punctuation">,</span>two<span class="operator">=</span><span class="number">2.1</span><span class="punctuation">,</span>three<span class="operator">=</span><span class="number">10</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span><span class="punctuation">[</span><span class="string">&quot;one&quot;</span><span class="punctuation">]</span></span><br><span class="line">one </span><br><span class="line"><span class="number">1.2</span> </span><br></pre></td></tr></table></figure>
+<h5 id="向量的长度-length"><a href="#向量的长度-length" class="headerlink" title="向量的长度 (length)"></a>向量的长度 (length)</h5><p>在r语言之中，为向量提供了一个长度查询与输出的一个函数，为<code>length()</code>，这个函数是单独为向量所提供长度查询的，结果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span><span class="built_in">c</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h5 id="向量的运算符"><a href="#向量的运算符" class="headerlink" title="向量的运算符"></a>向量的运算符</h5><p>通常，在基本上所有的语言之中，运算符都会被通用，就是说基本上都适用，所以我们也可以进行向量和向量之间运算，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> a <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> b <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> a<span class="operator">+</span>b</span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">2</span> <span class="number">6</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/rlang/3.基础语法/">R 基础语法</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/r-lang/" rel="tag">r lang</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>在众多语言之中，都将存在着一个注释，通常主要分为脚本语言和编程语言，主要的不同就是一个不需要编译器一个需要编译器，通常在注释上都会有一定的差别，最为明显的就是 <code>//</code>、<code>#</code>两种，通常脚本语言会使用后者，如python、shell等，而相似java、c等语言则使用前者。</p>
+<h3 id="“-”"><a href="#“-”" class="headerlink" title="“#”"></a>“#”</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="comment"># 输出 你好世界！</span></span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span><span class="string">&quot;你好世界！&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;你好世界！&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在R语言之中，我们可以使用 快捷键<code>ctrl+l</code>来实现 clear and system clear的作用，这会让我们的屏幕保持干净且整洁。</p>
+<h3 id="“if-FALSE-”"><a href="#“if-FALSE-”" class="headerlink" title="“if(FALSE)”"></a>“if(FALSE)”</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">if</span><span class="punctuation">(</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line"><span class="operator">+</span>     <span class="string">&quot;</span></span><br><span class="line"><span class="string">+     1.one</span></span><br><span class="line"><span class="string">+     2.two</span></span><br><span class="line"><span class="string">+     3.three</span></span><br><span class="line"><span class="string">+     &quot;</span></span><br><span class="line"><span class="operator">+</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>在R语言之中，和其他语言的赋值较为不同，通常的赋值是使用等于号<code>=</code>，而R语言的则是小于号加一个减号<code>&lt;-</code>，这样做可以更加直观的表示数据的赋值：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> 20</span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span>one <span class="operator">+</span> two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><p>正所谓计算机，通常很多语言都支持运算，我们统称为“运算符”，通过运算符，我们可以将两个变量或函数相加起来进行输出：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> 20</span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span>one <span class="operator">+</span> two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+<p>在本书中我们不会过多的讲解R语言的运算符，因为与其他语言都相互差不多，如果有兴趣的读者可自行进行学习和理解，也可翻阅知识库内的其他语言数据进行查看等。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/27">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

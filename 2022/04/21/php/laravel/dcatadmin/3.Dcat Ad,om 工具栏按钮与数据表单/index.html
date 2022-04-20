@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Dcat Admin 工具栏按钮 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Dcat Admin 工具栏按钮</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/dcatadmin/" rel="tag">dcatadmin</a> <a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Dcat Admin 在 DcatAdmin 数据表格之上为我们提供了工具栏按钮，使得我们可以在数据表格页面中自定义按下后的弹窗页面，通过 <code>app/Admin/Actions/Tool</code> 目录中定义菜单栏工具为 <code>MovieShowTool.php</code> ，并继承自 AbstractTool(<code>Dcat\Admin\Grid\Tools\AbstractTool</code>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">除了可以使用之前在数据表格中所使用到的页面脚手架之外，我们还可以使用 Artisan Cli 进行构建，数据表格、数据表单、数据详情和模型树，参考官方文档进行使用 [基本使用 | 动作 |《Dcat Admin 中文文档 2.x》| Laravel China 社区 (learnku.com)](https://learnku.com/docs/dcat-admin/2.x/basic-use/8124)</span><br></pre></td></tr></table></figure>
+
+<p>对于 Artisan Cli Command，我们可以通过 <code>php artisan admin:action</code> 来选择 show-tool 即 Dcat Admin 工具栏按钮自定义，然后输入类名称目录即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;php artisan admin:action</span><br><span class="line"></span><br><span class="line"> Which type of action would you like to make?:</span><br><span class="line">  [<span class="number">0</span>] <span class="keyword">default</span></span><br><span class="line">  [<span class="number">1</span>] grid-batch</span><br><span class="line">  [<span class="number">2</span>] grid-row</span><br><span class="line">  [<span class="number">3</span>] grid-tool</span><br><span class="line">  [<span class="number">4</span>] form-tool</span><br><span class="line">  [<span class="number">5</span>] show-tool</span><br><span class="line">  [<span class="number">6</span>] tree-row</span><br><span class="line">  [<span class="number">7</span>] tree-tool</span><br><span class="line"> &gt; <span class="number">5</span></span><br><span class="line"></span><br><span class="line"> Please enter a name of action <span class="class"><span class="keyword">class</span>:</span></span><br><span class="line"><span class="class"> &gt; <span class="title">MovieOutherTools</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"> <span class="title">Please</span> <span class="title">enter</span> <span class="title">the</span> <span class="title">namespace</span> <span class="title">of</span> <span class="title">action</span> <span class="title">class</span> [<span class="title">App</span>\<span class="title">Admin</span>\<span class="title">Actions</span>\<span class="title">Show</span>]:</span></span><br><span class="line"><span class="class"> &gt; <span class="title">App</span>\<span class="title">Admin</span>\<span class="title">Actions</span>\<span class="title">Tool</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">App</span>\<span class="title">Admin</span>\<span class="title">Actions</span>\<span class="title">Tool</span>\<span class="title">MovieOutherTools</span> <span class="title">created</span> <span class="title">successfully</span>.</span></span><br><span class="line"><span class="class"></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据表单是通过按钮、或者菜单进行调用的。</span><br></pre></td></tr></table></figure>
+<p>之后，我们通过工具表单的 Artisan Cli Commad <code>php artisan admin:form MovieOutherForm</code> 命令来生成一个名为 MovieOutherForm 类作为工具表单，在 <code>app/Admin/Forms</code> 目录内：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Admin</span>\<span class="title class_">Forms</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Widgets</span>\<span class="title">Form</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MovieOutherForm</span> <span class="keyword">extends</span> <span class="title">Form</span>  </span></span><br><span class="line"><span class="class"></span>&#123;  </span><br><span class="line"> <span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * 处理表单提交请求 * * <span class="doctag">@param</span> array $input  </span></span><br><span class="line"><span class="comment"> *  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> mixed  </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params"><span class="keyword">array</span> <span class="variable">$input</span></span>)  </span></span><br><span class="line"><span class="function"> </span>&#123; <span class="comment">// dump($input);  </span></span><br><span class="line">  </span><br><span class="line"> <span class="comment">// return $this-&gt;response()-&gt;error(&#x27;Your error message.&#x27;);  </span></span><br><span class="line"> <span class="keyword">return</span> <span class="variable language_">$this</span>  </span><br><span class="line"> -&gt;<span class="title function_ invoke__">response</span>()  </span><br><span class="line"> -&gt;<span class="title function_ invoke__">success</span>(<span class="string">&#x27;Processed successfully.&#x27;</span>)  </span><br><span class="line"> -&gt;<span class="title function_ invoke__">refresh</span>();  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line"> <span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * 构建表单. */</span> </span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">form</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"> </span>&#123; </span><br><span class="line"> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;name&#x27;</span>)-&gt;<span class="title function_ invoke__">required</span>();  </span><br><span class="line"> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">email</span>(<span class="string">&#x27;email&#x27;</span>)-&gt;<span class="title function_ invoke__">rules</span>(<span class="string">&#x27;email&#x27;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line"> <span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * 表单的数据. * * <span class="doctag">@return</span> array  </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">default</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function"> </span>&#123; <span class="keyword">return</span> [  </span><br><span class="line"> <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;John Doe&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;email&#x27;</span> =&gt; <span class="string">&#x27;John.Doe@gmail.com&#x27;</span>,  </span><br><span class="line"> ];  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时 MovieOutherForm 就会集成 Form，即 <code>Dcat\Admin\Widgets\Form</code> 使得可以用来构建表单和提交数据，以及全方位的独立处理数据，且不需要注册额外路由。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">通过 ```php artisan list``` 可以列出所有的 Laravel Artisan 命令，之后我们输入 ```php artisan list admin``` 来查看 Dcat Admin 的所有命令和语法。</span><br><span class="line"></span><br><span class="line">此外，我们还可以通过使用 ```php artisan help make:console``` 来查看 Artisan make Console 的具体用法。</span><br></pre></td></tr></table></figure>
+
+<p>在此之前，我们通过 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin/helpers/scaffold">Admin | 代码生成器</a> 网页脚手架所自动生成的控制器、模型以及数据仓库外，还可以通过 <a target="_blank" rel="noopener" href="https://laravel.com/api/5.5/Illuminate/Database/Eloquent/Model.html">Illuminate\Database\Eloquent\Model | Laravel API</a>  使得 <code>app\Models\Shop</code> 实现抽象模型，然后通过 <code>Service</code> 以此来中转数据。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/dcatadmin/3.Dcat%20Ad,om%20%E5%B7%A5%E5%85%B7%E6%A0%8F%E6%8C%89%E9%92%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%A1%A8%E5%8D%95/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

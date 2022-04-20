@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node events 事件触发器 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node events 事件触发器</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Node 是一个主要通过 API 使用异步事件模型的 I&#x2F;O 操作，某些类型对象或触发器周期的触发一个命名事件到 <strong>事件队列</strong>，如 <code>net.Server</code> 对象在每次连接时出发一个事件，以及 <code>fs.readStream</code> 对象在文件打开时也触发一个事件。</p>
+<p>在这些过程中，所有能产生事件的对象都是 <code>events.EventEmitter</code> 实例，其中 events 模块中就只提供了一个 <code>events.EventEmitter</code> 对象，因此 EventEmitter 的核心就是事件的触发和事件的监听功能的封装。</p>
+<h2 id="注册事件-amp-监听器"><a href="#注册事件-amp-监听器" class="headerlink" title="注册事件 &amp; 监听器"></a>注册事件 &amp; 监听器</h2><p>通过 <code>event.emit</code> 对象创建一个 <code>some_event</code> 对象，并在 3000ms 后触发该事件，然后通过 <code>event.on</code> 来触发该事件，此时 <code>event.on</code> 将是一个监听事件触发的作用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventEmitter</span> = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>).<span class="property">EventEmitter</span></span><br><span class="line"><span class="keyword">const</span> event = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 some_event 对象时触发回调</span></span><br><span class="line">event.<span class="title function_">on</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;some_event 事件触发&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3000ms 后向 &quot;event&quot; 对象发送事件 &quot;some_event&quot;</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    event.<span class="title function_">emit</span>(<span class="string">&#x27;some_event&#x27;</span>)</span><br><span class="line">&#125;,<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，EventEmitter 的每个事件由一个事件名和诺干的参数组成，事件名则是一个字符串形式，这通常表示一定的语义，对于每个事件、EventEmitter 还提供了一个支持多个事件的监听器，当该事件触发时，事件的监听器依次都会被调用，事件的参数会作为回调参数传递。</p>
+<blockquote>
+<p>对于多个事件，当事件被触发时将会依次被输出</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> events.<span class="title class_">EventEmitter</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    some_event1 参数1 参数2</span></span><br><span class="line"><span class="comment">    some_event2 参数1 参数2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">emitter.<span class="title function_">on</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="keyword">function</span> (<span class="params">args1,args2</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;some_event1&#x27;</span>, args1, args2)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">emitter.<span class="title function_">on</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="keyword">function</span> (<span class="params">args1,args2</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;some_event2&#x27;</span>, args1, args2)</span><br><span class="line">&#125;)</span><br><span class="line">emitter.<span class="title function_">emit</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="string">&#x27;参数1&#x27;</span>,<span class="string">&#x27;参数2&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p>emit 方法允许为监听器传入任意参数，之后事件监听器中的 <code>this</code> 方法将会用于输出当前的事件属性和传入的方法等。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> events.<span class="property">EventEmitter</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    some_event</span></span><br><span class="line"><span class="comment">    a b EventEmitter &#123;</span></span><br><span class="line"><span class="comment">      _events: [Object: null prototype] &#123; some_event: [Function (anonymous)] &#125;,</span></span><br><span class="line"><span class="comment">      _eventsCount: 1,</span></span><br><span class="line"><span class="comment">      _maxListeners: undefined,</span></span><br><span class="line"><span class="comment">      [Symbol(kCapture)]: false</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="keyword">function</span> (<span class="params">a,b</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;some_event&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a,b, <span class="variable language_">this</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;some_event&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="on-at-once"><a href="#on-at-once" class="headerlink" title="on at once"></a>on at once</h2><p>在 <code>event</code> 中，监听事件的方法可以通过 <code>on</code> 和 <code>once</code> 进行实现，两者的主要区别是后者只可以监听单次的 <code>listener</code> 函数，当下次在触发事件时，将会移出此监听器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> event = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> event.<span class="property">EventEmitter</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    eventEmitter some_event</span></span><br><span class="line"><span class="comment">    eventEmitter some_event</span></span><br><span class="line"><span class="comment">    eventEmitter someEvent</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;some_event&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;eventEmitter some_event&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;some_event&#x27;</span>)</span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;some_event&#x27;</span>)</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">once</span>(<span class="string">&#x27;someEvent&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;eventEmitter someEvent&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;someEvent&#x27;</span>)</span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;someEvent&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加-x2F-移出监听器事件"><a href="#添加-x2F-移出监听器事件" class="headerlink" title="添加&#x2F;移出监听器事件"></a>添加&#x2F;移出监听器事件</h2><p>通过 <code>once</code> 创建一个事件，且侦听 <code>start</code> 事件，并通过 <code>eventEmitter.emit</code> 方法来进行调用此方法，因此输出的是 <code>netListener</code> 和 <code>start</code> 事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> events.<span class="property">EventEmitter</span></span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">once</span>(<span class="string">&#x27;newListener&#x27;</span>, <span class="keyword">function</span> (<span class="params">event, listener</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (event == <span class="string">&#x27;start&#x27;</span>) &#123;</span><br><span class="line">        eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;start&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;start 2&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;start&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;eventEmitter start&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用事件</span></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;start&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/13.Node%20events%20%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

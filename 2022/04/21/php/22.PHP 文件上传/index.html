@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 文件上传 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 文件上传</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在当今时代技术发展旅程中，文件的上传与下载已经成为了一个非常常用的功能，如<strong>个人资料</strong>中的设置个人头像，也需要用到文件的上传操作。在比如QQ.COM的官网，需要用到文件下载的操作与应用。</p>
+<h4 id="PHP-文件上传"><a href="#PHP-文件上传" class="headerlink" title="PHP 文件上传"></a>PHP 文件上传</h4><h5 id="获取上传后的文件信息"><a href="#获取上传后的文件信息" class="headerlink" title="获取上传后的文件信息"></a>获取上传后的文件信息</h5><h6 id="FILES"><a href="#FILES" class="headerlink" title="$_FILES"></a>$_FILES</h6><p>$_FILES是一个二维数组，主要用途是当文件上传后，依然可以使用该函数获取文件的信息；</p>
+<h5 id="文件的上传类型"><a href="#文件的上传类型" class="headerlink" title="文件的上传类型"></a>文件的上传类型</h5><h6 id="FILES-39-文件’-‘类型’"><a href="#FILES-39-文件’-‘类型’" class="headerlink" title="$FILES[&#39;文件’][‘类型’]"></a>$FILES[&#39;文件’][‘类型’]</h6><p>文件的常用上传类型主要可以分为以下几种：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text&#x2F;plain</td>
+<td>表示普通文本文件</td>
+<td>文件</td>
+</tr>
+<tr>
+<td>text&#x2F;html</td>
+<td>表示HTML文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>表示GIF图片</td>
+<td>图片</td>
+</tr>
+<tr>
+<td>image&#x2F;pjpeg</td>
+<td>表示JPEG图片</td>
+<td></td>
+</tr>
+<tr>
+<td>iamge&#x2F;jpeg</td>
+<td>用于表示JPEG图片[^Fivefox浏览器]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;msword</td>
+<td>表示Word文件</td>
+<td>格式文件</td>
+</tr>
+<tr>
+<td>application&#x2F;pdf</td>
+<td>表示PDF文件</td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;x-zip-compressed</td>
+<td>表示ZIP格式的压缩文件</td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;octet-stream</td>
+<td>表示二进制流文件[^如EXE、RAR、视频等文件]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>audio&#x2F;mpeg</td>
+<td>表示mp3格式音频文件</td>
+<td>音频文件</td>
+</tr>
+</tbody></table>
+<h5 id="文件上传在服务器时的临时存储名"><a href="#文件上传在服务器时的临时存储名" class="headerlink" title="文件上传在服务器时的临时存储名"></a>文件上传在服务器时的临时存储名</h5><h6 id="FILES-‘文件’-‘临时名称’"><a href="#FILES-‘文件’-‘临时名称’" class="headerlink" title="$FILES[‘文件’][‘临时名称’]"></a>$FILES[‘文件’][‘临时名称’]</h6><p>当文件被上传后，文件存储与服务器端，此时我们可以为其增加临时名称，可以用$FILES[‘文件’][‘临时名称’]来解决</p>
+<h5 id="以上传的文件大小"><a href="#以上传的文件大小" class="headerlink" title="以上传的文件大小"></a>以上传的文件大小</h5><h6 id="FILES-‘文件’-‘大小’"><a href="#FILES-‘文件’-‘大小’" class="headerlink" title="$FILES[‘文件’][‘大小’]"></a>$FILES[‘文件’][‘大小’]</h6><p>已上传的文件大小，单位即为字节。</p>
+<h5 id="错误消息代码"><a href="#错误消息代码" class="headerlink" title="错误消息代码"></a>错误消息代码</h5><h6 id="FILES-‘文件’-‘erre’"><a href="#FILES-‘文件’-‘erre’" class="headerlink" title="$FILES[‘文件’][‘erre’]"></a>$FILES[‘文件’][‘erre’]</h6><p>在错误信息代码中，<strong>值为0 将表示没有错误发生，即文件上传成功</strong>。<strong>值为1即代表上传的文件超过了php.ini文件中upload_max_filesize选项限制的值</strong>。<strong>值为2则表示上传文件的大小超过了HTML表单中规定的最大值</strong>。<strong>值为3则表示文件中只有部分被上传</strong>。<strong>值为4则表示没有文件被上传</strong>，而最后<strong>值为5则表示上传文件大小为0</strong>如下表：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>表示没有错误发生，即文件上传成功</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>传的文件超过了php.ini文件中upload_max_filesize选项限制的值</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>上传文件的大小超过了HTML表单中规定的最大值</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>文件中只有部分被上传</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>没有文件被上传</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>文件大小为0</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="临时存储"><a href="#临时存储" class="headerlink" title="临时存储"></a>临时存储</h5><h6 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file()"></a>move_uploaded_file()</h6><p>当文件上传结束后，将会默认的存储在临时目录中，这时候必须将其从临时目录中删除或移动到其他地方，无论是否上传成功，都将当脚本执行完后删除；</p>
+<h5 id="判断文件是否通过HTTP-POST上传"><a href="#判断文件是否通过HTTP-POST上传" class="headerlink" title="判断文件是否通过HTTP POST上传"></a>判断文件是否通过HTTP POST上传</h5><h6 id="is-uploaded-file"><a href="#is-uploaded-file" class="headerlink" title="is_uploaded_file()"></a>is_uploaded_file()</h6><p>为避免不发分子或恶意用户是否通过HTTP POST上传，<strong>所以PHP的is_uploaded_file()函数进行判断，诺通过HTTP POST上传的则返回TRUE，否则返回FALSE；</strong></p>
+<h5 id="文件上传例子"><a href="#文件上传例子" class="headerlink" title="文件上传例子"></a>文件上传例子</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;form enctype=&quot;multipart/form-data&quot; action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">		&lt;input type=&quot;file&quot; name=&quot;myFile&quot;&gt;</span><br><span class="line">		&lt;input type=&quot;submit&quot; name=&quot;up&quot; value=&quot;上传文件&quot;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">	&lt;?php</span><br><span class="line">		if (isset($_POST[&#x27;up&#x27;])) &#123;</span><br><span class="line">			// 判断文件格式是否为JPEG</span><br><span class="line">			if ($_FILES[&#x27;myFile&#x27;][&#x27;type&#x27;] == &quot;image/gif&quot;) &#123;</span><br><span class="line">				if ($_FILES[&#x27;myFile&#x27;][&#x27;error&#x27;] &gt; 0) &#123;</span><br><span class="line">					// 临时文件名称</span><br><span class="line">					echo &quot;错误:&quot;,$_FILES[&#x27;myFile&#x27;][&#x27;error&#x27;];</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					// 临时文件名</span><br><span class="line">					$tmp_filename = $_FILES[&#x27;myFile&#x27;][&#x27;tmp_name&#x27;];</span><br><span class="line"></span><br><span class="line">					// 上传的文件名</span><br><span class="line">					$filename = $_FILES[&#x27;myFile&#x27;][&#x27;name&#x27;];</span><br><span class="line"></span><br><span class="line">					// 上传后的文件未知</span><br><span class="line">					$dir = $_SERVER[&#x27;DOCUMENT_ROOT&#x27;].&quot;/text/&quot;;</span><br><span class="line"></span><br><span class="line">					// 判断是否通过HTTPS POST上传</span><br><span class="line">					if (is_uploaded_file($tmp_filename)) &#123;</span><br><span class="line">						// 上传并移动文件</span><br><span class="line">						if (move_uploaded_file($tmp_filename, &quot;$dir$filename&quot;)) &#123;</span><br><span class="line">							echo &quot;文件&quot;,$filename,&quot;上传成功&quot;;</span><br><span class="line"></span><br><span class="line">							// 输出文件的大小</span><br><span class="line">							echo &quot;文件大小为：&quot;.($_FILES[&#x27;myFile&#x27;][&#x27;size&#x27;]/1024).&quot;KB&quot;;</span><br><span class="line">						&#125; else &#123;</span><br><span class="line">							echo &quot;文件上传失败&quot;;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				echo &quot;文件错误，非GIF格式文件&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="文件的下载"><a href="#文件的下载" class="headerlink" title="文件的下载"></a>文件的下载</h4><h5 id="header"><a href="#header" class="headerlink" title="header()"></a>header()</h5><p>header()函数主要作用就是向浏览器发送正确的HTTP报头，报头指定了网页的内容和类型，页面属性等信息。header()函数的功能主要用<strong>页面跳转</strong>和<strong>指定下载的文件类型</strong>  以及<strong>文件下载</strong>如下：</p>
+<h6 id="header-支持表"><a href="#header-支持表" class="headerlink" title="header()支持表"></a>header()支持表</h6><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Location()</td>
+<td>跳转到指定页面</td>
+<td>页面跳转</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Content-type:</td>
+<td>指定下载的文件类型</td>
+<td>下载文件类型</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>readfile()</td>
+<td>文件下载</td>
+<td>文件下载</td>
+</tr>
+</tbody></table>
+<h4 id="文件处理函数"><a href="#文件处理函数" class="headerlink" title="文件处理函数"></a>文件处理函数</h4><h5 id="计算文件大小"><a href="#计算文件大小" class="headerlink" title="计算文件大小"></a>计算文件大小</h5><h6 id="filesize"><a href="#filesize" class="headerlink" title="filesize()"></a>filesize()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		$num = filesize($file);</span><br><span class="line">		echo &quot;$num/1024KB&quot;;</span><br><span class="line">		?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="判断文件是否存在"><a href="#判断文件是否存在" class="headerlink" title="判断文件是否存在"></a>判断文件是否存在</h5><h6 id="file-exists"><a href="#file-exists" class="headerlink" title="file_exists()"></a>file_exists()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		if (file_exists($file)) &#123;</span><br><span class="line">			echo &quot;文件存在&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;文件不存在&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h5><h6 id="unlink"><a href="#unlink" class="headerlink" title="unlink()"></a>unlink()</h6><p>在php之中，可使用unlink()函数进行删除不需要的文件，如果删除成功则返回TRUE、否则删除失败则返回FALSE；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		// 删除文件</span><br><span class="line">		unlink($file);</span><br><span class="line"></span><br><span class="line">		// 检测文件是否存在</span><br><span class="line">		if (file_exists($file)) &#123;</span><br><span class="line">			echo &quot;文件存在&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;文件不存在&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$_FILES</td>
+<td>主要用途是当文件上传后，依然可以使用该函数获取文件的信息；</td>
+<td><strong>获取上传后文件信息</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$FILES[&#39;文件’][‘类型’]</td>
+<td>设置当前文件上传的类型</td>
+<td><strong>上传类型</strong></td>
+</tr>
+<tr>
+<td>文件类型可包括以下几种：</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>表示普通文本文件</td>
+<td>文件</td>
+</tr>
+<tr>
+<td>text&#x2F;html</td>
+<td>表示HTML文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>表示GIF图片</td>
+<td>图片</td>
+</tr>
+<tr>
+<td>image&#x2F;pjpeg</td>
+<td>表示JPEG图片</td>
+<td></td>
+</tr>
+<tr>
+<td>iamge&#x2F;jpeg</td>
+<td>用于表示JPEG图片[^Fivefox浏览器]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;msword</td>
+<td>表示Word文件</td>
+<td>格式文件</td>
+</tr>
+<tr>
+<td>application&#x2F;pdf</td>
+<td>表示PDF文件</td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;x-zip-compressed</td>
+<td>表示ZIP格式的压缩文件</td>
+<td></td>
+</tr>
+<tr>
+<td>application&#x2F;octet-stream</td>
+<td>表示二进制流文件[^如EXE、RAR、视频等文件]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>audio&#x2F;mpeg</td>
+<td>表示mp3格式音频文件</td>
+<td>音频文件</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$FILES[‘文件’][‘临时名称’]</td>
+<td>临时存放名称</td>
+<td><strong>文件上传在服务器时的临时存储名</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$FILES[‘文件’][‘大小’]</td>
+<td>已上传的文件大小，单位即为字节。</td>
+<td><strong>文件的上传大小</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$FILES[‘文件’][‘erre’]</td>
+<td>在错误信息代码中有如下代码:</td>
+<td><strong>错误代码</strong></td>
+</tr>
+<tr>
+<td>错误代码：</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>表示没有错误发生，即文件上传成功</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>传的文件超过了php.ini文件中upload_max_filesize选项限制的值</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>上传文件的大小超过了HTML表单中规定的最大值</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>文件中只有部分被上传</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>没有文件被上传</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>文件大小为0</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>move_uploaded_file()</td>
+<td>当文件上传结束后，将会默认的存储在临时目录中，这时候必须将其从临时目录中删除或移动到其他地方，无论是否上传成功，都将当脚本执行完后删除；</td>
+<td><strong>临时存储</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>is_uploaded_file()</td>
+<td>判断文件是否通过HTTP POST上传</td>
+<td><strong>HTTP POST</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>filesize()</td>
+<td>计算文件大小</td>
+<td><strong>文件处理函数</strong></td>
+</tr>
+<tr>
+<td>file_exists()</td>
+<td>判断文件是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>unlink()</td>
+<td>删除文件</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/22.PHP%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

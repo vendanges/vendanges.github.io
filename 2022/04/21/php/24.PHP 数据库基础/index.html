@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 数据库基础 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 数据库基础</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h4 id="什么是数据库"><a href="#什么是数据库" class="headerlink" title="什么是数据库"></a>什么是数据库</h4><p>所谓动态站点，无非是与用户进行交互和存储的过程，其中在PHP飞速发展的过程中，有许多的数据库可供PHP进行调用与使用。其中最受青睐的无非就是MySQL系统，其因开源、小巧广受开发者们的情迷。</p>
+<h4 id="数据库与数据库管理系统"><a href="#数据库与数据库管理系统" class="headerlink" title="数据库与数据库管理系统"></a>数据库与数据库管理系统</h4><h5 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h5><p>数据库简称“DB”，即从字面意义上理解是存放数据的仓库，只不过这些数据存在了一定的关联，并按照一定的格式用于存放于计算机或服务器之中。从目前数据库类型支持来讲，数据不仅仅包含文字和数字，还包括了文本、图像、音频、视频等数据。</p>
+<h5 id="数据库管理系统"><a href="#数据库管理系统" class="headerlink" title="数据库管理系统"></a>数据库管理系统</h5><p>数据库管理系统简称为（“DBMS”），只要用于管理数据，可进行添加、插入、修改表中的列和行的数据，以及删除复制和粘贴的操作，减少了在命令行形式的命令繁琐的难题，从而广受开发者青睐；</p>
+<h6 id="数据库定义语言与数据库操作语言（DDL-x2F-DML）"><a href="#数据库定义语言与数据库操作语言（DDL-x2F-DML）" class="headerlink" title="数据库定义语言与数据库操作语言（DDL&#x2F;DML）"></a>数据库定义语言与数据库操作语言（DDL&#x2F;DML）</h6><p>DBSM提供了数据的定义语言（DDL，Data Definition Language）以及数据库操作语言（DML，Data Manipulation Language），为用户提供了基本的权限约束，实现了数据库的追加、删除等操作，DBSM主要支持如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>可定义数据库中是数据对象</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>可对标进行基本操作[^插入、删除、修改、查询]</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>数据库的完整性检查[^可满足用户输入的数据是否满足约束权限]</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>数据库的安全保护功能[^只有赋予权限的用户才可访问数据中的数据]</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>数据库的并发控制[^几个不同的应用程序可同一时间向数据库发送访问请求]</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>数据库的故障恢复功能[^使数据库发生故障时还可进行恢复]</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>在网络的情况下访问数据库功能</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>方便和邮箱的提供了数据库的信息和接口工具</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="数据库的类型"><a href="#数据库的类型" class="headerlink" title="数据库的类型"></a>数据库的类型</h4><h5 id="关系型数据库管理系统"><a href="#关系型数据库管理系统" class="headerlink" title="关系型数据库管理系统"></a>关系型数据库管理系统</h5><p>关系型模型是以<strong>二维表格，俗称关系表</strong>的形式组织和管理数据库中的数据，一个关系型数据库可以有诺干张表，而在关系型数据库中，我们一般将表格中的<strong>每一行，称之为记录</strong>，而<strong>一列称之为“字段”</strong>，每列标题称之为<strong>字段名</strong>.</p>
+<h5 id="关系型数据库语言"><a href="#关系型数据库语言" class="headerlink" title="关系型数据库语言"></a>关系型数据库语言</h5><p>关系型数据库的标准语言即SQL（结构化查询语言，Sructued Query Language），最早由<strong>Boyce和Chambedin</strong>在1974年提出。1982年美国国家标准化组织ANSI确定为SQL数据库系统的工业标准，而SQL语言的功能主要包含<strong>数据查询、数据操纵、数据定义和数据控制</strong>等四部分。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/24.PHP%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

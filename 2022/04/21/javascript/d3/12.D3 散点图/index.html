@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 散点图 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 散点图</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210330093420.png"><br>散点图（<code>scatterplot</code>），主要在<code>回归分析（regression analysis）</code>中主要用于确定<strong>两种</strong>或两种以上的<code>变量</code>间互相依赖的<code>定量关系</code>的一种统计分析方法。散点图也可以用于表述<code>趋势的增加的聚合数据</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 定义高度与宽度，其中包括 x和y轴的宽度 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">	<span class="attr">width</span>: <span class="number">700</span>,</span><br><span class="line">	<span class="attr">height</span>: <span class="number">700</span>,</span><br><span class="line">	<span class="attr">xAxisWidth</span>: <span class="number">500</span>,</span><br><span class="line">	<span class="attr">yAxisWidth</span>: <span class="number">500</span>,</span><br><span class="line">	<span class="attr">right</span>: <span class="number">30</span>,</span><br><span class="line">	<span class="attr">bottom</span>: <span class="number">30</span>,</span><br><span class="line">	<span class="attr">left</span>: <span class="number">130</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 定义数据 x,y */</span></span><br><span class="line"><span class="keyword">var</span> center = [[<span class="number">0.8</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0.8</span>],[<span class="number">0.4</span>,<span class="number">0.3</span>],[<span class="number">0.6</span>,<span class="number">0.4</span>],[<span class="number">0.2</span>,<span class="number">0.6</span>],[<span class="number">0.8</span>,<span class="number">0.2</span>],[<span class="number">0.2</span>,<span class="number">0.1</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 定义颜色序数比例尺 */</span></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category10</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	1.选择body元素，并添加一个&lt;svg&gt;元素</span></span><br><span class="line"><span class="comment">	2.并设置&lt;svg&gt;的高\宽为 600.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>, padding.<span class="property">width</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* x/y 轴比例尺 */</span></span><br><span class="line"><span class="keyword">var</span> xScale = d3.<span class="property">scale</span>.<span class="title function_">linear</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>, <span class="number">1</span> * d3.<span class="title function_">max</span>(center, <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> d[<span class="number">1</span>];</span><br><span class="line">	&#125;)])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="number">0</span>, padding.<span class="property">xAxisWidth</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.<span class="property">scale</span>.<span class="title function_">linear</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>, <span class="number">1</span> * d3.<span class="title function_">max</span>(center, <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> d[<span class="number">1</span>];</span><br><span class="line">	&#125;)])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="number">0</span>, padding.<span class="property">yAxisWidth</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 定义圆 */</span></span><br><span class="line"><span class="keyword">var</span> cirlce = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">	.<span class="title function_">data</span>(center)</span><br><span class="line">	.<span class="title function_">enter</span>()</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>, <span class="keyword">function</span>(<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="title function_">color</span>(i)</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> padding.<span class="property">left</span> + <span class="title function_">xScale</span>(d[<span class="number">0</span>])</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>, <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> padding.<span class="property">height</span> - padding.<span class="property">bottom</span> - <span class="title function_">yScale</span>(d[<span class="number">1</span>])</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* x/y 坐标轴选择比例尺 */</span></span><br><span class="line"><span class="keyword">var</span> xAxis = d3.<span class="property">svg</span>.<span class="title function_">axis</span>()</span><br><span class="line">	.<span class="title function_">scale</span>(xScale)</span><br><span class="line">	.<span class="title function_">orient</span>(<span class="string">&quot;bottom&quot;</span>)</span><br><span class="line">	.<span class="title function_">ticks</span>(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">	yScale.<span class="title function_">range</span>([padding.<span class="property">yAxisWidth</span>, <span class="number">0</span>])	<span class="comment">/* 反向输出 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yAxis = d3.<span class="property">svg</span>.<span class="title function_">axis</span>()</span><br><span class="line">	.<span class="title function_">scale</span>(yScale)</span><br><span class="line">	.<span class="title function_">orient</span>(<span class="string">&quot;left&quot;</span>)</span><br><span class="line">	.<span class="title function_">ticks</span>(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在 svg 元素中添加一个包含坐标轴的数据并计算出位置 */</span></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;axis&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;transform&quot;</span>, <span class="string">&quot;translate(&quot;</span> + padding.<span class="property">left</span> + <span class="string">&quot;,&quot;</span> + (padding.<span class="property">height</span> - padding.<span class="property">bottom</span>) + <span class="string">&quot;)&quot;</span>)</span><br><span class="line">	.<span class="title function_">call</span>(xAxis)</span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;axis&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;transform&quot;</span>, <span class="string">&quot;translate(&quot;</span> + padding.<span class="property">left</span> + <span class="string">&quot;,&quot;</span> + (padding.<span class="property">height</span> - padding.<span class="property">bottom</span> - padding.<span class="property">yAxisWidth</span>) + <span class="string">&quot;)&quot;</span>)</span><br><span class="line">	.<span class="title function_">call</span>(yAxis)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.axis</span> path,   <span class="comment">/* 坐标轴路径设置 */</span></span><br><span class="line"><span class="selector-class">.axis</span> line &#123;    <span class="comment">/* 设置 坐标轴的线条 */</span></span><br><span class="line">  fill: none;   <span class="comment">/* 设置坐标轴宽度 */</span></span><br><span class="line">  stroke: <span class="number">#929292</span>;  <span class="comment">/* 坐标轴颜色 */</span></span><br><span class="line">  shape-rendering: crispEdges;  <span class="comment">/* 将形状渲染为清晰的边缘 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.axis</span> text &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  stroke: <span class="number">#929292</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/12.D3%20%E6%95%A3%E7%82%B9%E5%9B%BE/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

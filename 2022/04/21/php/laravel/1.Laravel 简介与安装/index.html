@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 介绍 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 介绍</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Laravel是一套简洁且优雅的PHP WEB开发框架，正如官网中所说的“Laravel是一个具有表达力、优雅语法的Web应用程序框架“这与国内的Thinkphp框架不同，也许你可以从两者的官网中进行查看和阅读相关文献资料。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="apache2"><a href="#apache2" class="headerlink" title="apache2"></a>apache2</h3><p>在安装php7之前，我们需要安装apache2的服务器应用环境，来启动本地环境，可使用zypper软件管理包的安装命令进行安装：</p>
+<blockquote>
+<p>zypper install apache2</p>
+</blockquote>
+<p>在安装完成后，读者可使用<code>service</code>来启动apache2服务。</p>
+<h3 id="php7"><a href="#php7" class="headerlink" title="php7"></a>php7</h3><p>本文作者由于使用opensuse开发环境，所以使用zyyper软件管理包来分别安装<code>php7、php7-mysql、apache2-mod_php7</code>等，读者如果环境支持也可复制下方安装命令进行安装：</p>
+<blockquote>
+<p>zypper install php7 php7-mysql apache2-mod_php7</p>
+</blockquote>
+<p>在php7安装完成之后，我们需要使用<code>a2enmod php7</code>来添加apache2对php7的支持即可，通过在<code>/srv/www/htdocs</code>目录中创建info.php文件中写入：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">phpinfo</span>()</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>后通过localhost&#x2F;info.php来访问，如果出现php配置信息则以上步骤操作成功，如出现直接下载info.php文件则需读者自行查找结果。</p>
+<h4 id="安装常用模块"><a href="#安装常用模块" class="headerlink" title="安装常用模块"></a>安装常用模块</h4><p>在安装完php之后，还需要安装一些php的常用模块，否则将会在后面安装composer时出现一系列的报错和需要修改<code>php.ini</code>文件的操作，实际上修改完了也依然无法安装，所以需要安装以下模块：</p>
+<h5 id="php7-1"><a href="#php7-1" class="headerlink" title="php7"></a>php7</h5><blockquote>
+<p>zypper install php-phar php7-curl php7-dev php7-gd php7-mbstring php7-zip php7-mysql php7-xml</p>
+</blockquote>
+<h5 id="php7-4"><a href="#php7-4" class="headerlink" title="php7.4"></a>php7.4</h5><blockquote>
+<p>sudo apt install php7.4 libapache2-mod-php7.4 php7.4-bcmath php7.4-json php7.4-mbstring php7.4-xml php7.4-zip</p>
+</blockquote>
+<h3 id="composer"><a href="#composer" class="headerlink" title="composer"></a>composer</h3><p>composer是用于PHP管理依赖关系的工具，可以在自己的项目中所依赖的外部工具库，这些操作可以使用compose来安装这些依赖库文件。</p>
+<h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>composer的安装我们可以通过php进行下载，也可通过使用系统自带的zypper软件管理包进行安装，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php -r &quot;copy(&#x27;https://install.phpcomposer.com/installer&#x27;, &#x27;composer-setup.php&#x27;);&quot;</span><br><span class="line">php composer-setup.php</span><br><span class="line">php -r &quot;unlink(&#x27;composer-setup.php&#x27;);&quot;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>php -r“ copy（’<a target="_blank" rel="noopener" href="https://getcomposer.org/installer&#39;%EF%BC%8C&#39;composer-setup.php&#39;%EF%BC%89;%E2%80%9D">https://getcomposer.org/installer&#39;，&#39;composer-setup.php&#39;）;”</a><br>php composer-setup.php<br>php composer-setup.php –filename&#x3D;composer</p>
+</blockquote>
+<p>在此之后，读者可将<code>composer</code>移至到<code>/bin</code>目录下，这样就可以使用 composer命令进行构建相关项目。</p>
+<h4 id="设置国内镜像"><a href="#设置国内镜像" class="headerlink" title="设置国内镜像"></a>设置国内镜像</h4><p>在composer安装完成以后，需要设置其国内镜像，以免在项目部署的过程中出现下载缓慢或暂停的情况：</p>
+<blockquote>
+<p>composer config -g repo.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/composer/">https://mirrors.aliyun.com/composer/</a><br>composer config -g repo.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.huaweicloud.com/repository/php/">https://mirrors.huaweicloud.com/repository/php/</a><br>composer config -g repos.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.cloud.tencent.com/composer/">https://mirrors.cloud.tencent.com/composer/</a></p>
+</blockquote>
+<p><strong>如果php和composer都没问题的话，以下两个步骤可以忽略</strong></p>
+<h5 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h5><p>在使用<code>composer install / composer update</code>命令之前，我们需要在项目当前目录下新建<code>composer.json</code>文件，并写入如下配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;monolog/monolog&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.2.*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h6 id="composer-install"><a href="#composer-install" class="headerlink" title="composer install"></a>composer install</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">localhost:/srv/www/htdocs # composer install</span><br><span class="line">Composer is operating significantly slower than normal because you do not have the PHP curl extension enabled.</span><br><span class="line">No lock file found. Updating dependencies instead of installing from lock file. Use composer update over composer install if you do not have a lock file.</span><br><span class="line">Loading composer repositories with package information</span><br><span class="line">Updating dependencies</span><br><span class="line">Lock file operations: 1 install, 0 updates, 0 removals</span><br><span class="line">  - Locking monolog/monolog (1.2.1)</span><br><span class="line">Writing lock file</span><br><span class="line">Installing dependencies from lock file (including require-dev)</span><br><span class="line">Package operations: 1 install, 0 updates, 0 removals</span><br><span class="line">  - Downloading monolog/monolog (1.2.1)</span><br><span class="line">  - Installing monolog/monolog (1.2.1): Extracting archive</span><br><span class="line">3 package suggestions were added by new dependencies, use `composer suggest` to see details.</span><br><span class="line">Generating autoload files</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/1.laravel%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.md/20210207032612514_1522805721.png"><br>当一切都安装好了之后，我们可以开启apache2服务，并进入<code>srv/www/htdocs</code>目录下，使用composer构建一个Laravel 6，如果不加以版本限制则会出现一系列的报错问题，最后使得php无法运行Laravel6。</p>
+<blockquote>
+<p>composer create-project laravel&#x2F;laravel&#x3D;”6.0” test_webapp</p>
+</blockquote>
+<p>在Arch Linux 环境下，且php version 8 ，则我们可以使用以下命令:</p>
+<blockquote>
+<p>composer create-project –prefer-dist laravel&#x2F;laravel test_web “6.*”</p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/1.laravel%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.md/20210207032912966_2026680967.png"><br>当composer create-project 命令执行完毕后，会发现当前所在目录下会新建<code>test_webapp</code>目录，此时我们只需要进入该目录，并执行<code>php artisan serve</code>即可运行刚刚下载的laravel项目，之后访问<code>http://127.0.0.1:8000</code>即可访问主页面。</p>
+<h3 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h3><p>在 Laravel 中，项目所默认的语言均为英文，因此我们需要将项目的默认语言改为中文，即<code>zh-CN</code>。通常需要使用<code>composer require caouecs/laravel-lang:~3.0</code>来下载语言包，之后更改 <code>config/app.php</code>内的 <strong>locale</strong> 值为 <strong>zh-CN</strong>，在通过<code>vendor\caouecs\laravel-lang\src\zh-CN</code>文件复制到<code>resources\lang</code>即可。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/1.Laravel%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

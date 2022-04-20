@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 矩阵布局 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 矩阵布局</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210413153321.png"><br>矩阵布局（<code>Treemap</code>）是一个层级布局或分层布局扩展，最早由<code>Ben Shneiderman</code>在 <code>1991</code>进行提出，可以通过对一块举行进行切分，并达到层级演示的效果。会通过使用将一块<code>类似于近正矩形</code>并进行切块，之后将数据根据<code>矩形树图算法</code>进行计算。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.layout.treemap()</td>
+<td>创建矩阵数布局</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.nodes(root)</td>
+<td>根据<code>root</code>进行计算，并获取节点数据</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.links(nodes)</td>
+<td>根据 nodes 进行计算，获取连线数组</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.children(<code>[children]</code>)</td>
+<td>设置或获取子节点访问器（默认情况下子节点对象是<code>children</code> ）</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.sort(<code>[comparator]</code>)</td>
+<td>设置或获取布局的节点排序数据</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.value(<code>[value]</code>)</td>
+<td>设置或获取值访问器</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.size(<code>[size]</code>)</td>
+<td>设置或获取布局尺寸，（有两个参数分别为 表示<code>宽</code>以及<code>高</code>）</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.padding(<code>[padding]</code>)</td>
+<td>设置或获取矩阵单元之间的间隔（单位为像素）</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.round(<code>[round]</code>)</td>
+<td>设置或获取是否对计算结果是否进行<code>四舍五路</code></td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.sticky(<code>[sticky]</code>)</td>
+<td>设置或获取矩阵树图是否有<code>粘性</code>，粘性属性布局将保留整个过度中节点的相对排序</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.ratio(<code>[ratio]</code>)</td>
+<td>设置或获取矩阵树图是否有<code>粘性</code>的</td>
+</tr>
+<tr>
+<td></td>
+<td>treemap.mode(<code>[mode]</code>)</td>
+<td>设置矩阵布局模式，不同算法之间的有<code>很大的差异</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210413153418.png"></td>
+</tr>
+</tbody></table>
+<h2 id="确定数据"><a href="#确定数据" class="headerlink" title="确定数据"></a>确定数据</h2><p>下述我们通过计算出<code>广州省、吉林省、河南省</code>的人口迁移数据，通过新建<code>json</code>文件来进行写入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;中国&quot;</span>,</span><br><span class="line">  <span class="string">&quot;children&quot;</span>:</span><br><span class="line">  [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;广州省&quot;</span>,</span><br><span class="line">      <span class="string">&quot;children&quot;</span>: [</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;佛山市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">25.82</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;东莞市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">10.26</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;深圳市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">8.53</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;清远市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">5.22</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;中山市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">3.56</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;惠州市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">3.49</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;肇庆市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">2.85</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;江门市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">2.52</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;珠海市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">1.92</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;湛江市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">1.62</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;吉林省&quot;</span>,</span><br><span class="line">      <span class="string">&quot;children&quot;</span>:[</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;辽阳市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">11.82</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;哈尔滨市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">10.55</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;北京市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">6.56</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;铁岭市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">5.77</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;通辽市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">5.14</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;兴安盟&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">4.46</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大连市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">3.34</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大庆市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">2.86</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;天津市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">2.27</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;齐齐哈尔市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">1.88</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;河南省&quot;</span>,</span><br><span class="line">      <span class="string">&quot;children&quot;</span>: [</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;辽阳市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">11.82</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;哈尔滨市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">10.55</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;北京市&quot;</span>, <span class="string">&quot;ratio&quot;</span>: <span class="number">6.56</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;铁岭市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">5.77</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;通辽市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">5.14</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;兴安盟&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">4.46</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大连市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">3.34</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大庆市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">2.86</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;天津市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">2.27</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;齐齐哈尔市&quot;</span>,<span class="string">&quot;ratio&quot;</span>: <span class="number">1.88</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="布局运算"><a href="#布局运算" class="headerlink" title="布局运算"></a>布局运算</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210413153449.png"><br>上述的 <code>json</code> 数据是无法直接被 <code>d3.js</code>所识别的，所以需要通过使用布局，将得到<code>node</code>以及<code>links</code>的连线关系并进行转换，上图我们以<code>河南省数据</code>为例，转换如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    转换数据 -&gt; nodes（节点） -&gt; links (连线关系)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> treemap = d3.<span class="property">layout</span>.<span class="title function_">treemap</span>()</span><br><span class="line">    .<span class="title function_">size</span>([padding.<span class="property">width</span>,padding.<span class="property">height</span>])</span><br><span class="line">    .<span class="title function_">value</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">ratio</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;treemap.json&quot;</span>,<span class="keyword">function</span> (<span class="params">error, root</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> nodes = treemap.<span class="title function_">nodes</span>(root)</span><br><span class="line">    <span class="keyword">var</span> links = treemap.<span class="title function_">links</span>(nodes)</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(nodes)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(links)</span><br><span class="line">&#125;）</span><br></pre></td></tr></table></figure>
+
+<h2 id="绘制矩阵"><a href="#绘制矩阵" class="headerlink" title="绘制矩阵"></a>绘制矩阵</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    转换数据 -&gt; nodes（节点） -&gt; links (连线关系)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> treemap = d3.<span class="property">layout</span>.<span class="title function_">treemap</span>()</span><br><span class="line">    .<span class="title function_">size</span>([padding.<span class="property">width</span>,padding.<span class="property">height</span>])</span><br><span class="line">    .<span class="title function_">value</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">ratio</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;treemap.json&quot;</span>,<span class="keyword">function</span> (<span class="params">error, root</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> nodes = treemap.<span class="title function_">nodes</span>(root)</span><br><span class="line">    <span class="keyword">var</span> links = treemap.<span class="title function_">links</span>(nodes)</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(nodes)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(links)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 选择颜色 */</span></span><br><span class="line">    <span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20c</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* &lt;g&gt; 组 */</span></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(nodes.<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> !d.<span class="property">children</span></span><br><span class="line">        &#125;))</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 矩形 */</span></span><br><span class="line">    <span class="keyword">var</span> rects = groups.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;nodeRect&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">x</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">y</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">dx</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">dy</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>, <span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">color</span>(d.<span class="property">parent</span>.<span class="property">name</span>)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 文字 */</span></span><br><span class="line">    <span class="keyword">var</span> text = groups.<span class="title function_">append</span>(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;nodeName&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">x</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">y</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;dx&quot;</span>, <span class="string">&quot;0.5em&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;dy&quot;</span>, <span class="string">&quot;1.5em&quot;</span>)</span><br><span class="line">        .<span class="title function_">text</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> d.<span class="property">name</span> + <span class="string">&quot;&quot;</span> + d.<span class="property">ratio</span></span><br><span class="line">        &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.nodeRect</span> &#123;</span><br><span class="line">  stroke: white;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.nodeName</span> &#123;</span><br><span class="line">  fill: white;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/29.D3%20%E7%9F%A9%E9%98%B5%E5%B8%83%E5%B1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

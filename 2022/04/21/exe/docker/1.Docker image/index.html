@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Docker | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Docker</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag">虚拟化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Docker 是一个平台即服务的产品，使用操作系统进行虚拟化，并称之为容器的包中运行，并隔离、捆绑自己的软件，在技术发展的今天，实际上可以以通过 Docker 打包我们所需要的一切，包括 PHP\Mysql\Nginx 配置文件。</p>
+<p>在此之前，我们主要通过手动来构建 LAMP 、XMAPP 环境，之后出现了诸如宝塔、小皮、Laragon 等较为简单的图形化开发环境构建工具，在 2010 年之后，开发人员的趋势逐渐上升到虚拟机环境，与生产环境的复制使得网站真正上线时也会很少出现问题。</p>
+<p>直到近几年出现了 Vagrant 这类工具的出现，消除了虚拟机的种种麻烦，除此之外在微服务的应用中，也会经常使用 Vagrant 来搭建集群。</p>
+<p>但即使 Vagrant 如此方便，他的系统资源消耗无非是一个绕不开的问题，同时虚拟机和服务器之间的同步又造成了另外一个问题的产生，以及整体生态，和版本的分发都很难控制，甚至是多元，因此 Docker 就成功的避免了这类问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Docker 是一组平台即服务的产品，它可以通过系统级的虚拟在容器的包中交付软件、项目等，容器之间彼此隔离，并拥有自己的软件、库和配置文件，使得他们可以通过明确定义来相互通信</span><br></pre></td></tr></table></figure>
+
+<p>实际上最能体现 Docker 的方便时允许我们打包网站服务所需的一切，即代码和可执行文件、甚至是数据库和服务依赖所需的配置文件，打包在一起成为应用。</p>
+<p>Docker 最为重要的三个概念就是 DockerFile 、 Image、Container 即 Docker文件、镜像、容器，首先 DockerFile 理解起来较为容易，他包含了需要部署的应用程序和其相关联的库（vagrant 也有）。</p>
+<p>对于 DevOps 来说，最希望的就是一次创建和配置可以在任何地方所正常的与运行，因此使用 Docker 可以通过镜像来实现持续的集成、交付和部署，也可以通过 DockerFile 来进行镜像的构建。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h3><p>image 即镜像，是 Docker 中较为特殊的文件系统，提供了容器运行时所有需要的程序、资源、配置、依赖库等，还包含了以些为运行时所准备的配置参数，但不包含动态数据。</p>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p>容器是镜像中的一部分，它可以被创建、启动、删除甚至是暂停等，通俗的理解可以是一个单纯的进程，运行着独立的命名空间和文件系统、自己的网络配置和环境、</p>
+<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h3><p>通过 DockerFile，可以创建许多不同的容器(Container)，可以将容器理解为虚拟机，里面运行着 DockerFile 的应用、服务等，且每个容器独立运行不相互影响。而最后的 Image，就是通过 DockerFile 来进行创建的，使得让你的容器打包运行分享到仓库中。</p>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h3><p>当镜像构建完成后，如果需要在除了在本机之外上运行，就需要使用 Docker Registory 这样的服务，当你注册完一个 Docker Registry 中可以包含多个仓库(Repository)，并包含了多个标签(Tag)，每个 Tag 中都对应着一个镜像。</p>
+<h2 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h2><p>在 Windows 10 平台中使用 Docker，你可以在<a target="_blank" rel="noopener" href="https://docs.docker.com/get-docker/">获取 Docker |Docker 文档</a> 中进行选择系统并下载，之后再功能中开启 Hyper-V 以及确保 wsl 可以正常使用的情况下，即可成功的启动 docker Desktop 并在 Windows 终端中输入 <code>docker version</code> 查看是否正确安装了 Docker。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请确保你的 Windows 系统为专业版，家庭版和企业版是没有 Hyper-V 功能的，Docker 在 Windows 中主要依赖的还是 wls server 来进行构建镜像等。</span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-pull-amp-run"><a href="#docker-pull-amp-run" class="headerlink" title="docker pull &amp; run"></a>docker pull &amp; run</h3><p>在 <a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a> 中有大量的镜像供我们使用，同时我们也可以自己创建并上传一个开放仓库，但在此之前我们主要先获取镜像, 这里我们主要以 php 的镜像为例，<code>docker pull php:7.4.27-zts-buster</code> 你可以通过此来拉取镜像。</p>
+<h4 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h4><p>通过 pull 拉取镜像后，就能够以这个镜像为基础来启动一个容器，通过 <code>docker run</code> 来直接进行启用：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -it --<span class="built_in">rm</span> php:7.4.27-zts-buster -v</span></span><br></pre></td></tr></table></figure>
+
+<p>docker rum 的格式为 docker run [参数] [镜像名] command ，当然，<code>docker run</code> 只是一个基础命令，他还有一系列的参数，就以上述三个参数为切入点我们可以知道：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>run</td>
+<td>运行容器的命令</td>
+</tr>
+<tr>
+<td>-it</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>-t</code> 终端，因为需要返回结果，因此使用交互式终端</td>
+</tr>
+<tr>
+<td></td>
+<td><code>-i</code> 交互式操作</td>
+</tr>
+<tr>
+<td>-rm</td>
+<td>容器推出后删除数据（在不需要保留结果的场景时使用）</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>Docker 分配一个伪终端(pseudo-tty)并将其绑定输出</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>使容器标准输入保持打开</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>守护状态运行，不会将命令输出在当前宿主机中，即在后台运行</td>
+</tr>
+<tr>
+<td>bash</td>
+<td>进入交互式 shell</td>
+</tr>
+</tbody></table>
+<p>容器的核心理念时一个可执行的程序，所有需要的资源都是通过应用程序运行所必须的，因此我们可以通过 <code>docker container start/stop</code> 来决定容器的启动和关闭。</p>
+<h3 id="image"><a href="#image" class="headerlink" title="image"></a>image</h3><p>通过 <code>docker pull</code> 我们已经将 php:7.4.27 版本的镜像给拉去下来了并且成功的使用，之后我们也可以通过 <code>docker image ls</code> 来查看已经下载下来的镜像，对于 Windows 来说，还可以通过 Docker Desktop 来进行图形化的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">对于镜像的体积，通过 ```docker image ls``` 来进行查看的镜像大小/所占空间会与 Docker Hub 中的不同，Docker Hub 中显示的是压缩后的体积，方便下载和上传过程中更快，因此处于压缩状态。而 Docker image ls 显示的是下载本地后解压、展开后的大小。</span><br><span class="line"></span><br><span class="line">另外需要注意的是，```docker image ls``` 并非是镜像的实际硬盘消耗，这得益于 Docker 镜像的多存储结构，可以集成、复用的，因此不同镜像之间使用的可能是相同的基础镜像。</span><br><span class="line"></span><br><span class="line">对于此类问题可以通过 ```docker system df``` 来查看镜像、容器、数据卷所占的空间大小</span><br></pre></td></tr></table></figure>
+
+<h4 id="悬空镜像-dangling-image-rml"><a href="#悬空镜像-dangling-image-rml" class="headerlink" title="悬空镜像(dangling image) \ rml"></a>悬空镜像(dangling image) \ rml</h4><p>至于“悬空镜像: <code>&lt;note&gt;</code>” 中文更多的被翻译为 “虚悬镜像”，这种镜像在此之前是拥有过 Tag的，后来随着其维护者重新发布了新的版本，并且 tag 没有改变的时候，由于新旧镜像同名，旧的镜像则会被取消。</p>
+<p>你可以通过 <code>docker iamge ls -f dangling=true</code> 来进行显示，按照官方文档的逻辑来说，这些镜像是无法使用的因此你可以使用 <code>docker image prune</code> 来进行删除，你甚至可以使用 <code>docker rmi $(docker image -f &quot;danglig=true&quot; -q)</code> 来批量的进行删除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```rmi``` 属性支持删除一个或多个镜像，以上述参数 &quot;-f&quot; 为例，在此是过滤列出镜像的意思，也许在真实的环境更多的可以参考 [docker 图像修剪|Docker 文档](https://docs.docker.com/engine/reference/commandline/image_prune/)</span><br></pre></td></tr></table></figure>
+
+<h4 id="隐藏镜像"><a href="#隐藏镜像" class="headerlink" title="隐藏镜像"></a>隐藏镜像</h4><p>在一些书籍中，将被隐藏的镜像称之为中间层镜像，亦为了加速镜像的构建、重复利用资源的以节省消耗，Docker 会使用中间层镜像来进行加速，如果将中间层镜像删除，那么也会导致依赖此中间层镜像的镜像缺失一些信息从而无法运行。</p>
+<p>假设你通过删除某一个镜像，那么该镜像所依赖的中间层镜像也将会被删除，你可以通过 <code>docker image ls -a 来进行查看</code>，对于此命令你可以在 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/image_ls/">docker image ls |Docker 文档</a> 中进行阅览。</p>
+<p>同样的，你也可以通过 <code>docker image ls php</code> 来搜索关于 php 的顶层镜像，并且它还支持仓库名+标签。</p>
+<h4 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h4><p>如果需要删除镜像，那么可能还需要通过 <code>docker image rm image1 image2 ……</code>来进行删除，同时，它还支持使用 <code>docker image ls</code> 列表中的 <code>REPOSITORY:TAG</code> 和 <code>IMAGE ID</code> 进行删除，其在 <code>IMAGE ID</code> 中，还分为<strong>长ID</strong>和<strong>短ID</strong>，例如:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY               TAG                 IMAGE ID       CREATED       SIZE</span><br><span class="line">docker/getting-started   latest              bd9a9f733898   2 days ago    28.8MB</span><br><span class="line">php                      7.4.27-zts-buster   939f91a8d5c8   2 weeks ago   403MB&gt;)</span><br><span class="line"></span><br><span class="line">❯ docker image rm bd9</span><br><span class="line">	❯ docker image rm bd9a9f733898 </span><br></pre></td></tr></table></figure>
+
+<p>其中，使用 bd9 还是 bd9a9f733898 都是可以删除的，通过上述我们了解到的命令，也可以自由进行搭配，比如 <code>-f</code> 参数来进行过滤，你可以自由搭配，比如删除所有在 php7.4.27 之前的镜像 <code>$ docker image rm $(docker image ls -q -f before=php:7.4.27-zts-buster)</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">对于 Docker 的删除行为一共分为两类，一类是 Untagged 即标记删除，而另一类则是 Deleted删除，镜像的唯一标识是ID，而一个镜像可以拥有多个标签。</span><br><span class="line"></span><br><span class="line">!!! ad-warning</span><br><span class="line">	title: Untagged 和 Deleted 区别</span><br><span class="line">	collapse: close</span><br><span class="line">	在使用 ```rm``` 删除镜像的时候，实际上是删除镜像的某一个标签上的镜像，因此我们首先需要做的是删除所有该镜像的标签，所以并非 ```docker image rm``` 都会产生删除镜像的行为，顶多算是删除了某个标签而已，所以删除标记(rm)和删除镜像(rmi) 有着本质的区别，你可以阅读下 [docker rmi |Docker 文档](https://docs.docker.com/engine/reference/commandline/rmi/#extended-description)</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<p>在 Docker Cli 中，还有很多类似的命令搭配，对于 image 你可以参考 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/images/">docker 映像|Docker 文档</a> 来进行使用。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/docker/1.Docker%20image/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

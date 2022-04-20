@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>SVG SMIL Animations | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>SVG SMIL Animations</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/svg/" rel="tag">svg</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="SVG"><a href="#SVG" class="headerlink" title="SVG"></a>SVG</h2><p>SVG 是可伸缩矢量图的缩写（Scalable Vector Graphics），是另一种图形格式，通过XML制定行组行，最后由SVG查看器来呈现XML，目前大多数浏览器都可以支持显示SVG。本文中的 <code>Animations</code>在SVG里面，主要用于呈现 SVG 动画效果，而SVG可以实现如下效果：</p>
+<ol>
+<li>基本行组行</li>
+<li>路径形状</li>
+<li>文本</li>
+<li>图片</li>
+<li>分层和透明度</li>
+<li>旋转</li>
+<li>渐变</li>
+<li>链接</li>
+<li>动画制作</li>
+<li>数据用例等</li>
+</ol>
+<p>就比如我们来编写一个简单的svg图像：<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025405_20210306143644974_255467392.png" alt="效果图"></p>
+<figure class="highlight svg"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;10&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">style</span>=<span class="string">&quot;stroke: red; fill:royalblue&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>svg 图像可以是非常简单也可以是非常复杂，这都将取决与项目的需要来进行改变。就如上述code 中的实例可以看出，我们首先使用了<code>svg</code>标签，之后通过写入<code>rect</code>标签来画一个矩形，设置x,y左边以及大小和轮廓以及填充颜色等。</p>
+<h2 id="浏览器使用"><a href="#浏览器使用" class="headerlink" title="浏览器使用"></a>浏览器使用</h2><p>在浏览器中我们可以通过使用<code>iframe</code>来引入svg img，通常像是ps、ai等专业级的设计工具都支持导出svg格式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;img.svg&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在编写svg的是时候需要注意，所有图像的根元素都是以<code>&lt;svg&gt;</code>所开始的，通常格式为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span> =<span class="string">“</span> <span class="attr">http:</span>//<span class="attr">www.w3.org</span>/<span class="attr">2000</span>/<span class="attr">svg</span>”</span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns</span>：<span class="attr">xlink</span> =<span class="string">“</span> <span class="attr">http:</span>//<span class="attr">www.w3.org</span>/<span class="attr">1999</span>/<span class="attr">xlink</span>”&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- code --&gt;</span></span><br><span class="line">&lt;/ svg&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="svg-分组"><a href="#svg-分组" class="headerlink" title="svg 分组"></a>svg 分组</h2><p>svg中，可以通过使用 <code>&lt;g&gt;</code>元素来将svg形状分组在一起，分组后可将单个图形变成一个整体，因此我们可以使用：<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025405_20210306153822530_38782602.png" alt="分组后的图形整体移动"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span> <span class="attr">transform</span>=<span class="string">&quot;rotate(10 20 40)&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">line</span> <span class="attr">x1</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y1</span>=<span class="string">&quot;10&quot;</span> <span class="attr">x2</span>=<span class="string">&quot;85&quot;</span> <span class="attr">y2</span>=<span class="string">&quot;10&quot;</span> <span class="attr">style</span>=<span class="string">&quot;stroke: royalblue;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">line</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span> <span class="attr">height</span>=<span class="string">&quot;20&quot;</span> <span class="attr">width</span>=<span class="string">&quot;40&quot;</span> <span class="attr">style</span>=<span class="string">&quot;stroke: royalblue;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025405_20210306161207551_1616724605.gif" alt="动画"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">style</span>=<span class="string">&quot;stroke: royalblue;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">animate</span> <span class="attr">attributeName</span>=<span class="string">&quot;y&quot;</span> <span class="attr">form</span>=<span class="string">&quot;160&quot;</span> <span class="attr">to</span>=<span class="string">&quot;160&quot;</span> <span class="attr">begin</span>=<span class="string">&quot;3s&quot;</span> <span class="attr">dur</span>=<span class="string">&quot;1s&quot;</span> <span class="attr">repeatCount</span>=<span class="string">&quot;indefinite&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">animate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在SVG动画中，主要基于SMIL即<code>Synchronized Multimedia Integration Language，同步多媒体集成语言</code>来进行实现，通过使用SMIL可以做到<code>动画的移动、颜色、路径运动、元素数值属性</code>等效果。</p>
+<h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025406_20210306162422639_1357675975.gif" alt="路径"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">&quot;0&quot;</span> <span class="attr">y</span>=<span class="string">&quot;0&quot;</span> <span class="attr">width</span>=<span class="string">&quot;10&quot;</span> <span class="attr">height</span>=<span class="string">&quot;10&quot;</span> <span class="attr">style</span>=<span class="string">&quot;stroke: blue;fill: none;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">animateMotion</span> </span></span><br><span class="line"><span class="tag">                <span class="attr">path</span>=<span class="string">&quot;M10,50 q60,50 100,0 q60,-50 100,0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">begin</span>=<span class="string">&quot;0s&quot;</span> <span class="attr">dur</span>=<span class="string">&quot;10s&quot;</span> <span class="attr">repeatCount</span>=<span class="string">&quot;indefinite&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">d</span>=<span class="string">&quot;M10,50 q60,50 100,0 q60,-50 100,0&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;#cd0000&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>SVG Animation的强大之处在于<strong>只要是浏览器页面中</strong>，使用<code>animation</code>元素，即使在没有<code>css、js</code>的情况下也可以实现，而svg图像可通过使用贝塞尔曲线（bezier curve）进行。</p>
+<h2 id="贝塞尔曲线"><a href="#贝塞尔曲线" class="headerlink" title="贝塞尔曲线"></a>贝塞尔曲线</h2><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>线性贝塞尔曲线（一次）</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025406_20210306165532174_1051631753.gif" alt="1"></td>
+</tr>
+<tr>
+<td>二次贝塞尔曲线</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025406_20210306165613845_1097901277.gif" alt="2"></td>
+</tr>
+<tr>
+<td>三次贝塞尔曲线</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025407_20210306165627599_1191101401.gif" alt="3"></td>
+</tr>
+<tr>
+<td>四次被塞尔曲线</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025407_20210306165644234_1076046540.gif" alt="4"></td>
+</tr>
+<tr>
+<td>五次被塞尔曲线</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025407_20210306165658031_655562351.gif" alt="5"></td>
+</tr>
+</tbody></table>
+<p>贝塞尔曲线又被称之为济埃曲线，主要应用在二维图形应用程序的数学曲线，一般矢量图形软件通过贝塞尔曲线来精确画出曲线，主要通过<code>线段</code>与<code>节点</code>组成：</p>
+<ol>
+<li>节点可通过拖动支点</li>
+<li>线段可进行伸缩</li>
+</ol>
+<h3 id="贝塞尔曲线指令"><a href="#贝塞尔曲线指令" class="headerlink" title="贝塞尔曲线指令"></a>贝塞尔曲线指令</h3><p>在上述的code直至中，我们主要使用了<code>path</code>元素来写贝塞尔曲线命令，通常Canvas以及CSS3动画函数也会使用贝塞尔曲线，但语法格式会有大多数不同，就比如svg的:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">path</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">d</span>=<span class="string">&quot;M10,50 q60,50 100,0 q60,-50 100,0&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过<code>指令+坐标值</code>进行实现，在svg中，标准的指令值有“10”个，分别为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M</td>
+<td>移动到……</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>关闭路径</td>
+</tr>
+<tr>
+<td>L</td>
+<td>直线到……</td>
+</tr>
+<tr>
+<td>H</td>
+<td>水平线到……</td>
+</tr>
+<tr>
+<td>V</td>
+<td>垂直线到……</td>
+</tr>
+<tr>
+<td>C</td>
+<td>三次贝塞尔曲线到……</td>
+</tr>
+<tr>
+<td>S</td>
+<td>光滑三次贝塞尔曲线到……</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>二次贝塞尔曲线到……</td>
+</tr>
+<tr>
+<td>T</td>
+<td>光滑贝塞尔曲线到……</td>
+</tr>
+<tr>
+<td>A</td>
+<td>椭圆弧</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Catumll-Rom 曲线</td>
+</tr>
+</tbody></table>
+<h3 id="贝塞尔曲线基础"><a href="#贝塞尔曲线基础" class="headerlink" title="贝塞尔曲线基础"></a>贝塞尔曲线基础</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025408_20210306170500839_1478706576.png" alt="点"><br>一个标准的贝塞尔曲线当中，主要有四个点，分别为<code>起始点（x）</code>、<code>终止点（y）</code>、<code>两个曲线点（x1,y1 and x2,y2）</code><br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025408_20210306180526949_1550185817.png" alt="三次贝塞尔曲线"><br>在上图的贝塞尔曲线中的坐标需要组合为<code>svg</code>格式，主要格式为：</p>
+<ol>
+<li>M<ol>
+<li>211 375</li>
+</ol>
+</li>
+<li>C<ol>
+<li>x1,y1 <ol>
+<li>579 294</li>
+</ol>
+</li>
+<li>x2,y2<ol>
+<li>209 464</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>X,Y<ol>
+<li>464 384</li>
+</ol>
+</li>
+</ol>
+<p>其表达式为<code>M 211 375 C 579 294, 206 209, 464 384</code> 即 ：<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615025408_20210306180641590_2099376339.png" alt="效果"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">width</span>=<span class="string">&#x27;500&#x27;</span> <span class="attr">height</span>=<span class="string">&#x27;500&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&#x27;M211 375 C 579 294,206 209, 464 384&#x27;</span> <span class="attr">style</span>=<span class="string">&quot;stroke:blue;stroke-width:1;fill:rgb(238, 238, 238);&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后强烈推荐使用“ <a target="_blank" rel="noopener" href="http://wx.karlew.com/canvas/bezier/">http://wx.karlew.com/canvas/bezier/</a> ”进行绘制贝塞尔曲线，虽然所生成的code为<code>Canvas</code>格式，但我们依然可以进行提取为<code>CSS或SVG</code>格式的语法</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/svg/1.SVG%20SMIL%20animation/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

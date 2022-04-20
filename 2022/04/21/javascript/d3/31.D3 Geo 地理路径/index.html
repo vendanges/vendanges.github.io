@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 Geo 地理路径 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 Geo 地理路径</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210420200831.png"><br>地理路径生成器（<code>Geographic Path Generator</code>），对于地图可视化，D3 支持少数的组建来显示或操作地理数据，通常使用 GeoJSON 格式（这也是在 JavaScript中的标准的地理特征表示方法，<strong>而TopoJSON则是GeoJSON的扩展</strong>）。</p>
+<p>对于 TopoJSON、GeoJSON，可以通过使用 <code>ogr2ogr 或 ogr2topo or geo2topo</code>来分别进行转换的数据通过<strong>地理路径生成器</strong>生成该地图的路径值，通过使用 <code>d3.geo.path</code>类来直接渲染到画布中。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>FA</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.gao.path</td>
+<td>创建一个新的地理路径生成器，可以使用默认的 abersUsa投影和 4.5个像素点半径</td>
+<td></td>
+</tr>
+<tr>
+<td>path(feature[,index])</td>
+<td>给制定的功能返回路径的数据串，可以是 GeoJSON 的特征或集合对象</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Point</td>
+<td>单个位置</td>
+</tr>
+<tr>
+<td></td>
+<td>MultiPoint</td>
+<td>一组位置</td>
+</tr>
+<tr>
+<td></td>
+<td>LineString</td>
+<td>一组位置形成一条连续的线</td>
+</tr>
+<tr>
+<td></td>
+<td>MultiLineString</td>
+<td>位置数组的数组，形成多条线</td>
+</tr>
+<tr>
+<td></td>
+<td>Polygon</td>
+<td>位置数组的数组，形成一个多边形</td>
+</tr>
+<tr>
+<td></td>
+<td>MultiPolygon</td>
+<td>位置的多维数组，形成了多个多边形</td>
+</tr>
+<tr>
+<td></td>
+<td>GeometryCollection</td>
+<td>几何对象的数组</td>
+</tr>
+<tr>
+<td></td>
+<td>Feature</td>
+<td>包含了几何对喜爱那个其中的一个特征</td>
+</tr>
+<tr>
+<td></td>
+<td>FeatureCollection</td>
+<td>特征对象的数组</td>
+</tr>
+<tr>
+<td>path.projection([projection])</td>
+<td>指定投影，如果投影被有被制定，那么就会返回当前的投影默认为<code>alberUsa（艾伯斯美国投影）</code></td>
+<td>美国地图常见的就是 alberUsa 这可以使得地图更加的紧凑和可用</td>
+</tr>
+<tr>
+<td>path.context[context]</td>
+<td>设置渲染上下文并发那会生成路径，默认为 null，如果为空的当一个给定调用时路径生成器会返回一个SVG路径字符串。非空则路径生成器替换调用函数为指定调查上下文来渲染几何图形</td>
+<td></td>
+</tr>
+<tr>
+<td>path.pointRadius([radius])</td>
+<td>设置点半径，用于显示点(Point) 和多点(MultPoint)的功能，如果未指定则返回当前的半径</td>
+<td></td>
+</tr>
+<tr>
+<td>path.area(feature)</td>
+<td>计算出指定几何体的投影面积<code>点（Point）、多点（MultiPoint）、LineString（线串）</code> 则面积为0，如果类型为<code>Polygon（多边形）、MultiPolygon（多点多边形）</code>那么先计算外部环面积，在减去内部空洞</td>
+<td></td>
+</tr>
+<tr>
+<td>path.centroid(feature)</td>
+<td>对指定的功能计算几何体的中心，单位为像素</td>
+<td></td>
+</tr>
+<tr>
+<td>path.bounds(feature)</td>
+<td>对特定的功能计算投影的边框</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="d3-geo-path"><a href="#d3-geo-path" class="headerlink" title="d3.geo.path"></a>d3.geo.path</h2><p>d3.geo.path 内计算方法主要分为<strong>计算面积(area)、中心(centroid)、边界框(bounds)<strong>，Area 用于计算出几何体的</strong>投影面积</strong>，centroid 来计算出几何体的中心及当前<strong>选择的中心</strong>（由于使用的是 TopoJSON 他是可以做到的），bounds（<strong>投影边框</strong>）。</p>
+<h3 id="area-and-centroid-as-well-as-bounds"><a href="#area-and-centroid-as-well-as-bounds" class="headerlink" title="area and centroid as well as bounds"></a>area and centroid as well as bounds</h3><p>Area 用于计算出几何体的<strong>投影面积</strong>，centroid 来计算出几何体的中心及当前<strong>选择的中心</strong>（由于使用的是 TopoJSON 他是可以做到的），bounds（<strong>投影边框</strong>）当鼠标经过图标数据的时候显示出 <code>area、centroid、bounds</code>总共加起来绘制出的数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">19</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20b</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&quot;mouseover&quot;</span>,<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                * 分别计算出投影面积、几何体的中心、边框</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">var</span> area = path.<span class="title function_">area</span>(d)</span><br><span class="line">            <span class="keyword">var</span> centroid = path.<span class="title function_">centroid</span>(d)</span><br><span class="line">            <span class="keyword">var</span> bounds = path.<span class="title function_">bounds</span>(d)</span><br><span class="line"></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                * 绘制中心点</span></span><br><span class="line"><span class="comment">                * 绘制边框</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            svg.<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>,centroid[<span class="number">0</span>])</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>,centroid[<span class="number">1</span>])</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">            svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>, bounds[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,bounds[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,bounds[<span class="number">1</span>][<span class="number">0</span>] - bounds[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,bounds[<span class="number">1</span>][<span class="number">1</span>] - bounds[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.province</span> &#123;</span><br><span class="line">  fill: white;</span><br><span class="line">  stroke: <span class="number">#25595a</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.circle</span>&#123;</span><br><span class="line">  stroke: <span class="number">#e17676</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">2px</span>;</span><br><span class="line">  fill: transparent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.rect</span>&#123;</span><br><span class="line">  stroke: <span class="number">#dbdbdb</span>;</span><br><span class="line">  stroke-dasharray: <span class="number">10</span>,<span class="number">10</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">2px</span>;</span><br><span class="line">  fill: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="形状生成器"><a href="#形状生成器" class="headerlink" title="形状生成器"></a>形状生成器</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210421202642.png"><br>形状生成器（Shape Geeratior）可以在地图上绘制网格，即<strong>经度和纬度</strong>来展现出一种视觉效果，也能让其图标先的更加专业：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.geo.graticule()</td>
+<td>构造一个经纬线</td>
+<td></td>
+</tr>
+<tr>
+<td>graticule()</td>
+<td>返回一个类型为 MultiLineString 几何对象表示这个刻度的所有经纬线</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>lines()</td>
+<td>返回一个 LineString 集合对象，用于这个刻度的为一个<strong>经线</strong>和<strong>纬线</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>outline()</td>
+<td>返回一个类型为 Polygon 的对象，表示出网格的轮廓</td>
+</tr>
+<tr>
+<td></td>
+<td>extent(<code>[extent]</code>)</td>
+<td>设置网格范围，如果没有指定范围，那么则返回抢钱的次要范围，默认为<code>[[-180,-80], [180,80]]</code></td>
+</tr>
+<tr>
+<td></td>
+<td>step(<code>step</code>)</td>
+<td>设置网格的主要和次要间隔，如果没有则返回<code>(10,10)</code></td>
+</tr>
+</tbody></table>
+<h3 id="经纬线网络"><a href="#经纬线网络" class="headerlink" title="经纬线网络"></a>经纬线网络</h3><p>经纬线网络可以通过过使用<code>d3.geo.path()</code>进行绘制，在graticule中，网格的范围被使用<code>经度范围为 -180～180,纬度范围是-90~90，每隔 10 度画一条经纬线</code>来通过<code>step</code>表示间隔距离。</p>
+<h4 id="中国地图"><a href="#中国地图" class="headerlink" title="中国地图"></a>中国地图</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">31</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * min 是一个极小值，来防止没有没有边界线的问题</span></span><br><span class="line"><span class="comment"> */</span> <span class="keyword">var</span> min = <span class="number">1e-4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 创建网格生成器，生成网格</span></span><br><span class="line"><span class="comment">    * 通过最后的 grid 来进行绑定数据进行绘制。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> graticule = d3.<span class="property">geo</span>.<span class="title function_">graticule</span>()</span><br><span class="line">    <span class="comment">/* 经度范围为 -180～180,纬度范围是-90~90，每隔 10 度画一条经纬线*/</span></span><br><span class="line">    .<span class="title function_">extent</span>([[-<span class="number">180</span>,-<span class="number">90</span>],[<span class="number">180</span>+min,<span class="number">90</span>]])</span><br><span class="line">    .<span class="title function_">step</span>([<span class="number">10</span>,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> grid = <span class="title function_">graticule</span>()</span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">datum</span>(grid)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;graticule&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.province</span> &#123;</span><br><span class="line">  fill: white;</span><br><span class="line">  stroke: <span class="number">#25595a</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.graticule</span> &#123;</span><br><span class="line">  fill: transparent;</span><br><span class="line">  stroke: <span class="number">#e2e2e2</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="世界地图"><a href="#世界地图" class="headerlink" title="世界地图"></a>世界地图</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210421202610.png"></p>
+<blockquote>
+<p>地图JSON: <a target="_blank" rel="noopener" href="https://gitee.com/mirrors_jamiebuilds/world.geo.json/blob/master/countries.geo.json#">https://gitee.com/mirrors_jamiebuilds/world.geo.json/blob/master/countries.geo.json#</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">120</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * min 是一个极小值，来防止没有没有边界线的问题</span></span><br><span class="line"><span class="comment"> */</span> <span class="keyword">var</span> min = <span class="number">1e-4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 创建网格生成器，生成网格</span></span><br><span class="line"><span class="comment">    * 通过最后的 grid 来进行绑定数据进行绘制。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> graticule = d3.<span class="property">geo</span>.<span class="title function_">graticule</span>()</span><br><span class="line">    <span class="comment">/* 经度范围为 -180～180,纬度范围是-90~90*/</span></span><br><span class="line">    .<span class="title function_">extent</span>([[-<span class="number">180</span>,-<span class="number">90</span>],[<span class="number">180</span>+min,<span class="number">90</span>]])</span><br><span class="line">    .<span class="title function_">step</span>([<span class="number">10</span>,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> grid = <span class="title function_">graticule</span>()</span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">datum</span>(grid)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;graticule&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 绘制地图</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./world-continents.geo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(root.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="圆形网络"><a href="#圆形网络" class="headerlink" title="圆形网络"></a>圆形网络</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210421202714.png"><br>除了绘制经纬线网络之外，还有<strong>原型网络的</strong>绘制，同样是通过使用<code>d3.geo.path()</code>进行绘制，地图和网格都会自动进行适应，需要注意的是如果出现问题那基本上就是地图数据的原因，目前支持绘制圆形网络的生成器方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.geo.circle</td>
+<td>为一个指定的地理位置创建带有设置的半径，在圆中心创建一个特征生成器</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>circle(arguments)</td>
+<td>返回一个类型为多边形的 GeoJSON 对象</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>circle.origin([origin])</strong> 设置<code>圆的圆点</code>，默认值为 (0,0)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>circle.precision([precision])</strong> 设置圆半径，默认为<code>90度</code></td>
+</tr>
+</tbody></table>
+<p>圆形网络是一个分别在平面地图和球面地图，平面主要是将球面地图展开后进行的结果，我们可以使用<code>d3.geo.mercator()</code>，来绘制出平面图，而通过使用<code>d3.geo.orthographic</code>，来绘制出球形网络。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.gao.orthographic()</td>
+<td>来显示出适合单个半球的投影，即球面投影</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>rotation(<code>[rotate]</code>)</td>
+<td>指定旋转，设置投影的三个轴的指定角度</td>
+</tr>
+<tr>
+<td></td>
+<td>clipAngle(<code>angle</code>)</td>
+<td>设置投影和裁剪圆的半径，指定角度并返回。如果角度为 null则切换到<strong>子午线切割，而不是小圆裁剪</strong>。（如果没有指定角度，则发那会出当前的裁剪角度，默认为空）</td>
+</tr>
+</tbody></table>
+<h4 id="mercator"><a href="#mercator" class="headerlink" title="mercator"></a>mercator</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">120</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * min 是一个极小值，来防止没有没有边界线的问题</span></span><br><span class="line"><span class="comment"> */</span> <span class="keyword">var</span> min = <span class="number">1e-4</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> angles = d3.<span class="title function_">range</span>(<span class="number">0</span>,<span class="number">150</span>,<span class="number">8</span>)</span><br><span class="line"><span class="keyword">var</span> geocircle = d3.<span class="property">geo</span>.<span class="title function_">circle</span>()</span><br><span class="line">    .<span class="title function_">origin</span>([<span class="number">77</span>,-<span class="number">19</span>])</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .<span class="title function_">selectAll</span>(<span class="string">&quot;.geocircle&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(angles)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;graticule&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> circle = geocircle.<span class="title function_">angle</span>(d)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">path</span>(<span class="title function_">circle</span>())</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 绘制地图</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./world-continents.geo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(root.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="orthographic"><a href="#orthographic" class="headerlink" title="orthographic"></a>orthographic</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210421202824.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">orthographic</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">300</span>)</span><br><span class="line">    .<span class="title function_">rotate</span>([-<span class="number">90</span>,-<span class="number">20</span>])</span><br><span class="line">    .<span class="title function_">clipAngle</span>(<span class="number">90</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * min 是一个极小值，来防止没有没有边界线的问题</span></span><br><span class="line"><span class="comment"> */</span> <span class="keyword">var</span> min = <span class="number">1e-4</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> angles = d3.<span class="title function_">range</span>(<span class="number">0</span>,<span class="number">150</span>,<span class="number">8</span>)</span><br><span class="line"><span class="keyword">var</span> geocircle = d3.<span class="property">geo</span>.<span class="title function_">circle</span>()</span><br><span class="line">    .<span class="title function_">origin</span>([<span class="number">77</span>,-<span class="number">19</span>])</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .<span class="title function_">selectAll</span>(<span class="string">&quot;.geocircle&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(angles)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;graticule&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> circle = geocircle.<span class="title function_">angle</span>(d)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">path</span>(<span class="title function_">circle</span>())</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 绘制地图</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./world-continents.geo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(root.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/31.D3%20Geo%20%E5%9C%B0%E7%90%86%E8%B7%AF%E5%BE%84/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

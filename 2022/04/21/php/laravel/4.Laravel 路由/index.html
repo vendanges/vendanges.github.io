@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 路由 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 路由</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Laravel路由与Spring boot的控制器相差无几，相信学过Spring boot的读者会感觉Laravel非常的和蔼可亲，甚至比Spring boot更好理解。通过阅读前面的Laravel的文件结构我们可以得知，在<code>app/reutes/web.php</code>文件中定义路由，在这里面的路由通常都会被分配给web中间件组<strong>，在不为人知的情况下，他还提供了会话状态和CSRF保护的作用</strong>。</p>
+<h2 id="路由的定义"><a href="#路由的定义" class="headerlink" title="路由的定义"></a>路由的定义</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/4.laravel%20%E8%B7%AF%E7%94%B1.md/20210207072219299_618828202.png"><br>在Laravel中，为我们提供了一个简洁优雅的定义路由语法，为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/hey&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello,world!&#x27;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="视图路由"><a href="#视图路由" class="headerlink" title="视图路由"></a>视图路由</h3><p>当然此时你觉得单纯的返回字符串已经完全满足不了需求了，这个时候我们可以在定义一个<strong>视图（view）</strong>路由，需要注意的视图路由通常存放在<code>resources/view/</code>目录下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这个时候如果你访问<code>localhost:8000</code>则会跳转至<code>/reousces/view/welcome.blade.php</code>文件所呈现的视图。</p>
+<h3 id="重定向路由（redirect）"><a href="#重定向路由（redirect）" class="headerlink" title="重定向路由（redirect）"></a>重定向路由（redirect）</h3><p>重定向路由即访问$url后跳转至另外一个url，而不会产生任何的报错即称之为“重定向”，通俗了说就是<strong>你在你家开了房门，发现外面并不是自己的家</strong>就为重定向：</p>
+<h4 id="重定向到另一个视图"><a href="#重定向到另一个视图" class="headerlink" title="重定向到另一个视图"></a>重定向到另一个视图</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">redirect</span>(<span class="string">&#x27;/hey&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>即访问<a target="_blank" rel="noopener" href="http://localhost:8000/hey%EF%BC%8C%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0&#39;/&#39;%E6%89%80%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%86%E5%9B%BE%60%60%60/resources/view/welcome.blade.php%60%60%60%E3%80%82">http://localhost:8000/hey，重定向到&#39;/&#39;所显示的视图```/resources/view/welcome.blade.php```。</a></p>
+<h4 id="重定向到上一个页面"><a href="#重定向到上一个页面" class="headerlink" title="重定向到上一个页面"></a>重定向到上一个页面</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/hey&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">redirect</span>()-&gt;<span class="title function_ invoke__">back</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在Laravel之中，我们也可通过<code>Route::get</code>的方式来进行重定向，而最终执行重定向的是<code>return redirect</code>，只不过第一种方法更加的简洁。</p>
+<h2 id="路由参数"><a href="#路由参数" class="headerlink" title="路由参数"></a>路由参数</h2><p>路由参数通常是指用于传递的一些信息，主要分为两类，分别为<strong>必要参数以及一个可选参数</strong>，本文我们主要通过获取id以及名称来进行不同的演示：</p>
+<h3 id="必要参数"><a href="#必要参数" class="headerlink" title="必要参数"></a>必要参数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;id/&#123;id&#125;&#x27;</span>, function (<span class="variable">$id</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;我的ID是：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>可通过访问<code>localhost:8000/id/8012</code>来访问自己的id，所返回的结果也一定是<code>我的ID是：8012</code>。</p>
+<h3 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h3><p>可选参数与必要参数的区别就是，可选参数允许你提交空值，之后所返回的不是404而是默认定义的字符串或数值。如通过必要参数时，你访问<code>localhost:8000/id/</code>则会返回404，但是如果使用可选参数将会返回默认的值，定义方法如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;name?&#125;&#x27;</span>, function (<span class="variable">$name</span> = <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;name?&#125;&#x27;</span>, function (<span class="variable">$name</span> = <span class="string">&#x27;test&#x27;</span>) &#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样你如果访问<code>localhost:8000/user/</code>不会返回404,而是返回test信息。</p>
+<h2 id="路由约束"><a href="#路由约束" class="headerlink" title="路由约束"></a>路由约束</h2><p>路由约束可分为正则表达式约束、全局约束两种方式，可以理解为使用正则表达式来约束单个路由，使用全局约束来约束全部路由：</p>
+<h3 id="正则表达式约束"><a href="#正则表达式约束" class="headerlink" title="正则表达式约束"></a>正则表达式约束</h3><p>使用正则表达式约束需要配合<code>where</code>来定义一个正则表达式用于约束该路由：</p>
+<h4 id="单个函数约束"><a href="#单个函数约束" class="headerlink" title="单个函数约束"></a>单个函数约束</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;id/&#123;id&#125;&#x27;</span>, function (<span class="variable">$id</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;我的ID是：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">where</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;[0-9]+&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="多个函数约束"><a href="#多个函数约束" class="headerlink" title="多个函数约束"></a>多个函数约束</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id&#125;/&#123;name&#125;&#x27;</span>, function (<span class="variable">$id</span>, <span class="variable">$name</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;当前用户ID：&quot;</span>.<span class="variable">$id</span> . <span class="string">&quot;，名称是：&quot;</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">where</span>([<span class="string">&#x27;id&#x27;</span> =&gt; <span class="string">&#x27;[0-9]+&#x27;</span>, <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;[A-Za-z]+&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+<p>此时如果你访问<code>http://localhost:8000/user/1/test</code>将会显示“当前用户ID：1，名称是：test”，但是如果不按照正则表达式约束则会出现<code>404</code>的错误，如<code>http://localhost:8000/user/1s/test</code>。</p>
+<h3 id="全局约束"><a href="#全局约束" class="headerlink" title="全局约束"></a>全局约束</h3><p>在Laravel项目中，全局约束由<code>app/Providers/RouteServiceProvider.php</code>所定义，具体为在19行左右之中：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Define your route model bindings, pattern filters, etc.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 定义id函数仅允许0-9的输入回显</span></span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">pattern</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;[0-9]+&#x27;</span>);</span><br><span class="line">    <span class="built_in">parent</span>::<span class="title function_ invoke__">boot</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>routes&#x2F;web.php文件内容如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id&#125;&#x27;</span>, function (<span class="variable">$id</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;我的ID是：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>之后通过<a target="_blank" rel="noopener" href="http://localhost:8000/user/11s%E8%AE%BF%E9%97%AE%E5%88%99%E4%BC%9A%E5%87%BA%E7%8E%B0404%E9%94%99%E8%AF%AF%EF%BC%8C%E5%A6%82%E6%8C%89%E7%85%A7%E5%85%A8%E5%B1%80%E7%BA%A6%E6%9D%9F%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%9A%E4%B9%89%E8%AE%BF%E9%97%AE%60%60%60http://localhost:8000/user/11%60%60%60%E5%88%99%E4%BC%9A%E5%9B%9E%E6%98%BE%E2%80%9C%E6%88%91%E7%9A%84ID%E6%98%AF%EF%BC%9A11%E2%80%9D%E6%95%B0%E6%8D%AE%E3%80%82">http://localhost:8000/user/11s访问则会出现404错误，如按照全局约束文件内定义访问```http://localhost:8000/user/11```则会回显“我的ID是：11”数据。</a></p>
+<h2 id="路由命名"><a href="#路由命名" class="headerlink" title="路由命名"></a>路由命名</h2><p>路由命名可以为指定的路由生成一个url或者重定向，可以通过<code>name</code>来指定路由名称：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/test&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id?&#125;&#x27;</span>, function (<span class="variable">$id</span> = <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;我的ID是：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;user.id&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="路由名称前缀"><a href="#路由名称前缀" class="headerlink" title="路由名称前缀"></a>路由名称前缀</h3><p>后续我们会有一个路由前缀，而为了简便开发，Laravel还提供了一个路由名称前缀，来方便我们与视图的对接：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">group</span>([], function () &#123;</span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/test&#x27;</span>, function () &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">name</span>(<span class="string">&#x27;user.&#x27;</span>)-&gt;<span class="title function_ invoke__">group</span>(function () &#123;</span><br><span class="line">        <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id?&#125;&#x27;</span>, function (<span class="variable">$id</span> = <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;ID is be:&quot;</span> .<span class="variable">$id</span>;</span><br><span class="line">        &#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;id&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    ……</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当然我们这还加上了路由分组，来让代码的可读性和延伸扩展性进行了一系列的优化，而这个路由前缀的最后结果为<code>user.id</code>，我们可以继续。</p>
+<h3 id="test-blade-php"><a href="#test-blade-php" class="headerlink" title="test.blade.php"></a>test.blade.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;&#123;&#123; str_replace(&#x27;_&#x27;, &#x27;-&#x27;, app()-&gt;getLocale()) &#125;&#125;&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;title&gt;Laravel&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Fonts --&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;https://fonts.googleapis.com/css?family=Nunito:200,600&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;a href=<span class="string">&quot;&#123;&#123;route(&#x27;user.id&#x27;, [&#x27;id&#x27; =&gt; 10])&#125;&#125;&quot;</span>&gt;go&gt;&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由分组"><a href="#路由分组" class="headerlink" title="路由分组"></a>路由分组</h2><p>在Laravel框架中，路由分组可以通过使用<code>Route::group</code>将不同的路由分别划分在一起，来让代码更加的简洁优雅：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">group</span>([],function () &#123;</span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/test&#x27;</span>, function () &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id?&#125;&#x27;</span>, function (<span class="variable">$id</span> = <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我的ID是：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">    &#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;user.id&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="子域名路由"><a href="#子域名路由" class="headerlink" title="子域名路由"></a>子域名路由</h2><p>顾名思义即用于处理子域名的路由，如pv.zsun.org.cn就是一个子路由，本文仅仅用于演示语法，该语法并不具有可执行性，想实现的读者可通过配置服务器应用文件即可。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">domain</span>(<span class="string">&#x27;&#123;er&#125;.url.org.cn&#x27;</span>)-&gt;<span class="title function_ invoke__">group</span>(function () &#123;</span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;user/&#123;id&#125;&#x27;</span>, function (<span class="variable">$er</span>, <span class="variable">$id</span>) &#123;</span><br><span class="line">       <span class="comment">// code</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;当前子域名为：&quot;</span>.<span class="variable">$er</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;用户ID为：&quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="域名前缀"><a href="#域名前缀" class="headerlink" title="域名前缀"></a>域名前缀</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/4.laravel%20%E8%B7%AF%E7%94%B1.md/20210207112951830_1866358753.png"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">prefix</span>(<span class="string">&#x27;one&#x27;</span>)-&gt;<span class="title function_ invoke__">group</span>(function () &#123;</span><br><span class="line">   <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;two&#x27;</span>, function () &#123;</span><br><span class="line">       <span class="comment">// 即 localhost:8000/one/two</span></span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;one/two&quot;</span>;</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>域名前缀偶尔会让读者产生一丝的误会，实际上域名前缀指的是一个一个目录下包含着的一些文件，以这个为比喻可能更加方便读者的理解，如上述我们所写的域名前缀则意为：</p>
+<blockquote>
+<p>one&#x2F;下的&#x2F;two，即可通过<a target="_blank" rel="noopener" href="http://localhost:8000/one/two%E8%BF%9B%E8%A1%8C%E8%AE%BF%E9%97%AE%EF%BC%8C%E5%BD%93%E7%84%B6%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AAthree">http://localhost:8000/one/two进行访问，当然我们也可以定义一个three</a>:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">prefix</span>(<span class="string">&#x27;one&#x27;</span>)-&gt;<span class="title function_ invoke__">group</span>(function () &#123;</span><br><span class="line">   <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;two&#x27;</span>, function () &#123;</span><br><span class="line">       <span class="comment">// 即 localhost:8000/one/two</span></span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;one/two&quot;</span>;</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;three&#x27;</span>, function () &#123;</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;one/three&quot;</span>;</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/4.Laravel%20%E8%B7%AF%E7%94%B1/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

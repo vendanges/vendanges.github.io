@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>流动池与AMM 自动做市机制 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>流动池与AMM 自动做市机制</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/blockchain/" rel="tag">blockchain</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在了解流动池与AMM自动做市机制之前，我们需要了解下 DeFi 即去中心化金融(Decentralized finance)，它是一种新兴的金融技术，通常类似于加密货币所使用的分布式账本(钱包)，他主要的方便之处在于：</p>
+<ol>
+<li>方便了其他金融公司所收取的费用</li>
+<li>余额存放在安全的数字钱包中</li>
+<li>可以在任何由网络连接的地方使用</li>
+<li>可以在在分钟或几秒钟内转移你的资金。</li>
+</ol>
+<p>DeFi 主要使用加密货币进行交易，而传统的 CeFi (集中财务,Centralized Finance) 中，你的钱归银行持有，他们的目的主要就是为了赚钱，以此完成一整个金融系统的流动，在一小部分的银行厂商内，你在转账时都会进行一定的收费。</p>
+<p>而其它的金融服务也都需要收费，甚至你向银行申请贷款，也都需要几天甚至是几月来进行批准，这可能会耽误你的时间。</p>
+<p>而去中心化金融他主要是创建于区块链上的金融模式，且不依赖于卷商、交易所或银行等金融交易机构所提供的金融工具，主要利用<strong>区块链上的智能合约</strong>，以此来进行交易活动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DeFi 平台允许人们向他人借出或借入资金，交易加密货币，并在类似于储蓄账户中获取利息</span><br></pre></td></tr></table></figure>
+
+<h2 id="流动资金池"><a href="#流动资金池" class="headerlink" title="流动资金池"></a>流动资金池</h2><p>Liquidity Pools，即流动资金池，使得用户能够在分散的交易所(DEX)和其他的 DeFi 平台上买卖加密货币。在 DeFi 中，交易者为分散式交易所(DEX,Decentralized exchange) 提供流动性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEX 是一种加密货币交易所，允许直接的点对点加密货币在线交易，无需中介。</span><br></pre></td></tr></table></figure>
+
+<p>流动池是一种机制，通过该机制用户可以将其资产汇聚到 DEX 的智能合约中，为交易者在交易货币之间提供资产的流动性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">智能合约是区块链中的基础技术，同时也是以太坊网络中的关键要素，智能合约是自动执行的一组 Code，然后在区块链上进行验证。可以将智能合约理解成传统意义上的合同，同样是多方之间的协议，其中以方向另一方提供有价值的东西，而且交易双方要被智能合约所约束。</span><br><span class="line"></span><br><span class="line">他与传统的交易来进行对比，不同之处在于，智能合约可以自动执行协议条款中的 Code，然后 Code 会发送到区块链上的地址，由该区块的共识机制进行验证，一旦交易包含在此区块中，那么就会执行智能合约且发生不可挽回的操作。</span><br><span class="line"></span><br><span class="line">在智能合约中，消除了传统 CeFi 中的中介以及合同的执行需求，简化了合同的谈判过程，主要通过 Code 来定义交易的机制，从而成为条款的仲裁者。</span><br><span class="line"></span><br><span class="line">但智能合约也有缺点，就是如果智能合约中的 Code 出现或存在错误，则会使得智能合约无效，且不可更改。因为智能合约是无信任、自主、分散且透明的，一旦部署他就是不可逆以及不可修改的存在。</span><br><span class="line"></span><br><span class="line">**一个合约就是一个交易货币**，一个资金流动池中包含了多了加密货币，在资金池中我们可以指定的转换币的类型。</span><br></pre></td></tr></table></figure>
+
+<p>流动资金池的主要协议是 Bancor ，但随着 Uniswap 的普及使得这一概念引起了更多的关注，在详细了解流动池之前，我们可以先了解下 Uniswap。</p>
+<p>Uniswap 是一个领先的分散式加密交易所，完全的去中心化，这意味着他不是由单个实体所运营，而是采用一种相对于新颖的交易模型，称之为流动性协议</p>
+<h3 id="Uniswap"><a href="#Uniswap" class="headerlink" title="Uniswap"></a>Uniswap</h3><p>Uniswap 系统就是一个自动化的流动性协议，通过常数乘积公式进行驱动这也是 Uniswap 所使用的自动做市算法 <a target="_blank" rel="noopener" href="https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/glossary#x--y--k">词汇表|优斯瓦普 (uniswap.org)</a> 在 Uniswap 中的智能合约内，都管理着由一个由两个 <a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-20">ERC-20</a> 合约所储备组成的流动性机制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERC20 tokens 是一个合约标准，也是 token 的标准接口，允许智能合约为 token 实现标准的 API 该标准提供了转移 token 的基本功能并允许 token 获得批准，使得可以在链上第三方应用。</span><br></pre></td></tr></table></figure>
+
+<p>任何人都可以成为流动池与流动池提供者 (Liquidity provider,LP)，其方法主要是存入每个底层 token 的等价值，以换取流动池 token。</p>
+<h4 id="Pool"><a href="#Pool" class="headerlink" title="Pool"></a>Pool</h4><p>Uniswap 的独特之处在于，他不会使用订单薄来推到资产的价格，也不会匹配 token 的买家和卖家，是一个完全去中心化的平台和交易流程。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202251201283.png"></p>
+<p>每个 Uniwap 流动池都是一堆 ERC20 合约所交易的场所，起初在创建时每个 token 都为 0，第一个 LP 是设定流动池初始加价格。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202251628658.png"></p>
+<p>无论何时何地将流动性存入到流动池中，都会生成一流动性 token 并将其发送到提供者的地址，流动池中的流动性比列决定了提供者收到的流动性 token(Liquidity tokens)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Liquidity tokens 本身就是可以交易的资产，LP(Liquidity providers,流动提供者)可以出售、转让或者以其他方式其流动性的 token。 </span><br></pre></td></tr></table></figure>
+
+<p>为了获取相关的流动性，加上其他费用，LP 必须烧掉自己的 Liquidity Tokens 以任何他们所认为的合适方式。</p>
+<h3 id="AMM"><a href="#AMM" class="headerlink" title="AMM"></a>AMM</h3><p>自动化做市商(American Metal Market) 可以理解为一种机器人，可以让买卖双方的资产进行报价。而他主要是一种去中心化的交易平台(DEX) 合约，通过数学公式对资产等进行定价（主要通过算法进行完成），而不是传统的订单薄。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">订单薄是一个按照价格排序的当前资产目前开放的买卖订单列表</span><br></pre></td></tr></table></figure>
+
+<p>AMM 的定价公式会随着不同的合约进行变化，这类似于 <a target="_blank" rel="noopener" href="https://uniswap.org/">uniswap</a> 的 <code>x * y= k</code> 即流动性池。在传统的做商机制中，适用于作用大量资源并采用复合策略的公司，借助这种机制使得交易者可以在订单薄交易平台中获得优质的成交量。</p>
+<p>自动化做商机制中。则将做市商的这一过程去中心化，让所有人都可以在区块链中创建市场</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/blockchain/2.%E6%B5%81%E5%8A%A8%E6%B1%A0%E4%B8%8EAMM%E8%87%AA%E5%8A%A8%E5%81%9A%E5%B8%82%E6%9C%BA%E5%88%B6/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

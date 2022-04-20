@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JAVA 重写与重载 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JAVA 重写与重载</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">java 面向对象</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态指的是在<strong>继承</strong>中<strong>子类继承父类</strong>的行为，在JAVA中多态是通过重写（Override）和重载（Overload）来实现的。</p>
+<h2 id="重写（Overriding）"><a href="#重写（Overriding）" class="headerlink" title="重写（Overriding）"></a>重写（Overriding）</h2><p>​		是<strong>父类</strong>与<strong>子类</strong>，之间<strong>多态性的表现</strong>，如果<strong>子类</strong>中，某个<strong>方法类</strong>，具有<strong>相同名称和参数</strong>就被称之为方法<strong>重写（Override）</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Overriding_A</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// Overriding_A</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Overriding_B</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// Overriding_B</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">Overrding_A</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// Overriding_A</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="重载（Overload）"><a href="#重载（Overload）" class="headerlink" title="重载（Overload）"></a>重载（Overload）</h2><p>​		一个类中<strong>多态性</strong>的一种表现，如果在一个<strong>类</strong>中，定义了多个<strong>同名</strong>的放方法，但是他们的“<strong>参数列表</strong>”<strong>不同，则称方法为重载（Overload）</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Overloading_A</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// Overloading_A</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Overloading_A</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">		<span class="comment">// Overloading_A (int num )</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>重写（Override） or 重载（Overload）之间的区别就是：</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>De</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重写</td>
+<td><strong>方法</strong>和<strong>参数</strong>都需要<strong>相同</strong></td>
+</tr>
+<tr>
+<td>重载</td>
+<td><strong>方法相同</strong>，<strong>参数</strong>可<strong>不相同</strong></td>
+</tr>
+</tbody></table>
+<p><strong>重写（Override）方法和参数都需要相同，但重载（Overload）方法名相同，但参数不同</strong></p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/2.JAVA%20%E9%87%8D%E5%86%99%E4%B8%8E%E9%87%8D%E8%BD%BD/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

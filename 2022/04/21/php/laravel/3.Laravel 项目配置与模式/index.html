@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 项目配置与模式 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 项目配置与模式</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h2><h3 id="env"><a href="#env" class="headerlink" title="env"></a>env</h3><p>Laravel的项目配置与模式与Java or Java  web差不多，可通过<code>.env</code>文件自来配置当前项目的环境，这个文件是在composer创建项目时自动进行创建的，其中<code>.env</code>下的文件都是自进行生成的，当然你也可以根据项目所需进行自定义，以下是<code>.env</code>文件内容：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">APP_NAME=Laravel</span><br><span class="line">APP_ENV=local</span><br><span class="line">APP_KEY=base64:mHuJZujFK7vNFQAK+TqBNYGkw16feddY6Bf6oK8UUtc=</span><br><span class="line">APP_DEBUG=<span class="literal">true</span></span><br><span class="line">APP_URL=http:<span class="comment">//localhost</span></span><br><span class="line"></span><br><span class="line">LOG_CHANNEL=stack</span><br><span class="line"></span><br><span class="line">DB_CONNECTION=mysql</span><br><span class="line">DB_HOST=<span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">DB_PORT=<span class="number">3306</span></span><br><span class="line">DB_DATABASE=laravel</span><br><span class="line">DB_USERNAME=root</span><br><span class="line">DB_PASSWORD=</span><br><span class="line"></span><br><span class="line">BROADCAST_DRIVER=log</span><br><span class="line">CACHE_DRIVER=file</span><br><span class="line">QUEUE_CONNECTION=sync</span><br><span class="line">SESSION_DRIVER=file</span><br><span class="line">SESSION_LIFETIME=<span class="number">120</span></span><br><span class="line"></span><br><span class="line">REDIS_HOST=<span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">REDIS_PASSWORD=<span class="literal">null</span></span><br><span class="line">REDIS_PORT=<span class="number">6379</span></span><br><span class="line"></span><br><span class="line">MAIL_DRIVER=smtp</span><br><span class="line">MAIL_HOST=smtp.mailtrap.io</span><br><span class="line">MAIL_PORT=<span class="number">2525</span></span><br><span class="line">MAIL_USERNAME=<span class="literal">null</span></span><br><span class="line">MAIL_PASSWORD=<span class="literal">null</span></span><br><span class="line">MAIL_ENCRYPTION=<span class="literal">null</span></span><br><span class="line"></span><br><span class="line">AWS_ACCESS_KEY_ID=</span><br><span class="line">AWS_SECRET_ACCESS_KEY=</span><br><span class="line">AWS_DEFAULT_REGION=us-east-<span class="number">1</span></span><br><span class="line">AWS_BUCKET=</span><br><span class="line"></span><br><span class="line">PUSHER_APP_ID=</span><br><span class="line">PUSHER_APP_KEY=</span><br><span class="line">PUSHER_APP_SECRET=</span><br><span class="line">PUSHER_APP_CLUSTER=mt1</span><br><span class="line"></span><br><span class="line">MIX_PUSHER_APP_KEY=<span class="string">&quot;$&#123;PUSHER_APP_KEY&#125;&quot;</span></span><br><span class="line">MIX_PUSHER_APP_CLUSTER=<span class="string">&quot;$&#123;PUSHER_APP_CLUSTER&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="config-x2F-database-php"><a href="#config-x2F-database-php" class="headerlink" title="config&#x2F;database.php"></a>config&#x2F;database.php</h3><p>相信很多读者都使用过原生态的php写web项目，连接数据库的语法都极具特色，在Laravel项目中，Laravel为我们提供了一个专门的数据库配置文件，我们只需要修改相关参数即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;mysql&#x27;</span> =&gt; [</span><br><span class="line">    <span class="string">&#x27;driver&#x27;</span> =&gt; <span class="string">&#x27;mysql&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;url&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DATABASE_URL&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;host&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_HOST&#x27;</span>, <span class="string">&#x27;127.0.0.1&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;port&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_PORT&#x27;</span>, <span class="string">&#x27;3306&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;database&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_DATABASE&#x27;</span>, <span class="string">&#x27;forge&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;username&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_USERNAME&#x27;</span>, <span class="string">&#x27;forge&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;password&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_PASSWORD&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;unix_socket&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;DB_SOCKET&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;charset&#x27;</span> =&gt; <span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;collation&#x27;</span> =&gt; <span class="string">&#x27;utf8mb4_unicode_ci&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;prefix&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;prefix_indexes&#x27;</span> =&gt; <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&#x27;strict&#x27;</span> =&gt; <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&#x27;engine&#x27;</span> =&gt; <span class="literal">null</span>,</span><br><span class="line">    <span class="string">&#x27;options&#x27;</span> =&gt; <span class="title function_ invoke__">extension_loaded</span>(<span class="string">&#x27;pdo_mysql&#x27;</span>) ? <span class="title function_ invoke__">array_filter</span>([</span><br><span class="line">        PDO::<span class="variable constant_">MYSQL_ATTR_SSL_CA</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;MYSQL_ATTR_SSL_CA&#x27;</span>),</span><br><span class="line">    ]) : [],</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h3 id="维护模式-down"><a href="#维护模式-down" class="headerlink" title="维护模式 (down)"></a>维护模式 (down)</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/3.laravel%20%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%A8%A1%E5%BC%8F.md/20210207065230658_109968253.png"><br>Laravel维护模式可以通过使用<code>php artisan down</code>进行开启，开启后如果再次访问则会出现503：暂停服务的字样</p>
+<h3 id="正常模式-（up）"><a href="#正常模式-（up）" class="headerlink" title="正常模式 （up）"></a>正常模式 （up）</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/3.laravel%20%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%A8%A1%E5%BC%8F.md/20210207065435553_513893208.png"><br>当然，Laravel不仅仅支持维护模式，还支持一个正常模式，这个模式下则会显示正常的文件内信息，可通过<code>php artisan up</code>开启。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/3.Laravel%20%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%A8%A1%E5%BC%8F/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

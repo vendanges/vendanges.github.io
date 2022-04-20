@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JSP 指令标记 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JSP 指令标记</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>常用的Java Server page语言指令有page 和 include指令，而JSP指令用于<strong>h转换阶段</strong>，主要提供整个<strong>JSP 页面的相关信息</strong>，影响由JSP生成的Servlet（应用连接器）整体结构。</p>
+<h2 id="page"><a href="#page" class="headerlink" title="page"></a>page</h2><p>page指令可以用于标记整个Java Server pages页面的一些属性，如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>language</td>
+<td>设置当前页面开发语言</td>
+<td>目前仅仅可以使用java</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>用于应用程序来打开的方式类型</td>
+<td>contentType</td>
+</tr>
+<tr>
+<td></td>
+<td>text&#x2F;html</td>
+<td>HTML网页形式</td>
+</tr>
+<tr>
+<td></td>
+<td>text&#x2F;plain</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;pdf</td>
+<td>PDF文档</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;msword</td>
+<td>Word 应用程序</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;vnd.ms-powerpowerpoint</td>
+<td>PowerPoint 应用程序</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;jpeg</td>
+<td>JPEG 图像</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;png</td>
+<td>PNG 图像</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;gif</td>
+<td>GIF 图像</td>
+</tr>
+<tr>
+<td>pageEncoding</td>
+<td>charset 服务器发送给客户浏览器时所见到的网页内容编码</td>
+<td>pageEncoding是指JSP文件自身存储时的所用编码</td>
+</tr>
+<tr>
+<td>charset</td>
+<td>charset 和pageEncoding 一样，都是网页内容编码，如果pageEncoding不存在则使用<code>charset</code></td>
+<td>如果都不存在这使用默认编码<code>ISO-8859-1</code></td>
+</tr>
+</tbody></table>
+<h2 id="include"><a href="#include" class="headerlink" title="include"></a>include</h2><p>include指令可以用于当一个网站中有多个Java Server pages页面需要显示同样的信息时，为了减少代码量和易于阅读可以使用<code>include</code>指令进行处理。Inculde指令的作用就是将一个jsp文件、Html网页文件或其他文本静态嵌入到当前jsp页面之中。</p>
+<h3 id="NewFile-jsp"><a href="#NewFile-jsp" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;%@ include file=<span class="string">&quot;NewFile1.jsp&quot;</span>%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile1-jsp"><a href="#NewFile1-jsp" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;Hello,world!&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JSP-动作标记"><a href="#JSP-动作标记" class="headerlink" title="JSP 动作标记"></a>JSP 动作标记</h1><p>JSP 指令标记和动作标记的区别主要是指令标记以<code>&lt;%@</code>开始，的指令。而JSP动作标记则是由Java Server pages引起在请求阶段时处理的，而不是和指令一样在翻译为Servlet(应用连接器)阶段处理的。<br>在通常的情况之下，动作标记主要有 <strong>include、forward、param、useBean、getProperty、setProperty、useBean、getProperty、setProperty等</strong></p>
+<h2 id="include-动作标记"><a href="#include-动作标记" class="headerlink" title="include 动作标记"></a>include 动作标记</h2><p>include动作标记的主要作用就是将JSP文件、HTML文件或其他文本文件动态嵌入到当前的Java Server Pages页面之中</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:include page=<span class="string">&quot;file&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>例子</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;jsp:include page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile-jsp-1"><a href="#NewFile-jsp-1" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;jsp:include page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile1-jsp-1"><a href="#NewFile1-jsp-1" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h3><figure class="highlight plaintext"><figcaption><span>page language</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(&quot;Hello,world!&quot;);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="forward-动作标记"><a href="#forward-动作标记" class="headerlink" title="forward 动作标记"></a>forward 动作标记</h2><p>forward 动作标记的作用是从该标记出现出停止当前的Java server pages 页面的继续执行并转向<code>指定</code>的forward动作标记中page属性值的指定JSP页面。</p>
+<h3 id="判断数值"><a href="#判断数值" class="headerlink" title="判断数值"></a>判断数值</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	<span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"> 	<span class="keyword">if</span> (min == <span class="number">10</span>) &#123;</span><br><span class="line"> 		out.println(<span class="string">&quot;min = 10&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">        <span class="comment">// 当数字型成员变量min为10时，forward将会执行NewFile1.jsp内的内容</span></span><br><span class="line"> 		&lt;jsp:forward page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;%</span><br><span class="line"> 	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> 		out.println(<span class="string">&quot;min != 10&quot;</span>);</span><br><span class="line"> 	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">        <span class="comment">// 当数字型成员变量min不为10时，forward将会执行NewFile2.jsp内的内容</span></span><br><span class="line">	&lt;jsp:forward page=<span class="string">&quot;NewFile2.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/Java%20server%20pages/3.JSP%20%E6%8C%87%E4%BB%A4%E6%A0%87%E8%AE%B0%E5%92%8C%E5%8A%A8%E4%BD%9C%E6%A0%87%E8%AE%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

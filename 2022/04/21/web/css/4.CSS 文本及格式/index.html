@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>CSS 文本及格式 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>CSS 文本及格式</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/css/" rel="tag">css</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">	<span class="selector-tag">b</span> &#123;</span><br><span class="line">		<span class="attribute">color</span>: <span class="number">#008080</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">b</span>&gt;Hello,world!&lt;/<span class="selector-tag">b</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-2-对齐方式"><a href="#1-2-对齐方式" class="headerlink" title="1.2 对齐方式"></a>1.2 对齐方式</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="comment">/*设置字体*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">font-family</span>: <span class="string">&quot;黑体&quot;</span>;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	</span></span><br><span class="line"><span class="language-css"><span class="comment">/*标题*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">h1</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	</span></span><br><span class="line"><span class="language-css"><span class="comment">/*副白标题*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">h4</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-decoration</span>: overline;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="comment">/*删除字*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">h6</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-decoration</span>: line-through;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	</span></span><br><span class="line"><span class="language-css"><span class="comment">/*下划线*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">b</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-decoration</span> : underline;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="comment">/*右侧*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">p</span><span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-align</span>: right;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	</span></span><br><span class="line"><span class="language-css"><span class="comment">/*整齐*/</span></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">p</span><span class="selector-class">.neat</span> &#123;</span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-align</span>: justify;</span></span><br><span class="line"><span class="language-css">	<span class="comment">/*缩进*/</span></span></span><br><span class="line"><span class="language-css">	<span class="attribute">text-indent</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello,world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h4</span>&gt;</span>1972年<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span>《C语言程序设计》<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;neat&quot;</span>&gt;</span>作为所有编程语言的起始阶段，HELLO WORLD占据着无可比拟的地位。在所有中/英/法/德/美……版本的编程教材中，HELLO WORLD总是作为第一个TEST记录于书本之中，所有编程者学习编程的第一步就在于此了！经典中的经典！HELLO WORLD！这个例程是从Kernighan &amp; Ritchie 合著的《The C Programme Language》开始有的，因为它的简洁，实用，并包含了一个程序所应具有的一切，因此为后来的些类书的作者提供了范例，一直待续到今。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">b</span>&gt;</span>涉嫌引战删除<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h6</span>&gt;</span>C语言是世界上最好的语言<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-3-大小写格式"><a href="#1-3-大小写格式" class="headerlink" title="1.3 大小写格式"></a>1.3 大小写格式</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">	<span class="comment">/*全部大写*/</span></span></span><br><span class="line"><span class="language-css">	<span class="selector-tag">p</span><span class="selector-class">.capital</span> &#123;</span></span><br><span class="line"><span class="language-css">		<span class="attribute">text-transform</span>: uppercase;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	<span class="comment">/*全部小写*/</span> </span></span><br><span class="line"><span class="language-css">	<span class="selector-tag">p</span><span class="selector-class">.initialcapital</span> &#123;</span></span><br><span class="line"><span class="language-css">		<span class="attribute">text-transform</span>: lowercase;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css">	<span class="comment">/*首字母大写*/</span></span></span><br><span class="line"><span class="language-css">	<span class="selector-tag">p</span><span class="selector-class">.lowercase</span> &#123;</span></span><br><span class="line"><span class="language-css">		<span class="attribute">text-transform</span>: capitalize;</span></span><br><span class="line"><span class="language-css">	&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;capital&quot;</span>&gt;</span>hello,world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;initialcapital&quot;</span>&gt;</span>hello,world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;lowercase&quot;</span>&gt;</span>Hello,world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-4-文本格式"><a href="#1-4-文本格式" class="headerlink" title="1.4 文本格式"></a>1.4 文本格式</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.italic</span> &#123;</span><br><span class="line">	<span class="attribute">font-style</span>: italic;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">p</span> class=&quot;italic&quot;&gt;Hello,world!&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-5-文字大小"><a href="#1-5-文字大小" class="headerlink" title="1.5 文字大小"></a>1.5 文字大小</h5><h6 id="1-5-1-px"><a href="#1-5-1-px" class="headerlink" title="1.5.1 px"></a>1.5.1 px</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>:<span class="number">10px</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">h1</span>&gt;Hello,world!&lt;/<span class="selector-tag">h1</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="1-5-2-em"><a href="#1-5-2-em" class="headerlink" title="1.5.2 em"></a>1.5.2 em</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>:<span class="number">0.625em</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">h1</span>&gt;Hello,world!&lt;/<span class="selector-tag">h1</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>关于em的数值可通过“ 10px ÷ 16 &#x3D; 0.525” 最终得出“0.625em”可被font-size所读取。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>color</td>
+<td>文本颜色</td>
+<td></td>
+</tr>
+<tr>
+<td>family</td>
+<td>设置字体</td>
+<td>font</td>
+</tr>
+<tr>
+<td>italic</td>
+<td>斜体</td>
+<td>font-style</td>
+</tr>
+<tr>
+<td>size</td>
+<td>字体大小</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>align</td>
+<td>文本格式( center &#x3D; 居中, right &#x3D; 居右, left &#x3D; 居左)</td>
+<td>text</td>
+</tr>
+<tr>
+<td>indent</td>
+<td>缩进</td>
+<td></td>
+</tr>
+<tr>
+<td>overline</td>
+<td>顶部横线</td>
+<td>text-decoration</td>
+</tr>
+<tr>
+<td>line-through</td>
+<td>删除字</td>
+<td></td>
+</tr>
+<tr>
+<td>underline</td>
+<td>下划线</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>text-transform</td>
+</tr>
+<tr>
+<td>uppercase</td>
+<td>全部大写</td>
+<td></td>
+</tr>
+<tr>
+<td>lowercase</td>
+<td>全部小写</td>
+<td></td>
+</tr>
+<tr>
+<td>capitalize</td>
+<td>首字母大写</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/css/4.CSS%20%E6%96%87%E6%9C%AC%E5%8F%8A%E6%A0%BC%E5%BC%8F/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

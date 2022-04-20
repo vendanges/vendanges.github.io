@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js Express at ejs | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js Express at ejs</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>express 是一个高度包容和快速包容且极简的 Node.js Web 框架，主要用于其 API 路由以及对数据的集成支持，可通过 <code>express</code> 模块完成各种使用程序方法和中间件，方便快捷的创建一个强大的 API。</p>
+<p>通过 <code>express</code> 和模板引擎 <code>ejs</code> 的配合，以 ejs 十分简单以及对 <code>express</code> 良好的集成，可以充分的完成前后端的相关开发需求，并以此来完成一个非常规范的 node start 写法，在此之前我们需要安装 <code>express</code> 以及 <code>ejs</code> 模块</p>
+<blockquote>
+<p>npm install ejs \ npm install express</p>
+</blockquote>
+<p>路由用于确定应用程序特定端点的客户端请求，主要通过 <code>express</code> 来进行实现，而这其中 app 与 HTTP 方法相对应的 Express 对象方法来定义路由，如 <code>app.get()</code> 用于处理 GET 请求，而 <code>app.post</code> 则用于处理 POST 请求。</p>
+<h2 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h2><p>这些路由方法都指定了回调函数（或者：“处理程序函数”），当程序接收到指定的路由（端点）的时候（也就是说 HTTP 方法请求时被调用），来调用回调函数，换句话说就是应用程序监听与指定路由和方法匹配的请求，当检测到匹配时，他会调用对应的回调函数。</p>
+<p>比如我们要创建一个非常符合 node 风格的项目并搭配 ejs 进行开发，可以目录结构可以为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">node/</span><br><span class="line">├── server.js</span><br><span class="line">├── package.json</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── route</span><br><span class="line">│   └── index.js</span><br><span class="line">└── views</span><br><span class="line">    └── index.ejs</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>除去 <code>node_modules</code> 目录</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRoute = <span class="built_in">require</span>(<span class="string">&#x27;./route/index&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.set(name, value)，将 set name 分配给 value，因此他可以存储任何想要的值</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;views&#x27;</span>, path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;views&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定渲染引擎使用使用 ejs</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由将匹与 path 相同的路径</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/&#x27;</span>, indexRoute)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8021</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由参数"><a href="#路由参数" class="headerlink" title="路由参数"></a>路由参数</h3><p>接下来在 <code>route/</code> 目录里面添加 <code>use</code> 所对应的文件，并引入 <code>express</code> 库，并通过 <code>express.Router</code> 创建模块化，之后以 <code>router.get</code> 实例来检测端点参数的访问，之后通过 <code>res.render</code> 将 HTML 字符串发送到客户端：</p>
+<ul>
+<li>res.render(view[, locals][, callback])<ul>
+<li>view 参数是一个字符串，是视图文件，用于渲染文件的路径</li>
+<li>locals，一个对象，其属性定义了视图的局部变量。</li>
+<li>callback，回调函数。如果提供，该方法将返回可能的错误和呈现的字符串，但不执行自动响应。当发生错误时，该方法会在next(err)内部调用。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> router = express.<span class="title class_">Router</span>()</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/:name&#x27;</span>, <span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    res.<span class="title function_">render</span>(<span class="string">&#x27;index&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">name</span>: req.<span class="property">params</span>.<span class="property">name</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/8.node.js%20express%20at%20ejs.md/4838212836698.png"></p>
+<p>在上述 code 中，在 <code>router.get</code> 监控路由端点中所使用的路由参数（:name）是一个包含映射命名路由，其作用是捕获 URL 中位置所指定的值，并填充在 <code>req.params</code> 对象中，你可以随意定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> router = express.<span class="title class_">Router</span>()</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user/:username/uid/:userid&#x27;</span>, <span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    res.<span class="title function_">render</span>(<span class="string">&#x27;index&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">username</span>: req.<span class="property">params</span>.<span class="property">username</span>,</span><br><span class="line">        <span class="attr">userid</span>: req.<span class="property">params</span>.<span class="property">userid</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:8021/user/kunlun/uid/20">http://localhost:8021/user/kunlun/uid/20</a></p>
+</blockquote>
+<p><img src="https://gitee.com/sif_one/drawing-bed/raw/9ae992c73ebe98123fc07646de096ecc924c77cd/javascript/node.js/8.node.js%20express%20at%20ejs.md/568318279175.png"><br>当然如果不需要 <code>ejs</code> 进行交互也可以通过其 <code>res.render</code> 方法 <code>options</code>参数来进行实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> router = express.<span class="title class_">Router</span>()</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/:name&#x27;</span>, <span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    res.<span class="title function_">render</span>(<span class="string">&#x27;index&#x27;</span>, <span class="keyword">function</span> (<span class="params">err,html</span>) &#123;</span><br><span class="line">        res.<span class="title function_">send</span>(html)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:8021/hehe">http://localhost:8021/hehe</a></p>
+</blockquote>
+<p>在这其中 <code>res.send</code> 是一个用于发送 HTTP 响应的方法，所描述的 body 可以是 <code>buffer、string\boolean\array</code> 对象等。</p>
+<h2 id="Ejs"><a href="#Ejs" class="headerlink" title="Ejs"></a>Ejs</h2><p>在 <code>ejs</code> 试图中非常简单，我们只需要掌握 ejs 是那个非常关键的几个语法就可以进行使用：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>&lt;% code %&gt;</td>
+<td>用于运行 <code>JavaScript</code> 代码</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&lt;%&#x3D; code %&gt;</td>
+<td>显示转义后的 HTML 内容</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&lt;%- code %&gt;</td>
+<td>显示原始的 HTML 内容</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>DOCTYPE<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>User: &lt;%= username%&gt;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Uid: &lt;%= userid%&gt;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/8.Node.js%20Express%20at%20ejs/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

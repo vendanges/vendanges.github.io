@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring Boot 读取与自动配置 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring Boot 读取与自动配置</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a> <a class="article__tag-none-link" href="/tags/spring-boot/" rel="tag">spring boot</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h2><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>Environment是用于读取应用程序运行时环境变量的类，是可通过在application.properties中写入的key来通过Environment类读取的一种方式，而通过这种方式来读取的实现类通常称之为“Environment”类。</p>
+<h4 id="src-x2F-main-x2F-resources-x2F-application-properties"><a href="#src-x2F-main-x2F-resources-x2F-application-properties" class="headerlink" title="src&#x2F;main&#x2F;resources&#x2F;application.properties"></a>src&#x2F;main&#x2F;resources&#x2F;application.properties</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">demo.msg = Hello I am here read config!</span><br></pre></td></tr></table></figure>
+
+<h4 id="HelloWorldController-java"><a href="#HelloWorldController-java" class="headerlink" title="HelloWorldController.java"></a>HelloWorldController.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.env.Environment;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorldController</span> &#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> Environment env;</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/demoEnv&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">demoEnv</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// 从 src/main/resources/application.properties 中的key读取配置文件数据</span></span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;Spring boot:&quot;</span> + env.getProperty(<span class="string">&quot;demo.msg&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Value"><a href="#Value" class="headerlink" title="@Value"></a>@Value</h3><p>第二种方法就是使用@value注解来进行读取，与Environment的区别就是少了一行code，就是说用注解代替了Environment的return，来读取application.properties:</p>
+<h4 id="src-x2F-main-x2F-resources-x2F-application-properties-1"><a href="#src-x2F-main-x2F-resources-x2F-application-properties-1" class="headerlink" title="src&#x2F;main&#x2F;resources&#x2F;application.properties"></a>src&#x2F;main&#x2F;resources&#x2F;application.properties</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">demo.msg = Hello I am here read config!</span><br></pre></td></tr></table></figure>
+
+<h4 id="HelloWorldController-java-1"><a href="#HelloWorldController-java-1" class="headerlink" title="HelloWorldController.java"></a>HelloWorldController.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorldController</span> &#123;</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;demo.msg&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String msg;</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/demoValue&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">demoValue</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;Spring boot&quot;</span> + msg;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PropertySource"><a href="#PropertySource" class="headerlink" title="@PropertySource"></a>@PropertySource</h3><p>在前面所介绍的注解仅仅可用于读取application.properties的Spring boot全局配置文件，而如果想要读取另一个或其他的配置文件需要使用到@PropertySource + @Value来读取其他配置文件的内容，其步骤如下：</p>
+<h4 id="PropertySourceValueReaderOtherController-java"><a href="#PropertySourceValueReaderOtherController-java" class="headerlink" title="PropertySourceValueReaderOtherController.java"></a>PropertySourceValueReaderOtherController.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.PropertySource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@PropertySource(&#123;&quot;one.properties&quot;,&quot;two.properties&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PropertySourceValueReaderOhterController</span> &#123;</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;two.msg&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String twomsg;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;one.msg&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String onemsg;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/demoProperty&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">demoProperty</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;one.properties:&quot;</span> + twomsg + <span class="string">&quot;&lt;br&gt;&quot;</span> +</span><br><span class="line">				<span class="string">&quot;two.properties:&quot;</span> + twomsg;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="one-properties"><a href="#one-properties" class="headerlink" title="one.properties"></a>one.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">one.msg</span> = <span class="string">Hello</span></span><br></pre></td></tr></table></figure>
+<h4 id="two-properties"><a href="#two-properties" class="headerlink" title="two.properties"></a>two.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">two.msg</span> = <span class="string">test PropertySource</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ConfigurationProperties"><a href="#ConfigurationProperties" class="headerlink" title="@ConfigurationProperties"></a>@ConfigurationProperties</h3><figure class="highlight plaintext"><figcaption><span>```@Value、@PropertySource```注解类似，通过使用该注解可以配置 Controller、Model 进行获取 ```application.properties``` 配置文件信息。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### application.properties</span><br><span class="line">```java</span><br><span class="line">com.example.name=$&#123;name:sunlikun&#125;</span><br><span class="line">com.exmaple.age=16</span><br><span class="line">com.example.address[0]=one</span><br><span class="line">com.example.address[1]=two</span><br><span class="line">com.example.address[2]=three</span><br></pre></td></tr></table></figure>
+
+<h4 id="ConfigExampleModel"><a href="#ConfigExampleModel" class="headerlink" title="ConfigExampleModel"></a>ConfigExampleModel</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ConfigExampleModel class</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunlikun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/06/08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;com.example&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConfigExampleModel</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Data</span> 自动生成 setter()、getter()、toString()、equals()、hashCode() 方法;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Component</span> <span class="doctag">@Component</span> 及表示为当时用该注解时，Spring 框架将会自动检测到这些类进行注入。通常表示说当前类不属于各种归类</span></span><br><span class="line"><span class="comment">     * 时（如 Controller、Services）就可以通过使用该注解进行标注。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@ConfigurationProperties</span> 将配置信息自动封装为实体类，其 &quot;prefix（前缀）&quot;是配置文件中定义的配置信息: &quot;com.example.&#123;value&#125;&quot;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; address;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="ConfigExampleController"><a href="#ConfigExampleController" class="headerlink" title="ConfigExampleController"></a>ConfigExampleController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.model.ConfigExampleModel;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ConfigExampleController class</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/06/08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConfigExampleController</span>  &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ConfigExampleModel configExampleModel;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> configExampleModel.getName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/address&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">getAddress</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> configExampleModel.getAddress();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当一切完成之后我们访问 <a target="_blank" rel="noopener" href="http://localhost:8080/address">http://localhost:8080/address</a> 会发现返回的是 <code>[&quot;one&quot;,&quot;two&quot;,&quot;three&quot;]</code>，或者访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a>  进行测试，此时返回的结果则是 <code>sunlikun</code>，而这正是 <code>application.properties</code> 下配置文件的内容数据。</p>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><p>在众多的开发语言之中，日志是最为重要的一个功能，虽然这里说的开发语言不指java、c\c++、php这些，但是我们可拿mysql为例，在mysql中，日志是非常好的排错工具，通过阅读日志信息可帮助我们快速的了解错误和安全性的信息，学习spring boot自动配置之前，我们需要预先连接下spring boot的日志生成和管理以及对日志的配置。通常我们使用apache下的Log、LogFactory的方式来实现日志，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LogTestController</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">Log</span> <span class="variable">log</span> <span class="operator">=</span> LogFactory.getLog(LogTestController.class);</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/testLog&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">testLog</span><span class="params">()</span> &#123;</span><br><span class="line">		log.info(<span class="string">&quot;test log&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;test Log&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="日志等级"><a href="#日志等级" class="headerlink" title="日志等级"></a>日志等级</h3><p>在Spring boot中，日志等级和一些日志配置都是在<code>application.properties</code>文件下进行设置的，通常存储在src&#x2F;main&#x2F;resources目录下，而日志等级主要分为五个等级级别，以及三个颜色等级，共分别为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OFF</td>
+<td>关闭</td>
+<td>无颜色</td>
+</tr>
+<tr>
+<td>FATAL</td>
+<td>致命</td>
+<td>红色</td>
+</tr>
+<tr>
+<td>ERROR</td>
+<td>错误</td>
+<td>红色</td>
+</tr>
+<tr>
+<td>WARN</td>
+<td>警告</td>
+<td>黄色</td>
+</tr>
+<tr>
+<td>INFO</td>
+<td>信息</td>
+<td>绿色</td>
+</tr>
+<tr>
+<td>DEBUG</td>
+<td>调试</td>
+<td>绿色</td>
+</tr>
+<tr>
+<td>TREACE</td>
+<td>追踪</td>
+<td>绿色</td>
+</tr>
+<tr>
+<td>ALL</td>
+<td>所有</td>
+<td>无颜色</td>
+</tr>
+<tr>
+<td>通常我们可以使用针对默认和设置指定包下的日志等级两种方式为:</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="默认日志等级设置"><a href="#默认日志等级设置" class="headerlink" title="默认日志等级设置"></a>默认日志等级设置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 设置日志的默认等级为 info</span><br><span class="line">logging.level.root = info </span><br></pre></td></tr></table></figure>
+<h4 id="指定包下的日志等级设置"><a href="#指定包下的日志等级设置" class="headerlink" title="指定包下的日志等级设置"></a>指定包下的日志等级设置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 设置 com.example.demo 包下日志等级为 off 即关闭</span><br><span class="line">logging.level.com.example.demo = off</span><br></pre></td></tr></table></figure>
+<h3 id="日志目录"><a href="#日志目录" class="headerlink" title="日志目录"></a>日志目录</h3><p>在spring boot全局配置文件中，默认是在启动时输出日志文件，<code>而不会针对性的单个生成一个日志文件</code>，这就显得单个生成日志文件存储是多么重要，通常我们可以在spring boot全局配置文件中的<code>application.properties</code>文件中设置：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging.file</span> = <span class="string">spring.log</span></span><br></pre></td></tr></table></figure>
+<p>以上是针对于spring.log是存放于spring项目目录下的，如果运行后spinrg boot发现日志文件并没有写入则是可能spring boot未找到<code>spring.log</code>日志文件，而遇到这种事情 spring boot提供了一个完美的解决方案就是通过使用相对目录进行指定：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging.file.name</span>=<span class="string">/home/kunlun/Development/Web/Demo/Spring/demo/src/main/resources/spring.log</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在spring boot logging日志中有一个非常好的功能呢个就是，如果当日志文件超过了10mb时，将会自动生成一个新的日志文件。与此同时spring boot提供了日志的自定义，如自定义错误的颜色以及时间、等级、长度、方法名、代码行等自定义，有兴趣的读者可通过查看spring boot 关于日志这一篇的文档：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-logging">https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-logging</a></p>
+</blockquote>
+<h2 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h2><p>在spring boot中，@SpringBootApplication注解之中，主要调用并使用了@EnableAutoConfiguration注解来进行标注，从而实现spring boot的自动配置功能，来帮助开发者解决spirng原生的蛋疼配置问题，我们可以通过阅读spring boot的@EnableAutoCOnfiguratiot的官方Java Doc的官方文档和其依赖的源代码查看并理解其Spirng boot自动配置的原理。</p>
+<h3 id="EnableAutoConfiguration-class"><a href="#EnableAutoConfiguration-class" class="headerlink" title="EnableAutoConfiguration.class"></a>EnableAutoConfiguration.class</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 排除特定的自动配置类，使它们永远不会被应用。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the classes to exclude</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 排除特定的自动配置类名，这样它们就永远不会被应用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the class names to exclude</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.3.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>通常只要是一个标准的Spring boot代码都会使用 @SpringBootApplication注解，而通过阅读@SpringBootApplication对应的代码我们发现了@SpringBootApplication注解包含了@EnableAutoOnfiguration注解，而进一步阅读源代码后发现其在Springboot启动的时候会夹在主配置类<code>AutoConfigurationImportSelector.class</code></p>
+<h4 id="AutoConfigurationImportSelector-class"><a href="#AutoConfigurationImportSelector-class" class="headerlink" title="AutoConfigurationImportSelector.class"></a>AutoConfigurationImportSelector.class</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String[] selectImports(AnnotationMetadata annotationMetadata) &#123;</span><br><span class="line">    <span class="comment">// 判断@EnableAutoOnfiguration 注解是否开启，如没有开启则返回，默认开启（不然他也不会写!isEnable）</span></span><br><span class="line">	<span class="keyword">if</span> (!isEnabled(annotationMetadata)) &#123;</span><br><span class="line">		<span class="keyword">return</span> NO_IMPORTS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 自动配置条目</span></span><br><span class="line">	<span class="type">AutoConfigurationEntry</span> <span class="variable">autoConfigurationEntry</span> <span class="operator">=</span> getAutoConfigurationEntry(annotationMetadata);</span><br><span class="line">	<span class="keyword">return</span> StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// SpringFactoriesLoader从META-INF/spring中夹在实例化给指定的工厂，而这些可能存在于类中的路径中的多个jar文件中</span></span><br><span class="line"><span class="keyword">protected</span> List&lt;AutoConfigurationImportFilter&gt; <span class="title function_">getAutoConfigurationImportFilters</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> SpringFactoriesLoader.loadFactories(AutoConfigurationImportFilter.class, <span class="built_in">this</span>.beanClassLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> AutoConfigurationEntry <span class="title function_">getAutoConfigurationEntry</span><span class="params">(AnnotationMetadata annotationMetadata)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (!isEnabled(annotationMetadata)) &#123;</span><br><span class="line">		<span class="keyword">return</span> EMPTY_ENTRY;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">AnnotationAttributes</span> <span class="variable">attributes</span> <span class="operator">=</span> getAttributes(annotationMetadata);</span><br><span class="line">	List&lt;String&gt; configurations = getCandidateConfigurations(annotationMetadata, attributes);</span><br><span class="line">       </span><br><span class="line">       <span class="comment">// 删除重复的配置 remoe Duplicates</span></span><br><span class="line">	configurations = removeDuplicates(configurations);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上述代码我们可以大概的了解到Spring Boot是通过加载所有的jar文件来实现自动配置的，所以@SpringBootApplication是通过使用@EnableAutoConfiguration注解自动配置的原理即从class目录中搜索所有的spring.factories配置文件并将其中EnableAutoConfiguration对应的配置项通过java反射机制进行实例化之后夹在到spring ioc容器中。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20boot/4.Spring%20boot%20%E8%AF%BB%E5%8F%96%E4%B8%8E%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

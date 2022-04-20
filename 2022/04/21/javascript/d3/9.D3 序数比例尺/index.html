@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 序数比例尺 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 序数比例尺</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>序数比例尺（<code>Ordinal Scale</code>）所定义的<code>定义域</code>都是<strong>离散</strong>且不会连续的，即为<code>序数比例尺</code>，通常是在场景中最为常用的比例尺之一，如通过输入一个离散值来获取得到另一个离散的值，我们就可以通过使用序数比例尺来实现。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.scale.ordinal()</td>
+<td>定义序数比例尺</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal(y)</td>
+<td><strong>输入</strong>定义域<code>离散值</code>，<strong>返回</strong>值域内的一个<code>离散值</code></td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.domain()</td>
+<td>设定或获取定义域</td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.range()</td>
+<td>设定获取值域</td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.rangePoints(间隔<code>(interval)</code> [间距<code>(padding)</code>])</td>
+<td>代替 <code>range() </code>定义值域，并接受一个连续区间，之后根据定义与中离散值的数量将其分段。之后的出的分段值用于<strong>值域</strong>中的离散值</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ordinal.rangeRoundPoints ，与 <code>ordinal.rangePoints()</code>作用一样，但是结果会被取整</td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.rangeBands(间隔 <code>(interval)</code> [内边距<code> (padding)</code> ])</td>
+<td>代替<code> range()</code>定义值域，与<code>rangePoints</code>类似，但分段方法不同</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>ordinal.rangeRoundBands() </code>，与<code>rangeBands</code>类似，但结果会被<strong>取整</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.rangeBand()</td>
+<td>返回使用 <code>rangeBands()</code> 设定后的每一段参数</td>
+</tr>
+<tr>
+<td></td>
+<td>ordinal.rangeExtend()</td>
+<td>返回一个数组，数组中存放着<code>最大值</code>以及一个<code>最小值</code></td>
+</tr>
+</tbody></table>
+<h2 id="rangePoints"><a href="#rangePoints" class="headerlink" title="rangePoints()"></a>rangePoints()</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616460890_20210323010248539_709414254.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ordinal = d3.<span class="property">scale</span>.<span class="title function_">ordinal</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">ordinal</span>(<span class="number">1</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">ordinal</span>(<span class="number">2</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">ordinal</span>(<span class="number">3</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">ordinal</span>(<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在上述的code中，当<code>定义域</code>内数据大于<code>值域</code>时，那么多出的定义域值将会重新<strong>轮回</strong>一遍<code>值域</code>为止。但此方法来定义值域或许有些麻烦，所以我们可以通过使用<code>rangePoints()</code>来解决：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ordinal = d3.<span class="property">scale</span>.<span class="title function_">ordinal</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">	.<span class="title function_">rangePoints</span>([<span class="number">0</span>,<span class="number">1000</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(ordinal.<span class="title function_">range</span>())</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">ordinal</span>(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616460892_20210323015145808_1201495856.png"></p>
+<p>通常，我们使用<code>rangePoints(interval,padding)</code>，其中<code>interval</code>为<code>[0,200]</code>，而<code>padding</code>是一个缺省值，之后计算得出<code>step</code>是根据定义域与数值计算得到的值，因为我们并没有设置<code>padding</code>，所以间距默认为<code>50</code>，而计算出的值就是圆的对应点。：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ordinal = d3.<span class="property">scale</span>.<span class="title function_">ordinal</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">	.<span class="title function_">rangePoints</span>([<span class="number">0</span>,<span class="number">100</span>],<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(ordinal.<span class="title function_">range</span>())</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616460893_20210323083558017_1464942769.png"></p>
+<p>当<code> padding</code>那边距设置为<code>5</code>，那么当<code>step * padding / 2</code> 时，那么将会的出<strong>第一个圆</strong>的位置坐标，在下述 code 中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ordinal = d3.<span class="property">scale</span>.<span class="title function_">ordinal</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">	.<span class="title function_">rangePoints</span>([<span class="number">0</span>,<span class="number">200</span>],<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(ordinal.<span class="title function_">range</span>())</span><br></pre></td></tr></table></figure>
+
+<p>当 <code>rangePoints</code>替换为<code>rangeRoundPoints()</code>来四舍五入取整的数据，此时如果上述 code 输出<code>55.55555555555</code>，那么将会被<strong>四舍五入</strong>为<code>56</code>。就如四舍五入后的结果为<code>56、78、100、122、144</code>，那么我们从<code>55.55555555555556 - 77.77777777777777</code>可以得知，<code>step</code>为<code>22.222222222222214</code>，那么通过<code>step * padding / 2 </code>将会得出第一个结果的坐标。</p>
+<h2 id="RangeBands"><a href="#RangeBands" class="headerlink" title="RangeBands()"></a>RangeBands()</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616464332_20210323095002920_986250707.png"></p>
+<p>rangeBands()与<code>rangePoints</code>同样是代替 <code>range()</code>定义值域，与<code>rangePoints</code>类似，其分段方法为<code>outerPadding、padding、outerPadding</code>其中<code>outerPadding</code>主要是<strong>边界</strong>的空白参数（默认为0）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ordinal = d3.<span class="property">scale</span>.<span class="title function_">ordinal</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">	.<span class="title function_">rangeBands</span>([<span class="number">0</span>,<span class="number">200</span>],<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(ordinal.<span class="title function_">range</span>())</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616464334_20210323095208710_776879633.png"></p>
+<p>在上述的 code 中，我们首先定义了<code>interval</code>为<code>[0,200]</code>，将<code>padding</code>与<code>outerPadding</code>分别设置为<code>2和3</code>，那么输出的信息将会是最终是圆的<strong>位置坐标</strong>。那么最终经过计算，他的<code>outerPadding</code>与<code>Padding</code>分别<code>22.22222222222223、22.222222222222214</code>。通常从字面上意思来进行理解<code>outherPadding</code>就是圆开头与<code>结尾</code>处即两边的空白距离，就为<code>outerPadding</code></p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/9.D3%20%E5%BA%8F%E6%95%B0%E6%AF%94%E4%BE%8B%E5%B0%BA/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Redis Keys | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Redis Keys</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/redis/" rel="tag">redis</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>键（keys）通常背后都会代表着一个数据结构，就已字符串的形式来称，他会表现为 <code>key_name=value_name</code> 在 Redis 中的命令与常见的数据传输码类似，如 <code>SET</code> 是创建、<code>GET</code> 是请求。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET key_name hello,world!</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; GET key_name</span><br><span class="line">&quot;hello,world!&quot;</span><br><span class="line">127.0.0.1:6379&gt; DEL key_name</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; GET key_name</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+
+<p>在上面的命令中，我们通过 <code>SET</code> 创建了一个 <code>key_name</code>，他的值是 **hello,world!**，并通过 <code>GET</code> 进行请求，毫无疑问返回的是对应的值。</p>
+<h2 id="键的操作"><a href="#键的操作" class="headerlink" title="键的操作"></a>键的操作</h2><p>在这个之间还使用到了 <code>DEL</code> 他是删除键的意思，而对于键的操作，并不只有这一条命令：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>DEL</td>
+<td>删除 Key</td>
+<td><code>DEL value_name</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>DUMP</td>
+<td>序列化 key，返回所序列化的值</td>
+<td><code>DUMP key_name</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>EXISTS</td>
+<td>检查 key 是否存在</td>
+<td><code>EXISTS key_name</code> （存在返回1，不存在返回0，虽然你通过 <code>GET</code> 也可以媲美 <code>EXISTS</code> 的效果）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>RANDOMKEY</td>
+<td>随机从数据库中抽取一个 <code>key</code></td>
+<td><code>RANDOMKEY</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>RENAME</td>
+<td>修改 key 的名称</td>
+<td><code> RENAME key_name new_name</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>RENAMENX</td>
+<td>为了避免错误，虽然与 <code>RENAME</code> 同样是修改名称，但 <code>RENAME</code> 会直接覆盖（无论是否存在），而如果用此命令如果是相同的键名则会返回错误（0）创建成功会返回 1</td>
+<td><code>RENAMENX key key_name</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>TYPE</td>
+<td>返回 key 所存储的数据类型</td>
+<td><code>TYPE key_name</code></td>
+</tr>
+</tbody></table>
+<h3 id="易失-key"><a href="#易失-key" class="headerlink" title="易失 key"></a>易失 key</h3><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>EXPIRE</td>
+<td>设置 key 的过期时间</td>
+<td><code>EXPIRE key_name 10</code>（&#96;&#96;&#96;EXPIRE 的单位是秒，即10秒后过期）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>PEXPIRE</td>
+<td>设置 key 的过期时间（毫秒）</td>
+<td><code>PEXPIRE key_name 10</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>PSETEX</td>
+<td>设置 key 的过期时间（毫秒）</td>
+<td><code>PTTL key_one</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>EXPIREAT</td>
+<td>通过 UNIX 时间戳的方式为 key 设置过期时间</td>
+<td><code>EXPIREAT key_name 1626521040</code> （2021-07-17 19:24 过期）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PEXPIREAT</td>
+<td>通过 Unix 时间戳的形式来设置 key 过期时间，与 <code>EXPIREAT</code> 的区别是他需要精确到毫秒</td>
+<td><code>PEXPIREAT key_name 1626521962</code> （2021-07-17 19:39:22 过期）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PERSIST</td>
+<td>移除 key 的过期时间，让其成为持久 key</td>
+<td><code>PERSIST key_name</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>PTTL</td>
+<td>以毫秒为单位返回 key 剩余的过期时间</td>
+<td><code>PTTL key_name</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>TTL</td>
+<td>以秒为单位返回 key 剩余的过期时间</td>
+<td><code>TTL key_name</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>SETEX</td>
+<td>同时设置过期时间为秒和键值</td>
+<td><code>SETEX key_name 10 &quot;hello&quot;</code></td>
+</tr>
+</tbody></table>
+<p>所谓的 <strong>易失 KEY</strong> 主要就是被 Redis 命令所设置了过期时间的（如<code>EXPIRE\EXPIRET\PEXPIRE\PEXPIREAT</code>）所进行设置的。</p>
+<p>这些易失的KEY只能通过使用  <code>DEL、SET、GETSET、PERSIST</code> 等 STORE（存储） 命令进行清楚或覆盖成为 <strong>持久 key（persistent）</strong>。</p>
+<blockquote>
+<p>只能通过覆盖或清除的方式来让其成为持久key，像诸如更改 key 名称、修改 key 值、自增的做法并不适用，过期时间依然会移植到新的 key 上。</p>
+<p>对于通过 <code>EXPIREAT</code> 命令来使用 Unix 时间戳让 key 成为易失 KEY 的方式，可以通过：<a target="_blank" rel="noopener" href="https://tool.chinaz.com/tools/unixtime.aspx">https://tool.chinaz.com/tools/unixtime.aspx</a> 转换工具来完成。</p>
+<p>于此同时需要注意的是 <code>EXPIRE</code> 和 <code>SETEX</code> 相比之下 <code>SETEX</code> 区别就是原子性的操作</p>
+<blockquote>
+<p>原子性就是要么同时发生，要么就什么都不发生</p>
+</blockquote>
+</blockquote>
+<h4 id="关于过期时间的准确性"><a href="#关于过期时间的准确性" class="headerlink" title="关于过期时间的准确性"></a>关于过期时间的准确性</h4><p>由于我们所使用的是 redis 2.6 因此过期时间的精度往往比 redis 2.4 提高到 0～1 毫秒之多。需要注意的是如果使用绝对 Unix 时间戳的方式进行存储，那么无论 Redis 是否运行都会流逝，但如果服务器时间并不精准，那也会导致易失 key 可靠性会降低。</p>
+<h4 id="过期时间的淘汰流程"><a href="#过期时间的淘汰流程" class="headerlink" title="过期时间的淘汰流程"></a>过期时间的淘汰流程</h4><p>Redis key 的过期时间被分为两种淘汰过程，分别为被动方式和主动，而被动方式最好理解的就是当你访问了该 key ，而这时候恰好该 key 是过期的，那么这个 key 就会被发现之后淘汰了。</p>
+<p>当然这种方式存在缺点，假设你这个 key 永远不会被访问，那么他岂不是会存在直到你访问的那天，于是 主动过期就出来了。</p>
+<p>主动过期的淘汰方式也就是周期性的主动随机检查一部分被设置生存时间的 key，当扫到过期时间到了的 key 将会在 key 空间中删除，Redis 每 10 秒都会执行这个操作。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/redis/2.Redis%20%E9%94%AE/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

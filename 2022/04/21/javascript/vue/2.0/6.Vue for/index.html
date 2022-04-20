@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue for | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue for</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305943_20210309112600303_820778007.png"><br>除了vue所提供的<code>v-if</code>指令之外，还提供了另一用于多次渲染元素的模块指令<code>v-for</code>，首先需要提供<code>遍历的元素</code>别名格式为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表达式 is 别名</span><br></pre></td></tr></table></figure>
+<p>当然我们也可以使用<code>v-for</code>指令并基于数组来渲染列表，通常<code>items</code>是源数据数组，而<code>item</code>则是被迭代的数组元素别名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;item in items&quot; :key=&quot;item.message&quot;&gt;</span><br><span class="line">        &#123;&#123; item.message &#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            items: [</span><br><span class="line">                &#123;message: &#x27;Vue&#x27;&#125;,</span><br><span class="line">                &#123;message: &#x27;Ajax&#x27;&#125;,</span><br><span class="line">                &#123;message: &#x27;Ejs&#x27;&#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="父作用域属性（第二参数）"><a href="#父作用域属性（第二参数）" class="headerlink" title="父作用域属性（第二参数）"></a>父作用域属性（第二参数）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305944_20210309113209667_849372394.png"><br>在<code>v-for</code>块中还支持访问所有父作用域的属性，<code>v-for</code>并支持第二参数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;(item, index) in items&quot;&gt;</span><br><span class="line">       &#123;&#123;title&#125;&#125; - &#123;&#123;index&#125;&#125; - &#123;&#123; item.message &#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            title: &#x27;Hello&#x27;,</span><br><span class="line">            items: [</span><br><span class="line">                &#123;message: &#x27;Vue&#x27;&#125;,</span><br><span class="line">                &#123;message: &#x27;Ajax&#x27;&#125;,</span><br><span class="line">                &#123;message: &#x27;Ejs&#x27;&#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>其中<code>index</code>属性对应的则是输出次数，为<code>v-for</code>所支持的第二参数，其格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(表达式 , 表达式二) in 别名 </span><br></pre></td></tr></table></figure>
+
+<h2 id="遍历对象"><a href="#遍历对象" class="headerlink" title="遍历对象"></a>遍历对象</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305944_20210309151747081_435649573.png"><br>除了遍历<strong>元素之外</strong>，for还可以遍历对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;item in items&quot;&gt;</span><br><span class="line">        &#123;&#123;item&#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            items: &#123;</span><br><span class="line">                name: &#x27;kun&#x27;,</span><br><span class="line">                age: &#x27;10&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="键名-元素"><a href="#键名-元素" class="headerlink" title="键名:元素"></a>键名:元素</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305945_20210309152850312_1080666859.png"><br>我们可以通过使用vue所提供的另一种方式即<code>键名:元素</code>来循环遍历对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;(value ,name) in items&quot;&gt;</span><br><span class="line">        &#123;&#123;name&#125;&#125;:&#123;&#123;value&#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            items: &#123;</span><br><span class="line">                name: &#x27;kun&#x27;,</span><br><span class="line">                age: &#x27;10&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="维护状态"><a href="#维护状态" class="headerlink" title="维护状态"></a>维护状态</h2><p>当<code>v-for</code>渲染元素列表的时候，他会默认使用<code>就地更新</code>的策略，如果数据被改变，vue将不会移动dom元素来匹配数据项的顺序。<strong>为了确保他们的每个索引位置正确的渲染</strong>。</p>
+<p>这个时候我们需要为每个节点写入一个唯一的key属性即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-for=&quot;item in items&quot; v-bind:key=&quot;item.id&quot;&gt;</span><br><span class="line">  &lt;!-- 内容 --&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在官方稳定那个中建议尽可能使用 v-for 时所提供的 key属性，除非遍历输出的DOM内容非常简单，或是希望性能上的提升</p>
+</blockquote>
+<h2 id="数组更新检测"><a href="#数组更新检测" class="headerlink" title="数组更新检测"></a>数组更新检测</h2><h3 id="变更方法"><a href="#变更方法" class="headerlink" title="变更方法"></a>变更方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push()</td>
+<td>增加一个方法</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305946_20210309193102343_1678439982.gif"></td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>从下往上突然的删除一个方法</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305947_20210309193341908_1860820753.gif"></td>
+</tr>
+<tr>
+<td>shift()</td>
+<td>从上往下删除一个方法</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305947_20210309193647774_880064994.gif"></td>
+</tr>
+<tr>
+<td>unshift()</td>
+<td>从上方新加入一个方法</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305948_20210309193852540_95820420.gif"></td>
+</tr>
+<tr>
+<td>splice()</td>
+<td><code>splice()</code>方法可用于<strong>添加、删除、替换</strong>数组内的值</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305949_20210309201402475_2127206412.gif"></td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>用于排序方法</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305950_20210309225614010_760249585.png"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>reverse()</td>
+<td>主要用于排序倒序</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615305951_20210309235013709_1807157599.png"></td>
+</tr>
+</tbody></table>
+<h4 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;item in sortItems&quot;&gt;</span><br><span class="line">        &#123;&#123; item &#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            items: [1,20,2,3,4,100],</span><br><span class="line">        &#125;,</span><br><span class="line">        computed: &#123;</span><br><span class="line">            sortItems:function() &#123;</span><br><span class="line">                return this.items.sort(sortNumber)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    function sortNumber(a,b) &#123;</span><br><span class="line">        return a-b</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="reverse"><a href="#reverse" class="headerlink" title="reverse()"></a>reverse()</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p v-for=&quot;item in items.slice().reverse()&quot;&gt;</span><br><span class="line">       &#123;&#123; item &#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            items: [1,2,3,4,5,6],</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/6.Vue%20for/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

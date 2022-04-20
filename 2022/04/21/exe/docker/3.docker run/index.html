@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Docker run | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Docker run</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag">虚拟化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在前面几章我们了解了 docker 的具体原理以及运作方法，之后本章主要进行演示 docker 的使用以及运行的方式，当然我们也可以选择使用 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">docker desktop</a> 来进行操作。</p>
+<h2 id="install-mysql"><a href="#install-mysql" class="headerlink" title="install mysql"></a>install mysql</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220311024332.png"></p>
+<p>安装 MySQL 我们可以在 docker hub 中选择我们需要的 tag 后直接通过 <code>docker pull mysql</code> 来进行下载，下载之后我们可以通过 <code>docker images</code> 来查看所下载的镜像信息。</p>
+<p>之后，我们需要使用 <code>docker run -itd --name dexnav -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:5.7.36</code> 命令来创建一个容器。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-itd</td>
+<td><code>i</code> 交互操作, <code>t</code> 终端，因为需要返回结果，因此使用交互式终端 <code>d</code> 守护状态运行，不会将命令输出在当前宿主机中，即在后台运行</td>
+</tr>
+<tr>
+<td>-name</td>
+<td>容器的名称</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>所映射的端口 <code>需要映射的端口:当前服务端口</code></td>
+</tr>
+<tr>
+<td>-e</td>
+<td><code>-e</code>，设置环境变量，加上 <code>MYSQL_ROOT_PASSWORD</code> 来设置 MySQL 的密码</td>
+</tr>
+</tbody></table>
+<h2 id="install-redis"><a href="#install-redis" class="headerlink" title="install redis"></a>install redis</h2><p>redis 的安装我们可以在 <a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">docker hub</a> 上直接搜索 redis 来查看到该 Image 的主界面，但我们通过上述两篇可以了解到，docker 主要用于构建容器等环境，我们知道这个问题就可以解决很多个疑问了。</p>
+<p>我们可以通过使用 <code>docker pull redis</code>  直接来拉取最新版的 Redis，之后，我们还需要通过使用 <code>docker run --name dexnav-redis -d -p 6379:6379 redis</code></p>
+<p>如果你需要通过 RDM 等工具进行连接，那么我推荐你在 RDM 连接 Redis 配置的时候将地址写为 <code>0.0.0.0</code> 即可，如果是开发环境需要则写上 <code>127.0.0.1</code> 即可。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/docker/3.docker%20run/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

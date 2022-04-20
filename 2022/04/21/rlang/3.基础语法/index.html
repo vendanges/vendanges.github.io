@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>R 基础语法 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>R 基础语法</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/r-lang/" rel="tag">r lang</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>在众多语言之中，都将存在着一个注释，通常主要分为脚本语言和编程语言，主要的不同就是一个不需要编译器一个需要编译器，通常在注释上都会有一定的差别，最为明显的就是 <code>//</code>、<code>#</code>两种，通常脚本语言会使用后者，如python、shell等，而相似java、c等语言则使用前者。</p>
+<h3 id="“-”"><a href="#“-”" class="headerlink" title="“#”"></a>“#”</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="comment"># 输出 你好世界！</span></span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span><span class="string">&quot;你好世界！&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;你好世界！&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在R语言之中，我们可以使用 快捷键<code>ctrl+l</code>来实现 clear and system clear的作用，这会让我们的屏幕保持干净且整洁。</p>
+<h3 id="“if-FALSE-”"><a href="#“if-FALSE-”" class="headerlink" title="“if(FALSE)”"></a>“if(FALSE)”</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">if</span><span class="punctuation">(</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line"><span class="operator">+</span>     <span class="string">&quot;</span></span><br><span class="line"><span class="string">+     1.one</span></span><br><span class="line"><span class="string">+     2.two</span></span><br><span class="line"><span class="string">+     3.three</span></span><br><span class="line"><span class="string">+     &quot;</span></span><br><span class="line"><span class="operator">+</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>在R语言之中，和其他语言的赋值较为不同，通常的赋值是使用等于号<code>=</code>，而R语言的则是小于号加一个减号<code>&lt;-</code>，这样做可以更加直观的表示数据的赋值：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> 20</span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span>one <span class="operator">+</span> two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><p>正所谓计算机，通常很多语言都支持运算，我们统称为“运算符”，通过运算符，我们可以将两个变量或函数相加起来进行输出：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> 20</span><br><span class="line"><span class="operator">&gt;</span> print<span class="punctuation">(</span>one <span class="operator">+</span> two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+<p>在本书中我们不会过多的讲解R语言的运算符，因为与其他语言都相互差不多，如果有兴趣的读者可自行进行学习和理解，也可翻阅知识库内的其他语言数据进行查看等。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/rlang/3.%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

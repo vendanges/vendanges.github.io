@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JavaScript 异步函数类型 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JavaScript 异步函数类型</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/" rel="tag">异步加载</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>JavaScript环境主要有<code>setTimeout</code>和<code>setInterval</code>异步函数集，而JavaScript主要分为两种类型，分别为：“<code>I/O函数”</code>和<code>“计时函数”</code>两大类</p>
+<h2 id="I-x2F-O-函数"><a href="#I-x2F-O-函数" class="headerlink" title="I&#x2F;O 函数"></a>I&#x2F;O 函数</h2><p>JavaScript脚本语言主要采用了非阻塞式的I&#x2F;O，相比其他开发语言很容易造成阻塞，相比之下可以明显的看到JavaScript只需要加入一个<code>返回事件队列（回调）</code>即可解决阻塞的问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ajaxRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>;</span><br><span class="line">ajaxRequest.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url);</span><br><span class="line">ajaxRequest.<span class="title function_">send</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">while</span> (ajaxRequest.<span class="property">readyState</span> === <span class="title class_">XMLHttpRequest</span>.<span class="property">UNSENT</span>) &#123;</span><br><span class="line">        <span class="comment">// code </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在以上code之中，这种堵塞会将永远的循环运行下去，不可能会停止。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ajaxRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>;</span><br><span class="line">ajaxRequest.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>,url);</span><br><span class="line">ajaxRequest.<span class="title function_">send</span>(<span class="literal">null</span>);</span><br><span class="line">ajaxRequest.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>此时只需要在加上一个事件处理器，即可返回事件队列从而不会造成上述堵塞问题。</p>
+<h2 id="计时函数"><a href="#计时函数" class="headerlink" title="计时函数"></a>计时函数</h2><p>著名的时间事件主要涉及了两个函数，分别为<code>setTimeout</code>与<code>setInterval</code>两个函数，但是这两个函数都有自己的权限，比如上一章讲的“无法准时显示，但会维持在那个数值范围之内而不超过”。</p>
+<h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h3><p>setTimeout()函数是在JavaScript异步加载中常见的异步加载函数，例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> one = <span class="number">1</span>; one &lt;= <span class="number">3</span>; one++) &#123;</span><br><span class="line">		<span class="built_in">setTimeout</span> (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">			<span class="variable language_">document</span>.<span class="title function_">write</span>(one,<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">			&#125;,<span class="number">3000</span>);        <span class="comment">/*三秒后输出语句*/</span></span><br><span class="line">		&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>只所以最后输出结果为“4.4.4”是因为这里的延时为3秒，定义的函数都会抢着要第一个触发</p>
+<h3 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><h4 id="英特尔-i7处理器"><a href="#英特尔-i7处理器" class="headerlink" title="英特尔 i7处理器"></a>英特尔 i7处理器</h4><p>国外开发人员发现当使用<code>setInterval</code>函数调度事件的时候，且延迟设置为0毫秒，则会尽可能的循环此事件。当使用英特尔i7处理器的计算机中，使用谷歌、火狐等浏览器，大约为200次&#x2F;秒。但是在node环境下，此事件触发频率大约可达到<code>1000次.秒</code>。<br>而将<code>setInterval</code>函数替换成while循环语句，则在谷歌、火狐等浏览器事件的触发频率高达400万次&#x2F;秒，在Node环境之中则会达到500万次&#x2F;秒。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>最后的出结论，<code>setTimeout</code>与<code>setInterval</code>设计时就是想成为慢慢吞吞的，这是一个HTML规范，所有的主要浏览器都要遵守的规范，在推行的延时、时隔的最小值就是4毫秒。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/asynchronous/2.JavaScript%20%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

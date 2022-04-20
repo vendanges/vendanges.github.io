@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud 应用程序分层与响应式 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud 应用程序分层与响应式</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="MVC（Model-View-Controller）"><a href="#MVC（Model-View-Controller）" class="headerlink" title="MVC（Model-View-Controller）"></a>MVC（Model-View-Controller）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210610053652.png"><br>MVC（Model View Controller）是在软件工程中较为常见的一种架构模式，无论是 Spring cloud 以及 Spring、Spring boot 基本上我们都介绍过此模型。</p>
+<p>如果要简单的理解 MVC 的话，我们可以从上图了解到，首先 <strong>Model</strong> 是拥有对数据直接访问的权利（例如数据库访问）。</p>
+<p>而 <strong>Conttroller</strong> 则是可以控制应用程序的流程，并对事件作出响应，这也包括了对 <strong>Model</strong> 的操作。</p>
+<p>最后则是 <strong>View</strong> ，他能够显示资料，通常为前端应用。在上图中 Controller 操纵 Model 进行数据的更新或插入，之后交给 View 进行显示给用户。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210610053645.png"></p>
+<p>如果说前面我们介绍的都是 MVC 概述，那么通过上图我们可以详细的进行理解。首先浏览器一看是看到的并不是 View，而是 通过 <strong>DispathcherServlet</strong> 来调用视图渲染后返回给浏览器中。这里我们需要注意的是 <strong>DispathcheServlet</strong> 继承于 <strong>HttpServlet</strong> ，主要负责协调和组织不同组件来完成请求并返回响应的工作，他的流程如下：</p>
+<ol>
+<li>浏览器发送请求，服务器接受请求并转交给 DispatcherServlet 进行处理</li>
+<li>DispatcherServlet 匹配在控制器中配置的映射路径，进行下一步处理</li>
+<li>View 请求将 Model 和 View 解析成 View，之后调用 render() 方法根据 Model 和 View 中的数据渲染出页面。</li>
+</ol>
+<h3 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h3><p>这与 MVC 的三层架构有很大的关系，所谓三层架构即 表现层（UI）、业务逻辑层（Service）、数据访问层（Dao\Repository）三种，他们分别表示：</p>
+<blockquote>
+<p>Responsitory 是存取和管理对象，而 Dao 则是存取对象</p>
+</blockquote>
+<ol>
+<li>表现层：<strong>用于展示界面</strong>，接收用户请求并返回数据，为客户端提供应用程序的访问接口（View）</li>
+<li>业务逻辑层：也称之为服务层，负责业务逻辑的处理，<strong>主要调用D哦曾对数据进行 CURD 的操作</strong></li>
+<li>数据访问层：与数据库进行交互的持久层，被 Service 调用，在 Spring Data JPA 中则由 Hibernate 进行实现。</li>
+</ol>
+<h2 id="WebFlux"><a href="#WebFlux" class="headerlink" title="WebFlux"></a>WebFlux</h2><blockquote>
+<p>反应式是关于异步和事件驱动的非堵塞应用程序，并且需要少量线程进行垂直扩展，而不是水平扩展（集群）。反应式系统具有某些特征，可以使其成为低延迟、高吞度量工作的理想选择。</p>
+</blockquote>
+<p>WebFlux 是在 Spring Framework 5.0（5.0.0.M5）所引入的一种反应式 Web 框架。WebFlux 可以在资源有限的情况下提高系统的吞度量和垂直扩展，这意味着在同样情况下 WebFlux 的吞吐量明显优于 MVC。</p>
+<h3 id="响应式（反应式）与命令式"><a href="#响应式（反应式）与命令式" class="headerlink" title="响应式（反应式）与命令式"></a>响应式（反应式）与命令式</h3><p>为了应对高并发环境下服务端开发，微软提出了一个实现异步编程方案，即 <strong>反应式编程（Reactive Programming）</strong>。其他技术和社区为了跟上脚步，因此向 Netifix 等公司都也提供了类似的技术，这使得 Java 平台也有了能够实现反应式编程的框架</p>
+<blockquote>
+<p>响应式编程或反应式编程（Reactive programming）是一个面向数据流和 <strong>变化传播</strong> 的声明式编程范式（Declarative programming）。</p>
+<blockquote>
+<p>响应式编程与命令式编程对立，他的目标是让计算机明白，而非流程，声明式编程不需要告诉电脑问题，<strong>即告诉结果，让机器自行解决</strong></p>
+<blockquote>
+<blockquote>
+<p>而响应式编程则是是意味着式子 <code>a=b+c</code>，这意味着 a 是由 b 和 c 计算而出，如果后续有变化会影响到 a 的值，这也是 <strong>即告诉结果，让机器自行解决</strong> </p>
+</blockquote>
+<p>命令式编程或指令式编程（Inperative programming），<strong>详细命令机器去处理一种事情而达到你想要的结果</strong>。<br>变化传递我们可以理解为在命令式变成中，假设式子为 <code>a=b+c</code> 那么 a 的值就来自 b和c计算出的，如果后续有变化不会影响到a的值，这也是为什么他是 <strong>细命令机器去处理一种事情而达到你想要的结果</strong></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Spring WebFlux 是一个从头开始构建的非堵塞Web框架，可利用多核下一代处理器并处理大量并发。而 WebFlux 与 Spring MVC 数据流的选择也各不相同，前者是 <strong>Reactive Streames</strong>，后者则是 <strong>Servlet API</strong>。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210610053635.png"><br>自然而然，既然 WebFlux 是用的是响应式数据流，而Spring MVC 选择的是 命令式数据流，自然而然 WebFlux 会更快。我认为上图很好的诠释了这一点，Spring MVC 是一个 <strong>响应 -&gt; 准备数据 -&gt; 返回数据</strong> 的一个过程。而 WebFlux 则是 <strong>响应 -&gt; 返回数据 -&gt; 开启一个新的 Work 线程进行准备 -&gt; Work 线程完成工作 -&gt; 返回结果</strong> 从而让对方觉得 WebFlux 会更快的一点。</p>
+<h3 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h3><p>Peactor 框架由 Pivotal 基于 <strong>反应式编程（Reactive Programming）</strong> 思想进行实现，符合反应式编程的规范。</p>
+<h4 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h4><p>响应式编程（Reactive Programming）是一种非堵塞且事件驱动数据的开发方案，使用函数式编程的概念来操作数据流。</p>
+<blockquote>
+<p>函数式编程是一种编程方式，将计算机的运算视为函数计算，如何直接和生动形象的表现出函数式编程的特点呢，那么下面的表达式就非常的清晰</p>
+<blockquote>
+<p><strong>过程式编程：</strong> var a &#x3D; 1 + 2;<br><strong>函数式编程：</strong> var result &#x3D; subtract(multiply(add(1,2), 3), 4);</p>
+</blockquote>
+<p>其实函数式变成并没有什么特殊，他其实就是将一数复制给变量或者一个数组中，就这个意思。<br>函数变成最主要的是λ演算 (Iambda calculus)，而λ演算可以 <strong>接受函数党组输出（参数）和输出（返回值）</strong>，相比过程化编程相比，<strong>函数式编程里的函数可以随时调用</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>包含元素信息</td>
+<td>onNext()</td>
+</tr>
+<tr>
+<td>序列结束消息</td>
+<td>onComplete()</td>
+</tr>
+<tr>
+<td>序列出错消息</td>
+<td>onError()</td>
+</tr>
+</tbody></table>
+<p>这是通知与订阅者对应的方法，但如果我们继续眼神可以了解到背压机制（与本文有关）：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>Iterable 迭代模式 (拉\pull)</th>
+<th>Observable 观察模式(推\push)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>获取数据</td>
+<td>T next()</td>
+<td>onNext()</td>
+</tr>
+<tr>
+<td>处理完成</td>
+<td>hasNext()</td>
+<td>onCompleted()</td>
+</tr>
+<tr>
+<td>发现异常</td>
+<td>throws Exception</td>
+<td>onError()</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>1.<strong>事件发布者（Publisher）</strong> 主动推送数据给 <strong>订阅者（Subscriber）</strong>，出发 onNext() 方法;<br>2.<strong>事件发布者</strong>发生异常，则触发 <strong>订阅者</strong> 的 onError() 方法进行异常捕获处理<br>3.<strong>事件发布者</strong>每次推送都触发一次 onNext() 方法，当所有推送无异常时， onCompleted() 方法在在最后触发一次。</p>
+<p>我们可以从被订阅者和订阅者理解为服务提供者和服务消费者。</p>
+</blockquote>
+<p>如果 被订阅者发布的消息太快了，超过了订阅者的处理速度，那么这个时候就需要通过 <strong>背压机制（Backpressure），使得订阅者能够控制消费消息的速度。</strong></p>
+<p>实际上除了 <strong>迭代模式 (lterable)</strong> 其他的都是我们 <strong>响应式编程API的使用方式</strong>，实际上激素和观察者模式(Observable)的扩展。</p>
+<h4 id="Reactive-Streams"><a href="#Reactive-Streams" class="headerlink" title="Reactive Streams"></a>Reactive Streams</h4><blockquote>
+<p>他由 Netifix，TypeSafe、Pivatol共同制定，这是 Java 平台上 RxJava、Scala、Akka、Spring、Reactor 等项目的主要维护者所共同发起的。</p>
+</blockquote>
+<p>反应式流（Reactive Streams）是一项倡议，主要用于反应式编程相关的规范以及接口提供标准。</p>
+<p>他主要有四个组件构成，分别为发布者、订阅者、订阅、处理器等。除此还有三个接口最为主要：</p>
+<ol>
+<li>Publisher（事件发布者）</li>
+<li>Subscriber（订阅者）</li>
+<li>Subcription（订阅）</li>
+</ol>
+<h4 id="Mono-与-Flux"><a href="#Mono-与-Flux" class="headerlink" title="Mono 与  Flux"></a>Mono 与  Flux</h4><p>Mono 与 Flux 都是事件的发布者，也是 Reactor 的核心类：</p>
+<ul>
+<li>Mono<ul>
+<li>实现了 org.reactivestreams.<strong>Publisher</strong> 接口，用于返回单个数据</li>
+</ul>
+</li>
+<li>Flux<ul>
+<li>同样实现了 org.reactivestreams.<strong>Publisher</strong> 接口，用于返回多个数据。</li>
+</ul>
+</li>
+</ul>
+<p>如果根据 ID 查询某个 User 对象，那么返回的肯定是单个数据，那么就需要使用 <code>Mono&lt;User&gt;</code></p>
+<p>但是如果要获取所有 User，则返回的是多个数据，需要使用 <code>Flux&lt;User&gt;</code>。</p>
+<p>需要注意的是 Mono 与 Flux 之间可以 <strong>互相转换</strong>，对一个 Flux 序列进行技术操作，得到的结果是一个 <code>Mono&lt;Long&gt;</code> 对象，将多个 Mono 序列合并在一起，则得到的是 Flux 对象。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/4.Spring%20cloud%20Reactor/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

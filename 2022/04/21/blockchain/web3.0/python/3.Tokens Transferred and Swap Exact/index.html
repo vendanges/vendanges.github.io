@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Swap Exact | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Swap Exact</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/blockchain/" rel="tag">blockchain</a> <a class="article__tag-none-link" href="/tags/python/" rel="tag">python</a> <a class="article__tag-none-link" href="/tags/web3-0/" rel="tag">web3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在 Etherscan 和 Bcanscan 中，作为区块链开发，主要关注的点是交易数据中的 <code>Tokens Transferred</code> 参数项来理解本次交易过程是干什么的，通常在 Bcanscan 的 <code>Input Data</code> 内，都是已经帮助我们解析完成的，在 web 3.0 中，主要通过 <strong>Contranct Factions</strong> 即 “合约工厂” 来进行创建一个合约对象。</p>
+<h2 id="swapExactTokensForTokens-以Token为基准互换为-Tokens"><a href="#swapExactTokensForTokens-以Token为基准互换为-Tokens" class="headerlink" title="swapExactTokensForTokens 以Token为基准互换为 Tokens"></a>swapExactTokensForTokens 以Token为基准互换为 Tokens</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220226152222.png"><br>在 <a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0x213028d9fb2561db91a7f7775d60cba4edd155db44997feaa99372def8c1b95d">Binance Transaction Hash (Txhash) Details | BscScan</a> 这一份交易中，特别是 <code>Input Data</code> 和 <code>Tokens Transferred:</code> 栏的信息内，这一交易主要是通过 0xf… 钱包将≈154.15$的Binace-Pag(在池子中可能名字为 ESC-US) 放入到 PancakeSwap 转换池中。</p>
+<p>然后池子将 ≈154.15 的 BSC-US 兑换 17.8637… FistToken 发送到 0xf87… 钱包内。可以看出这一交易主要是将 BSC-US 转换为 FIST。</p>
+<p>对于这个方法我们可以通过直译的方式来进行理解，“为 Tokens 转换确切的代币”，结合 <code>Tokens Transferred</code> 中的数据再配合中文直译来进行理解。之后在 web3.0 中，主要通过 <a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/contracts.html?highlight=eth.contract#contract-factories">eth.contrace</a>  来解析合约工厂：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_router_contract</span>(<span class="params">web3</span>):</span><br><span class="line">    pan_router_contract_address = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    router_abi = [<span class="string">&#x27;&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> web3.eth.contrace(address=pan_router_contract_address, abi=router_abi)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为了使整体项目目录和 Code 更加美观，通过 flask 框架，我们可以将上述基础类方法写在 ```Helper.py``` 内，之后我们在 ```main.py``` 启动类引用即可。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>方法中包含的参数主要有六个参数，分别体现了该合约方法的主要用处：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| Id | Name | Info | type |</span><br><span class="line">| --- | --- | --- | --- | </span><br><span class="line">| 1 | amountin | 金额，要发送的 token 数量 | unint |</span><br><span class="line">| 2 | amountOutMin | 最小金额，为了使交易不被逆转，所必须受到的最小输出代币量 | unint |</span><br><span class="line">| 3 | path | 一个目标地址池（流动池必须存在，且拥有流动性, ```path.length &gt; 2```） | address[]calldata |</span><br><span class="line">| 4 | to | token 的接收者 | address |</span><br><span class="line">| 5 | deadline | Unix 时间戳（在此之后将会恢复） | unint |</span><br><span class="line"></span><br><span class="line">我们可以通过一个具体的项目是示例来结合官方文档以及 web3.0py 中来进行更深一步的了解：</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">pancakeswap2_txn = router_contract.functions.swapExactTokensForTokens(  </span><br><span class="line">    buy_value,  </span><br><span class="line">    slippage,  # set to 0, or specify minimum amount of tokeny you want to receive - consider decimals!!!  </span><br><span class="line"> [value_type_address, pair_type_address, tokenToBuy],  </span><br><span class="line">    sender_address,  </span><br><span class="line">    (int(time.time()) + 10000)  </span><br><span class="line">).buildTransaction(&#123;  </span><br><span class="line">    &#x27;from&#x27;: sender_address,  </span><br><span class="line">    &#x27;gas&#x27;: int(gas),  </span><br><span class="line">    &#x27;gasPrice&#x27;: web3.toWei(str(gas_price), &#x27;gwei&#x27;),  </span><br><span class="line">    &#x27;nonce&#x27;: nonce,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>通过上述的 code 中我们可以看到基本上就是非常符合 <a target="_blank" rel="noopener" href="https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#swapexacttokensfortokens">swapExactTokensForTokens</a><br>所传入的参数，而之后的 <a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/contracts.html?highlight=get_router_contract#web3.contract.ContractFunction.buildTransaction">.buildTransaction</a> 方法是交易交易，指定合约调用并构建事务字典，包含了诸如 <code>from</code> 以及 <code>gas</code> 和 <code>nonce</code> 等参数。</p>
+<p>但在此之前我们可以知道 <a target="_blank" rel="noopener" href="https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#weth">WETH</a> 是 Address 的方法组，更多的我们可以参考官方文档给出的解释。</p>
+<p>之后我们在  <a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0x213028d9fb2561db91a7f7775d60cba4edd155db44997feaa99372def8c1b95d">15581850</a> 块内其中一个交易信息中，在其 <code>Interacted With(To)</code> 栏中，进入到该合约页面中，可以在其 <strong>Contract</strong> 内查看合约的具体信息以及合约的 Code 等。</p>
+<p>同样的我们也可以在 <strong>Contract Source Code (Solidity)</strong> 栏中查看合约的源代码，具体的与 <a target="_blank" rel="noopener" href="https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#swapexacttokensfortokens">uniswap</a> 都相差无几。</p>
+<h2 id="swapExactETHForTokens-以-ETH-为基准将-ETH-互换为-Tokens"><a href="#swapExactETHForTokens-以-ETH-为基准将-ETH-互换为-Tokens" class="headerlink" title="swapExactETHForTokens 以 ETH 为基准将 ETH 互换为 Tokens"></a>swapExactETHForTokens 以 ETH 为基准将 ETH 互换为 Tokens</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220226180013.png"></p>
+<p>通过 ETH 交换 token，在 Bsccan 中，由于套的 Ethscan 所以通过此方法交易的类型，也会在交易详情页中的 <code>Value</code> 内进行标注通过 BNB 交易的份额，例如 <a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0xebc3cd65120b04e6d22f17a973214cb2a812888d3d1b0aa509a17a65b184612e">Binance Transaction Hash (Txhash) Details | BscScan</a>中。</p>
+<p>通过此方法进行交易，将会附带一个 <code>payable</code> 参数，用于可能、可以、或必须支付的费用，在其他非 Eth 交易的数据中，则不会将交易的数额写入到 <code>Value</code> 栏内。该方法的第一个参数必须是 <a target="_blank" rel="noopener" href="https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#weth">WBNB</a> 也就是 WBNB 的地址等，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> value_type_address == <span class="string">&#x27;BNB&#x27;</span> <span class="keyword">and</span> pair_type_address == wbnb:  </span><br><span class="line">    pancakeswap2_txn = router_contract.functions.swapExactETHForTokens(  </span><br><span class="line">        <span class="number">0</span>,  <span class="comment"># set to 0, or specify minimum amount of tokeny you want to receive - consider decimals!!!  </span></span><br><span class="line"> [wbnb, tokenToBuy],  </span><br><span class="line">        sender_address,  </span><br><span class="line">        (<span class="built_in">int</span>(time.time()) + <span class="number">10000</span>)  </span><br><span class="line">    ).buildTransaction(&#123;  </span><br><span class="line">        <span class="string">&#x27;from&#x27;</span>: sender_address,  </span><br><span class="line">        <span class="string">&#x27;value&#x27;</span>: buy_value,  <span class="comment"># This is the Token(BNB) amount you want to Swap from  </span></span><br><span class="line"> <span class="string">&#x27;gas&#x27;</span>: <span class="built_in">int</span>(gas),  </span><br><span class="line">        <span class="string">&#x27;gasPrice&#x27;</span>: web3.toWei(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;gwei&#x27;</span>),  </span><br><span class="line">        <span class="string">&#x27;nonce&#x27;</span>: nonce,  </span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，与 <code>swapExactTokensForTokens</code>  的区别之处在于 <code>payable</code> ，这个在 web3.0 的概述中，我们可以得知，<code>payable</code> 就是 <code>value</code> 只有通过 <strong>WBNB</strong> 进行交易的时候。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于其他的方法，只要涉及 ```payable``` 变量，那么就表明这个东西是需要进行 BNB 交易份额的。</span><br></pre></td></tr></table></figure>
+
+<p>在此之前，我们需要了解下一个交易时的概念，就是滑点(Slippage) 也就是在交易的过程中来描述交易在等待时可能发生改变的属于，当交易被提交到 ETH 时，他们的执行顺序时根据 gas 数量来决定的（提供的 gas 费用越高，所执行的速度也就越快。在这其中他所最终交易的价格环境也会发生变化，因为加密货币的市值也是不断变化的）</p>
+<p>滑点的容忍度他建立了一个用户可以所接受的超出价格影响的变化幅度，只要价格在滑点的范围内，那么交易就会被执行。</p>
+<h2 id="swapETHForExactTokens-以-Tokens-为基准来通过-ETH-来进行换取"><a href="#swapETHForExactTokens-以-Tokens-为基准来通过-ETH-来进行换取" class="headerlink" title="swapETHForExactTokens 以 Tokens 为基准来通过 ETH 来进行换取"></a>swapETHForExactTokens 以 Tokens 为基准来通过 ETH 来进行换取</h2><p>我们可以看到同样是互换的交易类型，<a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0xdba5ff7533a427156ee53d5282baddf2ffdea93613d0d584cfde3a2f61f89e44">Binance Transaction Hash (Txhash) Details | BscScan</a> 的交易类型和 <code>swapExactTokensForTokens</code> 的区别在于，之处可以看下方的图片介绍：<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/function.png"></p>
+<p>从上图可以得知，两个转换方法的不同指出在于，买入的方式不同，后者是通过 BNB 货币价值等价于 tokens 来进行买入 Tokens，而前者则是通过买入 tokens 数量来支付 BNB，一般来说 <code>swapETHForExactTokens</code> 会更加精准些许。</p>
+<p>需要注意的是，按照 uniswap 的 function 命名规则，通常是 <code>Exact</code> 跟在谁的后面，那么就精准谁的数据信息，比如 <code>Exact</code> 在 <code>token</code> 后面，那么他的数据就较为精准，反而毅然。</p>
+<h2 id="swapExactTokensForETH-准确地将-token-交换出-ETH"><a href="#swapExactTokensForETH-准确地将-token-交换出-ETH" class="headerlink" title="swapExactTokensForETH 准确地将 token 交换出 ETH"></a>swapExactTokensForETH 准确地将 token 交换出 ETH</h2><p>准确的将 token 交换出的 ETH，用于将一个接近整数的 token 互换为 ETH，并进行交易。<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/image%2014.png"></p>
+<p>你可以通过 <a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0x65d5808aeac2a832c964991217dc856623ebe3452312c569ce633056faab66e9">Binance Transaction Hash (Txhash) Details | BscScan</a> 来查看真实的交易数据，之后通过 Web3 来进行 Swap 交易的进行。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/blockchain/web3.0/python/3.Tokens%20Transferred%20and%20Swap%20Exact/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Python MySQL | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Python MySQL</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/python/" rel="tag">python</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h1 id="Python-MySQL"><a href="#Python-MySQL" class="headerlink" title="Python MySQL"></a>Python MySQL</h1><h2 id="pymysql-err-OperationalError-1045-“Access-denied-for-user-‘root-localhost‘-’localhost’-using-password-YES-”"><a href="#pymysql-err-OperationalError-1045-“Access-denied-for-user-‘root-localhost‘-’localhost’-using-password-YES-”" class="headerlink" title="pymysql.err.OperationalError: (1045, “Access denied for user ‘root@localhost‘@’localhost’ (using password: YES)”)"></a>pymysql.err.OperationalError: (1045, “Access denied for user ‘root@localhost‘@’localhost’ (using password: YES)”)</h2><p>​		遇到此问题需要在终端界面中MySQL交互式模式中输入以下命令解决此问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;New Password&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="PyMySQL"><a href="#PyMySQL" class="headerlink" title="PyMySQL"></a>PyMySQL</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install PyMySQL</span><br></pre></td></tr></table></figure>
+
+<p>​	 安装PyMySQL，可以在终端或者IDE集成开发环境中进行安装，之后就可以在开发环境中进行导入。</p>
+<h2 id="连接数据库例子"><a href="#连接数据库例子" class="headerlink" title="连接数据库例子"></a>连接数据库例子</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">temysql = pymysql.connect(host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">                          port=<span class="number">3306</span> ,</span><br><span class="line">                          user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">                          passwd=<span class="string">&#x27;toor&#x27;</span>,</span><br><span class="line">                          db=<span class="string">&#x27;mysql&#x27;</span>,</span><br><span class="line">                          charset=<span class="string">&#x27;utf8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建游标对象 cursor</span></span><br><span class="line">cursor = temysql.cursor()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MySQL 命令</span></span><br><span class="line">cursor.execute(<span class="string">&#x27;show databases;&#x27;</span>)</span><br><span class="line">data = cursor.fetchone()</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;%s&#x27;</span> % data)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="关闭数据库和游标"><a href="#关闭数据库和游标" class="headerlink" title="关闭数据库和游标"></a>关闭数据库和游标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭游标</span></span><br><span class="line">cursor.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭数据库</span></span><br><span class="line">temysql.close()</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<h3 id="预处理语句"><a href="#预处理语句" class="headerlink" title="预处理语句"></a>预处理语句</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cursor.execute(<span class="string">&quot;DROP TABLE IF EXISTS EMPLOYEE&quot;</span>)</span><br><span class="line">data = <span class="string">&quot;&quot;&quot;CREATE TABLE EMPLOYEE (</span></span><br><span class="line"><span class="string">        FIRST_NAME CHAR(20) NOT NULL, </span></span><br><span class="line"><span class="string">        LAST_NAME CHAR(20), </span></span><br><span class="line"><span class="string">        AGE INT, SEX CHAR(1), </span></span><br><span class="line"><span class="string">        INCOME FLOAT )&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#输出</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;%s&#x27;</span> % data)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="提交数据-or-回滚"><a href="#提交数据-or-回滚" class="headerlink" title="提交数据 or 回滚"></a>提交数据 or 回滚</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># 执行语句</span></span><br><span class="line">    cursor.execute(data)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 提交数据</span></span><br><span class="line">    temysql.commit()</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="comment"># 数据回滚</span></span><br><span class="line">    temysql.rollback()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> DBUtils.PooledDB <span class="keyword">import</span> PooledDB, SharedDBConnection</span><br><span class="line"></span><br><span class="line">Pool = PooledDB(creator=pymysql,        <span class="comment"># 使用模块</span></span><br><span class="line">                maxconnections=<span class="number">6</span>,       <span class="comment"># 连接池允许的最大连接数, 0 or None表示不限制</span></span><br><span class="line">                mincached=<span class="number">2</span>,            <span class="comment"># 在初始化时的连接池最大连接数</span></span><br><span class="line">                maxcached=<span class="number">5</span>,            <span class="comment"># 最多限制链接，0 or None表示无限制</span></span><br><span class="line">                maxshared=<span class="number">3</span>,            <span class="comment"># 连接池最多的共享链接数量，0 or None表示无限制 （无论设置多少，_maxshared永远的为0，所以都是共享的）</span></span><br><span class="line">                blocking=<span class="literal">True</span>,          <span class="comment"># 连接池如果没有可用的连接诶是否阻塞等待。（True 等待 False不等待）</span></span><br><span class="line">                maxusage=<span class="literal">None</span>,          <span class="comment"># 连接可重复次数（None = 无限制）</span></span><br><span class="line">                setsession=[],          <span class="comment"># 开始回话前执行的命令列表</span></span><br><span class="line">                ping=<span class="number">0</span>,                 <span class="comment"># 检查服务是否可用 (0 = 永不停止，1 = 每当请求时，2 = 创建游标时， 4 = 执行查询时，7 = 始终)</span></span><br><span class="line">                host=<span class="string">&#x27;localhost&#x27;</span>,       <span class="comment"># MySQL地址</span></span><br><span class="line">                port=<span class="number">3306</span>,              <span class="comment"># MySQL Port</span></span><br><span class="line">                user=<span class="string">&#x27;root&#x27;</span>,            <span class="comment"># MySQL User</span></span><br><span class="line">                passwd=<span class="string">&#x27;toor&#x27;</span>,          <span class="comment"># MySQL Password</span></span><br><span class="line">                db=<span class="string">&#x27;mysql&#x27;</span>,             <span class="comment"># MySQL db</span></span><br><span class="line">                charset=<span class="string">&#x27;utf8&#x27;</span>)         <span class="comment"># MySQL 字符集</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/python/Python%20MySQL/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

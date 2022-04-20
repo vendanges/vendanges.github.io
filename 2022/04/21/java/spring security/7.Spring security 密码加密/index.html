@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring security 密码加密 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring security 密码加密</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-security/" rel="tag">spring security</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在注册的过程中，通常会有一定的入库处理机制，以钟山计算机端口安全联合众测平台为例，密码入库时都是由MD5运算加密后的密文，以防止不法分子通过相关技术手段对站点进行脫库时明文密码的直接获取。通过使用密文给不法分子增加技术难度从而留有一定的解密时间来提醒用户尽快修改密码等公告的发布与通知。在目前，我们通常会使用MD5、SHA等摘要算法，尽管有很多在线解密的站点，通常在密码加密的场景中，我们会将用户输入的明文密码进行MD5或HAS运算后存储到数据库，之后在用户登录的时候将数据和数据库中的data进行对比的这种方案。</p>
+<h2 id="密文的解密方式"><a href="#密文的解密方式" class="headerlink" title="密文的解密方式"></a>密文的解密方式</h2><p>通常我们可通过碰撞，即存在两个甚至多个得到同一直的情况下就会存在被碰撞的可能性。当然还有就是最直接的方法构建一张反查表，就是说将密码经过md5后运算出的直来进行穷举，如果该站点数据库中有部分密码和反查表中大部分数据收录，则很容易被进行破解至明文。在或者还有一种非常暴力的方式则是“暴力破解”，主要依靠的是强大的字典而不是使用者的技术实力，按照道理来讲，只要你的字典足够丰富且完善，成功率就越高，如果你的字典跑完了还没有破解成功的话，那基本上是意味着失败了。</p>
+<h3 id="彩虹表"><a href="#彩虹表" class="headerlink" title="彩虹表"></a>彩虹表</h3><p>起初黑客们通过字典、碰撞的方式进行破解，对于简单的密码则非常有用，但是如果遇到复杂的密码和密码系统，就会产生较大的字典，为了解决逆向破解的难题，并增加表的容量，瑞士洛桑联邦技术学院的Philippe Oechslin就提出了一种优化型的时间与内存交换算法。</p>
+<p>这让表不在是只存储米嗯问与密文的一一对应关系，而是一个密码对的集合，并在有限的内存中以极高的效率破解更多可能的密码，这也被一些黑客改进了部分流程，最后成为了一种彩虹表。</p>
+<p>彩虹表的大小通常都超过了100g以上，彩虹表每一条散列链都会代表一组相同特征的铭文，但每一条散列链并不需要完整的存储，仅仅存储开始节点和结束节点即可。例如图中的H则代表一次散列计算，R1\R2\R3代表一次递归性质的约减计算R旁边的字母则会代表一条散列链会经历3次约减，也就是说这条散列链可以携带三条铭文，后面的都会由K所指代。当我们需要破解一个散列的时候，只需要对其做相应的约减计算，便可以推导出其所在的散列链，再有散列链正推就可能会得到该散列链的明文，由于K的存在，所以可以携带更多的数据。<code>虽然彩虹表看似如此强大，但是如果当遇到被加盐的时候，也是会变得弱不禁风的。</code></p>
+<h2 id="实现密码加密"><a href="#实现密码加密" class="headerlink" title="实现密码加密"></a>实现密码加密</h2><h3 id="UserServiceImpl-java"><a href="#UserServiceImpl-java" class="headerlink" title="UserServiceImpl.java"></a>UserServiceImpl.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.zhongce.service;</span><br><span class="line"><span class="keyword">import</span> com.example.zhongce.model.User;</span><br><span class="line"><span class="keyword">import</span> com.example.zhongce.repository.RoleRepository;</span><br><span class="line"><span class="keyword">import</span> com.example.zhongce.repository.UserRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RoleRepository roleRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BCryptPasswordEncoder bCryptPasswordEncoder;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));</span><br><span class="line">        user.setRoles(<span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(roleRepository.findAll()));</span><br><span class="line">        userRepository.save(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">findByUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> userRepository.findByUsername(username);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体代码可通过阅读或浏览钟山计算机端口安全联合众测平台进行得知：<a target="_blank" rel="noopener" href="https://gitee.com/zhongshan_union/Zhongshan-computer-port-security-joint-public-testing-platform/blob/master/src/main/java/com/example/zhongce/service/UserServiceImpl.java">https://gitee.com/zhongshan_union/Zhongshan-computer-port-security-joint-public-testing-platform/blob/master/src/main/java/com/example/zhongce/service/UserServiceImpl.java</a></p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20security/7.Spring%20security%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

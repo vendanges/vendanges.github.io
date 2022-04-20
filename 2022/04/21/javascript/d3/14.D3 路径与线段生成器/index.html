@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 路径与线段生成器 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 路径与线段生成器</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="线段"><a href="#线段" class="headerlink" title="线段"></a>线段</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210331111028.png"><br>线段生成器（<code>Line segment generator</code>）的主要作用就是，让原本只有<code>两个</code>点的线段，可以被划分成<code>无数</code>点，通过设置通过设置线段生成器可以使得绘画出各样形状，而仅仅通过<code>[x1,y1],[x2,y2]</code>的方法是无法达到的，在这个情况和需求的情况下，D3 提供了<code>路径生成器（Path Generator）</code>的概念，可以<strong>自动根据数据生成路径</strong>，而用于生成线段的过程被称之为<code>线段生成器（Line Generator）</code>：</p>
+<blockquote>
+<p>line</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">800</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">800</span>)</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;line&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x1&quot;</span>,<span class="number">0</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y1&quot;</span>,<span class="number">400</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x2&quot;</span>,<span class="number">200</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y2&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke&quot;</span>,<span class="string">&quot;black&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke-width&quot;</span>,<span class="string">&quot;3px&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>path</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">800</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">800</span>)</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,<span class="string">&quot;M20,201L300,20&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke&quot;</span>,<span class="string">&quot;black&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke-width&quot;</span>,<span class="string">&quot;3px&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="线段生成器"><a href="#线段生成器" class="headerlink" title="线段生成器"></a>线段生成器</h2><p>线段生成器（<code>Line Generator</code>），主要可以通过使用<code>d3.svg.line()</code>方法进行创建，通过线段的点数据，和每一项的<code>[x,y]</code>来进行定义坐标，对于线段生成器，D3 提供了如下方法：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.svg.line()</td>
+<td>创建一个线段生成器</td>
+<td></td>
+</tr>
+<tr>
+<td>line()</td>
+<td>使用线段生成器绘制数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>line.x()</td>
+<td>设置或获取线段<code>x</code>坐标访问器（使用什么作为线段的x坐标）</td>
+</tr>
+<tr>
+<td></td>
+<td>line.y()</td>
+<td>设置或获取 <code>y</code>坐标的访问器</td>
+</tr>
+<tr>
+<td>line.interpolate()</td>
+<td>设置或获取线段的<code>插值</code>模式</td>
+<td></td>
+</tr>
+<tr>
+<td>line.tension()</td>
+<td>设置或获取张力系数</td>
+<td>需要插值模式为：<code>cardinal、cardinal-open、cardinal-closed</code>时有效</td>
+</tr>
+<tr>
+<td>line.defined</td>
+<td>设置或获取一个访问器，用于确定线段是否<code>存在</code></td>
+<td>只有当数据存在时会被<code>绘制</code></td>
+</tr>
+</tbody></table>
+<h3 id="d3-svg-line"><a href="#d3-svg-line" class="headerlink" title="d3.svg.line()"></a>d3.svg.line()</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210331111037.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">800</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">800</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> lines = [[<span class="number">100</span>,<span class="number">100</span>],[<span class="number">200</span>,<span class="number">200</span>],[<span class="number">400</span>,<span class="number">200</span>],[<span class="number">500</span>,<span class="number">100</span>]]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> linePath = d3.<span class="property">svg</span>.<span class="title function_">line</span>()</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,<span class="title function_">linePath</span>(lines))</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke&quot;</span>,<span class="string">&quot;black&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke-width&quot;</span>,<span class="string">&quot;1px&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;none&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，主要提供了<code>四个点</code>，即他此时我们可以通过使用 <code>d3.svg.line(lines)</code>让其通过使用<code>线段生成器</code>进行创建，之后自动生成了路径为<code>M100,100L200,200L400,200L500,100</code>的折线路径。</p>
+<h3 id="访问器与-interpolate"><a href="#访问器与-interpolate" class="headerlink" title="访问器与 interpolate()"></a>访问器与 interpolate()</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014007.png"></p>
+<h4 id="访问器"><a href="#访问器" class="headerlink" title="访问器"></a>访问器</h4><p>在D3中，访问器即<code>line.x()</code>与<code>line.y()</code>，主要通过使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">x</span>(<span class="params">d</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> d[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">y</span>(<span class="params">d</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> d[<span class="number">1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通常访问器主要的作用就是对<code>x</code>与<code>y</code>坐标进行一些修改，通过使用访问器，我们可以达到经过调教很久的坐标数据，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lines = [<span class="number">100</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">400</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> linePath = d3.<span class="property">svg</span>.<span class="title function_">line</span>()</span><br><span class="line">    .<span class="title function_">x</span>(<span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">y</span>(<span class="keyword">function</span>(<span class="params">d,i</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> i%<span class="number">2</span>==<span class="number">0</span> ? <span class="number">50</span> : <span class="number">0</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014022.png"></p>
+<p>因此我们会得到<code>M100,50L200,0L300,50L400,0</code>的SVG路径：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> lines = [<span class="number">100</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">400</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> linePath = d3.<span class="property">svg</span>.<span class="title function_">line</span>()</span><br><span class="line">    .<span class="title function_">x</span>(<span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">y</span>(<span class="keyword">function</span>(<span class="params">d,i</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> i%<span class="number">2</span>==<span class="number">0</span> ? <span class="number">50</span> : <span class="number">10</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>, <span class="title function_">linePath</span>(lines))</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke&quot;</span>, <span class="string">&quot;black&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke-width&quot;</span>,<span class="string">&quot;2px&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;none&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>那么根据上述的<code>lines</code>与<code>linePath</code>，将会组成一组坐标即：”<code>[100,50]，[200,0]，[300,50]，[400,0]</code>“，而他们的组成主要与<code>line</code>以及<code>linePath</code>有关：<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014039.png"></p>
+<h4 id="interpolate"><a href="#interpolate" class="headerlink" title="interpolate"></a>interpolate</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| ID | DA |</span><br><span class="line">| --- | --- |</span><br><span class="line">| interpolate(&quot;```basis&quot;```) | ![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014352.png) |</span><br><span class="line">| interpolate(&quot;```cardinal```&quot;) | ![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014101.png) |</span><br><span class="line">| interpolate(&quot;```stop```) | ![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210401014259.png) |</span><br><span class="line">```js</span><br><span class="line">var padding = &#123;</span><br><span class="line">    width: 1800,</span><br><span class="line">    height: 1800</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var svg = d3.select(&quot;body&quot;)</span><br><span class="line">    .append(&quot;svg&quot;)</span><br><span class="line">    .attr(&quot;width&quot;,padding.width)</span><br><span class="line">    .attr(&quot;height&quot;,padding.height)</span><br><span class="line"></span><br><span class="line">var lines = [100,200,300,400]</span><br><span class="line"></span><br><span class="line">    var linePath = d3.svg.line()</span><br><span class="line">    .x(function(d) &#123;</span><br><span class="line">        return d;</span><br><span class="line">    &#125;)</span><br><span class="line">    .y(function(d,i) &#123;</span><br><span class="line">        return i%2==0 ? 50 : 0</span><br><span class="line">    &#125;)</span><br><span class="line">    .interpolate(&quot;basis&quot;)</span><br><span class="line"></span><br><span class="line">svg.append(&quot;path&quot;)</span><br><span class="line">    .attr(&quot;d&quot;, linePath(lines))</span><br><span class="line">    .attr(&quot;stroke&quot;, &quot;black&quot;)</span><br><span class="line">    .attr(&quot;stroke-width&quot;,&quot;2px&quot;)</span><br><span class="line">    .attr(&quot;fill&quot;,&quot;none&quot;)</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/14.D3%20%E8%B7%AF%E5%BE%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E7%94%9F%E6%88%90%E5%99%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

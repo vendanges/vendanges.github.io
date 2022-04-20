@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 事件处理 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 事件处理</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在vue当中，还提供了一个<code>v-on</code>指令来监听DOM事件，并使用一些鼠标、键盘方法来运行一些<code>js code</code>，其中我们在上面几章已经讲述了<code>v-on</code>指令的缩写为<code>@</code>，本文我们将不会重复上述关于<code>v-on</code>指令的信息。</p>
+<h2 id="鼠标左击处理-（-click-v-on-click）"><a href="#鼠标左击处理-（-click-v-on-click）" class="headerlink" title="鼠标左击处理 （@click \ v-on:click）"></a>鼠标左击处理 （@click \ v-on:click）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314857_20210310003808643_371236542.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;click += 1&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">    &lt;p&gt;当前增加次数为 &#123;&#123;click&#125;&#125; 次&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            click: 0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314857_20210310005233051_1355568314.gif"><br>在上述的code中，如果用于复杂逻辑处理那么会直接写上 js code 是不可行的，所以vue自然而然的为我们提供了调用方法的方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;button v-on:click=&quot;add&quot;&gt;Add&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            counter: 0</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            add: function(event) &#123;</span><br><span class="line">                    alert(&quot;当前数据默认被点击次数&quot; + this.counter)</span><br><span class="line">                if (event) &#123;</span><br><span class="line">                    alert(&quot;被触发元素为：&quot; + event.target.tagName)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="内链调用处理"><a href="#内链调用处理" class="headerlink" title="内链调用处理"></a>内链调用处理</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314857_20210310013509243_811361004.gif"><br>在上述我们演示到了方法调用以及鼠标动作处理等操作，其中鼠标左击处理也是通过<code>内链</code>直接调用的，所谓内链就是<strong>与html 标签元素写在一起</strong>即大多数都被称之为<code>内链</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;echo(&#x27;Hello,vue!&#x27;)&quot;&gt;Vue!&lt;/button&gt;</span><br><span class="line">    &lt;button @click=&quot;echo(&#x27;Hello,hello!&#x27;)&quot;&gt;Hello!&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            echo: function(message) &#123;</span><br><span class="line">                alert(message)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>在之前我们讲到了vue的基本事件修饰符，本文我们紧接着上述内容进行详细讲解，首先：</p>
+<h3 id="v-on"><a href="#v-on" class="headerlink" title="v-on"></a>v-on</h3><h4 id="鼠标修饰符"><a href="#鼠标修饰符" class="headerlink" title="鼠标修饰符"></a>鼠标修饰符</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219483_20210308235838938_657258918.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;</span><br><span class="line">        &lt;a v-bind:href=&quot;url&quot;&gt;Go blog&lt;/a&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var app =  new Vue(&#123;</span><br><span class="line">                el: &#x27;#app&#x27;,</span><br><span class="line">                data: &#123;</span><br><span class="line">                    url: &#x27;http://sif_one.gitee.io/&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>那么其最后在 <code>v-on</code>指令的笼罩下范围内的<code>&lt;a&gt;</code>标签将会失去原本的作用：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.stop</td>
+<td>调用 event.stopPropagation()</td>
+<td>停止传播</td>
+</tr>
+<tr>
+<td>.prevent</td>
+<td>调用 event.preventDefault()</td>
+<td>防止默认</td>
+</tr>
+<tr>
+<td>.capture</td>
+<td>添加事件侦听器时使用capture(捕获) 模式</td>
+<td></td>
+</tr>
+<tr>
+<td>.self</td>
+<td>只当事件从侦听器绑定元素本身触发时才进行回调</td>
+<td></td>
+</tr>
+<tr>
+<td>&#96;&#96;&#96;.{keyCode</td>
+<td>keyAlias} &#96;&#96;&#96;</td>
+<td>只当事件从特定键触发时才进行回调</td>
+</tr>
+<tr>
+<td>.native</td>
+<td>监听组件根本元素的原生事件</td>
+<td></td>
+</tr>
+<tr>
+<td>.once</td>
+<td>只触发一次回调</td>
+<td></td>
+</tr>
+<tr>
+<td>.left</td>
+<td>只当点击鼠标左键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.right</td>
+<td>只当鼠标点击右键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.middle</td>
+<td>当鼠标中键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.passive</td>
+<td>以 { passive: true } 模式添加侦听器</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>在上述的修饰符中，在事件处理中经常会调用到<code>event.stopPropagation</code>以及<code>event.stopPropagation</code>等方法，但由于其<strong>主要处理纯粹的数据逻辑，并不处理BOM事件的写接</strong>。</p>
+<p>于是，vue为了解决这个问题，官方为其提供了事件的修饰符：</p>
+<ol>
+<li>stop</li>
+<li>prevent</li>
+<li>capture</li>
+<li>salf</li>
+<li>once</li>
+<li>passive</li>
+</ol>
+<p>当然vue官方文档还提供了几个修饰符的组合例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 阻止单击事件继续传播 --&gt;</span><br><span class="line">&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 提交事件不再重载页面 --&gt;</span><br><span class="line">&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 修饰符可以串联 --&gt;</span><br><span class="line">&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 只有修饰符 --&gt;</span><br><span class="line">&lt;form v-on:submit.prevent&gt;&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;</span><br><span class="line">&lt;!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 --&gt;</span><br><span class="line">&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;</span><br><span class="line">&lt;!-- 即事件不是从内部元素触发的 --&gt;</span><br><span class="line">&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在以上的修饰符进行组合的时候，请需要注意顺序，顺序不同可能最后表达的效果可能不一。。</p>
+</blockquote>
+<blockquote>
+<p>不仅仅这样</p>
+</blockquote>
+<p>众所周知，jq很多方法都需要使用鼠标事件，如鼠标单击事件，而vue 在2.2.0版本中，也增加了一个鼠标按钮修饰符：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.left</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314864_20210310023340787_19361796.png"></td>
+</tr>
+<tr>
+<td>.right</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314864_20210310023349941_457868271.png"></td>
+</tr>
+<tr>
+<td>.middle</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314864_20210310023403944_2005098164.png"></td>
+</tr>
+</tbody></table>
+<h4 id="键盘修饰符"><a href="#键盘修饰符" class="headerlink" title="键盘修饰符"></a>键盘修饰符</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314858_20210310020723530_1547753745.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```vue</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;input v-on:keyup.tab=&quot;echo&quot;&gt;  </span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app = new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                echo: function(message) &#123;</span><br><span class="line">                    alert(&quot;监听到了 tab 的键盘事件&quot;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314862_20210310021334112_662643988.png"><br>在上述的code案例中，我们主要使用<code>tab</code>案件码来配合键盘修饰符来监听<code>tab</code>的键盘事件，vue一共所支持的按键修饰符共有9个，分别为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.enter</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314858_20210310021209150_664945765.png"></td>
+</tr>
+<tr>
+<td>.tab</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314858_20210310021217131_1306434253.png"></td>
+</tr>
+<tr>
+<td>.delete</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314859_20210310021227795_2030532408.png"></td>
+</tr>
+<tr>
+<td>.esc</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314859_20210310021236858_381250194.png"></td>
+</tr>
+<tr>
+<td>.space</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314859_20210310021245998_1540743431.png"></td>
+</tr>
+<tr>
+<td>.up</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314860_20210310021255252_1572494897.png"></td>
+</tr>
+<tr>
+<td>.down</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314860_20210310021310064_944186225.png"></td>
+</tr>
+<tr>
+<td>.left</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314860_20210310021317831_767826694.png"></td>
+</tr>
+<tr>
+<td>.right</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314861_20210310021323438_342082501.png"></td>
+</tr>
+</tbody></table>
+<h4 id="系统修饰符"><a href="#系统修饰符" class="headerlink" title="系统修饰符"></a>系统修饰符</h4><p>当然，vue的<code>v-on</code>指令还不仅仅以上这些，自然而然的还支持了系统修饰符，我们可以通过按下响应的按键触发监听器：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.ctrl</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314863_20210310022110116_1825194517.png"></td>
+</tr>
+<tr>
+<td>.alt</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314863_20210310022103246_1902125262.png"></td>
+</tr>
+<tr>
+<td>.shift</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314863_20210310022054172_1203530686.png"></td>
+</tr>
+<tr>
+<td>.meta</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615314863_20210310022150252_2026743425.png" alt="win 键 或 ⌘ 键"></td>
+</tr>
+</tbody></table>
+<p>同样的，系统修饰符也可以进行组合，如官方文档中所提供的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Alt + C --&gt;</span><br><span class="line">&lt;input v-on:keyup.alt.67=&quot;clear&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Ctrl + Click --&gt;</span><br><span class="line">&lt;div v-on:click.ctrl=&quot;doSomething&quot;&gt;Do something&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是，修饰符键于常规的不同，当<code>keyup</code>事件一起使用的时候，修饰符键必须处于<strong>按下的状态</strong>，只有当按住<code>tab</code>的情况下释放其他案件，才能被触发，所以如果需要实现那种行为，可以改为键代码为<code>keyup.17</code>即可。</p>
+</blockquote>
+<h5 id="exact"><a href="#exact" class="headerlink" title=".exact"></a>.exact</h5><figure class="highlight plaintext"><figcaption><span>2.5.0中所新增的修饰符，可以**精确的控制系统修饰符组合并触发事件**，这里我们提供了vue的官方文档中所写的例子：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">&lt;!-- 即使 Alt 或 Shift 被一同按下时也会触发 --&gt;</span><br><span class="line">&lt;button v-on:click.ctrl=&quot;onClick&quot;&gt;A&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;</span><br><span class="line">&lt;button v-on:click.ctrl.exact=&quot;onCtrlClick&quot;&gt;A&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 没有任何系统修饰符被按下的时候才触发 --&gt;</span><br><span class="line">&lt;button v-on:click.exact=&quot;onClick&quot;&gt;A&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+
+<p>从例子中可以看到使用<code>.exact</code>修饰符进行系统修饰符的多种组合变得更加方便（且不用写键代码如<code>keyup.17</code>）</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/7.Vue%20%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

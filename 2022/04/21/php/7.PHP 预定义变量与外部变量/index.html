@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 预定义变量（内部定义变量）与外部变量 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 预定义变量（内部定义变量）与外部变量</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>预定义变量指PHP内置变量，可供随时进行调用且不需进行初始化。而在预定义变量之中主要分为<strong>服务器相关变量</strong>、<strong>系统相关变量</strong>、<strong>PHP自带变量</strong>等三种预定义变量支持。</p>
+<h4 id="服务器变量-（-SERVER-“成员变量名”-）"><a href="#服务器变量-（-SERVER-“成员变量名”-）" class="headerlink" title="服务器变量 （$_SERVER[“成员变量名”]）"></a>服务器变量 （$_SERVER[“成员变量名”]）</h4><h5 id="PATH"><a href="#PATH" class="headerlink" title="PATH "></a>PATH <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/7.php%20%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%B8%8E%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F.md/20201105194224389_510036618.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		echo $_SERVER[&quot;PATH&quot;];</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP_HOST</td>
+<td>当前url</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_CONNECTION</td>
+<td>HTTP连接状态</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_UPGRADE_INSECURE_REQUESTS</td>
+<td>HTTP不安全请求</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_USER_AGENT</td>
+<td>HTTP用户代理</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT</td>
+<td>当前请求头信息</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT_ENCODING</td>
+<td>HTTP接收编码</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT_LANGUAGE</td>
+<td>HTTP接收语言</td>
+<td></td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>当前系统路径</td>
+<td></td>
+</tr>
+<tr>
+<td>SystemRoot</td>
+<td>系统根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>COMSPEC</td>
+<td>命令文件位置</td>
+<td></td>
+</tr>
+<tr>
+<td>PATHEXT</td>
+<td>在命令行中可直接运行支持</td>
+<td></td>
+</tr>
+<tr>
+<td>WINDIR</td>
+<td>进程位置</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_SIGNATURE</td>
+<td>当前服务器签名</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_SOFTWARE</td>
+<td>当前服务器程序信息</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_NAME</td>
+<td>服务器名称</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_ADDR</td>
+<td>服务器地址</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_PORT</td>
+<td>服务器端口</td>
+<td></td>
+</tr>
+<tr>
+<td>REMOTE_ADDR</td>
+<td>正在浏览此界面的IP地址</td>
+<td></td>
+</tr>
+<tr>
+<td>DOCUMENT_ROOT</td>
+<td>服务器文件根</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_SCHEME</td>
+<td>当前请求协议</td>
+<td></td>
+</tr>
+<tr>
+<td>CONTEXT_PREFIX</td>
+<td>上下文前缀</td>
+<td></td>
+</tr>
+<tr>
+<td>CONTEXT_DOCUMENT_ROOT</td>
+<td>当前环境文件根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_ADMIN</td>
+<td>服务器管理员</td>
+<td></td>
+</tr>
+<tr>
+<td>SCRIPT_FILENAME</td>
+<td>当前页面文件名及路径</td>
+<td></td>
+</tr>
+<tr>
+<td>REMOTE_PORT</td>
+<td>远程端口</td>
+<td></td>
+</tr>
+<tr>
+<td>GATEWAY_INTERFACE</td>
+<td>网关接口</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER PROTOCOL</td>
+<td>服务器协议</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_METHOD</td>
+<td>请求方法</td>
+<td></td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>查询字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_URI</td>
+<td>请求URL</td>
+<td></td>
+</tr>
+<tr>
+<td>SCRIPT_NAME</td>
+<td>请求文件名</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="外部变量"><a href="#外部变量" class="headerlink" title="外部变量"></a>外部变量</h4><p>在整个开发语言之中，在当前<strong>程序内自动产生的变量叫做内部变量</strong>。，而HTML之类除php所产生的变量，将会被称之为<strong>外部变量</strong>。而在开发语言之中，表单可缠上两个变量分别为<strong>“GET”和“POST”</strong>，“POST”变量用于提交大量的<strong>数据</strong>，而$_POST变量可以从表单当中<strong>接收POST变量</strong>，接收方式为“$_POST[‘表单变量名’]”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	编号:&amp;nbsp;&lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;&lt;br&gt;</span><br><span class="line">	姓名:&amp;nbsp;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; name=&quot;so&quot; style=&quot;width: 100px;&quot; value=&quot;查询&quot;&gt;</span><br><span class="line">	&lt;br&gt;</span><br><span class="line">	&lt;hr&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;get&quot;&gt;</span><br><span class="line">	性别:&amp;nbsp;&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&amp;nbsp;</span><br><span class="line">		 &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女</span><br><span class="line">	&lt;br&gt;</span><br><span class="line">	部门:&amp;nbsp;&lt;select name=&quot;work&quot;&gt;</span><br><span class="line">		&lt;option&gt;决策团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;项目团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;技术团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;测试团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;运营团队&lt;/option&gt;</span><br><span class="line">	&lt;/select&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; name=&quot;getpost&quot; value=&quot;GET提交&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">	if (isset($_POST[&#x27;so&#x27;])) &#123;				// 点击查询按钮</span><br><span class="line">		$id = $_POST[&#x27;id&#x27;]; 				// 获取ID(编号)；</span><br><span class="line">		$name = $_POST[&#x27;name&#x27;];				// 获取姓名;</span><br><span class="line">		echo &quot;接收POST变量： &lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;编号：&quot;.$id.&quot;&lt;br&gt;&quot;;			// 编号</span><br><span class="line">		echo &quot;姓名：&quot;.$name.&quot;&lt;br&gt;&quot;;			// 姓名</span><br><span class="line">	&#125;</span><br><span class="line">	if (isset($_GET[&#x27;getpost&#x27;])) &#123;			// GET 提交按钮</span><br><span class="line">		$sex = $_GET[&#x27;sex&#x27;];				// 性别</span><br><span class="line">		$work = $_GET[&#x27;work&#x27;];				// 部门组</span><br><span class="line">		echo &quot;&lt;br&gt;接收GET变量：&lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;性别：&quot;.$sex.&quot;&lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;部门：&quot;.$work.&quot;&lt;br&gt;&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 使用REQUEST，获取外部变量；</span><br><span class="line">	echo &quot;&lt;br&gt;接收REQUEST变量：&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;编号：&quot;.@$_REQUEST[&#x27;id&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;姓名：&quot;.@$_REQUEST[&#x27;name&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;性别：&quot;.@$_REQUEST[&#x27;sex&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;部门：&quot;.@$_REQUEST[&#x27;work&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>GET变量主要用于小数据量的传递，$_GET变量提交表单后，URL接收GET变量，而接收方式一般为 “$_GET[‘表单变量名’]”。$_REQUEST变量可以取得包括POST\GET\Cookie在内的外部变量。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/7.PHP%20%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%B8%8E%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

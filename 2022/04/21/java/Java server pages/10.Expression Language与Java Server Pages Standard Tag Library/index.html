@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JSP Expression Language与Java Server Pages Standard Tag Library | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JSP Expression Language与Java Server Pages Standard Tag Library</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>介绍表达式语言（Expression Language）和JSP标准标签库（Java Sever Pages Standard Tag Libray），在Java Server Pages页面之中， 可以显示逻辑，由于一般页面之中会夹杂很多HTML与Java的代码会给开发维护人员造成困难，这时可以使用EL来访问和处理应用程序数据，减少了Java的代码块使用。</p>
+<h2 id="EL（Expression-Language）"><a href="#EL（Expression-Language）" class="headerlink" title="EL（Expression Language）"></a>EL（Expression Language）</h2><p>EL是JSP2.0规范之中的语言，基本语法和PHP代码风格相似，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;code&#125;</span><br></pre></td></tr></table></figure>
+<p>EL语句中的表达式会被直接显示到浏览器中进行显示，可通过<code>isLIgnored</code>属性来查看是否支持EL的表达式，当返回false时即JSP可以使用EL表达式，如isELIgnored属性微true时则JSP页面不能使用EL表达式输出，但会将原有EL表达式转换为字符串字符串进行输出。</p>
+<h3 id="错误处理机制"><a href="#错误处理机制" class="headerlink" title="错误处理机制"></a>错误处理机制</h3><p>Expression Language中存在一个对开发人员非常友好的错误处理机制，那就是当Java Server Pages页面中Expression Language语法是不会报错的，如果出错则在Java Server Pages中不会出现。则不会像Eclipse web内置服务器中启动时的红色状态提醒，相比只想Expression Language简直对开发人员非常友好。</p>
+<h3 id="EL-常量与操作符"><a href="#EL-常量与操作符" class="headerlink" title="EL 常量与操作符"></a>EL 常量与操作符</h3><h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>Expression Language与其他开发语言一样，常量中包含布尔、整数、浮点数、字符串以及NULL等，其在Java Server Pages页面中可以通过Expression Language语法进行定义如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&quot;Hello,world!&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>在Java Server pages中，可以使用Expression Language来去除数组中的元素，可通过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;array[0]&#125;</span><br></pre></td></tr></table></figure>
+<p>Code</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;%@ page isELIgnored=&quot;false&quot; %&gt;</span><br><span class="line">    </span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">String dogs[] = &#123;&quot;jiangxue&quot;,&quot;zhongshan&quot;,&quot;sif&quot;&#125;;</span><br><span class="line">request.setAttribute(&quot;array&quot;,dogs);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">$&#123;array[0]&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><p>Expression Language与通常的开发语言一样，可通过el进行运算符进行计算：</p>
+<h5 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+<td>${1+1}</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+<td>${2-1}</td>
+</tr>
+<tr>
+<td>×</td>
+<td>乘法</td>
+<td>${1*2}</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+<td>${1&#x2F;2}</td>
+</tr>
+<tr>
+<td>%</td>
+<td>求余</td>
+<td>${1%2}</td>
+</tr>
+</tbody></table>
+<h5 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;</td>
+<td>等于</td>
+<td>eq</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不等于</td>
+<td>ne</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>lt</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+<td>gt</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于或等于</td>
+<td>le</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于或等于</td>
+<td>ge</td>
+</tr>
+</tbody></table>
+<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+<td>and</td>
+</tr>
+<tr>
+<td>ll</td>
+<td>逻辑或</td>
+<td>or</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+<td>not</td>
+</tr>
+</tbody></table>
+<h4 id="隐含对象"><a href="#隐含对象" class="headerlink" title="隐含对象"></a>隐含对象</h4><p>在Java Server Pages Expression Language隐含对象共有11个，而常用的隐含对象则有：&#96;&#96;&#96;pageScope、requestScope、sessionScope、applicationScope、param和param Values。</p>
+<h5 id="作用范围"><a href="#作用范围" class="headerlink" title="作用范围"></a>作用范围</h5><p>通常，常用的Expression Language的隐含对象分别微：<code>pageScope、requestScope、sessionScope、applicationScope，</code>分别可以对Java Server Pages获取内置对象<code>pageContext、request、session、application</code>中的数据。</p>
+<h6 id="param"><a href="#param" class="headerlink" title="param"></a>param</h6><p>param对象可用于获取请求参数值，本书主要分为<code>NewFile.jsp</code>和<code>login.jsp</code>，NewFile.jsp用于提交，login.jsp主要用于获取NewFile.jsp中的值。</p>
+<p><strong>NewFile.jsp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;%@ page isELIgnored=&quot;false&quot; %&gt;</span><br><span class="line">    </span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language NewFile&lt;/h1&gt;</span><br><span class="line">&lt;form action=&quot;login.jsp&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;input type = &quot;text&quot; name = &quot;user&quot; id = &quot;user&quot;&gt;</span><br><span class="line">	&lt;button type=&quot;sumbit&quot;&gt;up&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>login.jsp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language login&lt;/h1&gt;</span><br><span class="line">$&#123;param.user&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="pageContext"><a href="#pageContext" class="headerlink" title="pageContext"></a>pageContext</h6><p>pageContext即页面上下文对象，可用于访问Java Server Pages中内置对象中的&#96;&#96;&#96;request、response、out、session、exception、page、servletContext，获取相关的属性。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pageContext.request.serverPort</td>
+<td>当前端口</td>
+<td>request</td>
+</tr>
+<tr>
+<td>pageContext.response.contentType</td>
+<td>页面编码</td>
+<td>response</td>
+</tr>
+<tr>
+<td>pageContext.out.bufferSize</td>
+<td>访问out对象</td>
+<td>out</td>
+</tr>
+<tr>
+<td>pageContext.session.maxInactiveInterval</td>
+<td>访问session 对象</td>
+<td>session</td>
+</tr>
+<tr>
+<td>pageContext.exception.message</td>
+<td>访问exception 对象</td>
+<td>exception</td>
+</tr>
+<tr>
+<td>pageContext.servletContext.contextPath</td>
+<td>当前工作目录</td>
+<td>servletContext</td>
+</tr>
+</tbody></table>
+<h2 id="JSTL-Java-Server-Pages-Standard-Tag-Library"><a href="#JSTL-Java-Server-Pages-Standard-Tag-Library" class="headerlink" title="JSTL (Java Server Pages Standard Tag Library)"></a>JSTL (Java Server Pages Standard Tag Library)</h2><p>JSTL是Sun公司进行制定的规范，由Apache Jarkarta小组进行负责并实现，JSTL由标准标签库由五个不同功能的标签库所组成。</p>
+<h3 id="lt-c-out-gt"><a href="#lt-c-out-gt" class="headerlink" title="&lt;c:out&gt;"></a>&lt;c:out&gt;</h3><p>&lt;c:out&gt;标签可以用来显示一个过大是的结果，与<code>&lt;%= %&gt;作用相似</code>。，在Java Server Pages Stajdard Tag Library<code>&lt;c:out&gt;</code>由如下属性：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>输出内容</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td>默认输出值</td>
+<td></td>
+</tr>
+<tr>
+<td>escapeXml</td>
+<td>是否忽略xml特殊字符</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="使用JSTL-输出文字"><a href="#使用JSTL-输出文字" class="headerlink" title="使用JSTL 输出文字"></a>使用JSTL 输出文字</h4><h5 id="添加环境"><a href="#添加环境" class="headerlink" title="添加环境"></a>添加环境</h5><p>在编写JSTL（Java Server Pages Standard Tag Library）时，可使用Tomcat或直接使用语法进行引用，本书仅使用第二种进行演示，以下语法主要插入在第二行之中：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="value"><a href="#value" class="headerlink" title="value"></a>value</h5><p>value在Java Server Pages Standard Tag Library中可以输出指定的内容，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:out value=&quot;Hello&quot;&gt;</span><br><span class="line">	defaultValue</span><br><span class="line">&lt;/c:out&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="default"><a href="#default" class="headerlink" title="default"></a>default</h5><p>在Java Server Pages Standard Tag Library中的<code>default</code>主要用于当<code>value</code>中值不存在时，就会输出<code>default</code>中的数据，即默认输出值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;param.data&#125;&quot; default=&quot;Value No data&quot; /&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-c-set-gt-与-lt-c-remove-gt-即赋值与删除赋值"><a href="#lt-c-set-gt-与-lt-c-remove-gt-即赋值与删除赋值" class="headerlink" title="&lt;c:set&gt; 与 &lt;c:remove&gt; 即赋值与删除赋值"></a>&lt;c:set&gt; 与 &lt;c:remove&gt; 即赋值与删除赋值</h3><p>&lt;c:set&gt;主要在Java Server Pages Standard Tag Library中主要用于<code>设置作用域变量</code>，也可设置JavaBean属性：</p>
+<h4 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h4><p>将value 赋值给变量Name，其主要通过<code>&lt;c:set&gt;</code>进行赋值，之后<code>$&#123;&#125;</code>进行获取：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sif&quot; var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取变量 --&gt;</span><br><span class="line">$&#123;Name&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>其主要相当于Java中的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% session.setAttribute(<span class="string">&quot;Name&quot;</span>,<span class="string">&quot;sif&quot;</span>); %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除赋值-（-lt-c-remove-gt-）"><a href="#删除赋值-（-lt-c-remove-gt-）" class="headerlink" title="删除赋值 （&lt;c:remove&gt;）"></a>删除赋值 （&lt;c:remove&gt;）</h4><p>&lt;c:remove&gt;主要可以进行删除某个变量，可以写为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sif&quot; var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">&lt;!-- remove Name --&gt;</span><br><span class="line">&lt;c:remove var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">$&#123;Name&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="流程控制标签"><a href="#流程控制标签" class="headerlink" title="流程控制标签"></a>流程控制标签</h3><h4 id="lt-c-if-gt-x2F-lt-c-else-gt"><a href="#lt-c-if-gt-x2F-lt-c-else-gt" class="headerlink" title="&lt;c:if&gt; &#x2F; &lt;c:else&gt;"></a>&lt;c:if&gt; &#x2F; &lt;c:else&gt;</h4><p>在Java Server Pages Standard Tag Library中，可以使用<code>&lt;c:if&gt;</code>来实现if语句，其中条件表达式可以是EL、JSP等。如果满足则执行&lt;c:if&gt;中的code，如果不满足则会使用&lt;c:esle&gt;中的code，但这也只仅仅是给想法，<code>&lt;c:else&gt; 不在JSTL中存在</code>。<br>如果像实现在条件成立时执行一块code,不成立时执行的code，则可以使用<code>:&lt;c:choose&gt;、&lt;c:when&gt;以及&lt;c:otherwise&gt;标签</code>，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:choose&gt;</span><br><span class="line">    &lt;c:when test=&quot;条件1&quot;&gt;</span><br><span class="line">        // code</span><br><span class="line">    &lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test=&quot;条件2&quot;&gt;</span><br><span class="line">        // code</span><br><span class="line">    &lt;/c:when&gt;</span><br><span class="line">    &lt;c:otherwise&gt;</span><br><span class="line">        表达式不正确时，执行主体</span><br><span class="line">    &lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="if……if……else"><a href="#if……if……else" class="headerlink" title="if……if……else"></a>if……if……else</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sun&quot; var=&quot;user&quot; scope=&quot;page&quot;/&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">    // 满足li时执行</span><br><span class="line">	&lt;c:when test=&quot;$&#123;user == &#x27;li&#x27;&#125;&quot;&gt;</span><br><span class="line">		&lt;c:out value=&quot;li&quot;/&gt;</span><br><span class="line">	&lt;/c:when&gt;</span><br><span class="line">	// 满足sun时执行</span><br><span class="line">	&lt;c:when test=&quot;$&#123;user == &#x27;sun&#x27;&#125;&quot;&gt;</span><br><span class="line">		&lt;c:out value=&quot;sun&quot;/&gt;</span><br><span class="line">	&lt;/c:when&gt;</span><br><span class="line">	// 都不满足时执行</span><br><span class="line">	&lt;c:otherwise&gt;</span><br><span class="line">		&lt;c:out value=&quot;other&quot;/&gt;</span><br><span class="line">	&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环标签"><a href="#循环标签" class="headerlink" title="循环标签"></a>循环标签</h3><h4 id="lt-c-forEach-gt"><a href="#lt-c-forEach-gt" class="headerlink" title="&lt;c:forEach&gt;"></a>&lt;c:forEach&gt;</h4><p>&lt;c:forEach&gt;标签可以用于在Java Server Pages Standard Tag Library中实现for循环。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot;</span><br><span class="line">	contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span><br><span class="line">	list.add(&quot;one&quot;);</span><br><span class="line">	list.add(&quot;two&quot;);</span><br><span class="line">	list.add(&quot;three&quot;);</span><br><span class="line">	request.setAttribute(&quot;list&quot;,list);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;requestScope.list&#125;&quot; var=&quot;keyword&quot; varStatus=&quot;id&quot;&gt;</span><br><span class="line">	$&#123;id.index &#125; $&#123;keyword &#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他标签"><a href="#其他标签" class="headerlink" title="其他标签"></a>其他标签</h3><h4 id="lt-e-forTokens-gt"><a href="#lt-e-forTokens-gt" class="headerlink" title="&lt;e:forTokens&gt;"></a>&lt;e:forTokens&gt;</h4><p>&lt;e:forTokens&gt;标签主要用于分割字符串，其主要可通过<code>&quot;:&quot;</code>来实现字符串的分割：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forTokens items=&quot;one:two:three&quot; delims=&quot;:&quot; var=&quot;name&quot;&gt;</span><br><span class="line">	$&#123;name&#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forTokens&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="URL标签"><a href="#URL标签" class="headerlink" title="URL标签"></a>URL标签</h5><p>在Java Server Pages Standard Tag Library中，主要提供来三种URL操作的相关标签，分别为<code>&lt;c:url&gt;、&lt;c:redirect&gt;、&lt;c:import&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;c:url&gt;</td>
+<td>标签主要构建一个url地址</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;c:param&gt;</td>
+<td>指定url地址传递参数</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;c:redirect&gt;</td>
+<td>主要用于重定向其他url，即直接跳转：</td>
+<td></td>
+</tr>
+</tbody></table>
+<h6 id="lt-c-url-gt"><a href="#lt-c-url-gt" class="headerlink" title="&lt;c:url&gt;"></a>&lt;c:url&gt;</h6><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>指定构造URL</td>
+<td></td>
+</tr>
+<tr>
+<td>var</td>
+<td>指定报构造的url保存到范围域中的属性名称</td>
+<td></td>
+</tr>
+<tr>
+<td>scope</td>
+<td>指定构造url保存到范围域中</td>
+<td></td>
+</tr>
+<tr>
+<td>context</td>
+<td>指定url地址所属到同一web下</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;a href=&quot;&lt;c:url value=&quot;http://zsdk.org.cn/&quot;/&gt;&quot;&gt;Up zsdk.org.cn&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，&lt;c:url&gt;标签主要构建一个url地址，可通过上述或以下写法进行编写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot;/&gt;</span><br><span class="line">&lt;a href=&quot;$&#123;gourl&#125;&quot;&gt;up zsdk.org.cn&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="lt-c-param-gt"><a href="#lt-c-param-gt" class="headerlink" title="&lt;c:param&gt;"></a>&lt;c:param&gt;</h6><p>&lt;c:param&gt;标签向指定url地址传递参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot; context=&quot;/src&quot; scope=&quot;page&quot;&gt;</span><br><span class="line">	&lt;c:param name=&quot;user&quot; value=&quot;chenheng&quot;/&gt;</span><br><span class="line">	&lt;c:param name=&quot;pass&quot; value=&quot;pass&quot;/&gt;</span><br><span class="line">&lt;/c:url&gt;</span><br><span class="line">&lt;a href=&quot;$&#123;gourl&#125;&quot;&gt;go url&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h6 id="lt-c-redirect-gt"><a href="#lt-c-redirect-gt" class="headerlink" title="&lt;c:redirect&gt;"></a>&lt;c:redirect&gt;</h6><p>&lt;c:redirect&gt;主要在Java Server Pages Standard Tag Library 主要用于重定向其他url，即直接跳转：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot;/&gt;</span><br><span class="line">&lt;c:redirect url=&quot;$&#123;gourl &#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/Java%20server%20pages/10.Expression%20Language%E4%B8%8EJava%20Server%20Pages%20Standard%20Tag%20Library/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

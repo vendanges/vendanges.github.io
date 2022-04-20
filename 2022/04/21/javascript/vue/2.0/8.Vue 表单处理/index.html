@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 表单处理 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 表单处理</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>vue 的表单处理主要使用<code>v-model</code>指令，且仅仅限制于在<code>&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;</code>等HTML表单元素中使用。<strong>v-model</strong>可以根据HTML控件的类型来自动<strong>选取正确</strong>的方法来进行更新。</p>
+<p>需要值得注意的是<code>v-model</code>指令会忽略所有的表单<code>value、checked、selected</code>等属性的初始值，所以需在<code>js</code>内的<code>data</code>选项中声明初始值，其中元素所对应的属性对应为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text &amp; textarea</td>
+<td>使用value 属性和input 事件</td>
+</tr>
+<tr>
+<td>checkbox &amp; radio</td>
+<td>使用 checked 属性 和 change 事件</td>
+</tr>
+<tr>
+<td>select</td>
+<td>将以value 作为属性并和 change 事件</td>
+</tr>
+</tbody></table>
+<h3 id="input"><a href="#input" class="headerlink" title="input"></a>input</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343456_20210310083301869_723805875.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;input v-model=&quot;message&quot; placeholder=&quot;输入&quot;&gt;</span><br><span class="line">    &lt;p&gt;当前输入的是： &#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: 0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="textarea"><a href="#textarea" class="headerlink" title="textarea"></a>textarea</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343457_20210310084739514_1421939082.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .br &#123;</span><br><span class="line">        white-space: pre-line;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;textarea v-model=&quot;message&quot; placeholder=&quot;输入&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">    &lt;p class=&quot;br&quot;&gt;当前输入的是： &#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在上述的演示当中，<code>&lt;p&gt;</code>标签是不会根据<code>&lt;textarea&gt;</code>标签中并不会进行换行，所以我们需要使用style的<code>white-space</code>属性。</p>
+<h3 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a>checkbox</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343457_20210310085440274_1450202694.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;checkbox&quot; id=&quot;message&quot; v-model=&quot;message&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;message&quot;&gt;&#123;&#123;message&#125;&#125;&lt;/label&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="复选框绑定"><a href="#复选框绑定" class="headerlink" title="复选框绑定"></a>复选框绑定</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343458_20210310091600307_1209800815.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h2&gt;Vue&lt;/h2&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; id=&quot;vue&quot; value=&quot;vue&quot; v-model=&quot;message&quot;&gt;&lt;label&gt;vue&lt;/label&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; id=&quot;vue&quot; value=&quot;vue&quot; v-model=&quot;message&quot;&gt;&lt;label&gt;vue&lt;/label&gt;</span><br><span class="line">    &lt;h2&gt;Laravel&lt;/h2&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; id=&quot;laravel&quot; value=&quot;laravel&quot; v-model=&quot;message&quot;&gt;&lt;label&gt;laravel&lt;/label&gt;</span><br><span class="line">        &lt;h2&gt;Less&lt;/h2&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; id=&quot;less&quot; value=&quot;less&quot; v-model=&quot;message&quot;&gt;&lt;label&gt;less&lt;/label&gt;</span><br><span class="line">    &lt;hr/&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;label&gt;共选择了 &#123;&#123;message&#125;&#125;&lt;/label&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="radio"><a href="#radio" class="headerlink" title="radio"></a>radio</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343458_20210310092442925_1772327994.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;radio&quot; id=&quot;vue&quot; value=&quot;Vue&quot; v-model=&quot;message&quot;&gt;</span><br><span class="line">        &lt;label for=&quot;vue&quot;&gt;Vue&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;radio&quot; id=&quot;laravel&quot; value=&quot;Laravel&quot; v-model=&quot;message&quot;&gt;</span><br><span class="line">        &lt;label for=&quot;vue&quot;&gt;Laravel&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;radio&quot; id=&quot;ejs&quot; value=&quot;Ejs&quot; v-model=&quot;message&quot;&gt;</span><br><span class="line">        &lt;label for=&quot;vue&quot;&gt;Ejs&lt;/label&gt;</span><br><span class="line">    &lt;hr/&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;label&gt;选择了 &#123;&#123;message&#125;&#125;&lt;/label&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当单选一个<code>radio</code>类型的时候，将会根据其<code>radio</code>类型中所设置的<code>value</code>进行显示。</p>
+<h3 id="选择框"><a href="#选择框" class="headerlink" title="选择框"></a>选择框</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343459_20210310093729405_591069188.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;select v-model=&quot;message&quot;&gt;</span><br><span class="line">        &lt;option disabled value=&quot;&quot;&gt;类型&lt;/option&gt;</span><br><span class="line">        &lt;option value=&quot;Vue 被选择了&quot;&gt;Vue&lt;/option&gt;</span><br><span class="line">        &lt;option value=&quot;Laravel 被选择了&quot;&gt;Laravel&lt;/option&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在上述的code当中，我们主要通过使用<code>value</code>来设置<code>option</code>被选择时的属性，除此之外我们还可以直接在 vue 中更加生动的进行绑定：</p>
+<h4 id="value-绑定"><a href="#value-绑定" class="headerlink" title="value 绑定"></a>value 绑定</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343459_20210310095743096_33039906.gif"></p>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>在 vue中，不仅仅为前面几章提供了修饰符，自然而然的也为表单处理所加入了一些较为常用的修饰符，如<code>.lazy、.number、.trim</code>，他们的详细用法是：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.lazy</td>
+<td>当输入完成时在同步信息</td>
+</tr>
+<tr>
+<td>.number</td>
+<td>将输入的值自动转换为 <code>number</code>类型</td>
+</tr>
+<tr>
+<td>.trim</td>
+<td>自动过滤首尾空白</td>
+</tr>
+</tbody></table>
+<h3 id="lazy"><a href="#lazy" class="headerlink" title=".lazy"></a>.lazy</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343459_20210310102048771_1436436452.gif"><br>vue 所提供的<code>.lazy</code>修饰符的主要作用就是，<strong>当输入的时候并不会更新当前输入的内容</strong>，只有当结束输入的时候才会进行更新或同步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .br &#123;</span><br><span class="line">        white-space: pre-line;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;textarea v-model.lazy=&quot;message&quot; placeholder=&quot;输入&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">    &lt;p class=&quot;br&quot;&gt;当前输入的是： &#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="number"><a href="#number" class="headerlink" title=".number"></a>.number</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .br &#123;</span><br><span class="line">            white-space: pre-line;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;number&quot; v-model.number=&quot;message&quot; placeholder=&quot;输入&quot;&gt;&lt;/input&gt;</span><br><span class="line">        &lt;p class=&quot;br&quot;&gt;当前输入的是： &#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app = new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: &#x27;&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="trim"><a href="#trim" class="headerlink" title=".trim"></a>.trim</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615343460_20210310102738586_271980156.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .br &#123;</span><br><span class="line">            white-space: pre-line;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;textarea v-model.trim=&quot;message&quot; placeholder=&quot;输入&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">        &lt;p class=&quot;br&quot;&gt;当前输入的是： &#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app = new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: &#x27;&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/8.Vue%20%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

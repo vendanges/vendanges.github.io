@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 颜色与插值 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 颜色与插值</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><h3 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h3><p>RGB 色彩模式 (<code>RGB color mode</code>)，是一种工业界的颜色标准，主要有<code>红（R，Red）、绿（G，Green）、蓝（B，Blue）</code>三色，即<code>RGB</code>，通过<strong>相互之间的叠加</strong>来取得各种各样的<code>颜色</code>。RGB 主要覆盖了目前所有常用和人类肉眼可用的颜色，也是最为常用的颜色模式之一。</p>
+<p>除此之外，RGB 的亮度各有 <code>0～255</code>个亮度，通过他们三个通道的<strong>叠加</strong>可以组合出大约<code>1678</code>万中颜色，通常也会被称之为<code>1600</code>万色或千万色，还可以被称之为<code>24位色</code>，在D3中他有如下方法：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.rgb(r，g，b)</td>
+<td>分别输出<code> r\g\b</code>来创建颜色（范围都是0,255）</td>
+<td></td>
+</tr>
+<tr>
+<td>d3.rgb(<code>color</code>)</td>
+<td>通过输出相应的字符串来创建颜色：</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>RGB <code>十进制</code></td>
+<td>rgb(255, 255, 255)</td>
+</tr>
+<tr>
+<td></td>
+<td>RGB <code>十六进制</code></td>
+<td>#ff0d0d</td>
+</tr>
+<tr>
+<td></td>
+<td>RGB <code>十六进制</code>缩写</td>
+<td>#ff0</td>
+</tr>
+<tr>
+<td></td>
+<td>HSL <code>十进制</code></td>
+<td>hsl(120, 0.5, 0.5)</td>
+</tr>
+<tr>
+<td></td>
+<td>颜色<code>名称</code></td>
+<td>red</td>
+</tr>
+<tr>
+<td>rgb.brighter()</td>
+<td>使得颜色变得更加明亮</td>
+<td>RGB的各个通道 x 0.7 ^ -k（如果 <code>k</code>没有，那么<code>k</code>的值就为<code>1</code>），需要注意的是<strong>只有当某通道的值的范围在 30~255 之间时，才会进行相应的计算</strong></td>
+</tr>
+<tr>
+<td>rgb.darker()</td>
+<td>颜色变得更加黯淡</td>
+<td>RGB各个值 x 0.7 ^ k</td>
+</tr>
+<tr>
+<td>rgb.hsl()</td>
+<td>返回该颜色对应的 <code>HSL</code>值</td>
+<td></td>
+</tr>
+<tr>
+<td>rgb.toString()</td>
+<td>以字符串的形式返回颜色值 <code>#ffffff</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>brighter()</code></td>
+<td><code>darker()</code></td>
+<td>返回一个新的颜色对象，<code>当前对象并不会进行改变</code></td>
+</tr>
+<tr>
+<td>hsl()</td>
+<td>返回当前颜色所对应的 <code>HSL</code>值</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210330163559.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = d3.<span class="title function_">rgb</span>(<span class="number">166</span>,<span class="number">12</span>,<span class="number">12</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(color.<span class="title function_">has</span>())</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(color.<span class="title function_">darker</span>(<span class="number">2</span>).<span class="title function_">toString</span>())</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(color.<span class="title function_">brighter</span>(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code中，我们可以通过使用<code>has()</code>来返回 <code>color</code>的<code>has</code>颜色值，也可以通过使用<code>toString()</code>来返回该颜色的<code>十六进制</code>，<code>darker()与brighter()</code>数值为<code>2</code>即亮度为<code>2</code>，暗度为<code>2</code>的颜色<code>变值</code>。</p>
+<h2 id="HSL"><a href="#HSL" class="headerlink" title="HSL"></a>HSL</h2><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210330163521.png"><br>HSL 与 RGB 的区别就是，他是通过将 <code>RGB 色彩模式</code>内的各个组成颜色放在圆柱坐标系的表示方法。这种表示方法会比基于<code>笛卡尔坐标系</code>的集合结构中的RGB更加直观。</p>
+<p>HSL 颜色空间主要通过<code>色相（H，Hue）、饱和度（S，Saturation）、亮度（L，Lightness）</code>三个相互叠加来得到各种颜色，他的色相范围是<code>0°～360°</code>，饱和度和亮度分别为<code>0～1</code>。其中<strong>色相°</strong>是一个角度，每个<code>角度</code>都可以代表其中的<code>一个颜色</code>，例如<code>0°</code>代表红色，<code>120°</code>代表绿色，<code>240°</code>代表蓝色。</p>
+<p>通常的情况下，饱和度越大，颜色就越鲜艳，而亮度值主要控制色彩的<code>明暗变化</code>，当亮度越大，就越接近与白色，反之值越小就越接近黑色，默认的情况下<strong>RGB与HSL的颜色是可以互相转换的</strong>。</p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.hsl(<code>h,s,l</code>)</td>
+<td>根据<code>h、s、l</code>值来创建HAL颜色</td>
+</tr>
+<tr>
+<td>d3.hsl(<code>color</code>)</td>
+<td>根据字符串来创建<code>HSL</code>颜色</td>
+</tr>
+<tr>
+<td>hsl.brighter()</td>
+<td>使得颜色变得<code>更亮</code></td>
+</tr>
+<tr>
+<td>hsl.darker()</td>
+<td>使得颜色变得<code>更暗</code></td>
+</tr>
+<tr>
+<td>hsl.rgb()</td>
+<td>返回对应的<code>rgb</code>颜色</td>
+</tr>
+<tr>
+<td>hsl.toString</td>
+<td>返回以<code>RGB</code>字符串十六进制形式输出的颜色</td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210331002823.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rgb = d3.<span class="title function_">rgb</span>(<span class="number">166</span>,<span class="number">12</span>,<span class="number">12</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rgb.<span class="title function_">hsl</span>())</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hsl = d3.<span class="title function_">hsl</span>(<span class="number">0</span>,<span class="number">0.8651685393258428</span>,<span class="number">0.34901960784313724</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(hsl.<span class="title function_">rgb</span>().<span class="title function_">toString</span>())</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(hsl.<span class="title function_">darker</span>(<span class="number">2</span>).<span class="title function_">toString</span>())</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(hsl.<span class="title function_">brighter</span>(<span class="number">2</span>).<span class="title function_">toString</span>())</span><br></pre></td></tr></table></figure>
+
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210331020916.png"><br>插值（<code>Interpolation</code>）主要用于计算<code>介于</code>两个颜色之间的颜色，主要可以通过使用<code>d3.interpolateRgb()</code>来处理<code>RGB</code>颜色之间的插值运算。而如果是<code>HSL</code>颜色则可以通过使用<code>d3.interpolateHsl()</code>来处理<code>HSL</code>颜色之间的插值运算。<strong>除此之外</strong>，D3 还提供了一种更加<code>智能</code>的方法即：<code>d3.interpolate()</code>，他会自动的判断颜色类型，还可以处理<strong>字符串</strong>之间的差值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ragOne = d3.<span class="title function_">rgb</span>(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"><span class="keyword">var</span> ragTwo = d3.<span class="title function_">rgb</span>(<span class="number">0</span>,<span class="number">255</span>,<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> interpolate = d3.<span class="title function_">interpolate</span>(ragOne,ragTwo)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">interpolate</span>(<span class="number">0</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">interpolate</span>(<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，<code>ragOne</code>与<code>ragTwo</code>的插值通过<code>interpolate</code>来自动判断颜色类型，并根据设置的<code>插值</code>进行计算，当插值为<code>0</code>时返回了<code>#ff0000</code>颜色，而当插值为<code>0.5</code>时，则返回了<code>#808080</code>颜色。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/13.D3%20%E9%A2%9C%E8%89%B2%E4%B8%8E%E6%8F%92%E5%80%BC/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

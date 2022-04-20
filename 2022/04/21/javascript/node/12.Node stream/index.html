@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node stream | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node stream</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>流（Stream）是一种传输手段，其核心含义是指一个有始有终的数据传输结构，这通常是文件打开 -&gt; 关闭的过程，在 Node.js 中分为四个基本的流类型，分别为：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Writable</td>
+<td>可写入流（<code>fs.createWriteStream()</code>）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Readable</td>
+<td>读取流 (<code>fs.createReadStream()</code>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Duplex</td>
+<td>可读流 (<code>net.Socket</code>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transorm</td>
+<td>在读写的过程中可以修改和变换数据的可读写流（Duplex，<code>zlib.createDeflate()</code>）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>对于体积较大的二进制文件，如音频、视频文件或以 GB 为单位来衡量大小的，则会容易造成 <strong>爆仓</strong> ，为避免爆仓的发生，读取体积大的文件应使用读一部分写一部分的方式进行。</p>
+</blockquote>
+<h2 id="Readable"><a href="#Readable" class="headerlink" title="Readable"></a>Readable</h2><p>对于 node 的可读取留，即通过 <code>fs.createReadStream</code> 方法创建一个读取流，其参数大多数可通过 <a target="_blank" rel="noopener" href="https://ks.jiangxue.team/2021/09/01/Node-js-File-System/">Node.js File System
+</a> 进行参考，在这其中 <code>highWaterMark</code> 参数主要的作用是内部读取缓存区大小，这将在某些情况下，需要触发底层可读留机制的刷新，从而不消耗任何数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Stream in open</span></span><br><span class="line"><span class="comment">    file data =&gt;  This is desfile.txt</span></span><br><span class="line"><span class="comment">    Stream in end</span></span><br><span class="line"><span class="comment">    Stream in close</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> rs = fs.<span class="title function_">createReadStream</span>(<span class="string">&#x27;desfile.txt&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">flags</span>: <span class="string">&#x27;r&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="number">0o666</span>, <span class="comment">// https://www.xuchao.org/docs/freebsd/permissions.html</span></span><br><span class="line">    <span class="attr">encoding</span>: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">    <span class="attr">start</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">end</span>: <span class="number">19</span>,</span><br><span class="line">    <span class="attr">highWaterMark</span>: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;open&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in open&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">setEncoding</span>(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将可读流传出 data 事件</span></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;file data =&gt; &#x27;</span>,data)</span><br><span class="line">    rs.<span class="title function_">pause</span>()  <span class="comment">// 切出流模式</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        rs.<span class="title function_">resume</span>() <span class="comment">// 恢复流模式</span></span><br><span class="line">    &#125;, <span class="number">2000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in error&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in end&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in close&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>之后根据其 Stream 流程 open -&gt; data -&gt; error -&gt; end -&gt; close ，其中在监听 <code>data</code> 事件中，就可读取文件的内容并输出数据，边度边输的模式，这将会不停的通过 <code>data</code> 读取数据、触发 <code>data</code> 后再次读取。</p>
+<p>在这个过程中主要的不是将文件的整体内容读取并输出，而是通过 <code>fs.createReadStream</code> 方法所设置的缓存区，大小默认为 64KB（这可通过 <code>highWaterMark</code> 参数进行设置）</p>
+<h2 id="Writable"><a href="#Writable" class="headerlink" title="Writable"></a>Writable</h2><p>可写流（Writable Stream），主要通过使用 <code>fs.createWriteStream()</code> 方法进行创建，并通过 <code>ws.write</code> 进行写入，并当 <code>end</code> 事件后后使用 <code>finish</code> 事件来回调方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> ws = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;desfile.txt&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">flags</span>: <span class="string">&#x27;w&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="number">0o666</span>,</span><br><span class="line">    <span class="attr">start</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">highWaterMark</span>: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开流</span></span><br><span class="line">ws.<span class="title function_">on</span>(<span class="string">&#x27;open&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in open&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写入流</span></span><br><span class="line">ws.<span class="title function_">write</span>(<span class="string">&#x27;hey,fs.createWriteStream()&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭流</span></span><br><span class="line">ws.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in close&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结束流</span></span><br><span class="line">ws.<span class="title function_">end</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当 end 事件后且以刷新所有底层系统，则触发回调</span></span><br><span class="line">ws.<span class="title function_">on</span>(<span class="string">&#x27;finish&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Stream in end&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="管道流"><a href="#管道流" class="headerlink" title="管道流"></a>管道流</h2><p>管道流提供了一个输出和输入流的机制，这最为常用到的场景就是获取一个流的数据并写入另一个流当中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> rs = fs.<span class="title function_">createReadStream</span>(<span class="string">&#x27;befile.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> ws = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;desfile.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">chunk</span>) &#123;</span><br><span class="line">    ws.<span class="title function_">write</span>(chunk)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>或者通过其 <code>rs.pipe()</code> 方法，将可读流写到可写流当中，并触发 <code>pipe</code> 事件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> rs = fs.<span class="title function_">createReadStream</span>(<span class="string">&#x27;befile.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> ws = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;desfile.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">rs.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">chunk</span>) &#123;</span><br><span class="line">    ws.<span class="title function_">write</span>(chunk)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/12.Node%20stream/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

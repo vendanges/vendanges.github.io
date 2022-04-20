@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring Cloud Apache Dubbo | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring Cloud Apache Dubbo</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud-alibaba/" rel="tag">spring cloud alibaba</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Dubbos 是 Alibaba 于 2012 年开源，由于当时该项目是内部使用的一个分布式服务治理框架，并经历过多年的大规模业务验证，在短时间内收到很多开发者喜爱，但是处于某些原因在 2014 年停止了维护，所有就出现了当当网的 DubboX，但在 2017 年 9 月，Alibaba 又重启了 Dubbo 项目的维护，于 2018 年 2 月 进入了 Apache 孵化，这意味着 Dubbo 框架并不是只属于 Alibaba ，还属于开源社区的贡献。</p>
+<p>在 2019 年 5 月 Dubbo 正式从孵化器中毕业，正式成为 “Apache Dubbo”，意味着这是 Apache 的顶级项目。在目前 Dubbo 主要的作用就是监控和服务注册两个非常常用的功能，除此之外他还提供了服务治理、服务注册、监控、路由容错等功能。</p>
+<p>促使 Dubbo 项目产生的两个痛点就是服务提供者服务的连接，通常我们使用的是 URL，但如果服务提供者出现故障或者扩容时就需要来维护服务消费者或者服务中心的地址，因此这种维护方式非常麻烦。除</p>
+<p>此我们还需要通过监控来发现那些服务需要进行扩容，那一些服务是不需要这么大性能的，因此需要一个判断的根据，所以可以通过监控来根据不同服务访问的情况来合理调用服务资源，提高机器的利用率。</p>
+<blockquote>
+<p>因此 Dubbo 也类似一个 RPC 框架，但和普通类似框架不同的是它还提供了一个服务治理的功能</p>
+</blockquote>
+<h2 id="Spring-Boot-in-Apache-Dubbo-and-Nacos"><a href="#Spring-Boot-in-Apache-Dubbo-and-Nacos" class="headerlink" title="Spring Boot in Apache Dubbo and Nacos"></a>Spring Boot in Apache Dubbo and Nacos</h2><p>Dubbo 除了支持 Spring Cloud 之外，它还支持 Spring Boot 的生态来实现微服务，因此我们在讲解 Spring Cloud Dubbo 之外还需要了解下 ZooKeeper 和 Apache Dubbo 所实现出的微服务效果。</p>
+<h3 id="服务接口"><a href="#服务接口" class="headerlink" title="服务接口"></a>服务接口</h3><p>为了方便我们的的共用实体类，因此我们可以新建一个普通的 maven 文件，当开饭完成后导出为 jar 包，之后就可以在其他需要的时候直接调用依赖即可：</p>
+<blockquote>
+<p>可以理解为就是将实体类安装本地依赖中，然后用的时候直接引入依赖和工具类即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> model;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义接口</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/8/5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">heyService</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> load 服务消费者是</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">getData</span><span class="params">(String load)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当写好之后我们直接在项目的父目录运行 <code>mvn compile install</code> 直接安装到本地即可，之后可以通过其 <code>pom.xml</code> 定义的名称进行引入本地依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20alibaba/2.Spring%20Cloud%20Apache%20Dubbo/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/29">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/laravel/1.Laravel 简介与安装/">Laravel 介绍</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Laravel是一套简洁且优雅的PHP WEB开发框架，正如官网中所说的“Laravel是一个具有表达力、优雅语法的Web应用程序框架“这与国内的Thinkphp框架不同，也许你可以从两者的官网中进行查看和阅读相关文献资料。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="apache2"><a href="#apache2" class="headerlink" title="apache2"></a>apache2</h3><p>在安装php7之前，我们需要安装apache2的服务器应用环境，来启动本地环境，可使用zypper软件管理包的安装命令进行安装：</p>
+<blockquote>
+<p>zypper install apache2</p>
+</blockquote>
+<p>在安装完成后，读者可使用<code>service</code>来启动apache2服务。</p>
+<h3 id="php7"><a href="#php7" class="headerlink" title="php7"></a>php7</h3><p>本文作者由于使用opensuse开发环境，所以使用zyyper软件管理包来分别安装<code>php7、php7-mysql、apache2-mod_php7</code>等，读者如果环境支持也可复制下方安装命令进行安装：</p>
+<blockquote>
+<p>zypper install php7 php7-mysql apache2-mod_php7</p>
+</blockquote>
+<p>在php7安装完成之后，我们需要使用<code>a2enmod php7</code>来添加apache2对php7的支持即可，通过在<code>/srv/www/htdocs</code>目录中创建info.php文件中写入：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">phpinfo</span>()</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>后通过localhost&#x2F;info.php来访问，如果出现php配置信息则以上步骤操作成功，如出现直接下载info.php文件则需读者自行查找结果。</p>
+<h4 id="安装常用模块"><a href="#安装常用模块" class="headerlink" title="安装常用模块"></a>安装常用模块</h4><p>在安装完php之后，还需要安装一些php的常用模块，否则将会在后面安装composer时出现一系列的报错和需要修改<code>php.ini</code>文件的操作，实际上修改完了也依然无法安装，所以需要安装以下模块：</p>
+<h5 id="php7-1"><a href="#php7-1" class="headerlink" title="php7"></a>php7</h5><blockquote>
+<p>zypper install php-phar php7-curl php7-dev php7-gd php7-mbstring php7-zip php7-mysql php7-xml</p>
+</blockquote>
+<h5 id="php7-4"><a href="#php7-4" class="headerlink" title="php7.4"></a>php7.4</h5><blockquote>
+<p>sudo apt install php7.4 libapache2-mod-php7.4 php7.4-bcmath php7.4-json php7.4-mbstring php7.4-xml php7.4-zip</p>
+</blockquote>
+<h3 id="composer"><a href="#composer" class="headerlink" title="composer"></a>composer</h3><p>composer是用于PHP管理依赖关系的工具，可以在自己的项目中所依赖的外部工具库，这些操作可以使用compose来安装这些依赖库文件。</p>
+<h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>composer的安装我们可以通过php进行下载，也可通过使用系统自带的zypper软件管理包进行安装，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php -r &quot;copy(&#x27;https://install.phpcomposer.com/installer&#x27;, &#x27;composer-setup.php&#x27;);&quot;</span><br><span class="line">php composer-setup.php</span><br><span class="line">php -r &quot;unlink(&#x27;composer-setup.php&#x27;);&quot;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>php -r“ copy（’<a target="_blank" rel="noopener" href="https://getcomposer.org/installer&#39;%EF%BC%8C&#39;composer-setup.php&#39;%EF%BC%89;%E2%80%9D">https://getcomposer.org/installer&#39;，&#39;composer-setup.php&#39;）;”</a><br>php composer-setup.php<br>php composer-setup.php –filename&#x3D;composer</p>
+</blockquote>
+<p>在此之后，读者可将<code>composer</code>移至到<code>/bin</code>目录下，这样就可以使用 composer命令进行构建相关项目。</p>
+<h4 id="设置国内镜像"><a href="#设置国内镜像" class="headerlink" title="设置国内镜像"></a>设置国内镜像</h4><p>在composer安装完成以后，需要设置其国内镜像，以免在项目部署的过程中出现下载缓慢或暂停的情况：</p>
+<blockquote>
+<p>composer config -g repo.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/composer/">https://mirrors.aliyun.com/composer/</a><br>composer config -g repo.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.huaweicloud.com/repository/php/">https://mirrors.huaweicloud.com/repository/php/</a><br>composer config -g repos.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.cloud.tencent.com/composer/">https://mirrors.cloud.tencent.com/composer/</a></p>
+</blockquote>
+<p><strong>如果php和composer都没问题的话，以下两个步骤可以忽略</strong></p>
+<h5 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h5><p>在使用<code>composer install / composer update</code>命令之前，我们需要在项目当前目录下新建<code>composer.json</code>文件，并写入如下配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;monolog/monolog&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.2.*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h6 id="composer-install"><a href="#composer-install" class="headerlink" title="composer install"></a>composer install</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">localhost:/srv/www/htdocs # composer install</span><br><span class="line">Composer is operating significantly slower than normal because you do not have the PHP curl extension enabled.</span><br><span class="line">No lock file found. Updating dependencies instead of installing from lock file. Use composer update over composer install if you do not have a lock file.</span><br><span class="line">Loading composer repositories with package information</span><br><span class="line">Updating dependencies</span><br><span class="line">Lock file operations: 1 install, 0 updates, 0 removals</span><br><span class="line">  - Locking monolog/monolog (1.2.1)</span><br><span class="line">Writing lock file</span><br><span class="line">Installing dependencies from lock file (including require-dev)</span><br><span class="line">Package operations: 1 install, 0 updates, 0 removals</span><br><span class="line">  - Downloading monolog/monolog (1.2.1)</span><br><span class="line">  - Installing monolog/monolog (1.2.1): Extracting archive</span><br><span class="line">3 package suggestions were added by new dependencies, use `composer suggest` to see details.</span><br><span class="line">Generating autoload files</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/1.laravel%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.md/20210207032612514_1522805721.png"><br>当一切都安装好了之后，我们可以开启apache2服务，并进入<code>srv/www/htdocs</code>目录下，使用composer构建一个Laravel 6，如果不加以版本限制则会出现一系列的报错问题，最后使得php无法运行Laravel6。</p>
+<blockquote>
+<p>composer create-project laravel&#x2F;laravel&#x3D;”6.0” test_webapp</p>
+</blockquote>
+<p>在Arch Linux 环境下，且php version 8 ，则我们可以使用以下命令:</p>
+<blockquote>
+<p>composer create-project –prefer-dist laravel&#x2F;laravel test_web “6.*”</p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/1.laravel%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85.md/20210207032912966_2026680967.png"><br>当composer create-project 命令执行完毕后，会发现当前所在目录下会新建<code>test_webapp</code>目录，此时我们只需要进入该目录，并执行<code>php artisan serve</code>即可运行刚刚下载的laravel项目，之后访问<code>http://127.0.0.1:8000</code>即可访问主页面。</p>
+<h3 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h3><p>在 Laravel 中，项目所默认的语言均为英文，因此我们需要将项目的默认语言改为中文，即<code>zh-CN</code>。通常需要使用<code>composer require caouecs/laravel-lang:~3.0</code>来下载语言包，之后更改 <code>config/app.php</code>内的 <strong>locale</strong> 值为 <strong>zh-CN</strong>，在通过<code>vendor\caouecs\laravel-lang\src\zh-CN</code>文件复制到<code>resources\lang</code>即可。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/9.PHP 运算符/">PHP 运算符</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h4 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h4><p>算数运算符是在PHP之中出现最多从运算符，术语二元运算符，主要对两个变量将进行操作，在PHP之中，主要分为六种基本算数运算符，分别为<strong>加（+）、减（-）、乘（*）、除（&#x2F;）、取模（%）、曲负（-）</strong>。</p>
+<h5 id="加法"><a href="#加法" class="headerlink" title="加法 (+)"></a>加法 (+)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194329308_89302245.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a + $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="减法"><a href="#减法" class="headerlink" title="减法 (-)"></a>减法 (-)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194342460_708988866.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a - $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="乘法"><a href="#乘法" class="headerlink" title="乘法 (*)"></a>乘法 (*)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194354380_1302152094.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a * $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="除法-x2F"><a href="#除法-x2F" class="headerlink" title="除法 (&#x2F;)"></a>除法 (&#x2F;)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194408005_1484865431.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a / $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="取模（-）"><a href="#取模（-）" class="headerlink" title="取模（%）"></a>取模（%）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194419275_1525017529.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a % $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="取负-（-）"><a href="#取负-（-）" class="headerlink" title="取负 （-）"></a>取负 （-）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194431972_529206846.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = -$b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194444820_1025682201.png"></h4><p>赋值运算符可被理解为<strong>将右边的值赋给左边的变量</strong>，如$one &#x3D; $a+$b，则标识将$a、$b赋值给了$one:</p>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a + $b;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="同等于加法"><a href="#同等于加法" class="headerlink" title="同等于加法"></a>同等于加法<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194456723_470042886.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a + 10;			// 同等与 1 + 10</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="同等与除法"><a href="#同等与除法" class="headerlink" title="同等与除法"></a>同等与除法<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194506643_1275419551.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 1;</span><br><span class="line">		$b = 3;</span><br><span class="line">		$one = $a / 0.5;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="递增-x2F-递减运算符"><a href="#递增-x2F-递减运算符" class="headerlink" title="递增&#x2F;递减运算符"></a>递增&#x2F;递减运算符</h4><h5 id="前递增"><a href="#前递增" class="headerlink" title="前递增"></a>前递增<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194516931_1715954125.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 1;</span><br><span class="line">		$three = ++$one;</span><br><span class="line">			echo &quot;$three&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="前递减"><a href="#前递减" class="headerlink" title="前递减"></a>前递减<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194530539_229819438.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 1;</span><br><span class="line">		$three = --$one;</span><br><span class="line">			echo &quot;$three&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>递增递减运算符表</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>++$a</td>
+<td>$a 前增加1</td>
+<td>递增</td>
+</tr>
+<tr>
+<td>$a++</td>
+<td>$a 后增加1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>–$a</td>
+<td>$a 前递减</td>
+<td>递减</td>
+</tr>
+<tr>
+<td>$a–</td>
+<td>$a 后递减</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><h5 id="相等-（-x3D-x3D-）"><a href="#相等-（-x3D-x3D-）" class="headerlink" title="相等 （&#x3D;&#x3D;）"></a>相等 （&#x3D;&#x3D;）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194544756_1861054943.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		$two = 10;</span><br><span class="line">		if ($one == $two) &#123;</span><br><span class="line">			echo &quot;\$one相等于\$two&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="不相等于-x3D"><a href="#不相等于-x3D" class="headerlink" title="不相等于 (!&#x3D;)"></a>不相等于 (!&#x3D;)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		$two = 110;</span><br><span class="line">		if ($one != $two) &#123;</span><br><span class="line">			echo &quot;\$one不相等于\$two&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;</td>
+<td>等于</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;&#x3D;</td>
+<td>完全相等</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不等于</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>&lt;&gt;</td>
+<td>不等于</td>
+<td></td>
+</tr>
+<tr>
+<td>!&#x3D;&#x3D;</td>
+<td>非全等</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>大于小于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>小于</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于或等于</td>
+<td>小于&#x2F;大于等于</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于或等于</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>||</td>
+<td>判断是否取值</td>
+<td>取值</td>
+</tr>
+</tbody></table>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h4><p>逻辑运算符于上述不同的是它可以操作布尔类型数据，在PHP中逻辑运算符一共有六种，如下：</p>
+<h5 id="与-（and-amp-amp-）"><a href="#与-（and-amp-amp-）" class="headerlink" title="与 （and | &amp;&amp;）"></a>与 （and | &amp;&amp;）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194605211_1447232249.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = 10;</span><br><span class="line">		if ($a == 10 and $b == 10) &#123;</span><br><span class="line">			echo &quot;\$a 与 \$b 都为10&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>或</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = 10;</span><br><span class="line">		if ($a == 10 &amp;&amp; $b == 10) &#123;</span><br><span class="line">			echo &quot;\$a 与 \$b 都为10&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="或-or-xor"><a href="#或-or-xor" class="headerlink" title="或 (or | xor | ||  )"></a>或 (or | xor | ||  )<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194628955_1704854569.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = 110;</span><br><span class="line">		if ($a == 10 or $b == 1) &#123;</span><br><span class="line">			echo &quot;10或1，都能看到&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>或</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = 110;</span><br><span class="line">		if ($a == 10 xor $b == 1) &#123;</span><br><span class="line">			echo &quot;10或1，都能看到&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>再或者</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = 110;</span><br><span class="line">		if ($a == 10 || $b == 1) &#123;</span><br><span class="line">			echo &quot;10或1，都能看到&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="非-（-）"><a href="#非-（-）" class="headerlink" title="非 （!）"></a>非 （!）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/9.php%20%E8%BF%90%E7%AE%97%E7%AC%A6.md/20201105194640659_1314063512.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$a = 11;</span><br><span class="line">		if ($a !== 10) &#123;</span><br><span class="line">			echo &quot;如果\$为10，则不显示&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>and</td>
+<td>与</td>
+<td>与</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>与（$a 与 $b 都为10）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>or</td>
+<td>或者</td>
+<td>或</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>异或（10或1，都能看到）</td>
+<td></td>
+</tr>
+<tr>
+<td>||</td>
+<td>或（10或1，都能看到）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>!</td>
+<td>非（如果$为10，则不显示）</td>
+<td>非</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>as</td>
+<td>如同</td>
+<td>如同</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/8.PHP 常量与自定义常量/">PHP 常量与预定义常量</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在PHP中，常量一般指<strong>无法修改</strong>的变量或值，而常量一般分为自定义变量和预定义变量两种变量方法。</p>
+<h4 id="自定义常量"><a href="#自定义常量" class="headerlink" title="自定义常量"></a>自定义常量</h4><h5 id="创建一个常量"><a href="#创建一个常量" class="headerlink" title="创建一个常量"></a>创建一个常量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	define(&quot;常量名&quot;, &quot;常量值&quot;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="输出一个常量"><a href="#输出一个常量" class="headerlink" title="输出一个常量"></a>输出一个常量<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/8.php%20%E5%B8%B8%E9%87%8F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F.md/20201105194309284_1678047378.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		define(&quot;常量名&quot;, &quot;常量值&quot;);</span><br><span class="line">			echo 常量名;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="预定义常量"><a href="#预定义常量" class="headerlink" title="预定义常量"></a>预定义常量</h4><p>预定义常量也被称之为“<strong>魔术常量</strong>”，预定义常量是PHP自带提供的预定义常量，很多是由不同的扩展库定义的，<strong>也只有加载了这些库才可以使用预定义常量</strong>。虽然PHP提供了大量的预定义常量，但经常使用的也就屈指可数，他们都有一个共同的特点就是“<strong>不区分大小写</strong>”</p>
+<h5 id="输出当前所在行号（-LINE-）"><a href="#输出当前所在行号（-LINE-）" class="headerlink" title="输出当前所在行号（__LINE__）!"></a>输出当前所在行号（__LINE__）!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/8.php%20%E5%B8%B8%E9%87%8F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F.md/20201105194259036_1225058270.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		define(&quot;__LINE__&quot;, &quot;常量值&quot;);</span><br><span class="line">			echo __LINE__;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="预定义常量-1"><a href="#预定义常量-1" class="headerlink" title="预定义常量"></a>预定义常量</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>__LINE__</td>
+<td>输出常量当前所在行号</td>
+<td></td>
+</tr>
+<tr>
+<td>__FILE__</td>
+<td>输出当前常量所在文件位置</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/7.PHP 预定义变量与外部变量/">PHP 预定义变量（内部定义变量）与外部变量</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>预定义变量指PHP内置变量，可供随时进行调用且不需进行初始化。而在预定义变量之中主要分为<strong>服务器相关变量</strong>、<strong>系统相关变量</strong>、<strong>PHP自带变量</strong>等三种预定义变量支持。</p>
+<h4 id="服务器变量-（-SERVER-“成员变量名”-）"><a href="#服务器变量-（-SERVER-“成员变量名”-）" class="headerlink" title="服务器变量 （$_SERVER[“成员变量名”]）"></a>服务器变量 （$_SERVER[“成员变量名”]）</h4><h5 id="PATH"><a href="#PATH" class="headerlink" title="PATH "></a>PATH <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/7.php%20%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%B8%8E%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F.md/20201105194224389_510036618.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		echo $_SERVER[&quot;PATH&quot;];</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP_HOST</td>
+<td>当前url</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_CONNECTION</td>
+<td>HTTP连接状态</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_UPGRADE_INSECURE_REQUESTS</td>
+<td>HTTP不安全请求</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_USER_AGENT</td>
+<td>HTTP用户代理</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT</td>
+<td>当前请求头信息</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT_ENCODING</td>
+<td>HTTP接收编码</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP_ACCEPT_LANGUAGE</td>
+<td>HTTP接收语言</td>
+<td></td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>当前系统路径</td>
+<td></td>
+</tr>
+<tr>
+<td>SystemRoot</td>
+<td>系统根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>COMSPEC</td>
+<td>命令文件位置</td>
+<td></td>
+</tr>
+<tr>
+<td>PATHEXT</td>
+<td>在命令行中可直接运行支持</td>
+<td></td>
+</tr>
+<tr>
+<td>WINDIR</td>
+<td>进程位置</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_SIGNATURE</td>
+<td>当前服务器签名</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_SOFTWARE</td>
+<td>当前服务器程序信息</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_NAME</td>
+<td>服务器名称</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_ADDR</td>
+<td>服务器地址</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_PORT</td>
+<td>服务器端口</td>
+<td></td>
+</tr>
+<tr>
+<td>REMOTE_ADDR</td>
+<td>正在浏览此界面的IP地址</td>
+<td></td>
+</tr>
+<tr>
+<td>DOCUMENT_ROOT</td>
+<td>服务器文件根</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_SCHEME</td>
+<td>当前请求协议</td>
+<td></td>
+</tr>
+<tr>
+<td>CONTEXT_PREFIX</td>
+<td>上下文前缀</td>
+<td></td>
+</tr>
+<tr>
+<td>CONTEXT_DOCUMENT_ROOT</td>
+<td>当前环境文件根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER_ADMIN</td>
+<td>服务器管理员</td>
+<td></td>
+</tr>
+<tr>
+<td>SCRIPT_FILENAME</td>
+<td>当前页面文件名及路径</td>
+<td></td>
+</tr>
+<tr>
+<td>REMOTE_PORT</td>
+<td>远程端口</td>
+<td></td>
+</tr>
+<tr>
+<td>GATEWAY_INTERFACE</td>
+<td>网关接口</td>
+<td></td>
+</tr>
+<tr>
+<td>SERVER PROTOCOL</td>
+<td>服务器协议</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_METHOD</td>
+<td>请求方法</td>
+<td></td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>查询字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>REQUEST_URI</td>
+<td>请求URL</td>
+<td></td>
+</tr>
+<tr>
+<td>SCRIPT_NAME</td>
+<td>请求文件名</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="外部变量"><a href="#外部变量" class="headerlink" title="外部变量"></a>外部变量</h4><p>在整个开发语言之中，在当前<strong>程序内自动产生的变量叫做内部变量</strong>。，而HTML之类除php所产生的变量，将会被称之为<strong>外部变量</strong>。而在开发语言之中，表单可缠上两个变量分别为<strong>“GET”和“POST”</strong>，“POST”变量用于提交大量的<strong>数据</strong>，而$_POST变量可以从表单当中<strong>接收POST变量</strong>，接收方式为“$_POST[‘表单变量名’]”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	编号:&amp;nbsp;&lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;&lt;br&gt;</span><br><span class="line">	姓名:&amp;nbsp;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; name=&quot;so&quot; style=&quot;width: 100px;&quot; value=&quot;查询&quot;&gt;</span><br><span class="line">	&lt;br&gt;</span><br><span class="line">	&lt;hr&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;get&quot;&gt;</span><br><span class="line">	性别:&amp;nbsp;&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&amp;nbsp;</span><br><span class="line">		 &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女</span><br><span class="line">	&lt;br&gt;</span><br><span class="line">	部门:&amp;nbsp;&lt;select name=&quot;work&quot;&gt;</span><br><span class="line">		&lt;option&gt;决策团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;项目团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;技术团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;测试团队&lt;/option&gt;</span><br><span class="line">		&lt;option&gt;运营团队&lt;/option&gt;</span><br><span class="line">	&lt;/select&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; name=&quot;getpost&quot; value=&quot;GET提交&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">	if (isset($_POST[&#x27;so&#x27;])) &#123;				// 点击查询按钮</span><br><span class="line">		$id = $_POST[&#x27;id&#x27;]; 				// 获取ID(编号)；</span><br><span class="line">		$name = $_POST[&#x27;name&#x27;];				// 获取姓名;</span><br><span class="line">		echo &quot;接收POST变量： &lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;编号：&quot;.$id.&quot;&lt;br&gt;&quot;;			// 编号</span><br><span class="line">		echo &quot;姓名：&quot;.$name.&quot;&lt;br&gt;&quot;;			// 姓名</span><br><span class="line">	&#125;</span><br><span class="line">	if (isset($_GET[&#x27;getpost&#x27;])) &#123;			// GET 提交按钮</span><br><span class="line">		$sex = $_GET[&#x27;sex&#x27;];				// 性别</span><br><span class="line">		$work = $_GET[&#x27;work&#x27;];				// 部门组</span><br><span class="line">		echo &quot;&lt;br&gt;接收GET变量：&lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;性别：&quot;.$sex.&quot;&lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;部门：&quot;.$work.&quot;&lt;br&gt;&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 使用REQUEST，获取外部变量；</span><br><span class="line">	echo &quot;&lt;br&gt;接收REQUEST变量：&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;编号：&quot;.@$_REQUEST[&#x27;id&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;姓名：&quot;.@$_REQUEST[&#x27;name&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;性别：&quot;.@$_REQUEST[&#x27;sex&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;部门：&quot;.@$_REQUEST[&#x27;work&#x27;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>GET变量主要用于小数据量的传递，$_GET变量提交表单后，URL接收GET变量，而接收方式一般为 “$_GET[‘表单变量名’]”。$_REQUEST变量可以取得包括POST\GET\Cookie在内的外部变量。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/6.PHP 变量/">PHP 变量</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>变量是指在一个程序过程之中可以被改变的变量，变量的通常作用就是存储数值。通常一个变量可以存储任意数值或字符串数据，而在PHP之中也可以更改变量的类型，如类型转换等。在PHP的开发语言之中，主要分为<strong>自定义变量</strong>和<strong>预定义变量</strong>两种。</p>
+<h4 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h4><h5 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h5><h6 id="变量的基本格式"><a href="#变量的基本格式" class="headerlink" title="变量的基本格式"></a>变量的基本格式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$变量 = &quot;数据&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$one = 10;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时One变量已经被初始化，而初始化值为”10“,通常在PHP开发语言之中使用<strong>”&#x3D;“</strong>对变量进行初始化</p>
+<h6 id="变量的赋值"><a href="#变量的赋值" class="headerlink" title="变量的赋值"></a>变量的赋值<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/6.php%20%E5%8F%98%E9%87%8F.md/20201105194018163_1537566633.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = 100;</span><br><span class="line">		$two = $one;</span><br><span class="line">			echo &quot;$two&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将”one”变量赋值给”two“变量，之后输出two变量自然而然的就得出了one变量中的数值。</p>
+<h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><h6 id="局部变量格式"><a href="#局部变量格式" class="headerlink" title="局部变量格式"></a>局部变量格式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		function my_function() &#123;</span><br><span class="line">			// Code</span><br><span class="line">		&#125;</span><br><span class="line">		my_function();	// 调用局部变量</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="局部变量实例"><a href="#局部变量实例" class="headerlink" title="局部变量实例"></a>局部变量实例<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/6.php%20%E5%8F%98%E9%87%8F.md/20201105194100100_696617576.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dmeo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$my_one = &quot;调用外部变量&quot;;</span><br><span class="line"></span><br><span class="line">		// 创建局部变量</span><br><span class="line">		function fouction() &#123;</span><br><span class="line">			$my_one = &quot;调用局部变量&quot;;</span><br><span class="line">			print(&quot;$my_one&quot;);</span><br><span class="line">		&#125;	</span><br><span class="line">		fouction();			// 调用局部变量 </span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		print(&quot;$my_one&quot;);</span><br><span class="line">	?&gt;	</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>局部变量是指这些变量只能通过被动调用来使用，而不像通常变量一样，供其他方法调用。</p>
+<h5 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h5><h6 id="全局变量格式"><a href="#全局变量格式" class="headerlink" title="全局变量格式"></a>全局变量格式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 100;</span><br><span class="line">		function my_function() &#123;</span><br><span class="line">			global $one;</span><br><span class="line">		&#125;</span><br><span class="line">		my_function();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="全局变量实例-global"><a href="#全局变量实例-global" class="headerlink" title="全局变量实例 (global)"></a>全局变量实例 (global)</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 200;		</span><br><span class="line">		function my_function() &#123;</span><br><span class="line">			global $one;		// 声明one是一个全局变量</span><br><span class="line">			echo &quot;Hello,$one&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		my_function();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>全局变量与局部变量的区别就是，局部变量仅仅在某个区域才可使用。而全局变量可以在任何地方进行使用，只需要加上一段方法即可。</p>
+<h5 id="变量方法"><a href="#变量方法" class="headerlink" title="变量方法"></a>变量方法</h5><h6 id="isset"><a href="#isset" class="headerlink" title="isset()"></a><strong>isset()</strong><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/6.php%20%E5%8F%98%E9%87%8F.md/20201105194148723_1128066370.png"></h6><p>isset()主要用于检测变量是否存在，如果变量存在则返回TRUE、否则返回FALSE</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = &quot;&quot;;</span><br><span class="line">		var_dump(isset($one));</span><br><span class="line">		echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		var_dump(isset($two));</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="empty"><a href="#empty" class="headerlink" title="empty()"></a>empty()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/6.php%20%E5%8F%98%E9%87%8F.md/20201105194202724_1296392938.png"></h6><p>empty()方法主要用于检测变量是否为空，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 0;</span><br><span class="line">		if (empty($one)) &#123;</span><br><span class="line">			echo &quot;该变量为空&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;	</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/5.PHP 数据类型转换/">PHP 数据类型转换</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在PHP语言之中，主要存在两种类型转换，分别为<strong>隐式类型转换</strong>和<strong>显式类型转换</strong>两种，而在通常的编程语言中。主要称<strong>隐式类型转换为“自动类型转换</strong>”，而<strong>显式类型转换主要被称之为“强制类型转换”</strong>两种。</p>
+<h4 id="自动类型转换（隐式类型转换）"><a href="#自动类型转换（隐式类型转换）" class="headerlink" title="自动类型转换（隐式类型转换）"></a>自动类型转换（隐式类型转换）</h4><h5 id="数值-字符串-字符串"><a href="#数值-字符串-字符串" class="headerlink" title="数值+字符串 (字符串)!"></a>数值+字符串 (字符串)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193602816_1709103059.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		$two = &#x27;String&#x27;;</span><br><span class="line">		echo $one,$two;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时原本的$one变量是一个整数的，<strong>但经过于字符串变量“two”连接</strong>，将会被<strong>自动转换为字符串类型</strong>。</p>
+<h5 id="字符串-字符串-整型"><a href="#字符串-字符串-整型" class="headerlink" title="字符串+字符串 (整型)!"></a>字符串+字符串 (整型)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193733223_234494190.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;data&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;1&quot;;			// 字符串</span><br><span class="line">		$two = &quot;a&quot;;			// 字符串</span><br><span class="line">		$num = $one + $two;</span><br><span class="line">		echo &quot;$num&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时经过隐式类型转换，“1”与“a”相加，输出结果为<strong>“1”</strong>，将会被自动转换为<strong>“整型”</strong></p>
+<h5 id="字符串-浮点数（浮点型）"><a href="#字符串-浮点数（浮点型）" class="headerlink" title="字符串+浮点数（浮点型）!"></a>字符串+浮点数（浮点型）!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193750494_2030225800.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;1&quot;;</span><br><span class="line">		$two = $one + 3.14;</span><br><span class="line">		echo &quot;$two&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>经过字符串与浮点数的相加，最后得出的结果类型将会被自动转换成‘**”整数型”**</p>
+<h4 id="强制类型转换（显性类型转换）"><a href="#强制类型转换（显性类型转换）" class="headerlink" title="强制类型转换（显性类型转换）"></a>强制类型转换（显性类型转换）</h4><h5 id="整型-int"><a href="#整型-int" class="headerlink" title="整型 (int)"></a>整型 (int)</h5><h6 id="字符串转整型-int"><a href="#字符串转整型-int" class="headerlink" title="字符串转整型 (int)"></a>字符串转整型 (int)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193807637_613360955.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (int)&quot;hello,world!&quot;;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="浮点型转整型"><a href="#浮点型转整型" class="headerlink" title="浮点型转整型"></a>浮点型转整型<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193820605_189617616.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (int)3.14;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="布尔转整型"><a href="#布尔转整型" class="headerlink" title="布尔转整型"></a>布尔转整型<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193830701_456638422.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (int)false;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="字符串（int）"><a href="#字符串（int）" class="headerlink" title="字符串（int）"></a>字符串（int）</h5><h6 id="整型转字符串"><a href="#整型转字符串" class="headerlink" title="整型转字符串"></a>整型转字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193840924_621115554.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (string)10;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="浮点型转字符串"><a href="#浮点型转字符串" class="headerlink" title="浮点型转字符串"></a>浮点型转字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193850916_849711367.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (string)3.14;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="浮点型-float"><a href="#浮点型-float" class="headerlink" title="浮点型 (float)"></a>浮点型 (float)</h5><h6 id="整型转浮点型"><a href="#整型转浮点型" class="headerlink" title="整型转浮点型"></a>整型转浮点型<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193908640_1290790812.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (float)3;	// 浮点型结果为 3.00</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="布尔型（bool-boolean）"><a href="#布尔型（bool-boolean）" class="headerlink" title="布尔型（bool,boolean）"></a>布尔型（bool,boolean）</h4><h5 id="变量为布尔型-bool"><a href="#变量为布尔型-bool" class="headerlink" title="变量为布尔型 (bool)!"></a>变量为布尔型 (bool)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193924020_672751994.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (bool)1;		// 经过布尔转换值应为“true”</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="变量为布尔型-boolean"><a href="#变量为布尔型-boolean" class="headerlink" title="变量为布尔型 (boolean)"></a>变量为布尔型 (boolean)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = (boolean)0;		// 经过布尔转换值应为“false”</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="数组-extract"><a href="#数组-extract" class="headerlink" title="数组 (extract)"></a>数组 (extract)</h4><h5 id="数组转字符串"><a href="#数组转字符串" class="headerlink" title="数组转字符串"></a>数组转字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/5.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md/20201105193945116_163792440.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&#x27;key1&#x27; =&gt; 1,&#x27;key2&#x27; =&gt; 2,&#x27;key3&#x27; =&gt; 3);</span><br><span class="line">		extract($arrayName);</span><br><span class="line">		echo &quot;$key1&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(int)，(integer)</td>
+<td>转换为整型</td>
+<td>整型</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(string)</td>
+<td>转换为字符串</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(float)，(double)，(real)</td>
+<td>转换为浮点型</td>
+<td>浮点型</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(bool)，(boolean)</td>
+<td>转换为布尔</td>
+<td>布尔型</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(array)</td>
+<td>转换为数组</td>
+<td>数组</td>
+</tr>
+<tr>
+<td>extract</td>
+<td>数组转字符串</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(object)</td>
+<td>转换为对象</td>
+<td>对象</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/4.PHP 数据类型/">PHP 数据类型</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="整型-2147483648-2147483647"><a href="#整型-2147483648-2147483647" class="headerlink" title="整型 (-2147483648~2147483647)"></a>整型 (-2147483648~2147483647)</h3><h4 id="十进制数"><a href="#十进制数" class="headerlink" title="十进制数"></a>十进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192651547_861907332.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$data = 1;</span></span><br><span class="line"><span class="meta">			echo &quot;$data&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="八进制数-在八进制中，必须在数字前面加上“0”"><a href="#八进制数-在八进制中，必须在数字前面加上“0”" class="headerlink" title="八进制数[^在八进制中，必须在数字前面加上“0”]"></a>八进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192705555_1928129641.png">[^在八进制中，必须在数字前面加上“0”]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = <span class="number">0123</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="十六进制数-需在数值前面加上“0x”"><a href="#十六进制数-需在数值前面加上“0x”" class="headerlink" title="十六进制数[^需在数值前面加上“0x”]"></a>十六进制数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192724212_804639731.png">[^需在数值前面加上“0x”]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$data</span> = <span class="number">0x1B</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="零"><a href="#零" class="headerlink" title="零"></a>零<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192737557_1375215459.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="负数"><a href="#负数" class="headerlink" title="负数"></a>负数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192749013_10925325.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$data</span> = -<span class="number">50</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$data</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><h4 id="普通浮点型"><a href="#普通浮点型" class="headerlink" title="普通浮点型"></a>普通浮点型<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192801645_1242869560.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$data = 3.14;</span></span><br><span class="line"><span class="meta">			echo &quot;$data&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="精度-3-3e4"><a href="#精度-3-3e4" class="headerlink" title="精度 (3.3e4)"></a>精度 (3.3e4)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192814045_305884521.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$two</span> = <span class="number">3.3e4</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$two</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="最大精度-（1-8e308"><a href="#最大精度-（1-8e308" class="headerlink" title="最大精度 （1.8e308)!"></a>最大精度 （1.8e308)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192827020_1401640066.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$three</span> = <span class="number">1.8e308</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$three</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符串（”String”）"><a href="#字符串（”String”）" class="headerlink" title="字符串（”String”）"></a>字符串（”String”）</h3><h4 id="输出单个字符串"><a href="#输出单个字符串" class="headerlink" title="输出单个字符串"></a>输出单个字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192839805_2095327151.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$one = &quot;Hello,&quot;;</span></span><br><span class="line"><span class="meta">			echo &quot;$one&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="组合字符串"><a href="#组合字符串" class="headerlink" title="组合字符串"></a>组合字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105192850956_1352099515.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$one</span> = <span class="string">&quot;Hello,&quot;</span>;</span><br><span class="line">	<span class="variable">$two</span> = <span class="string">&quot;World&quot;</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$one</span></span></span><br><span class="line"><span class="string">		<span class="subst">$two</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串特殊字符输出"><a href="#字符串特殊字符输出" class="headerlink" title="字符串特殊字符输出"></a><strong>字符串特殊字符输出</strong></h4><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\n</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>tap</td>
+</tr>
+<tr>
+<td>\\</td>
+<td>反斜线</td>
+</tr>
+<tr>
+<td>\$</td>
+<td>美元符号</td>
+</tr>
+<tr>
+<td>\“</td>
+<td>双引号</td>
+</tr>
+</tbody></table>
+<p><strong>输出单引号</strong><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193013587_872688941.png"><br><?php
+    $one = "Hello,";
+    $two = "World";
+        echo "$one
+        $two";
+?></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		echo &#x27;吾有一\&#x27;单引号&#x27;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>输出\<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193030577_528651459.png"></strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		echo &#x27;吾有一\\&#x27;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果使用“\‘转义其他字符，则“\”也会显示，使用双引号和单引号的主要区别是。单引号定义的字符串中出现的变量和转义序列不会被变量值替代；而双引号中使用的变量名在显示变量的值。</p>
+<h3 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = true;</span></span><br><span class="line"><span class="meta">		$b = false;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="True"><a href="#True" class="headerlink" title="True"></a>True<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193046369_2133883735.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = true;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="False"><a href="#False" class="headerlink" title="False"></a>False</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = false;</span></span><br><span class="line"><span class="meta">		echo &quot;$a&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>布尔型主要有两个值，分别为“false” and “false”，在PHP中，这两个值是没有大小写限制的，可以使用“TRUE” and “FALSE” or “true” and “false”两种写法，本文使用小写。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193224793_648643830.png"></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&quot;key1&quot; =&gt; &quot;Hello&quot;, &quot;key2&quot; =&gt; &quot;World&quot;);</span><br><span class="line">		$one = (array)$arrayName;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><h4 id="One-0-1-2"><a href="#One-0-1-2" class="headerlink" title="One (0,1,2)"></a>One (0,1,2)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193523304_200936301.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$one = array(0,1,2);</span></span><br><span class="line"><span class="meta">s			var_dump($one);</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Two-0-gt-0-1-gt-1"><a href="#Two-0-gt-0-1-gt-1" class="headerlink" title="Two (0 &gt; 0, 1 &gt; 1)"></a>Two (0 &gt; 0, 1 &gt; 1)<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193503914_1045206889.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$two = array(&quot;One&quot; &gt; &quot;one&quot;,&quot;Two&quot; &gt; &quot;two&quot;,&quot;Three&quot; &gt; &quot;three&quot;);</span></span><br><span class="line"><span class="meta">		var_dump($two);</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>数组可以在变量中存储多个值，使用<strong>var_dump</strong>方法可以返回<strong>数据的类型和值</strong></p>
+<h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><h4 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">one</span> </span>&#123;</span><br><span class="line">		<span class="comment">// class code</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="定义对象"><a href="#定义对象" class="headerlink" title="定义对象"></a>定义对象</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">one</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 对象 = 关键词 对象();</span></span><br><span class="line">		<span class="variable">$data</span> = <span class="keyword">new</span> <span class="title function_ invoke__">data</span>(); <span class="comment">// 初始化</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="调取对象数据"><a href="#调取对象数据" class="headerlink" title="调取对象数据"></a>调取对象数据<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/4.php%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md/20201105193544297_1360035719.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		class person &#123;</span></span><br><span class="line"><span class="meta">			function one() &#123;</span></span><br><span class="line"><span class="meta">				echo &quot;Hello,world！&quot;;</span></span><br><span class="line"><span class="meta">			&#125;</span></span><br><span class="line"><span class="meta">		&#125;</span></span><br><span class="line"><span class="meta">		$person = new person();</span></span><br><span class="line"><span class="meta">		$person -&gt; one();</span></span><br><span class="line"><span class="meta">	?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;</td>
+<td>转义</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>new</td>
+<td>初始化对象</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>class</td>
+<td>定义类</td>
+<td></td>
+</tr>
+<tr>
+<td>function</td>
+<td>新建对象功能</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/3.PHP 输出与输出格式/">PHP 输出</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><h4 id="echo"><a href="#echo" class="headerlink" title="echo ()"></a>echo ()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192407233_873456996.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> (<span class="string">&quot;Hello,world&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="echo-1"><a href="#echo-1" class="headerlink" title="echo"></a>echo<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192419244_1096212365.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Hello,world&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="print"><a href="#print" class="headerlink" title="print()"></a>print()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192436216_1270008835.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">&quot;Hello,world&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="print-1"><a href="#print-1" class="headerlink" title="print"></a>print<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192449213_380803376.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;Hello,world&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><h4 id="输出-Hello-world"><a href="#输出-Hello-world" class="headerlink" title="输出 Hello,world"></a>输出 Hello,world</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192507103_1447228223.png">php与前端语言大多数一样，都拥有起始语句和结束语句，不同的在于php的起始语句是 &lt;</p>
+<p>?pho ，而结束语句是 ?&gt;，而php是经过浏览器编译的，与源代码不同，编译过后的源代码为<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192514356_1510515523.png"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;h1&gt;Hello,word!&lt;/h1&gt;&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="输出时间"><a href="#输出时间" class="headerlink" title="输出时间 "></a>输出时间 <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192530211_582544142.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">date</span>(<span class="string">&quot;Y-m-d H:i:s&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Y</td>
+<td>年</td>
+</tr>
+<tr>
+<td>m</td>
+<td>月</td>
+</tr>
+<tr>
+<td>d</td>
+<td>日</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td>时</td>
+</tr>
+<tr>
+<td>i</td>
+<td>分</td>
+</tr>
+<tr>
+<td>s</td>
+<td>秒</td>
+</tr>
+</tbody></table>
+<h3 id="嵌入输出"><a href="#嵌入输出" class="headerlink" title="嵌入输出"></a>嵌入输出</h3><h4 id="输出HTML代码"><a href="#输出HTML代码" class="headerlink" title="输出HTML代码"></a>输出HTML代码</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192544037_837404664.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">	echo &quot;&lt;h1&gt;Hello,world!&quot;;</span></span><br><span class="line"><span class="meta">	print(&quot;&lt;br&gt;&quot;);</span></span><br><span class="line"><span class="meta">	echo &quot;&lt;font size=&#x27;3&#x27;&gt;字体大小&lt;/font&gt;&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="嵌入JavaScript代码"><a href="#嵌入JavaScript代码" class="headerlink" title="嵌入JavaScript代码"></a>嵌入JavaScript代码</h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192559104_275848463.png"></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="meta">&lt;?php </span></span><br><span class="line"><span class="meta">	echo &quot;&lt;script&gt;&quot;;</span></span><br><span class="line"><span class="meta">	echo &quot;alert(&#x27;调用JavaScript code&#x27;)&quot;;</span></span><br><span class="line"><span class="meta">	echo &quot;&lt;/script&gt;&quot;;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="PHP与JavaCript-Html互相嵌入"><a href="#PHP与JavaCript-Html互相嵌入" class="headerlink" title="PHP与JavaCript+Html互相嵌入"></a>PHP与JavaCript+Html互相嵌入</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/3.php%20%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.md/20201105192613744_1082546073.png"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="meta">&lt;?php</span></span><br><span class="line"><span class="meta">		$a = &quot;请输入正确的账号&quot;;</span></span><br><span class="line"><span class="meta">	?&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">&quot;forml&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ti&quot;</span> <span class="attr">size</span>=<span class="string">&quot;10&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 40%&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bo&quot;</span> <span class="attr">value</span>=<span class="string">&quot;开始&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;ti.value=&#x27;&lt;?php echo $a;?&gt;&#x27;&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>echo (“N”)</td>
+<td>输出</td>
+<td>echo</td>
+</tr>
+<tr>
+<td>echo “N”</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>print (“N”)</td>
+<td>输出</td>
+<td>print</td>
+</tr>
+<tr>
+<td>print “N”</td>
+<td>输出</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>date()</td>
+<td>输出时间</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/27.PHP 读取数据库数据/">PHP 读取数据库数据</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>PHP 读取数据库方法有很多，本文仅列举最方便的面向过程方法，使用MySQLi_connect函数，进行数据库读取。在MySQL部分。我们仅仅涉及连接、插入、读取等三个方面，当掌握这三种方式，则可深度学习其他进阶操作，无论<br>MySQL + PHP 的项目需求多么的复杂，都离不开这三种功能。</p>
+<h2 id="新建数据库表"><a href="#新建数据库表" class="headerlink" title="新建数据库表"></a>新建数据库表</h2><h3 id="新建数据表"><a href="#新建数据表" class="headerlink" title="新建数据表"></a>新建数据表</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/27.php%20%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE.md/20201105162219170_1046308722.png"><br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/27.php%20%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE.md/20201105162248810_1847909516.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE user</span><br><span class="line">  (</span><br><span class="line">   id int(20),</span><br><span class="line">    name varchar(20),</span><br><span class="line">    age int(20)</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+<h3 id="插入表数据"><a href="#插入表数据" class="headerlink" title="插入表数据"></a>插入表数据</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/27.php%20%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE.md/20201105162404065_412001397.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO user(id,name,age) values(&#x27;1&#x27;,&#x27;sun&#x27;,&#x27;12&#x27;);</span><br></pre></td></tr></table></figure>
+<h2 id="MySQLi-connecta"><a href="#MySQLi-connecta" class="headerlink" title="MySQLi_connecta"></a>MySQLi_connecta</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/27.php%20%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE.md/20201105161956925_1997313597.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		// 连接数据库</span><br><span class="line">		$server = &#x27;127.0.0.1:3306&#x27;;</span><br><span class="line">		$username = &#x27;sun&#x27;;</span><br><span class="line">		$password = &#x27;7e63de77&#x27;;</span><br><span class="line">		$database_mysql = &#x27;mksql&#x27;;</span><br><span class="line"></span><br><span class="line">		$sqlconn = mysqli_connect($server,$username,$password,$database_mysql);</span><br><span class="line">		if (!$sqlconn) &#123;</span><br><span class="line">			echo &quot;数据库连接失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 查询数据库</span><br><span class="line">		$sqlcomm = &quot;SELECT id,name,age FROM user&quot;;</span><br><span class="line">		$res = mysqli_query($sqlconn,$sqlcomm);</span><br><span class="line">		// 输出数据库</span><br><span class="line">		if (mysqli_num_rows($res)&gt;0) &#123;</span><br><span class="line">			while ($row = mysqli_fetch_assoc($res)) &#123;</span><br><span class="line">				echo &quot;当前用户ID：&quot;.$row[&quot;id&quot;].&quot; -用户名称：&quot;.$row[&quot;name&quot;].&quot;用户注册年限：&quot;.$row[&quot;age&quot;];</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;当前数据表中暂无数据&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		// 关闭数据库流</span><br><span class="line">		mysqli_close($sqlconn);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/26.PHP 创建数据库/">PHP 创建数据库</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>根据上一章节“PHP连接数据风格”来看，PHP主要分为面向过程风格和面向对象风格两种风格来连接数据库，通常主要列举三种函数，分别为MySQLi、MySQLi_connect、PDO三种函数，但本书仅使用MySQLi、MySQLi_connect两种格式和函数进行演示，对PDO深有兴趣的读者，还请自行进行研究和学习。</p>
+<h2 id="对数据库帐号进行权限设置"><a href="#对数据库帐号进行权限设置" class="headerlink" title="对数据库帐号进行权限设置"></a>对数据库帐号进行权限设置</h2><p>对数据库帐号权限设置的前提是PHP需要对MySQL执行下写入、修改、删除的权限。如当前数据库连接帐号权限不够完成操作时则会报错为**ERROR 1044 (42000): Access denied for user ‘sun‘@’localhost’ to database ‘password’**，为避免出现此问题所以按照本书流程进行操作</p>
+<h3 id="查询当前数据库所有用户"><a href="#查询当前数据库所有用户" class="headerlink" title="查询当前数据库所有用户"></a>查询当前数据库所有用户</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/26.php%20%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.md/20201105102133974_1842072405.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct user from mysql.user;</span><br></pre></td></tr></table></figure>
+<p>或使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql;                #进入mysql库</span><br><span class="line">select * from user;    # 查看所有用户</span><br></pre></td></tr></table></figure>
+<h3 id="分配帐号权限"><a href="#分配帐号权限" class="headerlink" title="分配帐号权限"></a>分配帐号权限</h3><h4 id="分配所有权限给用户"><a href="#分配所有权限给用户" class="headerlink" title="分配所有权限给用户"></a>分配所有权限给用户</h4><h5 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT 权限 on 库.表 to &#x27;用户&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="授权用户"><a href="#授权用户" class="headerlink" title="授权用户"></a>授权用户</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant all on *.* to &#x27;user&#x27;@&#x27;localhost&#x27;;            # 将所有MySQL权限和库访问及操作权限授权给sun</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><h4 id="MySQLi"><a href="#MySQLi" class="headerlink" title="MySQLi"></a>MySQLi</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/26.php%20%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.md/20201105105158613_2116657720.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;?php </span><br><span class="line">			// 连接数据库</span><br><span class="line">			$server = &#x27;127.0.0.1:3306&#x27;;</span><br><span class="line">			$username = &quot;sun&quot;;</span><br><span class="line">			$password = &quot;7e63de77&quot;;</span><br><span class="line"></span><br><span class="line">			$mkmysql = new mysqli($server,$username,$password);</span><br><span class="line">			if ($mkmysql -&gt; connect_error) &#123;</span><br><span class="line">				echo &quot;连接失败&quot;;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// 创建数据库</span><br><span class="line">			$sqlcommand = &quot;CREATE DATABASE password&quot;;</span><br><span class="line">			if ($mkmysql -&gt; query($sqlcommand) === TRUE) &#123;</span><br><span class="line">				echo $sqlcommand,&quot;数据库创建成功&quot;;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				echo &quot;数据库创建失败&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			// 关闭数据库连接流</span><br><span class="line">			$mkmysql -&gt; close();</span><br><span class="line">		?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h3><h4 id="MySQLi-connect"><a href="#MySQLi-connect" class="headerlink" title="MySQLi_connect"></a>MySQLi_connect</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/26.php%20%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.md/20201105110534763_207845154.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		// 连接数据库</span><br><span class="line">		$server = &#x27;127.0.0.1:3306&#x27;;</span><br><span class="line">		$username = &quot;sun&quot;;</span><br><span class="line">		$password = &quot;7e63de77&quot;;</span><br><span class="line"></span><br><span class="line">		$mkmysql = mysqli_connect($server,$username,$password);</span><br><span class="line">		if (!$mkmysql) &#123;</span><br><span class="line">			echo &quot;数据库连接失败&quot;;</span><br><span class="line">		&#125; </span><br><span class="line"></span><br><span class="line">		// 创建数据库</span><br><span class="line">		$sqlcommand = &quot;CREATE DATABASE world&quot;;</span><br><span class="line">		if (mysqli_query($mkmysql,$sqlcommand)) &#123;</span><br><span class="line">			echo &quot;数据库创建成功&quot;;</span><br><span class="line">			echo &quot;数据库命令为: &quot;,$sqlcommand;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;数据库创建失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 关闭数据库流</span><br><span class="line">		$mkmysql -&gt; close();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/31">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

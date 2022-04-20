@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Shell 打印输出 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Shell 打印输出</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Shell脚本语言之中，主要分为<code>echo</code> 和 <code>print</code>两个输出语法，其中<code>echo</code>最为常见，本章主要介绍<code>echo</code>和<code>print</code>语法的输出和方法：</p>
+<h2 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h2><p>echo语法可以显示普通的字符串、打印变量、方法等，其在Shell中最为常用：</p>
+<h3 id="打印普通字符串"><a href="#打印普通字符串" class="headerlink" title="打印普通字符串"></a>打印普通字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &#x27;Hello,world&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="打印变量"><a href="#打印变量" class="headerlink" title="打印变量"></a>打印变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">var=&#x27;Hello,world&#x27;</span><br><span class="line">echo $var</span><br></pre></td></tr></table></figure>
+<h3 id="echo-方法"><a href="#echo-方法" class="headerlink" title="echo 方法"></a>echo 方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>转义</td>
+<td>echo “&quot;Hello,world”</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>开启转义</td>
+<td>echo -e “null”</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>echo -e “null \n”</td>
+</tr>
+<tr>
+<td>\c</td>
+<td>显示不换行</td>
+<td>echo -e “null \c”</td>
+</tr>
+</tbody></table>
+<h2 id="printf"><a href="#printf" class="headerlink" title="printf"></a>printf</h2><p>printf 是在Shell之中不为常用但依然需要用的方法，需要注意的是，printf命令是模仿C程序库（library）中的printf()程序</p>
+<h3 id="输出普通字符串"><a href="#输出普通字符串" class="headerlink" title="输出普通字符串"></a>输出普通字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">printf &#x27;hello,world&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="输出变量"><a href="#输出变量" class="headerlink" title="输出变量"></a>输出变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span>    </span><br><span class="line">var=&#x27;world!&#x27;</span><br><span class="line">printf $var</span><br></pre></td></tr></table></figure>
+<h3 id="printf-方法"><a href="#printf-方法" class="headerlink" title="printf 方法"></a>printf 方法</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>转义</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>换页</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/shell/6.Shell%20%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

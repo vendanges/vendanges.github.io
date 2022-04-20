@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>vue and axios | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>vue and axios</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/axios/" rel="tag">axios</a> <a class="article__tag-none-link" href="/tags/vue/" rel="tag">vue</a> <a class="article__tag-none-link" href="/tags/vue3-0/" rel="tag">vue3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="Callbacks-and-Asynchronous"><a href="#Callbacks-and-Asynchronous" class="headerlink" title="Callbacks and Asynchronous"></a>Callbacks and Asynchronous</h2><p>AXIOS 正如<a target="_blank" rel="noopener" href="https://axios-http.com/zh/docs/intro">文档</a>中所描述的，它是一个基于 <a target="_blank" rel="noopener" href="https://javascript.info/promise-basics">promise</a>用于因此 的网络请求库，即异步(async) 和 同步(await) 同时也在文档中描述了一段故事：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">想象一下，你是一位顶级歌手，粉丝没日没夜的询问你什么时候发送新歌，为了从中解放，你承诺（promise）会在单曲发布的第一时间发给他们。你给了粉丝们一个列表。他们可以在上面填写他们的电子邮件地址，以便当歌曲发布后，让所有订阅了的人能够立即收到。即便遇到不测，例如录音室发生了火灾，以致你无法发布新歌，他们也能及时收到相关通知。</span><br><span class="line"></span><br><span class="line">每个人都很开心：你不会被任何人催促，粉丝们也不用担心错过歌曲发行。</span><br><span class="line"></span><br><span class="line">这是我们在编程中经常遇到的事儿与真实生活的类比：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. 生产者代码，会做一些事并且需要一定时间，例如通过网络加载数据的 code；</span><br><span class="line">2. 消费者代码，想要在生产者代码完成工作的第一时间就可获得回馈(也就是工作结果)，可以理解为粉丝。</span><br></pre></td></tr></table></figure>
+
+<p>而 promise 就是将上述两者连接在一起的特殊 JavaScript 对象，使得可以立即获得相关信息，这也被称之为 “异步”，因为 Promise 是 AXOPS 的基础，所以本章也会从 Promise 开始来进行学习。</p>
+<p>在此之前我们需要了解下 <code>Promise</code> 对象，他主要用于表示一个异步操作最终完成的结果，当然也会包含失败的结果值。</p>
+<h3 id="Callbacks"><a href="#Callbacks" class="headerlink" title="Callbacks"></a>Callbacks</h3><p>又被称之为或调参数，即将一个参数传递给另一个参数的过程被称之为<strong>回调</strong>，在 <a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_callback.asp">JavaScript 回调 (w3schools.com)</a> 这一章节中您可以清除的了解到 callback 的主要用法。</p>
+<p>抛出基础问题不谈，Callbacks 主要就针对 <strong>调用</strong> 两个字来进行深入，以及将参数带入函数中进行计算，完成后回调，这里 W3 的例子是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;JavaScript Callbacks&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Do a calculation and then display the result.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p id=&quot;demo&quot;&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">function myDisplayer(something) &#123;</span><br><span class="line">  document.getElementById(&quot;demo&quot;).innerHTML = something;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function myCalculator(num1, num2, myCallback) &#123;</span><br><span class="line">  let sum = num1 + num2;</span><br><span class="line">  myCallback(sum);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myCalculator(5, 5, myDisplayer);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，<code>myDisplayer</code> 函数中的 <code>something</code> 参数被之后的 <code>document……</code> 方法引入，之后 <code>myCalculator</code> 将 <code>num1</code> 和 <code>num2</code> 参数通过 <code>myCallback</code> 回调给 sun，之后当 <code>myCalculator</code> 被调用时所添加的参数也会被解析到 <code>sun</code> 这个变量中进行计算，并将 <code>myCalculator</code> 函数绑定返回给 <code>myDisplayer</code></p>
+<h3 id="Asynchronous"><a href="#Asynchronous" class="headerlink" title="Asynchronous"></a>Asynchronous</h3><p>异步通常与 Callbacks 一起使用，同样在 <a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_asynchronous.asp">w3</a> 这一章节中所提供的例子使得我们可以快速了解 Asynchronous 和 Callbacks 一起使用的范例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myDisplayer</span>(<span class="params">some</span>) &#123;  </span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = some;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">myCallback</span>) &#123;  </span><br><span class="line"> <span class="keyword">let</span> req = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();  </span><br><span class="line"> req.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&quot;mycar.html&quot;</span>);  </span><br><span class="line"> req.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;  </span><br><span class="line"> <span class="keyword">if</span> (req.<span class="property">status</span> == <span class="number">200</span>) &#123;  </span><br><span class="line"> <span class="title function_">myCallback</span>(<span class="variable language_">this</span>.<span class="property">responseText</span>);  </span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line"> <span class="title function_">myCallback</span>(<span class="string">&quot;Error: &quot;</span> + req.<span class="property">status</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line"> &#125;  </span><br><span class="line"> req.<span class="title function_">send</span>();  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="title function_">getFile</span>(myDisplayer);</span><br></pre></td></tr></table></figure>
+
+<p>在异步的定位中，主要将与其他函数并行运行的函数为异步，结合上述的 Code 我们可以知道，<code>getFile</code> 与 <code>myDisplayer</code> 是同时执行的，这加快了网站加载的速度以及用户的体验。</p>
+<p>同样是在 <code>getFile</code> 下的 <code>myCallback</code> 参数，之后该参数返回的则是当前的请求信息和错误，以至于最后如果 GET 请求成功的情况下可以获取到 <code>mycar.html</code> 的上下文信息。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>在了解过回调(callbacks)和异步(Asyncchronous)之后，回归正题，Axios 主要是基于 Promise 来进行构建，那么 Promise 在通过一开始所介绍的 “故事” 内，我们知道，生产者代码需要一些时间，而消费者代码是可以得到反馈的。</p>
+<h3 id="Promise-Object"><a href="#Promise-Object" class="headerlink" title="Promise Object"></a>Promise Object</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myPromise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">myResolve, myReject</span>) &#123;  </span><br><span class="line"><span class="comment">// &quot;Producing Code&quot; (May take some time)  </span></span><br><span class="line">  </span><br><span class="line"> <span class="title function_">myResolve</span>(); <span class="comment">// when successful  </span></span><br><span class="line"> <span class="title function_">myReject</span>(); <span class="comment">// when error  </span></span><br><span class="line">&#125;);  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// &quot;Consuming Code&quot; (Must wait for a fulfilled Promise)  </span></span><br><span class="line">myPromise.<span class="title function_">then</span>(  </span><br><span class="line"> <span class="keyword">function</span>(<span class="params">value</span>) &#123; <span class="comment">/* code if successful */</span> &#125;,  </span><br><span class="line"> <span class="keyword">function</span>(<span class="params">error</span>) &#123; <span class="comment">/* code if some error */</span> &#125;  </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript Promise Object 包含了上述中生产者带么和消费者代码的实现，当之后 Promise 执行时，他会调用两个回调方法，如果时结果值那么就 successful，否则 error，这也对应着 Promise Object 所支持的两个属性，状态和结果。</p>
+<h3 id="then"><a href="#then" class="headerlink" title=".then()"></a>.then()</h3><p>最终，Promise 会通过 <code>.then()</code> 来返回成功和失败的回调函数，他的概念主要还是 Promise Object 所支持的两个属性，更加详细的可以参考下 MDN 的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#%E8%BF%94%E5%9B%9E%E5%80%BC">Promise.prototype.then() - JavaScript | MDN (mozilla.org)</a> 详细了解具体原理。</p>
+<p>最后总结一点是，如果 Promise 返回了一个值，那么 <code>then</code> 将会成为接受（accept）状态，没返回任何值，<code>then</code> 同样会返回接收状态，并将接受状态的回调参数设置为 <code>undefined</code>。</p>
+<p>假设抛出一个错误，那么 <code>then</code> 也会返回一个拒绝状态，并将错误信息回调到参数值中。但如果是一个接受的 Promise，那么 <code>then</code> 就会将状态设置为 <code>fulfilled</code>，反之则是 <code>rejected</code>。</p>
+<p>如果遇到一个未定状态(<code>pending</code>)，那么 <code>then</code> 所返回的 Promise 也会是未定的，在 W3 中，同样给了我们一个非常简单的例子供我们进行理解：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>JavaScript Promise<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">function</span> <span class="title function_">myDisplayer</span>(<span class="params">some</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = some;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">let</span> myPromise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">myResolve, myReject</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">let</span> x = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// some code (try to change x to 5)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">myResolve</span>(<span class="string">&quot;OK&quot;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">myReject</span>(<span class="string">&quot;Error&quot;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">myPromise.<span class="title function_">then</span>(</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span>(<span class="params">value</span>) &#123;<span class="title function_">myDisplayer</span>(value);&#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span>(<span class="params">error</span>) &#123;<span class="title function_">myDisplayer</span>(error);&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上述的 Code 中，同样的有两个最后的状态进行输出，一个是成功的而另一个则是错误的状态信息进行输出，通过 <code>.then()</code> 使得我们可以处理异步中的错误，以及成功返回的信息。</p>
+<h2 id="Async-x2F-Await"><a href="#Async-x2F-Await" class="headerlink" title="Async&#x2F;Await"></a>Async&#x2F;Await</h2><h3 id="Async"><a href="#Async" class="headerlink" title="Async"></a>Async</h3><p>在 async 和 await 还未出现之前，异步编程通常会苦恼当前的开发人员，但在 ECMAScript 2017 中，async&#x2F;await 通过 promises 使得将异步的编写更加容易和方便，同时增加的阅读性。</p>
+<p>我们可以将 async 和 await 拆分下来（虽然 <code>await</code> 离开了 async 些许并没有什么作用），async 可以理解为 promise 中的生产者代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello,world!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">hello</span>();</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中的 <code>async</code> 同等与传统方法中的 <code>function</code>，之后，我们还需要配合 <code>await</code> 来进行使用。</p>
+<h3 id="Await"><a href="#Await" class="headerlink" title="Await"></a>Await</h3><p>而之后的 await，他实际上就是 <code>.then</code>，只可以和 <code>async</code> 搭配进行使用，基于 promise 的函数之前。它会暂停代码在该行上，直到 promise 完成，然后返回结果值。在暂停的同时，其他正在等待执行的代码就有机会执行了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> greeting = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">hello</span>().<span class="title function_">then</span>(alert);</span><br></pre></td></tr></table></figure>
+
+<p>顾名思义，也就是在 <code>await</code> 的同时，他会来进行回调的调用，来代替之前我们之前直接一个函数来进行回调，同时他也完成了 <code>then</code> 的部分工作，使得 <code>then</code> 会减少使用。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/axios/1.axios%20and%20promise/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

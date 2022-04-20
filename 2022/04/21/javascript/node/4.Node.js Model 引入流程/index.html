@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js Model 引入流程 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js Model 引入流程</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Node model 可以相互进行调用，Node.js 为此提供了一个简单的模块系统，这可以内置的也可以是通过 <code>npm</code> 进行安装的，因此 Node.js 提供了 <code>exports</code> 和 <code>require</code> 两个对象，其中 <code>exports</code> 用于模块公开的接口，而 <code>require</code> 则用于获取模块的 <code>exports</code> 对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">setName</span> = <span class="keyword">function</span> (<span class="params">thyName</span>) &#123;</span><br><span class="line">        name = thyName;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sayHello</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hey,&#x27;</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Hello</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>exports</code> 对象将 <code>Hello</code> 对象本身，因此在通过 <code>require</code> 对象进行引入的时候，就会输出 Hello 函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Hello</span> = <span class="built_in">require</span>(<span class="string">&#x27;./modelName&#x27;</span>)</span><br><span class="line">hello = <span class="keyword">new</span> <span class="title class_">Hello</span>()</span><br><span class="line">hello.<span class="title function_">setName</span>(<span class="string">&#x27;This is vievs file!&#x27;</span>)</span><br><span class="line">hello.<span class="title function_">sayHello</span>()</span><br></pre></td></tr></table></figure>
+
+<p>在 Node.js 模块中，模块主要分为 <strong>核心模块</strong>，这是 Node.js 所提供的模块，而另一个则是用户所编写的模块，被称之为 <strong>文件模块</strong>。这之间的区别就是核心模块部分在 Node 编译的过程中，同时编译了二进制的执行文件，所以在 Node 进程启动时，核心模块就会被加载到内存中，因此和因模块在引入的时候，文件定位以及编译执行就会被省略掉。</p>
+<p>但用户所编写的文件模块则需要通过 <strong>查找路径，文件定位，编译执行</strong> 这三个流程，并在运行时进行动态加载，因此比较慢。所以和核心模块比起来，速度是自然赶不上人家内置的。</p>
+<h2 id="require-文件查找策略"><a href="#require-文件查找策略" class="headerlink" title="require 文件查找策略"></a>require 文件查找策略</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/4.node.js%20model.md/5142988836618.png"></p>
+<h3 id="文件缓存区"><a href="#文件缓存区" class="headerlink" title="文件缓存区"></a>文件缓存区</h3><p>对于 require 的文件缓存区主要的作用就是会优先从文件模块中加载已经存在的模块这也就说明了 Node 对引入过的模块都会进行缓存，以减少第二次使用时的加载时间。</p>
+<p>但与浏览器缓存静态脚本文件不同的是，Node.js 所缓存的是编译之后的对象，无论是核心模块还是文件模块，对于二次加载都一律采用缓存优先的方式进行。</p>
+<blockquote>
+<p>不同之处在于核心模块的检查优于文件模块的缓存检查</p>
+</blockquote>
+<h3 id="原生模块加载"><a href="#原生模块加载" class="headerlink" title="原生模块加载"></a>原生模块加载</h3><p>原生模块的加载仅次于检查文件缓存区是否存在，因此通过 <code>require</code> 解析完文件名之后，检查该模块是否在原生模块中。</p>
+<p>如 <code>http</code> 模块，虽然会在项目目录下存在 <code>http/http.js/http.node/http.json</code> 文件，但 <code>http</code> 模块不会从这些文件中加载，而是从原生模块中进行加载。</p>
+<p>因此原生模块内同样有也有一个缓存区，如缓存区没有被加载过，就会调用原生模块的加载方式进行加载和执行。</p>
+<h3 id="文件加载"><a href="#文件加载" class="headerlink" title="文件加载"></a>文件加载</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/4.node.js%20model.md/3951420721462.png"></p>
+<p>当文件模块在缓存中并不存在是，而且还是原生模块的时候，<code>require</code> 方法所传入的参数就会被 Node.js 解析，并从文件系统中加载到实际的文件。对于没一个被加载的文件模块，创建这个模块对象的时候就会生成一个 <code>paths</code> 属性，也就是 <code>/node_modules</code>，因此我们可以直接通过 <code>console.log(module.paths)</code> 来根据当前文件的路径计算得到 <code>module path</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[ &#x27;/home/kunlun/Development/Web/Demo/node/node_modules&#x27;,</span><br><span class="line">  &#x27;/home/kunlun/Development/Web/Demo/node_modules&#x27;,</span><br><span class="line">  &#x27;/home/kunlun/Development/Web/node_modules&#x27;,</span><br><span class="line">  &#x27;/home/kunlun/Development/node_modules&#x27;,</span><br><span class="line">  &#x27;/home/kunlun/node_modules&#x27;,</span><br><span class="line">  &#x27;/home/node_modules&#x27;,</span><br><span class="line">  &#x27;/node_modules&#x27; ]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从当前文件目录内开始查找 <code>node_modules</code> 目录，然后依次进入查找父目录下的 <code>node_modules</code>，以此循环迭代到根目录下的 <code>node_modules</code> 目录。</p>
+</blockquote>
+<p>如果 &#96;&#96;&#96;require&#96;&#96; 指向的是绝对路径的文件，查找时就直接作为当前的路径进行使用，如果不是则进入查找的流程。以 module_path 中取出地一个目录作为查找的基准：</p>
+<ol>
+<li>直接尝试从当前目录进行查找，如果存在则结束流程，反而继续进行查找，并进入下一阶段</li>
+<li>尝试添加扩展名后缀进行查找，如果存在就结束查找，否则进入下一个阶段</li>
+<li>尝试将 require 的参数作为一个包进行查找，读取项目目录下的 <code>package.json</code> 文件</li>
+<li>尝试添加扩展名或查找文件，如果存在就结束流程，否则进入下一个阶段</li>
+<li>如果继续失败，则取出 module path 中下一个目录作为查找的基准，循环 1～5 步骤</li>
+<li>如果仍然失败，则一直循环 1～6 步骤，知道 module path 中最后一个值</li>
+<li>如果持续失败，则抛出异常。</li>
+</ol>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/4.Node.js%20Model%20%E5%BC%95%E5%85%A5%E6%B5%81%E7%A8%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

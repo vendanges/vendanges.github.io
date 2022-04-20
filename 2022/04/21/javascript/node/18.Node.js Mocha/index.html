@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js Mocha | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js Mocha</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Node.js 是一个面向服务端的 JavaScript，为了能够有效的持续保证代码质量，通过单元测试(Unit Testing) 来进行正确性校验的测试工作，Node.js 也有 <code>Mocha</code> 和 <code>Should</code> 以及 <code>SuperTest</code> 模块用于。</p>
+<p>单元测试主要的目的就是这对程序模块中进行正确性检验测试工作，而程序单元是应用的最小测试部件。</p>
+<blockquote>
+<p>一个单元就是单个程序或者函数、过程等，而对于面向对象编程，则最小单元就是方法和超类、子类中的方法。</p>
+</blockquote>
+<p>在此之前，JavaScript 主要用于在前端，自从 node.js 起始以来 JavaScript 开始面向客户端以及跨平台的使用，这时单元测试就显得尤为重要。we</p>
+<h2 id="BDD-or-TDD"><a href="#BDD-or-TDD" class="headerlink" title="BDD or TDD"></a>BDD or TDD</h2><h3 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/18.node.js%20mocha.md/3274515149185.png"></p>
+<p>单元测试主要分为 BDD（Behavior-Driven Development, 行为驱动开发），以及TDD（Test-Driven Development，测试驱动开发）</p>
+<p>其中 TDD 原理是指在开发功能之前先编写单元测试的用例代码，TDD 也是 极限编程（Extreme programming,xp）的实现.</p>
+<blockquote>
+<p>极限编程是软件工程方法学中敏捷软件开发的一种，他更倾向与适应性以及可预测性，即在任何阶段去适应变化。</p>
+</blockquote>
+<h3 id="BDD"><a href="#BDD" class="headerlink" title="BDD"></a>BDD</h3><p>行为驱动开发（Behavior-driven development，BDD）是敏捷开发技术之一，他也是极限开发（Extreme Programming）鼓励软件项目的开发者和非技术人员和以及商业参与者之间的协作并保证最后的 QA（Quality Assurance）</p>
+<p>这主要是出于 2009 年 Dan North 对 BDD 给出的定义：</p>
+<blockquote>
+<p>BDD是第二代的、由外及内的、基于拉(pull)的、多方利益相关者的(stakeholder)、多种可扩展的、高自动化的敏捷方法。它描述了一个交互循环，可以具有带有良好定义的输出（即工作中交付的结果）：已测试过的软件。</p>
+</blockquote>
+<h2 id="Mocha"><a href="#Mocha" class="headerlink" title="Mocha"></a>Mocha</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/18.node.js%20mocha.md/5488758059186.png"></p>
+<p>Mocha 主要是用于 JavaScript 的测试框架，使得异步测试变得简单且 “有趣”。他最为重要的是 Mocha 测试是连续的，在正确的测试条件中遇到未捕获的异常时将会给出灵活且准确的报告。</p>
+<h3 id="Assert"><a href="#Assert" class="headerlink" title="Assert"></a>Assert</h3><p>断言（Assertion）是单元测试中用来保证最小单元是否正常的测试方法之一，目的是验证开发者所预期的效果，当程序运行到断言位置时会返回布尔值，其中返回为真则表示正常，否则将会终止运行并给出错误消息。</p>
+<p>是 Mocha 中的核心方法之一，这由 Node.js 官方库所进行提供，并在 Node.js 的 API 中定义了多种检测方法供开发者使用，将方法与 Mocha 进行配合来以低成本的方式进行单元测试。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>assert(value,[message])</td>
+<td>当 value 为 false 时终止运行并返回错误</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.ok(value,[message])</td>
+<td><code>assert</code> 的别名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>assert.ifError(value)</td>
+<td>如果 value 不是 <code>null</code> 或 <code>undefined</code> 则报错并抛出 value</td>
+</tr>
+<tr>
+<td>3</td>
+<td>assert.match(value,regExp)</td>
+<td>value 是否匹配正则表达式</td>
+</tr>
+<tr>
+<td>4</td>
+<td>assert.notEqual(actual,expected[,message])</td>
+<td>严格匹配 actual !&#x3D; expected 则正常运行，否则抛出异常错误</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.notStrictEqual(actual,expected[,message])</td>
+<td><code>assert.notEqual</code> 的别名</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.notDeepStricEqual(actual,expect[,message])</td>
+<td>深度匹配 actual !&#x3D; expected 是否相等，<code>assert.notEqual</code> 的别名</td>
+</tr>
+<tr>
+<td>5</td>
+<td>assert.equal(actual,expected[,message])</td>
+<td>严格匹配 actual 与 expected 是否相等</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.strictEqual(actual,expected[,message])</td>
+<td>Euqal 别名</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.deepEqual(actual,expected[,message])</td>
+<td>Equal 别名</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.deepStrictEqual(actual,expected[,message])</td>
+<td>Equal 别名</td>
+</tr>
+<tr>
+<td>6</td>
+<td>assert.throws(function[,error][,message])</td>
+<td>判断代码快是否抛出异常并自定义异常错误</td>
+</tr>
+<tr>
+<td></td>
+<td>assert.doesNotThrow(function[,error][,message])</td>
+<td>捕获错误然后重新抛出错误</td>
+</tr>
+</tbody></table>
+<h4 id="assert-or-assert-ok"><a href="#assert-or-assert-ok" class="headerlink" title="assert or assert.ok"></a>assert or assert.ok</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    AssertionError [ERR_ASSERTION]: 当 assert 为 false 时终止运行并返回错误</span></span><br><span class="line"><span class="comment">        at Object.&lt;anonymous&gt; (/home/kunlun/Development/Web/Demo/node/test.js:3:8)</span></span><br><span class="line"><span class="comment">        at Module._compile (internal/modules/cjs/loader.js:1072:14)</span></span><br><span class="line"><span class="comment">        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)</span></span><br><span class="line"><span class="comment">        at Module.load (internal/modules/cjs/loader.js:937:32)</span></span><br><span class="line"><span class="comment">        at Function.Module._load (internal/modules/cjs/loader.js:778:12)</span></span><br><span class="line"><span class="comment">        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)</span></span><br><span class="line"><span class="comment">        at internal/main/run_main_module.js:17:47 &#123;</span></span><br><span class="line"><span class="comment">      generatedMessage: false,</span></span><br><span class="line"><span class="comment">      code: &#x27;ERR_ASSERTION&#x27;,</span></span><br><span class="line"><span class="comment">      actual: false,</span></span><br><span class="line"><span class="comment">      expected: true,</span></span><br><span class="line"><span class="comment">      operator: &#x27;==&#x27;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//assert.ok(false,&#x27;当 assert 为 false 时终止运行并返回错误&#x27;) or</span></span><br><span class="line"><span class="title function_">assert</span>(<span class="literal">false</span>,<span class="string">&#x27;当 assert 为 false 时终止运行并返回错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="assert-ifError"><a href="#assert-ifError" class="headerlink" title="assert.ifError()"></a>assert.ifError()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line">assert.<span class="title function_">ifError</span>(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    AssertionError [ERR_ASSERTION]: ifError got unwanted exception: &#x27;Error&#x27;</span></span><br><span class="line"><span class="comment">        at Object.&lt;anonymous&gt; (/home/kunlun/Development/Web/Demo/node/test.js:4:8)</span></span><br><span class="line"><span class="comment">        at Module._compile (internal/modules/cjs/loader.js:1072:14)</span></span><br><span class="line"><span class="comment">        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)</span></span><br><span class="line"><span class="comment">        at Module.load (internal/modules/cjs/loader.js:937:32)</span></span><br><span class="line"><span class="comment">        at Function.Module._load (internal/modules/cjs/loader.js:778:12)</span></span><br><span class="line"><span class="comment">        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)</span></span><br><span class="line"><span class="comment">        at internal/main/run_main_module.js:17:47 &#123;</span></span><br><span class="line"><span class="comment">      generatedMessage: false,</span></span><br><span class="line"><span class="comment">      code: &#x27;ERR_ASSERTION&#x27;,</span></span><br><span class="line"><span class="comment">      actual: &#x27;Error&#x27;,</span></span><br><span class="line"><span class="comment">      expected: null,</span></span><br><span class="line"><span class="comment">      operator: &#x27;ifError&#x27;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">assert.<span class="title function_">ifError</span>(<span class="string">&#x27;Error&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="assert-match"><a href="#assert-match" class="headerlink" title="assert.match"></a>assert.match</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">match</span>(<span class="string">&#x27;hey,assert!&#x27;</span>, <span class="regexp">/[a-z]/</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /[a-z]/. Input:</span></span><br><span class="line"><span class="comment">    &#x27;2021&#x27;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">assert.<span class="title function_">match</span>(<span class="string">&#x27;2021&#x27;</span>, <span class="regexp">/[a-z]/</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="assert-notEqual-or-assert-notStricteEqueal-at-assert-notDeepStrictEuqal"><a href="#assert-notEqual-or-assert-notStricteEqueal-at-assert-notDeepStrictEuqal" class="headerlink" title="assert.notEqual or assert.notStricteEqueal at assert.notDeepStrictEuqal"></a>assert.notEqual or assert.notStricteEqueal at assert.notDeepStrictEuqal</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">notEqual</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// AssertionError [ERR_ASSERTION]: This is !=</span></span><br><span class="line">assert.<span class="title function_">notStrictEqual</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="string">&#x27;This is !=&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">notDeepStrictEqual</span>(<span class="number">1</span>,<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;This is ok!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="assert-equal-at-assert-strictEqual-or-deepEqual-and-deepStrictEqual"><a href="#assert-equal-at-assert-strictEqual-or-deepEqual-and-deepStrictEqual" class="headerlink" title="assert.equal at assert.strictEqual() or deepEqual() and deepStrictEqual()"></a>assert.equal at assert.strictEqual() or deepEqual() and deepStrictEqual()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">equal</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="string">&#x27;This is ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">strictEqual</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="string">&#x27;This is ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ok</span></span><br><span class="line">assert.<span class="title function_">deepEqual</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="string">&#x27;This is ok&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// AssertionError [ERR_ASSERTION]: This is error</span></span><br><span class="line">assert.<span class="title function_">deepStrictEqual</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="string">&#x27;This is error&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="asset-throws"><a href="#asset-throws" class="headerlink" title="asset.throws()"></a>asset.throws()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    AssertionError [ERR_ASSERTION]: Throw an exception error</span></span><br><span class="line"><span class="comment">        at Object.&lt;anonymous&gt; (/home/kunlun/Development/Web/Demo/node/test.js:4:8)</span></span><br><span class="line"><span class="comment">        at Module._compile (internal/modules/cjs/loader.js:1072:14)</span></span><br><span class="line"><span class="comment">        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)</span></span><br><span class="line"><span class="comment">        at Module.load (internal/modules/cjs/loader.js:937:32)</span></span><br><span class="line"><span class="comment">        at Function.Module._load (internal/modules/cjs/loader.js:778:12)</span></span><br><span class="line"><span class="comment">        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)</span></span><br><span class="line"><span class="comment">        at internal/main/run_main_module.js:17:47 &#123;</span></span><br><span class="line"><span class="comment">      generatedMessage: false,</span></span><br><span class="line"><span class="comment">      code: &#x27;ERR_ASSERTION&#x27;,</span></span><br><span class="line"><span class="comment">      actual: Error: Error value</span></span><br><span class="line"><span class="comment">          at assert.throws.code (/home/kunlun/Development/Web/Demo/node/test.js:6:15)</span></span><br><span class="line"><span class="comment">          at getActual (assert.js:765:5)</span></span><br><span class="line"><span class="comment">          at Function.throws (assert.js:911:24)</span></span><br><span class="line"><span class="comment">          at Object.&lt;anonymous&gt; (/home/kunlun/Development/Web/Demo/node/test.js:4:8)</span></span><br><span class="line"><span class="comment">          at Module._compile (internal/modules/cjs/loader.js:1072:14)</span></span><br><span class="line"><span class="comment">          at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)</span></span><br><span class="line"><span class="comment">          at Module.load (internal/modules/cjs/loader.js:937:32)</span></span><br><span class="line"><span class="comment">          at Function.Module._load (internal/modules/cjs/loader.js:778:12)</span></span><br><span class="line"><span class="comment">          at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)</span></span><br><span class="line"><span class="comment">          at internal/main/run_main_module.js:17:47,</span></span><br><span class="line"><span class="comment">      expected: &#123;</span></span><br><span class="line"><span class="comment">        code: 404,</span></span><br><span class="line"><span class="comment">        name: &#x27;TypeError&#x27;,</span></span><br><span class="line"><span class="comment">        message: &#x27;Error value&#x27;,</span></span><br><span class="line"><span class="comment">        info: &#123; nested: true, data: &#x27;nested ok&#x27; &#125;</span></span><br><span class="line"><span class="comment">      &#125;,</span></span><br><span class="line"><span class="comment">      operator: &#x27;throws&#x27;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">assert.<span class="title function_">throws</span>(</span><br><span class="line">    <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Error value&#x27;</span>)</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        <span class="attr">code</span>: <span class="number">404</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;TypeError&#x27;</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&#x27;Error value&#x27;</span>,</span><br><span class="line">        <span class="attr">info</span>: &#123;</span><br><span class="line">            <span class="attr">nested</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">data</span>: <span class="string">&quot;nested ok&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">&#x27;Throw an exception error&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="assert-doesNotThrow"><a href="#assert-doesNotThrow" class="headerlink" title="assert.doesNotThrow()"></a>assert.doesNotThrow()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// AssertionError [ERR_ASSERTION]: Got unwanted exception: This will print erroras</span></span><br><span class="line">assert.<span class="title function_">doesNotThrow</span>(</span><br><span class="line">    <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Error value&#x27;</span>)</span><br><span class="line">    &#125;,<span class="string">&#x27;This will print error&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h3><h4 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h4><p>首先我们需要通过一个计算的函数来进行添加 <code>tests.js</code> 测试用例，并最终通过测试用例进行检测代码是否通过测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">add</span> = <span class="keyword">function</span> (<span class="params">i,j</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> i + j</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">mul</span> = <span class="keyword">function</span> (<span class="params">i,j</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> i * j</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="appTests-js"><a href="#appTests-js" class="headerlink" title="appTests.js"></a>appTests.js</h4><p>在 Mocha 中，<code>describe</code> 方法的主要作用就是添加一段描述而 <code>it</code> 则是向测试回调方法中添加一个参数即 <code>done</code>，Mocha 将会等待调用此函数以完成测试，并接受 <code>Error</code> 实例。</p>
+<blockquote>
+<p>需要注意的 <code>it()</code> 任何东西都是无效使用并引发错误，这通常会导致测试失败</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">&#x27;assert&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> calc = <span class="built_in">require</span>(<span class="string">&#x27;./app&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">$ npm test</span></span><br><span class="line"><span class="comment">&gt; node@1.0.0 test /home/kunlun/Development/Web/Demo/node</span></span><br><span class="line"><span class="comment">&gt; mocha work.js</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  Calculator Tests</span></span><br><span class="line"><span class="comment">    Addition Tests</span></span><br><span class="line"><span class="comment">      ✔ returns 1 + 1 = 2</span></span><br><span class="line"><span class="comment">      ✔ should returns 1 + -1 = 0</span></span><br><span class="line"><span class="comment">      ✔ returns 0 * 4 = 4</span></span><br><span class="line"><span class="comment">      Multiplication Tests</span></span><br><span class="line"><span class="comment">        ✔ returns 2 * 2 = 4</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;Calculator Tests&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&#x27;Addition Tests&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&#x27;returns 1 + 1 = 2&#x27;</span>, <span class="keyword">function</span> (<span class="params">done</span>) &#123;</span><br><span class="line">            assert.<span class="title function_">equal</span>(calc.<span class="title function_">add</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="number">2</span>)</span><br><span class="line">            <span class="title function_">done</span>();</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&#x27;should returns 1 + -1 = 0&#x27;</span>, <span class="keyword">function</span> (<span class="params">done</span>) &#123;</span><br><span class="line">            assert.<span class="title function_">equal</span>(calc.<span class="title function_">add</span>(<span class="number">1</span>,-<span class="number">1</span>),<span class="number">0</span>)</span><br><span class="line">            <span class="title function_">done</span>()</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="title function_">describe</span>(<span class="string">&#x27;Multiplication Tests&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">it</span>(<span class="string">&#x27;returns 2 * 2 = 4&#x27;</span>, <span class="keyword">function</span> (<span class="params">done</span>) &#123;</span><br><span class="line">                assert.<span class="title function_">equal</span>(calc.<span class="title function_">mul</span>(<span class="number">2</span>,<span class="number">2</span>),<span class="number">4</span>)</span><br><span class="line">                <span class="title function_">done</span>()</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&#x27;returns 0 * 4 = 4&#x27;</span>, <span class="keyword">function</span> (<span class="params">done</span>) &#123;</span><br><span class="line">            assert.<span class="title function_">equal</span>(calc.<span class="title function_">mul</span>(<span class="number">2</span>,<span class="number">2</span>),<span class="number">4</span>)</span><br><span class="line">            <span class="title function_">done</span>()</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在上述 code 中，我们使用了 node.js 那种的 <code>assert</code> 模块，通常如果抛出一个 Error 就被执行工作，并向 <code>app.js</code> 添加 <code>i</code> 和 <code>j</code> 参数值。</p>
+<h2 id="istanbul"><a href="#istanbul" class="headerlink" title="istanbul"></a>istanbul</h2><p>istanbul 是一个使用行计数器检测 ES5、ES6 的 JavaScript 代码，来跟踪单元测试和代码的执行情况（也就是单元测试对代码的覆盖率），可直接根据 mocha 来添加 istanbul：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev nyc</span><br></pre></td></tr></table></figure>
+
+<p>之后在 <code>package.json</code> 中将 <code>nyc</code> 放入 <code>test</code> 之前即可：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nyc mocha work.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+
+<p>通过 <code>npm test</code> 运行后可以看到 instanbul 所提供的单元测试覆盖率检测：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  Calculator Tests</span><br><span class="line">    Addition Tests</span><br><span class="line">      ✔ returns 1 + 1 = 2</span><br><span class="line">      ✔ should returns 1 + -1 = 0</span><br><span class="line">      ✔ returns 0 * 4 = 4</span><br><span class="line">      Multiplication Tests</span><br><span class="line">        ✔ returns 2 * 2 = 4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  4 passing (5ms)</span><br><span class="line"></span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br><span class="line">File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s </span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br><span class="line">All files |     100 |      100 |     100 |     100 |                   </span><br><span class="line"> app.js   |     100 |      100 |     100 |     100 |                   </span><br><span class="line"> work.js  |     100 |      100 |     100 |     100 |                   </span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/18.Node.js%20Mocha/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

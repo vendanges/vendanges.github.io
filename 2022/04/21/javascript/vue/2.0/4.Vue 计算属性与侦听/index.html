@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 计算属性与侦听 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 计算属性与侦听</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><p>尽管vue内的表达式非常便利，但设计他们的初衷依然是用于进行简单的运算，如下方的code主要用于翻转字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123;message.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: &#x27;hello,world&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>但是如果我们想要在模板中<strong>多处</strong>翻转字符串的时候就会变得非常繁琐，所以对于复杂的处理我们一般使用<code>computed</code>属性，即&#96;&#96;&#96;所有getter和setter上的this上下文都会被绑定在Vue的实例中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; reversedMessage &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: &#x27;hello,world&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            computed: &#123;</span><br><span class="line">                reversedMessage: function() &#123;</span><br><span class="line">                    return this.message.split(&#x27;&#x27;).reverse(&#x27;&#x27;).join(&#x27;&#x27;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615225159_20210309004602995_1769313647.gif"><br>在此时，我们首先声明了一个计算属性为<code>reversedMessage</code>，并提供了函数将作特征为 <code>app.reversedMessage</code>的<code>getter</code>函数，同样的我们也可以在控制台中通过使用<code>app.message=&quot;vue&quot;</code>来进行修改。</p>
+<p>通过计算属性，vue知道<code>app.reversedMessage</code>依赖或引用于<code>app.message</code>所以当<code>app.message</code>发生改变的时候，依赖他的数据自然会被更新。</p>
+<h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><p>在官方文档中该标题为 <code>计算属性 vs 方法</code>很显然虽然两者最后都会达到同样的效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; reversedMessage() &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: &#x27;hello,world&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            methods: &#123;</span><br><span class="line">                reversedMessage: function() &#123;</span><br><span class="line">                    return this.message.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>但是不同的是<code>计算属性</code>是基于他的响应式依赖进行缓存的，当相关响应式以来发生改变的时候才会重新渲染，所以这就意味着只要&#96;&#96;&#96;&#96;app.message<code>没事不进行该ian，多次访问</code>reversedMessage&#96;&#96;&#96;<strong>并不会立即返回计算之前的效果或再次执行</strong>。</p>
+<blockquote>
+<p>相比之下与每次访问都要重新进行寻安然，调用方法然后在再次执行函数的操作很明显前者较为优秀。</p>
+</blockquote>
+<h2 id="计算属性和侦听属性"><a href="#计算属性和侦听属性" class="headerlink" title="计算属性和侦听属性"></a>计算属性和侦听属性</h2><p>vue为我们提供了一种更加通用的方式来观察响应vue实例上的数据变动即<code>watch</code>的侦听属性，<strong>当有一些数据需要随着其他数据进行变动的时候，可以使用watch属性</strong>：</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    var app =  new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            firstName: &#x27;Foo&#x27;,</span><br><span class="line">            lastName: &#x27;Bar&#x27;,</span><br><span class="line">            fullName: &#x27;Foo Bar&#x27;                </span><br><span class="line">        &#125;,</span><br><span class="line">        watch: &#123;</span><br><span class="line">            firstName: function(val) &#123;</span><br><span class="line">                this.fullName = val + &#x27;&#x27; + this.lastName</span><br><span class="line">            &#125;,</span><br><span class="line">            lastName: function(val) &#123;</span><br><span class="line">                this.fullName = this.firstName + &#x27;&#x27; + val</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    var app =  new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            firstName: &#x27;Foo&#x27;,</span><br><span class="line">            lastName: &#x27;Bar&#x27;,</span><br><span class="line">            fullName: &#x27;Foo Bar&#x27;                </span><br><span class="line">        &#125;,</span><br><span class="line">        computed: &#123;</span><br><span class="line">            fullName: function () &#123;</span><br><span class="line">                return this.firstName + &#x27;&#x27; + this.lastName</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>watch</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615225373_20210309014216307_748253139.gif"></td>
+</tr>
+<tr>
+<td>computed</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615225375_20210309014229057_399813776.gif"></td>
+</tr>
+</tbody></table>
+<p>通过上述的演示我们就可以非常轻松的了解到watch的作用，当很多数据需要随着其他数据改变而改变的时候，这个时候使用<code>watch</code>就非常的适当，而<code>computed</code>对于单个的数据较为有优势。</p>
+<h4 id="getter-与-setter"><a href="#getter-与-setter" class="headerlink" title="getter 与 setter"></a>getter 与 setter</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getter 与 setter</span><br><span class="line">getter 主要用于检索变量，而setter则用于更新变量的值</span><br></pre></td></tr></table></figure>
+<p>computed默认用于检索变量，如果想实现于<code>watch</code>差不多的作用那么我们可以增加一下<code>setter</code><br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615225159_20210309013607834_530669205.gif"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; fullName &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                firstName: &#x27;Foo&#x27;,</span><br><span class="line">                lastName: &#x27;Bar&#x27;,</span><br><span class="line">                fullName: &#x27;Foo Bar&#x27;                </span><br><span class="line">            &#125;,</span><br><span class="line">            computed: &#123;</span><br><span class="line">                fullName: &#123;</span><br><span class="line">                    // getter</span><br><span class="line">                    get: function () &#123;</span><br><span class="line">                    return this.firstName + &#x27; &#x27; + this.lastName</span><br><span class="line">                    &#125;,</span><br><span class="line">                    // setter</span><br><span class="line">                    set: function (newValue) &#123;</span><br><span class="line">                    var names = newValue.split(&#x27; &#x27;)</span><br><span class="line">                    this.firstName = names[0]</span><br><span class="line">                    this.lastName = names[names.length - 1]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615250567_20210309084159583_221556230.png"><br>vue为开发者所提供了一种更加丝滑的API为<code>watch</code>，vue在实例化的同时调用<code>watch</code>，来遍历 watch对象内的所有属性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;input v-model=&quot;faq&quot;&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;answer&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                faq: &#x27; &#x27;,</span><br><span class="line">                answer: &#x27;请输入信息&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            watch: &#123;</span><br><span class="line">                faq: function(newQuestion, oldQuestion) &#123;</span><br><span class="line">                    this.answer = &#x27;正在输入……&#x27;</span><br><span class="line">                    this.debouncedGetAnswer()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            created: function() &#123;</span><br><span class="line">                this.debouncedGetAnswer = _.debounce(this.getAnswer,500)</span><br><span class="line">            &#125;,</span><br><span class="line">            methods: &#123;</span><br><span class="line">                getAnswer: function() &#123;</span><br><span class="line">                    if(this.faq.indexOf(&#x27;?&#x27;) === -1) &#123;</span><br><span class="line">                        this.answer = &#x27;输入的时候请加上一个问号&#x27;</span><br><span class="line">                        return</span><br><span class="line">                    &#125;</span><br><span class="line">                    this.answer = &#x27;正在检索&#x27;</span><br><span class="line">                    var vm = this</span><br><span class="line">                    axios.get(&#x27;https://yesno.wtf/api&#x27;)</span><br><span class="line">                        .then(function(response) &#123;</span><br><span class="line">                            vm.answer = _.capitalize(response.data.answer)</span><br><span class="line">                        &#125;)</span><br><span class="line">                        .catch(function(error) &#123;</span><br><span class="line">                            vm.answer = &#x27;API内并没有此数据&#x27; + error</span><br><span class="line">                        &#125;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/4.Vue%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8E%E4%BE%A6%E5%90%AC/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

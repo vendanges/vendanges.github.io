@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js 基础 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js 基础</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Node.js 是一个基于 Chrome V8 的 JavaScript 运行环境，这也让 JavaScript 成为与 PHP、Python、Perl、Ruby 等服务端语言对等的脚本语言之一。Node.js 能够在服务端运行 JavaScript 的代码和跨平台环境，因此在 node.js 出现以前，JavaScript 经常作为客户端程序设计语言使用。</p>
+<blockquote>
+<p>ECMAScript 是 JavaScript 最初的名字，他由网景公司的 Brendan Eich 所开发的一种脚本语言标准化规范，历经 Mocha、LiveScript 最终成为 JavaScript，并在 1995年由 Sun 正式联合发布 JavaScript</p>
+</blockquote>
+<p>获取 Node.js 的方法非常简单，我们以 Debian Linux 发行版系为例，通过 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/">https://nodejs.org/zh-cn/</a> 访问 node.js 的官方站点进行下载你需要的版本（本书版本为 10），解压 <code>tar.xz</code> 文件后进入其 <code>bin</code> 目录，比昂通过 <code>ln</code> 建立软链接到 <code>/usr/bin</code> 中，最后通过其 <code>node -v</code> 来查看是否软链接建立成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln node /usr/bin/node</span><br><span class="line">ln npm /usr/bin/node</span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript-vs-Node-js"><a href="#JavaScript-vs-Node-js" class="headerlink" title="JavaScript vs Node.js"></a>JavaScript vs Node.js</h2><p>JavaScript 他本身是一个客户端程序设计语言，因此针对的也是 DOM、BOM、ECMAScript 组合而成，因此针对的也是前端部分，而 Node.js 他主要通过 ECMAScript、OS、File、Net、Databases 等五个部分，分别实现了 JavaScript 语法基础、操作系统交互、文件系统、网络系统和数据库，这也是后端语言最为常用的几个部分，因此他可以脱离浏览器来运行 JavaScript 的项目。</p>
+<h3 id="脚本文件运行"><a href="#脚本文件运行" class="headerlink" title="脚本文件运行"></a>脚本文件运行</h3><p>创建名称为 <code>hey.js</code> 的文件后，写入 DOM 语法并通过 <code>node.js</code> 来进行运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello,world!&quot;</span>)</span><br><span class="line"></span><br><span class="line">$ node hey.<span class="property">js</span> </span><br><span class="line"><span class="title class_">Hello</span>,world!</span><br></pre></td></tr></table></figure>
+
+<h3 id="交互式环境执行"><a href="#交互式环境执行" class="headerlink" title="交互式环境执行"></a>交互式环境执行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; console.log(&quot;Hello,world!&quot;)</span><br><span class="line">Hello,world!</span><br><span class="line">undefined</span><br><span class="line">&gt; </span><br></pre></td></tr></table></figure>
+
+<h2 id="构建-Node-js-项目"><a href="#构建-Node-js-项目" class="headerlink" title="构建 Node.js 项目"></a>构建 Node.js 项目</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210812211706.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hostname = <span class="string">&#x27;127.0.0.1&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">8210</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.<span class="property">statusCode</span> = <span class="number">200</span>;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/plain&#x27;</span>);</span><br><span class="line">    res.<span class="title function_">end</span>(<span class="string">&#x27;Hello,world!\n&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, hostname, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server running at http://<span class="subst">$&#123;hostname&#125;</span>:<span class="subst">$&#123;port&#125;</span>/`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>至此通过 <code>node index.js</code> 即可运行一个简单的 node 项目，之后点击或访问 <code>console.log</code> 的输出来访问项目视图：<a target="_blank" rel="noopener" href="http://127.0.0.1:8210/">http://127.0.0.1:8210/</a></p>
+<blockquote>
+<p>WebStorm 如果不支持 Node.js 相关语法可以通过在 File -&gt; Setting -&gt; Languages &amp; Frameworks -&gt; JavaScript -&gt; Libraries 内下载 node 语法支持</p>
+</blockquote>
+<h2 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h2><p>NPM（Node Package Manager）Node 包管理器，是 node.js 默认的依赖项之一，通常会随着 node.js 一起被安装，完全由 JavaScript 写成，最初由 lsaac Z.Schlueter 进行开发，2020 年 3 月 16 日 被 Github 收购。</p>
+<p>node.js 维护的包管理器允许开发者下载\安装\上传他人\自己编写的第三方包到本地使用\他人使用。</p>
+<p>NPM 的包注册（Register）也被称之为 “JavaScript 包注册表”，为了按照名称和版本来解析包，因此 nmp 采用了 CommonJS 包注册规范，这就导致了每个包都会存在一个 Json 格式的元文件。</p>
+<p>NPM 名称以 “先到先得” 的原则进行注册，这就不会导致各个模块的名称不会发生错乱，但一旦有人撤回了自己所发布的包，就会导致依赖这个包的项目的对应功能也会出现问题。</p>
+<p>你可以通过 <code>nmp -v</code> 的方式来查看版本以及是否正常安装，也可以使用 <code>nmp install npm -g</code> 让其进行升级。</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>一个项目中如果存在 <code>package.json</code> 文件，那么可以使用 <code>npm install</code> 命令来自动安装和维护所需要的依赖包，你可以通过使用 <code>npm init</code> 来初始化一个 <code>package.json</code> 文件。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>包名</td>
+</tr>
+<tr>
+<td>version</td>
+<td>包的版本号采用了语义版本号 X（住版本号）.Y（次版本号）.Z（补丁版本号） 三位</td>
+</tr>
+<tr>
+<td>description</td>
+<td>包的描述</td>
+</tr>
+<tr>
+<td>main</td>
+<td>指定程序的入口文件</td>
+</tr>
+<tr>
+<td>scripts</td>
+<td>指定了运行脚本命令的 npm 命令行缩写</td>
+</tr>
+<tr>
+<td>repository</td>
+<td>代码仓库位置</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>关键词</td>
+</tr>
+<tr>
+<td>author</td>
+<td>包作者的名字</td>
+</tr>
+<tr>
+<td>license</td>
+<td>开源许可证，默认为 （ISC）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>package.json 文件可以手写也可以通过 <code>npm init</code> 进行生成（就是回答一些问题后自行进行创建）</p>
+</blockquote>
+<p>从而可以快速体验工作空间以及脚本外壳的使用，因此你需要在初始化后的 CommonJS 包中添加或修改一出信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;demo&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;description&quot;</span>: <span class="string">&quot;node demo&quot;</span>,</span><br><span class="line">  <span class="string">&quot;main&quot;</span>: <span class="string">&quot;index.js&quot;</span>,</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;test&quot;</span>: <span class="string">&quot;node index.js&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;repository&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;url&quot;</span>: <span class="string">&quot;https://gitee.com/sif_one/node-demo&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;keywords&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;null&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">&quot;author&quot;</span>: <span class="string">&quot;sun likun&quot;</span>,</span><br><span class="line">  <span class="string">&quot;license&quot;</span>: <span class="string">&quot;ISC&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>有了 package.json 文件后，可以直接通过 <code>npm install</code> 进行安装所需要的包（在 dependencires 字段中写了），也可以通过指定安装依赖并写入字段的方法进行完善</p>
+<blockquote>
+<figure class="highlight plaintext"><figcaption><span>install express --save``` 参数将所需依赖写入  package.json 文件中的 ```dependencies``` 属性中。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">同样的还提供了写入 ```devDependencies``` 属性中的参数 ```--save-dev```</span><br><span class="line"></span><br><span class="line">在 ```package.json``` 中，如果在 ```script``` 字段内定义 js 脚本文件，即可通过 ``` npm run test``` 进行运行，此时也就同等于 ```node index.js```</span><br><span class="line"></span><br><span class="line">当然也可以通过使用 ```rpm run``` 来查看当前项目所有的 NPM 脚本命令，因为执行该命令时会执行指定的脚本命令，因此只要是 Shell 可以运行的都可以写在 NPM 脚本中。</span><br><span class="line"></span><br><span class="line">在大的项目中， npm run 会在 ```node_modules/.bin``` 子目录中加入变量，因此在该目录中的所有脚本都可以字节使用脚本的名称而不需要写成绝对路径。</span><br><span class="line"></span><br><span class="line">### 常用命令</span><br><span class="line"></span><br><span class="line">| Id | Name | Info | </span><br><span class="line">| --- | --- | --- | </span><br><span class="line">| 1 | ```npm install express``` | 安装某一个模块 |</span><br><span class="line">| | | ```-g``` 全局安装这个模块（也就是说直接在 ```/user/local/bin``` 内直接关联) |</span><br><span class="line">| 2 | ```npm uninstall name``` | 卸载安装的所有模块 |</span><br><span class="line">| | | ```--save``` 以 ```dependencires``` 为目标进行卸载 |</span><br><span class="line">| | | ```--save-dev``` 从 ```devDependencies``` 为目标进行卸载 |</span><br><span class="line">| | | ```--no-save``` 不会将 ```package.json``` 中进行删除依赖 |</span><br><span class="line">| 3 | ```npm update express``` | 更新模块 |</span><br><span class="line">| 4 | ```npm outdated``` | 检查模块版本 |</span><br><span class="line">| 5 | ```npm list``` |查看本地安装的模块 |</span><br><span class="line">| | | ```-g ``` 查看全局安装的模块 |</span><br><span class="line">| 6 | ```npm search express``` | 搜索模块 |</span><br><span class="line">| 7 | ```npm cache clean``` | 清除 NPM 本地缓存 |</span><br><span class="line">| 8 | ```npm start/restart ``` | 启动/重启模块 |</span><br><span class="line"></span><br><span class="line">## REPL</span><br><span class="line">REPL（Read Eval Print Loop，交互式解释器），也有另一种解释是：“读取-求值-输出-循环（Read-Eva-Print Loop，REPL）”，表示一个交互式顶层构件，也就是说提供一个简单的交互式编程环境。</span><br><span class="line"></span><br><span class="line">Node 也自带了这种交互式解释器，同样可以完成读取、执行、输出、循环的任务，通常你可以直接在终端输入 ```node``` 来进入 node.js 的交互式环境：</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">1 + 1</span><br><span class="line">2</span><br><span class="line">x = 1</span><br><span class="line">1</span><br><span class="line">y = 1</span><br><span class="line">1</span><br><span class="line">x + y </span><br><span class="line">2</span><br><span class="line">console.log(&quot;Hello,world!&quot;)</span><br><span class="line">Hello,world!</span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">var x = 0 </span><br><span class="line">undefined</span><br><span class="line">do &#123;</span><br><span class="line">... x++;</span><br><span class="line">... console.log(&quot;echo: &quot; + x);</span><br><span class="line">... &#125; while (x &lt; 10);</span><br><span class="line">echo: 1</span><br><span class="line">echo: 2</span><br><span class="line">echo: 3</span><br><span class="line">echo: 4</span><br><span class="line">echo: 5</span><br><span class="line">echo: 6</span><br><span class="line">echo: 7</span><br><span class="line">echo: 8</span><br><span class="line">echo: 9</span><br><span class="line">echo: 10</span><br><span class="line">undefined</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<h3 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614959274_20210305233032983_1613975634.png"><br>REPL 是由node.js所支持的可运行在终端内的控制台窗口即交互式命令环境，按照官方的说法叫“简单的交互式编程环境”，通常就比如你在终端内输入 <code>R</code>,进入R的REPL环境一样，node同样支持。</p>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614959275_20210305233143327_1806082948.png"><br>Node REPL与其他的REPL环境内不同的特点在于，他支持<code>tap</code>键进行补全，以及提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; console.log</span><br><span class="line">[Function: log]</span><br></pre></td></tr></table></figure>
+
+<h3 id="点命令"><a href="#点命令" class="headerlink" title="点命令"></a>点命令</h3><p>node.js与 python以及r等 repl交互式环境不同的之处通过<code>点命令</code>可以体现的琳琳尽至，就比如：</p>
+<blockquote>
+<p>python</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.9</span><span class="number">.2</span> (default, Feb <span class="number">20</span> <span class="number">2021</span>, <span class="number">18</span>:<span class="number">40</span>:<span class="number">11</span>) </span><br><span class="line">[GCC <span class="number">10.2</span><span class="number">.0</span>] on linux</span><br><span class="line"><span class="type">Type</span> <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>exit()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>node</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Welcome to Node.js v15.10.0.</span><br><span class="line">Type &quot;.help&quot; for more information.</span><br><span class="line">&gt; .exit</span><br><span class="line">&gt; </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>No.x</th>
+<th>Info</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.help</td>
+<td>显示帮助</td>
+<td></td>
+</tr>
+<tr>
+<td>.editor</td>
+<td>启用编辑模式，可以编写多行的js代码，在editor模式下可通过使用<code>ctrl+D</code>来运行 code</td>
+<td></td>
+</tr>
+<tr>
+<td>.break</td>
+<td>当输入多行表达式的时候，使用break可以中止进一步输入</td>
+<td>ctrl+c</td>
+</tr>
+<tr>
+<td>.clear</td>
+<td>将 REPL上下文设置空占位符，通常等价式为 Linux内的<code>create</code> ，主要用于清除多行表达式</td>
+<td></td>
+</tr>
+<tr>
+<td>.load</td>
+<td>加载 js文件</td>
+<td></td>
+</tr>
+<tr>
+<td>.save</td>
+<td>保存 repl 环境下输入的所有内容</td>
+<td></td>
+</tr>
+<tr>
+<td>.exit</td>
+<td>退出 node.js repl 交互式环境</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/1.Node.js%20%E6%A6%82%E8%BF%B0%E4%B8%8E%E7%8E%AF%E5%A2%83/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

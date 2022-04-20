@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 字符串操作与参数 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 字符串操作与参数</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>PHP 字符串是在语言中相当重要的一个操作部分，程序传递给用户的可视化信息即为大部分靠字符串来实现的。</p>
+<h4 id="echo-与-print"><a href="#echo-与-print" class="headerlink" title="echo() 与 print()"></a>echo() 与 print()</h4><p>在字符串中主要有<strong>echo and print</strong>，两个函数，而两个函数之间都是不同功能的，二者存在一定的区别。这就比如print具有一个返回值[^返回值为1]，而echo没有返回值，所以<strong>echo 比 print函数要快一点</strong>，而print与echo的另一个区别就是，<strong>echo函数可输出多个字符串</strong>，而print则不行：</p>
+<h5 id="print"><a href="#print" class="headerlink" title="print"></a>print<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201226503_473700601.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php  </span><br><span class="line">		$one = print &quot;&quot;;</span><br><span class="line">		echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201215719_777527820.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php  </span><br><span class="line">		echo &quot;One&quot;,&quot;Two&quot;,&quot;Three&quot;;</span><br><span class="line">		print &quot;One&quot;,&quot;Two&quot;,&quot;Three&quot;;			// Parse error: syntax error, unexpected &#x27;,&#x27; ……</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h4><h5 id="printf"><a href="#printf" class="headerlink" title="printf()"></a>printf()</h5><p>printf()函数可以将一个通过替换值简历的字符串输出到格式化字符串中，而格式化字符串中的每一个替换标记都有一个<strong>百分号（%）</strong>组成,，后面可能有一个填充字符。字符串的<strong>类型说明符为“s”</strong>：</p>
+<h6 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201146647_1193764501.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello&quot;;</span><br><span class="line">		printf (&quot;%s\n&quot;,$one);</span><br><span class="line">		printf (&quot;%10s\n&quot;,$one);</span><br><span class="line">		printf (&quot;%010s\n&quot;,$one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201136201_854551587.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = 10;</span><br><span class="line">		printf(&quot;%d&quot;,$one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串操作函数"><a href="#字符串操作函数" class="headerlink" title="字符串操作函数"></a>字符串操作函数</h4><h5 id="计算字符串个数"><a href="#计算字符串个数" class="headerlink" title="计算字符串个数"></a>计算字符串个数</h5><h6 id="strlen"><a href="#strlen" class="headerlink" title="strlen()"></a>strlen()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201124985_397919005.png"></h6><p>serlen()函数主要用于计算字符串的长度，<strong>当需要计算字符串数目时，可通过strlen()函数进行计算</strong>。需要注意的是，当字符串是中文时，则一个中文占2个字节，而英文则占1个字节。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello,world&quot;;</span><br><span class="line">		echo strlen($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="字符串大小写"><a href="#字符串大小写" class="headerlink" title="字符串大小写"></a>字符串大小写</h5><h6 id="小写转换（strtolower）"><a href="#小写转换（strtolower）" class="headerlink" title="小写转换（strtolower）"></a>小写转换（strtolower）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201114264_1248165547.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello,world&quot;;</span><br><span class="line">		echo strtolower($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="大写转换（strtoupper）"><a href="#大写转换（strtoupper）" class="headerlink" title="大写转换（strtoupper）"></a>大写转换（strtoupper）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201105312_396503541.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello,world&quot;;</span><br><span class="line">		echo strtoupper($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="句子首字母大写（ucfirst）"><a href="#句子首字母大写（ucfirst）" class="headerlink" title="句子首字母大写（ucfirst）!"></a>句子首字母大写（ucfirst）!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201056008_591299158.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;hello,world&quot;;</span><br><span class="line">		echo ucfirst($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="首字母开头大写（ucwords）"><a href="#首字母开头大写（ucwords）" class="headerlink" title="首字母开头大写（ucwords）"></a>首字母开头大写（ucwords）<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201042654_1793326368.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo ucwords(&quot;str int hello&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串裁剪"><a href="#字符串裁剪" class="headerlink" title="字符串裁剪"></a>字符串裁剪</h4><h5 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201030864_360657450.png"></h5><p>trim()函数主要将两边的多余空白字符去掉</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;		Hello 			&quot;;</span><br><span class="line">		echo trim($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="ltrim"><a href="#ltrim" class="headerlink" title="ltrim"></a>ltrim<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201018624_1775036993.png"></h5><p>Itrim()函数主要删除左边相同的字符串内容，而右边可使用rtrim()函数实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;HHHHHellohH&quot;;</span><br><span class="line">		echo ltrim($one,&quot;H&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="rtim"><a href="#rtim" class="headerlink" title="rtim"></a>rtim<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105201005982_17520584.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;HHHHHellohH&quot;;</span><br><span class="line">		echo rtrim($one,&quot;H&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串的查找与替换"><a href="#字符串的查找与替换" class="headerlink" title="字符串的查找与替换"></a>字符串的查找与替换</h4><h5 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h5><h6 id="strstr"><a href="#strstr" class="headerlink" title="strstr"></a>strstr<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200954442_691211513.png"></h6><p>查找字符串，如需要查找“el”，完整语句是“Hello”，则输出ello</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello&quot;;</span><br><span class="line">		echo strstr($one, &quot;el&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="strstr-……-if"><a href="#strstr-……-if" class="headerlink" title="strstr …… if"></a>strstr …… if<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200943167_829316440.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;Hello&quot;;</span><br><span class="line">		$two = &quot;el&quot;;</span><br><span class="line">		if (strstr($one, $two)) &#123;</span><br><span class="line">		 	echo &quot;包含el&quot;;</span><br><span class="line">		 &#125; else &#123;</span><br><span class="line">		 	echo &quot;不包含el&quot;;</span><br><span class="line">		 &#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h5><h6 id="str-replace"><a href="#str-replace" class="headerlink" title="str_replace"></a>str_replace<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200932555_692829901.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$str = &quot;Hello you&quot;;</span><br><span class="line">		$replace = &quot;Sun&quot;;</span><br><span class="line">		$end = str_replace(&quot;you&quot;, $replace, $str);</span><br><span class="line">		echo &quot;$end&quot;;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="多对一替换"><a href="#多对一替换" class="headerlink" title="多对一替换"></a>多对一替换<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200921561_1855656258.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$tit = &quot;Hello is world&quot;;</span><br><span class="line">		$arry = array(&quot;e&quot;,&quot;o&quot;,&quot;i&quot;,&quot;s&quot;);</span><br><span class="line">		echo str_replace($arry, &quot;&quot;, $tit);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="substr-replace"><a href="#substr-replace" class="headerlink" title="substr_replace"></a>substr_replace<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200910619_1904617225.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo substr_replace(&quot;abcdefd&quot;, &quot;AB&quot;, 3);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3,3</strong><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200857602_735605213.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo substr_replace(&quot;abcdefd&quot;, &quot;AB&quot;, 3,3);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><p>在实际的生活之中，经常可以发现通过姓氏笔画或拼音顺序来个多人或多个标题进行排序。而在程序设置中，由字母和数组促成的字符串，同样可以按照指定的规划来进行排序。<strong>而常见的字符串比较的函数有：string() 、strcasecmp()、strncmp()、strncasecmp()</strong></p>
+<p>如果$one比$two大，则他们都将返回大于0的<strong>整数</strong>。如果$one比$two小，则返回小于0的<strong>整数</strong>，再或者两者<strong>相等，则返回0</strong>。</p>
+<h5 id="strcmp"><a href="#strcmp" class="headerlink" title="strcmp"></a>strcmp<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200846658_1739943673.png"></h5><p>strcmp()函数主要用于<strong>区分大小写</strong>的字符串比较</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo strcmp(&quot;abcd&quot;, &quot;abcD&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="strncasecmp"><a href="#strncasecmp" class="headerlink" title="strncasecmp"></a>strncasecmp<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200836274_2045597523.png"></h5><p>strncasecmp()函数和strcmp()函数一样，<strong>只不过strncasecmp()函数与strcmp()函数不同的是strncasecmp()函数不需要区分大小写</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo strnatcasecmp(&quot;abcd&quot;, &quot;abcD&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="strcasecmp"><a href="#strcasecmp" class="headerlink" title="strcasecmp"></a>strcasecmp<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200824426_787036343.png"></h5><p>strcasecmp()函数主要用于<strong>不区分大小写</strong>的比较</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo strcasecmp(&quot;abcd&quot;, &quot;abce&quot;);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="strncmp"><a href="#strncmp" class="headerlink" title="strncmp"></a>strncmp<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200812280_428036030.png"></h5><p>strncmp()函数主要用于比较字符串的一部分，<strong>一般从字符串的开头进行比较</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo strncmp(&quot;abcd&quot;, &quot;abcdEFD&quot;, 4);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串写HTML"><a href="#字符串写HTML" class="headerlink" title="字符串写HTML"></a>字符串写HTML</h4><p>在web开发语言之中，通常都有支持HTML的语句，比如JavaScript他就支持输出html语句，而在PHP之中，<strong>可通过htmlspecialchars()函数，把HTML的代码进行转换和存储</strong>。</p>
+<p>在htmlspecialchars()函数中，有两个参数分别为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ENT_COMPAT</strong></td>
+<td>默认只转换双引号</td>
+</tr>
+<tr>
+<td><strong>ENT_NOQUOTES</strong></td>
+<td>都不转换（双引号 ）</td>
+</tr>
+<tr>
+<td><strong>ENT_QUOTES</strong></td>
+<td>转换单引号和双引号</td>
+</tr>
+</tbody></table>
+<h5 id="htmlspecialchars"><a href="#htmlspecialchars" class="headerlink" title="htmlspecialchars"></a>htmlspecialchars<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200800891_9262386.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;&lt;a href=&#x27;#&#x27;&gt;go&lt;/a&gt;&quot;;</span><br><span class="line">		echo htmlspecialchars($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="htmlspecialchars-ENT-NOQUOTES"><a href="#htmlspecialchars-ENT-NOQUOTES" class="headerlink" title="htmlspecialchars.ENT_NOQUOTES!"></a>htmlspecialchars.ENT_NOQUOTES!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200740211_305232843.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charsets=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;&lt;a href=&#x27;#&#x27;&gt;go&lt;/a&gt;&quot;;</span><br><span class="line">		echo htmlspecialchars($one,ENT_NOQUOTES);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="HTML转特殊字符"><a href="#HTML转特殊字符" class="headerlink" title="HTML转特殊字符"></a>HTML转特殊字符</h5><p>使用<strong>htmlspecialchars_decode()函数可以将HTML字符串形式转换为HTML格式</strong>，与htmlspecialcharrs()函数相反。</p>
+<h6 id="特殊字符转换表"><a href="#特殊字符转换表" class="headerlink" title="特殊字符转换表"></a>特殊字符转换表</h6><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>&amp;amp;</td>
+</tr>
+<tr>
+<td>“</td>
+<td>&amp;quot;</td>
+</tr>
+<tr>
+<td>‘</td>
+<td>&amp;#039;</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>&amp;lt;</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>&amp;gt;</td>
+</tr>
+</tbody></table>
+<h6 id="输出一个超链接"><a href="#输出一个超链接" class="headerlink" title="输出一个超链接"></a>输出一个超链接</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = htmlspecialchars_decode(&quot;&amp;lt;a href=&#x27;#&#x27;&amp;gt;demo&amp;lt;/a&amp;gt;&quot;);</span><br><span class="line">		echo $one;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符串的加密"><a href="#字符串的加密" class="headerlink" title="字符串的加密"></a>字符串的加密</h4><p>在PHP中，提供了cryot()函数，可完成PHP的加密功能，但cryot并不是最可靠的。目前最常用的加密函数可以使用md5()函数，可以将字符串转换成一个长为32位的字符串；</p>
+<p>而通过cryout()与md5()之间的区别就是cryout()是随机生成的，<strong>每次执行时生成的密文都不一样</strong>。而在md5()函数中，<strong>明文转换为密文的32位字符串是固定的</strong>，所以可使用进行判断。</p>
+<h5 id="cryout"><a href="#cryout" class="headerlink" title="cryout"></a>cryout<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200721643_703629645.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;你好世界&quot;;</span><br><span class="line">		echo crypt($one);</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="md5"><a href="#md5" class="headerlink" title="md5()"></a>md5()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200657792_1107144697.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;dems&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;你好世界&quot;;</span><br><span class="line">		if (md5($one) == &quot;65396ee4aad0b4f17aacd1c6112ee364&quot;) &#123;</span><br><span class="line">			echo &quot;OK&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">			echo &quot;当前md5值为：&quot;,md5($one);</span><br><span class="line">		&#125;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="列子"><a href="#列子" class="headerlink" title="列子"></a>列子</h4><h5 id="简单的留言功能"><a href="#简单的留言功能" class="headerlink" title="简单的留言功能"></a>简单的留言功能</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/19.php%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0.md/20201105200642636_2026187615.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">		&lt;form name=&quot;fone&quot; method=&quot;post&quot; action=&quot;&quot;&gt;</span><br><span class="line">			&lt;h3&gt;请输入Email地址：&lt;/h3&gt;</span><br><span class="line">			&lt;input type=&quot;text&quot; name=&quot;Email&quot; size=30&gt;</span><br><span class="line">			&lt;h3&gt;请输入留言信息&lt;/h3&gt;</span><br><span class="line">			&lt;textarea name=&quot;note&quot; rows=10 cols=30&gt;&lt;/textarea&gt;</span><br><span class="line">			&lt;br&gt;&lt;input type=&quot;submit&quot; name=&quot;bone&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">			&lt;input type=&quot;reset&quot; name=&quot;btwo&quot; value=&quot;清空&quot;&gt;</span><br><span class="line">		&lt;/form&gt; </span><br><span class="line">	&lt;?php</span><br><span class="line">		if (isset($_POST[&#x27;bone&#x27;])) &#123;</span><br><span class="line">			// 接收Email 和 Note </span><br><span class="line">			$Email = $_POST[&#x27;Email&#x27;];</span><br><span class="line">			$note = $_POST[&#x27;note&#x27;];</span><br><span class="line">		</span><br><span class="line">			if (!$Email || !$note) &#123;</span><br><span class="line">				// 判断是否取值</span><br><span class="line">				echo &quot;&lt;script&gt;alert(&#x27;Email地址和留言信息未填写或填写不完整！&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				$arrayName = array(&quot;@&quot; ,$Email );</span><br><span class="line">				if (count($arrayName) !=2) &#123;</span><br><span class="line">					// 如果有两个@则报错</span><br><span class="line">					echo &quot;&lt;script&gt;alert(&#x27;Email地址格式错误1&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					$username = $arrayName[0];</span><br><span class="line">					$netname = $arrayName[1];</span><br><span class="line"></span><br><span class="line">					if (strstr($username, &quot;.&quot;)or strstr($username, &quot;,&quot;)) &#123;</span><br><span class="line">						// 如果 username 含有 &quot;.&quot;、&quot;,&quot;则报错</span><br><span class="line">						echo &quot;&lt;script&gt;alert(&#x27;Email地址格式错误！2&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						// 输出 &quot;&lt;&quot; and &quot;&gt;&quot; 符号</span><br><span class="line">						$strone = htmlspecialchars(&quot;&lt;&quot;);</span><br><span class="line">						$strtwo = htmlspecialchars(&quot;&gt;&quot;);</span><br><span class="line">						</span><br><span class="line">						// 将字母句子第一个改为大写</span><br><span class="line">						$newonte = ucwords($note);</span><br><span class="line"></span><br><span class="line">						echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">						echo &quot;用户&quot;.$strone.$username. $strtwo.&quot;您好！&amp;nbsp;&quot;;</span><br><span class="line">						echo &quot;您是&quot;.$netname.&quot;网友!&lt;br&gt;&quot;;</span><br><span class="line">						echo &quot;您的留言是：&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;.$newonte.&quot;&lt;br&gt;&quot;;</span><br><span class="line">						echo &quot;&lt;hr&gt;&quot;;</span><br><span class="line">					&#125; </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>echo()</td>
+<td>回应[^没有返回值]</td>
+<td>输出函数</td>
+</tr>
+<tr>
+<td>print()</td>
+<td>打印[^返回值为1，比echo()慢]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>printf()</td>
+<td>字符串的格式化</td>
+<td>输出函数</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>strlen()</td>
+<td>计算字符串个数[^当字符串是中文时，则一个中文占2个字节，而英文则占1个字节。]</td>
+<td>计算字符串个数</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>strtolower()</td>
+<td>小写转换</td>
+<td>大小写转换</td>
+</tr>
+<tr>
+<td>strtoupper()</td>
+<td>大写转换</td>
+<td></td>
+</tr>
+<tr>
+<td>ucfirst()</td>
+<td>句子首字母大写</td>
+<td></td>
+</tr>
+<tr>
+<td>ucwords</td>
+<td>首字母开头大写</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>trim()</td>
+<td>将两边的多余空白字符去掉</td>
+<td>字符串裁剪</td>
+</tr>
+<tr>
+<td>ltrim()</td>
+<td>要删除左边相同的字符串内容[^右边可使用rtrim()函数实现。]</td>
+<td></td>
+</tr>
+<tr>
+<td>rtim()</td>
+<td>要删除右边相同的字符串内容[^左边可通过ltrim()函数实现]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>strstr()</td>
+<td>查找字符串[^如需要查找“el”，完整语句是“Hello”，则输出ello]</td>
+<td>字符串查找</td>
+</tr>
+<tr>
+<td>if……strstr()</td>
+<td>查找是否包含某个字符串</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>str_replace()</td>
+<td>替换字符串[^该函数支持多对一进行替换，即通过数组进行]</td>
+<td>字符串替换</td>
+</tr>
+<tr>
+<td>substr_replace()</td>
+<td>通过索引替换</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>strcmp()</td>
+<td>区分大小写的字符串比较</td>
+<td>字符串比较</td>
+</tr>
+<tr>
+<td>strncasecmp()</td>
+<td>不区分大小写的比较</td>
+<td></td>
+</tr>
+<tr>
+<td>strcasecmp()</td>
+<td>不区分大小写的比较</td>
+<td></td>
+</tr>
+<tr>
+<td>strncmp()</td>
+<td>从字符串开头进行比较[^echo strncmp(“abcd”, “abcdEFD”, 4);]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>字符串写HTML</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ENT_COMPAT</td>
+<td>默认只转换双引号</td>
+<td>htmlspecialchars()</td>
+</tr>
+<tr>
+<td>ENT_NOQUOTES</td>
+<td>都不转换（双引号 ）</td>
+<td></td>
+</tr>
+<tr>
+<td>ENT_QUOTES</td>
+<td>转换单引号和双引号</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>HTML转特殊字符</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>&amp;amp;</td>
+<td></td>
+</tr>
+<tr>
+<td>“</td>
+<td>&amp;quot;</td>
+<td></td>
+</tr>
+<tr>
+<td>‘</td>
+<td>&amp;#039;</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>&amp;lt;</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>&amp;gt;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cryout()</td>
+<td>随机生成密文</td>
+<td>加密字符串</td>
+</tr>
+<tr>
+<td>md5()</td>
+<td>使用md5进行加密</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/19.PHP%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%8F%82%E6%95%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 控制器 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 控制器</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>控制器的存在主要用于替代路由文件中以闭包形式所有的请求处理逻辑，可以使用控制器来组织这些行为，在MVC框架之中，分为业务模型（M）、用户视图（V）、控制器（C），使用MVC的目的是将M和V的实现代码分离，控制器用于确保业务模型以及用户视图的同步，一旦业务模型进行更改，那么用户视图也会随着更改。</p>
+<p>控制器主要存放在<code>app/Http/Controllers/</code>目录下，默认情况下并不会生成，需要使用命令<code>php artisan make:controller TestController</code>进行创建，在此会有一个命名潜规则是“作用+Controller”，如本次的控制器作用是测试则命名方式可为“TestController”即可，之后会在<code>app/Http/Controller</code>目录内生成该类，内容如下：</p>
+<h2 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/6.laravel%20%E6%8E%A7%E5%88%B6%E5%99%A8.md/20210208003318201_385207825.png"><br>通常我们需要将参数传递到控制器中，在Laravel之中，我们可以通过控制器进行传递，本次我们将实现一个传递id的效果：</p>
+<h2 id="命名空间（俗称-“路由绑定”）"><a href="#命名空间（俗称-“路由绑定”）" class="headerlink" title="命名空间（俗称 “路由绑定”）"></a>命名空间（俗称 “路由绑定”）</h2><p>在定义路由时，我们通常不需要写入完整的控制器名称，这是因为<code>ProuteServiceProvider</code>几乎将所有的路由文件加载到了包含名称空间的路由组中。比如一个控制器类的完整空间为<code>namespace App\Http\Controllers;</code>，此时我们可以在路由器中写成：</p>
+<blockquote>
+<p>Route::get(‘&#x2F;id&#x2F;{id}’, ‘TestController@index’);</p>
+</blockquote>
+<p>是可以找到TestController控制器的，当然如果你有相关的项目需要或自身的习惯也可以写完整的路径，浙江取决于你。</p>
+<h3 id="TestController"><a href="#TestController" class="headerlink" title="TestController"></a>TestController</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"><span class="variable">$id</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;My is be ID: &quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="web-php"><a href="#web-php" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里我们调用的TestController控制器的@index方法</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/id/&#123;id&#125;&#x27;</span>, <span class="string">&#x27;TestController@index&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="单个行为控制器"><a href="#单个行为控制器" class="headerlink" title="单个行为控制器"></a>单个行为控制器</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/6.laravel%20%E6%8E%A7%E5%88%B6%E5%99%A8.md/20210208004550051_89805105.png"><br>单个行为控制器说的通俗且简单一点就是，<strong>该控制器只用于处理你这一个请求</strong>，定义的方法也与普通的控制器有所不同，最为不同的一个点是在方法前面加了两个<code>__</code>，即<code>__invoke</code>函数：</p>
+<h3 id="TestController-1"><a href="#TestController-1" class="headerlink" title="TestController"></a>TestController</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"><span class="variable">$id</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;My is be ID: &quot;</span>.<span class="variable">$id</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="web-php-1"><a href="#web-php-1" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/id/&#123;id&#125;&#x27;</span>, <span class="string">&#x27;TestController&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图控制器"><a href="#视图控制器" class="headerlink" title="视图控制器"></a>视图控制器</h2><p>与路由一样，控制器也拥有一个视图控制器，而定义方法与路由所相差无几，实现如下，在Laravel项目中，只需要在控制器中添加一个返回视图的方法以及配置路由即可：</p>
+<h3 id="TestController-2"><a href="#TestController-2" class="headerlink" title="TestController"></a>TestController</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="web-php-2"><a href="#web-php-2" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/test&#x27;</span>, <span class="string">&#x27;TestController@index&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>之后通过访问<code>locahost:8000/test</code>回显的视图将是在<code>resources/</code>下的<code>welcome.blade.php</code>视图文件。</p>
+<h2 id="资源控制器（增删改查-“CURD”）"><a href="#资源控制器（增删改查-“CURD”）" class="headerlink" title="资源控制器（增删改查 “CURD”）"></a>资源控制器（增删改查 “CURD”）</h2><p>在Laravel中，资源控制器将经典的增删改查简化成了一行行控制器代码，Laravel为我们提供了一套约定的规则，这种规则可以方便我们的代码写的更加的完美且优雅，以下我们可以通过使用<code>Artisan</code>来生成一个资源控制器，使用的参数为<code>--resource</code>：</p>
+<blockquote>
+<p>php artisan make:controller PostController –resource</p>
+</blockquote>
+<p>这与普通的控制器一样，会在&#96;&#96;app\Http\Controllers`&#96;&#96;下创建一个名为<code>PostController</code>的控制器，且自动帮我们生成了CURD方法，<strong>我们可以通过对应请求在路由中进行绑定</strong>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Display a listing of the resource.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Show the form for creating a new resource.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Store a newly created resource in storage.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Illuminate\Http\Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">store</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Display the specified resource.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  int  $id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"><span class="variable">$id</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Show the form for editing the specified resource.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  int  $id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">edit</span>(<span class="params"><span class="variable">$id</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Update the specified resource in storage.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Illuminate\Http\Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  int  $id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params">Request <span class="variable">$request</span>, <span class="variable">$id</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Remove the specified resource from storage.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  int  $id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">destroy</span>(<span class="params"><span class="variable">$id</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>请求方式</th>
+<th>Route</th>
+<th>FA</th>
+<th>路由名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>&#x2F;post</td>
+<td>所有数据展现</td>
+<td>index</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>&#x2F;post&#x2F;create</td>
+<td>插入数据</td>
+<td>create</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>&#x2F;post&#x2F;store</td>
+<td>存储刚刚新提交的数据</td>
+<td>store</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>&#x2F;post&#x2F;{id}</td>
+<td>显示某个数据</td>
+<td>show</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>&#x2F;post&#x2F;{id}&#x2F;edit</td>
+<td>修改某个数据</td>
+<td>edit</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>&#x2F;post&#x2F;{id}</td>
+<td>更新数据库中某个资源</td>
+<td>update</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>&#x2F;post&#x2F;{id}</td>
+<td>删除某个数据</td>
+<td>destory</td>
+</tr>
+</tbody></table>
+<p>如果在路由中使用该资源控制器也非常的简单，可以在web.php类中来绑定资源控制器即可：</p>
+<blockquote>
+<p>Route::resource(‘post’, ‘PostController’);</p>
+</blockquote>
+<h3 id="实际开发过程中的伪造方法"><a href="#实际开发过程中的伪造方法" class="headerlink" title="实际开发过程中的伪造方法"></a>实际开发过程中的伪造方法</h3><p>在实际开发的过程中，我们会遇到很多问题，前端表单支持GET&#x2F;POST方法但不支持<code>PUT/DELETE</code>的请求方式，所以我们在前端中需要使用一个Blade指令**@method**来使用伪造HTTP动作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;/post/update&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">    @method(&#x27;PUT&#x27;)</span><br><span class="line">    ……</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="指定资源路由"><a href="#指定资源路由" class="headerlink" title="指定资源路由"></a>指定资源路由</h3><p>指定资源路由在官方文档中被命名为“部分资源路由”，这里我们以白名单与黑名单为例子让读者更加进一步理解：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用所有</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 白名单 -&gt; Only 只有……</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>)-&gt;<span class="title function_ invoke__">only</span>([</span><br><span class="line">   <span class="string">&#x27;index&#x27;</span> //…… ‘index<span class="string">&#x27;, &#x27;</span>show<span class="string">&#x27; &#x27;</span>create<span class="string">&#x27;</span></span><br><span class="line"><span class="string">]);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">// 黑名单 -&gt; except 除了……以外</span></span><br><span class="line"><span class="string">Route::resource(&#x27;</span>post<span class="string">&#x27;, &#x27;</span>PostController<span class="string">&#x27;)-&gt;except([</span></span><br><span class="line"><span class="string">   &#x27;</span>create<span class="string">&#x27;, &#x27;</span>update<span class="string">&#x27; // …… &#x27;</span>index<span class="string">&#x27;</span></span><br><span class="line"><span class="string">]);</span></span><br></pre></td></tr></table></figure>
+<h4 id="白名单（only）"><a href="#白名单（only）" class="headerlink" title="白名单（only）"></a>白名单（only）</h4><p>白名单指only，中文译名为<strong>只</strong>，顾名思义指这个处理器包含什么样的行为，在Laravel之中默认行为是所有。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 白名单 -&gt; Only 只有……</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>)-&gt;<span class="title function_ invoke__">only</span>([</span><br><span class="line">   <span class="string">&#x27;index&#x27;</span> //…… ‘index<span class="string">&#x27;, &#x27;</span>show<span class="string">&#x27; &#x27;</span>create<span class="string">&#x27;</span></span><br><span class="line"><span class="string">]);</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="黑名单-except"><a href="#黑名单-except" class="headerlink" title="黑名单 (except)"></a>黑名单 (except)</h4><p>Laravel之中的except可以理解为是黑名单，但原意思是“除了……之外”，所以以下例子为除了create、update方法，PostController之中的资源路由我全要。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 黑名单 -&gt; except 除了……以外</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>)-&gt;<span class="title function_ invoke__">except</span>([</span><br><span class="line">   <span class="string">&#x27;create&#x27;</span>, <span class="string">&#x27;update&#x27;</span> // …… <span class="string">&#x27;index&#x27;</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="命名资源路由"><a href="#命名资源路由" class="headerlink" title="命名资源路由"></a>命名资源路由</h3><p>在资源控制器名称写入路由的时候，当处理需求较小的情况下还好，但一旦数据非常的庞大，我们除了对路由进行分组，也有一个命名资源路由的方法，只需要使用<code>names</code>即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>)-&gt;<span class="title function_ invoke__">names</span>([</span><br><span class="line">    <span class="string">&#x27;create&#x27;</span> =&gt; <span class="string">&#x27;post.create&#x27;</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+
+<h4 id="资源路由参数"><a href="#资源路由参数" class="headerlink" title="资源路由参数"></a>资源路由参数</h4><p>为了让前端变得更加美妙且更好的分辨，Laravel为我们提供了一种用于命名资源路由的方法<code>parameters</code>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;PostController&#x27;</span>)-&gt;<span class="title function_ invoke__">parameters</span>([</span><br><span class="line">    <span class="string">&#x27;post&#x27;</span> =&gt; <span class="string">&#x27;test_post&#x27;</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>之后将会生成<code>/post/&#123;post_test&#125;</code>的url构造。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/6.Laravel%20%E6%8E%A7%E5%88%B6%E5%99%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring Boot 条件与其实现 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring Boot 条件与其实现</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a> <a class="article__tag-none-link" href="/tags/spring-boot/" rel="tag">spring boot</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>我们可以通过直接阅读引入<code>org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;</code>的Aop包下的AopAutoConfiguration.class来了解到其Spring boot自动配置的实现过程，而AopAutoConfigutaion.class中的关键代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(prefix = &quot;spring.aop&quot;, name = &quot;auto&quot;, havingValue = &quot;true&quot;, matchIfMissing = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AopAutoConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line">	<span class="meta">@ConditionalOnClass(Advice.class)</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">AspectJAutoProxyingConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line">		<span class="meta">@EnableAspectJAutoProxy(proxyTargetClass = false)</span></span><br><span class="line">		<span class="meta">@ConditionalOnProperty(prefix = &quot;spring.aop&quot;, name = &quot;proxy-target-class&quot;, havingValue = &quot;false&quot;,</span></span><br><span class="line"><span class="meta">				matchIfMissing = false)</span></span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">JdkDynamicAutoProxyConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line">		<span class="meta">@EnableAspectJAutoProxy(proxyTargetClass = true)</span></span><br><span class="line">		<span class="meta">@ConditionalOnProperty(prefix = &quot;spring.aop&quot;, name = &quot;proxy-target-class&quot;, havingValue = &quot;true&quot;,</span></span><br><span class="line"><span class="meta">				matchIfMissing = true)</span></span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CglibAutoProxyConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>通过AopAutoConfiguration.class的代码中我们可以理解到，基本上Spring Boot中的自动配置实现过程是通过@Conditational而@ConditationalOnProperty（即条件属性，单Conditational指“有条件的”）注解实现的，我们可通过Java Doc的官方文档中读取和了解到有关@ConditationalOnPropertry注解相关的信息</p>
+<h2 id="1-1-条件注解"><a href="#1-1-条件注解" class="headerlink" title="1.1. 条件注解"></a>1.1. 条件注解</h2><p>Spring的条件注解说白了就是程序的配置类和配置项，即满足特定了条件才会被调用，这就和if和try的条件判断语句一样，if的存在是判断是否等于或不等于某个条件，而try的存在则是判断这段code是否出现异常，出现异常后又执行什么方法或调用什么类等，在这里Spirng条件注解同样的意思。<br>在<code>spring-boot-autoconfigure-2.4.1.jar</code>spring boot核心依赖包下，有38个条件注解类如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@ConditionalOnBean</td>
+<td>OnBeanCodition.class</td>
+<td>Spring存在指定的实例Bean</td>
+</tr>
+<tr>
+<td>@ConditionalOnClass</td>
+<td>OnClassCondition.clss</td>
+<td>类加载器中存在对应的类</td>
+</tr>
+<tr>
+<td>@ConditionalOnCloudPlatform</td>
+<td>OnCloudPlatformCondition.class</td>
+<td>类中是否存在云平台</td>
+</tr>
+<tr>
+<td>@ConditionalOnExpression</td>
+<td>OnExpressionCondition.clss</td>
+<td>判断SpEL表达式是否成立</td>
+</tr>
+<tr>
+<td>@ConditionalOnJava</td>
+<td>OnJavaCondition.class</td>
+<td>Java版本是否符合你的条件要求</td>
+</tr>
+<tr>
+<td>@ConditionalOnJndi</td>
+<td>OnJndiCondition.class</td>
+<td>在JNDI（即Java命名项目和目录接口）条件查找指定位置</td>
+</tr>
+<tr>
+<td>@ConditionalOnMissingBean</td>
+<td>OnBeanCondition.class</td>
+<td>Spring容器中不存在指定的实例</td>
+</tr>
+<tr>
+<td>@ConditionalOnMissingClass</td>
+<td>OnClassCondition.class</td>
+<td>类加载器中不存在对应的类</td>
+</tr>
+<tr>
+<td>@ConditionalOnNotWebApplication</td>
+<td>OnWebApplicationCondition.class</td>
+<td>当前应用程序不是Web程序应用</td>
+</tr>
+<tr>
+<td>@ConditionalOnProperty</td>
+<td>OnResourceCondition.class</td>
+<td>应用环境中实行是否存在指定的值</td>
+</tr>
+<tr>
+<td>@ConditionalOnResource</td>
+<td>OnResourceCondition.class</td>
+<td>是否存在指定的资源文件</td>
+</tr>
+<tr>
+<td>@ConditionalOnSingleCandidate</td>
+<td>OnBeanCondition.class</td>
+<td>Spring容器中是否存在且只存在一个对应的实例Bean</td>
+</tr>
+<tr>
+<td>@ConditionalOnWebApplication</td>
+<td>OnWebApplicationCondition.class</td>
+<td>当前应用程序是Web程序</td>
+</tr>
+</tbody></table>
+<p>通过阅读以上列出的相关注解和注解实现类我们可随即查看实现类的过程，而本次我们主要阅读&#96;&#96;&#96;OnWebApplicationCondition.class&#96;&#96;即@ConditionalOnWebApplication的注解实现方法以及原理。</p>
+<h3 id="1-1-1-OnWebApplicationCondition-class"><a href="#1-1-1-OnWebApplicationCondition-class" class="headerlink" title="1.1.1. OnWebApplicationCondition.class"></a>1.1.1. OnWebApplicationCondition.class</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="comment">// 匹配Web应用</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> ConditionOutcome[] getOutcomes(String[] autoConfigurationClasses,</span><br><span class="line">		AutoConfigurationMetadata autoConfigurationMetadata) &#123;</span><br><span class="line">	ConditionOutcome[] outcomes = <span class="keyword">new</span> <span class="title class_">ConditionOutcome</span>[autoConfigurationClasses.length];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; outcomes.length; i++) &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">autoConfigurationClass</span> <span class="operator">=</span> autoConfigurationClasses[i];</span><br><span class="line">		<span class="keyword">if</span> (autoConfigurationClass != <span class="literal">null</span>) &#123;</span><br><span class="line">			outcomes[i] = getOutcome(</span><br><span class="line">					autoConfigurationMetadata.get(autoConfigurationClass, <span class="string">&quot;ConditionalOnWebApplication&quot;</span>));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> outcomes;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">// 确定匹配结果并以日志的形式输出</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> ConditionOutcome <span class="title function_">getMatchOutcome</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;</span><br><span class="line">    <span class="comment">// 检查是否使用@OnWebApplicationCndition注解</span></span><br><span class="line">	<span class="type">boolean</span> <span class="variable">required</span> <span class="operator">=</span> metadata.isAnnotated(ConditionalOnWebApplication.class.getName());</span><br><span class="line">       <span class="comment">// isWebApplication 检测是否是Web 应用程序    </span></span><br><span class="line">	<span class="type">ConditionOutcome</span> <span class="variable">outcome</span> <span class="operator">=</span> isWebApplication(context, metadata, required);</span><br><span class="line">       <span class="comment">// 如果有注解但不是Web应用环境则返回true</span></span><br><span class="line">	<span class="keyword">if</span> (required &amp;&amp; !outcome.isMatch()) &#123;</span><br><span class="line">		<span class="keyword">return</span> ConditionOutcome.noMatch(outcome.getConditionMessage());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果没有注解但是web应用环境则返回true</span></span><br><span class="line">	<span class="keyword">if</span> (!required &amp;&amp; outcome.isMatch()) &#123;</span><br><span class="line">		<span class="keyword">return</span> ConditionOutcome.noMatch(outcome.getConditionMessage());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果使用了@ConditionalOnWebApplication注解并是Web应用则返回匹配</span></span><br><span class="line">	<span class="keyword">return</span> ConditionOutcome.match(outcome.getConditionMessage());</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">// 是否为Web应用环境</span></span><br><span class="line"><span class="keyword">private</span> ConditionOutcome <span class="title function_">isAnyWebApplication</span><span class="params">(ConditionContext context, <span class="type">boolean</span> required)</span> &#123;</span><br><span class="line">	ConditionMessage.<span class="type">Builder</span> <span class="variable">message</span> <span class="operator">=</span> ConditionMessage.forCondition(ConditionalOnWebApplication.class,</span><br><span class="line">			required ? <span class="string">&quot;(required)&quot;</span> : <span class="string">&quot;&quot;</span>);</span><br><span class="line">	<span class="type">ConditionOutcome</span> <span class="variable">servletOutcome</span> <span class="operator">=</span> isServletWebApplication(context);</span><br><span class="line">	<span class="keyword">if</span> (servletOutcome.isMatch() &amp;&amp; required) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConditionOutcome</span>(servletOutcome.isMatch(), message.because(servletOutcome.getMessage()));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">ConditionOutcome</span> <span class="variable">reactiveOutcome</span> <span class="operator">=</span> isReactiveWebApplication(context);</span><br><span class="line">	<span class="keyword">if</span> (reactiveOutcome.isMatch() &amp;&amp; required) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConditionOutcome</span>(reactiveOutcome.isMatch(), message.because(reactiveOutcome.getMessage()));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConditionOutcome</span>(servletOutcome.isMatch() || reactiveOutcome.isMatch(),</span><br><span class="line">			message.because(servletOutcome.getMessage()).append(<span class="string">&quot;and&quot;</span>).append(reactiveOutcome.getMessage()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义条件"><a href="#自定义条件" class="headerlink" title="自定义条件"></a>自定义条件</h2><h3 id="条件实现类"><a href="#条件实现类" class="headerlink" title="条件实现类"></a>条件实现类</h3><h4 id="MyCondition-java"><a href="#MyCondition-java" class="headerlink" title="MyCondition.java"></a>MyCondition.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Condition;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ConditionContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.type.AnnotatedTypeMetadata;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyCondition</span> <span class="keyword">implements</span> <span class="title class_">Condition</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="comment">// 存在 test.properties</span></span><br><span class="line">		<span class="keyword">return</span> context.getResourceLoader().getResource(<span class="string">&quot;classpath:test.properties&quot;</span>).exists();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="YourCondition-java"><a href="#YourCondition-java" class="headerlink" title="YourCondition.java"></a>YourCondition.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Condition;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ConditionContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.type.AnnotatedTypeMetadata;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YourCondition</span> <span class="keyword">implements</span> <span class="title class_">Condition</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="comment">// 不存在 test.properties</span></span><br><span class="line">		<span class="keyword">return</span> !context.getResourceLoader().getResource(<span class="string">&quot;classpath:test.properties&quot;</span>).exists();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bean-接口实现类"><a href="#Bean-接口实现类" class="headerlink" title="Bean 接口实现类"></a>Bean 接口实现类</h3><h4 id="MessagePrint-java"><a href="#MessagePrint-java" class="headerlink" title="MessagePrint.java"></a>MessagePrint.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MessagePrint</span> &#123;</span><br><span class="line">	    <span class="keyword">public</span> String <span class="title function_">showMessage</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="MyMessagePrint-java"><a href="#MyMessagePrint-java" class="headerlink" title="MyMessagePrint.java"></a>MyMessagePrint.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyMessagePrint</span> <span class="keyword">implements</span> <span class="title class_">MessagePrint</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">showMessage</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;test.properties 文件存在&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="YourMessagePrint-java"><a href="#YourMessagePrint-java" class="headerlink" title="YourMessagePrint.java"></a>YourMessagePrint.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YourMessagePrint</span> <span class="keyword">implements</span> <span class="title class_">MessagePrint</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">showMessage</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;test.properties 文件不存在&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h3><h4 id="ConditionConfig-java"><a href="#ConditionConfig-java" class="headerlink" title="ConditionConfig.java"></a>ConditionConfig.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Conditional;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConditionConfig</span> &#123;</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Conditional(MyCondition.class)</span></span><br><span class="line">	<span class="keyword">public</span> MyMessagePrint <span class="title function_">myMessage</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyMessagePrint</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Conditional(YourCondition.class)</span></span><br><span class="line">	<span class="keyword">public</span> MessagePrint <span class="title function_">yourmessage</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">YourMessagePrint</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><h4 id="TestMain-java"><a href="#TestMain-java" class="headerlink" title="TestMain.java"></a>TestMain.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestMain</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> AnnotationConfigApplicationContext contextapplication;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		contextapplication = <span class="keyword">new</span> <span class="title class_">AnnotationConfigApplicationContext</span>(ConditionConfig.class);</span><br><span class="line">		<span class="type">MessagePrint</span> <span class="variable">message</span> <span class="operator">=</span> contextapplication.getBean(MessagePrint.class);</span><br><span class="line">		System.out.println(message.showMessage());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20boot/5.Spring%20boot%20%E6%9D%A1%E4%BB%B6%E4%B8%8E%E5%85%B6%E5%AE%9E%E7%8E%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

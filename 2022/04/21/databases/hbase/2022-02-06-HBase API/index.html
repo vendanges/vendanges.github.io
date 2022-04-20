@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>HBase API 使用 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>HBase API 使用</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/hbase/" rel="tag">hbase</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>通常 HBase API 的使用是通过 <a target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/org.apache.hbase/hbase-client">Apache HBase Client</a> 他主要提供了操作 HBase API 的一系列接口和类，新建 Maven 项目后引入依赖即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0-alpha-2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0-alpha-2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Admin</td>
+<td>HBase 的管理 API。</td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td></td>
+</tr>
+<tr>
+<td>BufferedMutator</td>
+<td>用于与类似于 Table 的单个 HBase 表进行通信，但用于批量异步放置。</td>
+</tr>
+<tr>
+<td>BufferedMutator.ExceptionListener</td>
+<td>侦听 BufferedMutator 上的异步异常。</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>一个集群连接，封装了与实际服务器的较低级别的单个连接以及与 zookeeper 的连接。</td>
+</tr>
+<tr>
+<td>HConnection</td>
+<td></td>
+</tr>
+<tr>
+<td>HTableInterfaceFactory</td>
+<td></td>
+</tr>
+<tr>
+<td>RegionLocator</td>
+<td>用于查看单个 HBase 表的区域位置信息。</td>
+</tr>
+<tr>
+<td>ResultScanner</td>
+<td>客户端扫描接口。</td>
+</tr>
+<tr>
+<td>Row</td>
+<td>一行</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>一个表</td>
+</tr>
+</tbody></table>
+<p>如果需要通过 API 操作 HBase 中的 CURD，那么就需要通过 HBase client 依赖中的 Admin 借口，创建后通过 Table 实例进行访问，以此向表中添加一行内容，Put 对象用于插入指定值、目标列以及时间戳等。</p>
+<p>使用 put 提交更新后如果需要获取，那么可以通过 Get 实列进行查询，在特定的行中获取内容，亦或者使用 scan 设置一个扫描仪来返回结果，通常你也可以使用 Delete 来删除单元格或整个 row。</p>
+<p>但在此之前你需要通过告诉配置对象你的客户端在那个地方连接，同工厂你可以将 hbase-site.xml 以及 core-site.xml 放在 Maven 项目文件中的 src&#x2F;main&#x2F;resources 文件夹内，此时 HbaseConfiguration 会自动帮你寻找。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.TableName;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Connection;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Get;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Table;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Put;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Result;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.ResultScanner;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Scan;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">helloHbase</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自动检测 hbase-site.xml 和 core-site.xml 配置</span></span><br><span class="line">        <span class="type">Configuration</span> <span class="variable">config</span> <span class="operator">=</span> HBaseConfiguration.create();</span><br><span class="line">            config.addResource(<span class="string">&quot;core-site.xml&quot;</span>);</span><br><span class="line">            config.addResource(<span class="string">&quot;hbase-site.xml&quot;</span>);</span><br><span class="line">            config.addResource(<span class="string">&quot;hdfs-site.xml&quot;</span>);</span><br><span class="line">            config.set(<span class="string">&quot;zookeeper.znode.parent&quot;</span>,<span class="string">&quot;/resources&quot;</span>);</span><br><span class="line">            config.set(<span class="string">&quot;hbase.zookeeper.property.clientPort&quot;</span>,<span class="string">&quot;2181&quot;</span>);</span><br><span class="line">            config.set(<span class="string">&quot;hbase.zookeeper.quorum&quot;</span>,<span class="string">&quot;192.168.115.10,192.168.115.11,192.168.115.12,192.168.115.13,192.168.115.14&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个链接，用于连接集群，之后关闭</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> ConnectionFactory.createConnection(config);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实列化 Table 对象</span></span><br><span class="line">            <span class="type">Table</span> <span class="variable">table</span> <span class="operator">=</span> connection.getTable(TableName.valueOf(<span class="string">&quot;test&quot;</span>));</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 通过 Put 构造函数添加一行</span></span><br><span class="line">                <span class="type">Put</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Put</span>(Bytes.toBytes(<span class="string">&quot;row2&quot;</span>));</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 向该行插入一条信息</span></span><br><span class="line">                p.addColumn(Bytes.toBytes(<span class="string">&quot;myLittleFamily&quot;</span>), Bytes.toBytes(<span class="string">&quot;someQualifier&quot;</span>),</span><br><span class="line">                        Bytes.toBytes(<span class="string">&quot;Some Value&quot;</span>));</span><br><span class="line">                table.put(p);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 检索数据</span></span><br><span class="line">                <span class="type">Get</span> <span class="variable">g</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Get</span>(Bytes.toBytes(<span class="string">&quot;row2&quot;</span>));</span><br><span class="line">                <span class="type">Result</span> <span class="variable">r</span> <span class="operator">=</span> table.get(g);</span><br><span class="line">                <span class="type">byte</span> [] value = r.getValue(Bytes.toBytes(<span class="string">&quot;myLittleFamily&quot;</span>),</span><br><span class="line">                        Bytes.toBytes(<span class="string">&quot;someQualifier&quot;</span>));</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 返回 &quot;Some Value&quot;</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">valueStr</span> <span class="operator">=</span> Bytes.toString(value);</span><br><span class="line">                System.out.println(<span class="string">&quot;Get:&quot;</span> + valueStr);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 使用 Scan 扫描</span></span><br><span class="line">                <span class="type">Scan</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scan</span>();</span><br><span class="line">                s.addColumn(Bytes.toBytes(<span class="string">&quot;myLittleFamily&quot;</span>),Bytes.toBytes(<span class="string">&quot;someQualifier&quot;</span>));</span><br><span class="line">                <span class="type">ResultScanner</span> <span class="variable">scanner</span> <span class="operator">=</span> table.getScanner(s);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// Scan 返回 Result 实列</span></span><br><span class="line">                    <span class="comment">// 对于迭代使用 while 循环打印</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">Result</span> <span class="variable">rr</span> <span class="operator">=</span> scanner.next(); rr != <span class="literal">null</span>; rr = scanner.next()) &#123;</span><br><span class="line">                        System.out.println(<span class="string">&quot;Found row: &quot;</span> + rr);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// 完成后关闭 Scan 进程</span></span><br><span class="line">                    scanner.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="comment">// 关闭表和集群的连接</span></span><br><span class="line">                <span class="keyword">if</span> (table != <span class="literal">null</span>) table.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">             connection.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ERROR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/71028364/java-api-operate-hbase-api-error-connecting-to-cluster-exception-making-rpc-to">https://stackoverflow.com/questions/71028364/java-api-operate-hbase-api-error-connecting-to-cluster-exception-making-rpc-to</a></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/hbase/2022-02-06-HBase%20API/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

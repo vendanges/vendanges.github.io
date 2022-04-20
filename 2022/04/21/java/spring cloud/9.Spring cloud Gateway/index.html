@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Gateway | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Gateway</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210708123502.png"><br>Gateway 是 Spring cloud 官方所推出的第二代网关（API Gateway）框架，在为服务系统中，网关的主要作用就是当用户调用的所有微服务，都要经过网关。</p>
+<blockquote>
+<p>在为服务中，除于不同微服务可能会带来不同的开发语言和协议，因此需要通过网关来处理服务的调用</p>
+</blockquote>
+<p>网关统一向外部系统提供 REST API，在 Spring cloud 中，使用 Zuul、Gateway 等作为网关可以实现出动态路由、监控、回退、安全功能等。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>Gateway 基于 <code>Spring Framework 5、Project Reactor 、Spring boot 2.0</code> 构建，可以匹配任何请求属性的路由，能编写谓词（Predicates）以及过滤器（Filters）等。</p>
+<blockquote>
+<p>谓词主要是用于确定给定输入的 true 或 false，在网关中谓词和过滤器也可以用于特定的路由。</p>
+<blockquote>
+<p>过滤器可以重写数据，但由于 Gateway 是异步的，如果需要对响应的 body 进行修改需要使用 <code>writeWith()</code> 所提供的 <code>GlobalFilter、GatewayFilter</code> 类型。</p>
+<blockquote>
+<p>其中 <code>GlobalFilter</code> 是对所有路由有效的，而 <code> GatewayFilter</code> 类型仅对指定范围生效</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>除此之外 Gateway 还支持路径重写、动态路由和集成了 Hystrix 断路器以及 <code>DiscoveryClient</code> 的集成和限流。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210708123510.png"></p>
+<p>首先 HTTP&#x2F;HTTPS 强求 Spring cloud Gateway，<code>DispatcherHandler</code> 接受请求，并通过 <code>RoutePredicateHandlerMapping</code> 进行路由匹配，<strong>如果网关路由与请求的路由进行匹配</strong> 则将请求发送到 <code>FilteringWebHandler</code>，如果不匹配，那么则将请求发送给 <code>DispatcherHandler</code> 进行处理。</p>
+<p>最后 <code>FilteringWebHandler</code> 通过自定义的过滤器来发送请求，这会将请求转发到具体的服务中，最后处理结果给用户。</p>
+<h2 id="谓词接口和谓词工厂"><a href="#谓词接口和谓词工厂" class="headerlink" title="谓词接口和谓词工厂"></a>谓词接口和谓词工厂</h2><p>谓词（Predicate），在 Java 8 中引入的一个函数式接口，<strong>主要用于接受输入参数并返回布尔值的结果</strong>，Spring cloud Gateway 通过 Predicate 接口来判断当前路由是否满足指定条件。</p>
+<blockquote>
+<p>谓词工厂（Route Predicate Factories）主要作用就是当符合谓词条件就使用该路由进行匹配，否则就忽略。</p>
+</blockquote>
+<p>Spring cloud Gateway 的路由规则是由 <code>RouteDefinitionLocator</code> 类进行管理，默认情况下使用 Spring Boot 的 <code>@ConfigurationProperties</code> 机制来加载属性。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="Java-API"><a href="#Java-API" class="headerlink" title="Java API"></a>Java API</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210708123517.png"><br>可以通过最简单的 Java API 的方式来构建路由，主要通过 <code>@Bean</code> 来实现一个自定义的 <code>RouteLocator</code> 类来实现 <strong>自定义路由转发规则</strong>。在此之前，需要通过添加 gateway 依赖来完成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于 Spring cloud gateway 使用的是 <strong>Netty+WebFlux</strong> 实现的，因此不需要引入 Web 模块依赖。</p>
+</blockquote>
+<p>之后在启动类添加自定义 RouteLocator 类即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.route.RouteLocator;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将请求转发给 baidu.com</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RouteLocator <span class="title function_">routeLocator</span> <span class="params">(RouteLocatorBuilder builder)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> builder.routes().</span><br><span class="line">                route(<span class="string">&quot;guonei&quot;</span>, r -&gt; r.path(<span class="string">&quot;/guonei/**&quot;</span>)</span><br><span class="line">                        .uri(<span class="string">&quot;http://news.baidu.com/&quot;</span>)).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述的过程中，<code>route</code> 主要将与 <strong>guonei</strong> 路由想匹配的通过 <code>Spring cloud Gateway</code> 转发到了 <a target="_blank" rel="noopener" href="http://news.baidu.com/guonei">http://news.baidu.com/guonei</a> 中，因此访问 <a target="_blank" rel="noopener" href="http://localhost:8081/guonei">http://localhost:8081/guonei</a> 就是访问 <a target="_blank" rel="noopener" href="http://news.baidu.com/guonei">http://news.baidu.com/guonei</a></p>
+<p>其中 <code>r.path</code> 参数下的 <code>/guonei/**</code> 指的是这将会匹配包含所有任何后缀携带 <code>/guonei</code> 的路径模式，还需要注意的是 Spring cloud Gateway 支持两种的配置，上面所实现的是基于RouteLocator 的实现，还有 properties 配置文件的实现</p>
+<h4 id="application-yml-x2F-application-proerties"><a href="#application-yml-x2F-application-proerties" class="headerlink" title="application.yml &#x2F; application.proerties"></a>application.yml &#x2F; application.proerties</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">guonei</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/guonei</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>与 Java API 一样，访问 <a target="_blank" rel="noopener" href="http://localhost:8081/guonei">http://localhost:8081/guonei</a> 就是访问 <a target="_blank" rel="noopener" href="http://news.baidu.com/guonei">http://news.baidu.com/guonei</a>，同样的实现了路由的功能。</p>
+<h3 id="路由谓词工厂或路由规则（RoutePredicateFactory）"><a href="#路由谓词工厂或路由规则（RoutePredicateFactory）" class="headerlink" title="路由谓词工厂或路由规则（RoutePredicateFactory）"></a>路由谓词工厂或路由规则（RoutePredicateFactory）</h3><p>在 Gateway 中，主要通过 RoutePredicateFactory（谓词工厂）来创建谓词（Predicate），因此也提供了很多种谓词工厂，这也是在上面所提到的：“谓词工厂（Route Predicate Factories）主要作用就是当符合谓词条件就使用该路由进行匹配，否则就忽略。” </p>
+<p>通过谓词工厂，使得开发人员可以简单配置即可获得很多需要和想要的路由规则，及谓词（Predicate），这些路由规则会根据 HTTP 请求进行不同属性来匹配，其中最为主要的为下述几类：</p>
+<table>
+<thead>
+<tr>
+<th>RoutePredicateFactory</th>
+<th>type</th>
+<th>info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AfterRoute……(省略 PredicateFactory)</td>
+<td>datetime</td>
+<td>请求时间满足在配置时间之后</td>
+</tr>
+<tr>
+<td>BeforeRoute</td>
+<td>datetime</td>
+<td>请求时间满足在配置时间之前</td>
+</tr>
+<tr>
+<td>BetweenRoute</td>
+<td>datetime</td>
+<td>请求时间满足在配置时间之前</td>
+</tr>
+<tr>
+<td>CookieRoute</td>
+<td>Cookie</td>
+<td>请求指定了 Cookie 正则匹配的指定值</td>
+</tr>
+<tr>
+<td>HeaderRoute</td>
+<td>Header（数据头）</td>
+<td>请求指定了请求上下文所匹配的指定值</td>
+</tr>
+<tr>
+<td>CloudFoundryRouteServiceRoute</td>
+<td>Header</td>
+<td>请求 Headers 是否包含了指定的名称</td>
+</tr>
+<tr>
+<td>MethodRoute</td>
+<td>Method（方法）</td>
+<td>请求的方法是否匹配配置的方法</td>
+</tr>
+<tr>
+<td>PathRoute</td>
+<td>Path（路径）</td>
+<td>请求路径是否匹配指定值</td>
+</tr>
+<tr>
+<td>Query</td>
+<td>Queryparam（查询参数）</td>
+<td>请求查询的查询参数与配置文件的相匹配</td>
+</tr>
+<tr>
+<td>RemoteAddreRoute</td>
+<td>Remoteaddr（远程地址）</td>
+<td>远程地址是否匹配指定值</td>
+</tr>
+<tr>
+<td>HostRoute</td>
+<td>Host（主机）</td>
+<td>请求主机是否匹配指定值</td>
+</tr>
+</tbody></table>
+<h4 id="After"><a href="#After" class="headerlink" title="After"></a>After</h4><p>AfterRoutePredicateFactory（After路由谓词工厂）是一个 <code>datetime（日期时间）</code> 类型的为此，他主要表达的是如果请求在配置文件中 <strong>时间在配置文件之后</strong> 发生的请求允许。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">After=2022-01-20T18:06:06+08:00[Asia/Shanghai]</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>After 的核心意思就是只能在配置规定后的时间进行访问，但只能通过 UTC + 时区的方式来添加规则，否则将直接报错。After 的主要作用就是在 2021 年 1 月 20 日之后才可进行访问，否则将会直接报错，直接访问 <a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081/</a> 即可。</p>
+<h4 id="Before"><a href="#Before" class="headerlink" title="Before"></a>Before</h4><p>Before 也是属于 <code>datetime</code> 类型之一，其核心含义是当请求满足配置时间之前，而之前的 <code>After</code> 路由谓词工厂只是满足配置时间之后：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Before=2022-01-20T18:06:06+08:00[Asia/Shanghai]</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Between"><a href="#Between" class="headerlink" title="Between"></a>Between</h4><p>Between 可以理解为是两个 UTC 时间之间的请求，因此他有两个参数，分别是 datetime1 以及 datetime2 这是一个 ZonedDateTime 对线，因此请求需要满足 datetione1 之后且 datetime2 之前的请求：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Between=2019-01-20T18:06:06+08:00[Asia/Shanghai],2022-01-20T18:06:06+08:00[Asia/Shanghai]</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如上面的 <code>Between</code> 路由规则是，在 2019-01-20T18:06:06+08:00[Asia&#x2F;Shanghai] 之后，2022-01-20T18:06:06+08:00[Asia&#x2F;Shanghai] 之前的请求将会进行匹配，否则将会忽视。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h4><p>CookieRoutePredicateFactory 主要用于匹配指定值，虽然很多作者说直接可以一条参数走到低：<code>mycookie,mycookievalue</code>，但很遗憾并没有作用，因此只能通过全展开的方式来实现：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cookie</span></span><br><span class="line">              <span class="attr">args:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">meteor_login_token</span></span><br><span class="line">                <span class="attr">regexp:</span> <span class="string">ipQdtc89kEO7-JaBWLdgwPHzX9oDy6l-2qXmZ_OeHye</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>在上述的 cookie 中，主要指定了 cookie 名字 <code>meteor_login_token</code>，以及 cookie_value <code>ipQdtc89kEO7-JaBWLdgwPHzX9oDy6l-2qXmZ_OeHye</code>，因此如果请求的 cookie 与配置文件相匹配则通过，否则将会忽略。</p>
+<h4 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h4><p>Header 即请求上下文的头部信息，当请求与配置的 Header 一致时进行转发，在官方文档中被称之为：<code>X-Request-Id</code> 与正则表达式合在一起进行匹配，<strong>但并没有什么作用</strong>。因此我们可以理解为 Header 请求头是根据上下文头部信息来指定服务器的域名和服务器正在侦听的 TCP 端口号：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Header=Host,localhost:8081</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>当请求的上下文头部信息与配置文件相互匹配则允许请求，否则将会直接进行忽略。</p>
+<h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h4><p>Host 路由谓词工厂与 Header 类似，或者说两者都可以实现其效果，但 Host 路由谓词工厂很明显比 Hedaer 更加的简单且好理解。因此他主要的作用就是匹配所请求的主机是否和配置文件相互一致，否则将不具备转发功能：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Host=localhost:8081</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>在上述配置文件中，请求的主机是 <code>localhost:8081</code> 因此与配置文件的信息相互匹配，可以通过网关使用路由进行跳转。</p>
+<h4 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210709153656.png"><br>Method 路由谓词工厂相比上述几个 <code>header</code> 类型的谓词工厂显得特别实用，他主要用指定访问资源以响应预检请求时允许的方法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Method=GET,POST</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>就比如上述的配置文件，我们允许了 <code>GET，POST</code> 方法请求，但不允许 <code>PUT</code> 方法请求，因此使用该方法请求将会直接被网关所进行拦截。</p>
+<h4 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210709230650.png"><br>Query 路由谓词工厂主要是当 <strong>请求查询的查询参数与配置文件的相匹配</strong>，就比如 <code>localhost:8081?name=111</code> 正好与配置文件中的 <code>query=name</code> 的 <code>name</code> 相互匹配，则允许请求：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">after</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com/</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Query=name</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayForward</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="RemoteAddre"><a href="#RemoteAddre" class="headerlink" title="RemoteAddre"></a>RemoteAddre</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210709230658.png"></p>
+<p>RemoteAddre 与 Header 路由谓词工厂类似，简单理解就是他们的进阶版，他可以根据 CIDR 表示法进行匹配，也就是说当你写入规则是 <code>192.168.0.1/24</code> 时，你 <code>192.168.0.104/24</code> 也可以请求此接口，但如果你不是这个网段下的，则会被拒绝</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">    gateway:</span><br><span class="line">      routes:</span><br><span class="line">        - id: remoteaddr_route</span><br><span class="line">          uri: http:<span class="comment">//news.baidu.com</span></span><br><span class="line">          predicates:</span><br><span class="line">            - RemoteAddr=<span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line">  application:</span><br><span class="line">    name: GatewayForward</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>localhost 是 127.0.0.1 的地址映射，因此在 RemoteAddr 路由谓词工厂规则中他会被直接拒绝。</p>
+</blockquote>
+<h4 id="Weight"><a href="#Weight" class="headerlink" title="Weight"></a>Weight</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210709232130.png"><br>Weight 是权重路由谓词工厂，当 Gateway 中有多个路由网关配置时可以发挥作用，他主要分为 <strong>组（group）</strong> 以及 <strong>权重（weight）</strong> 进行组合：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">weight_one</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Weight=group1,</span> <span class="number">1</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">weight_two</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://baidu.com</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Weight=group1,</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<p>就比如上述的配置中，<code>weight_two</code> 的权重比 <code>weight_one</code> 高，因此网关匹配的是 <code>weight_two</code> 的路由。</p>
+<h3 id="Gateway-consul-服务转发"><a href="#Gateway-consul-服务转发" class="headerlink" title="Gateway consul 服务转发"></a>Gateway consul 服务转发</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210710193849.png"><br>在正常的微服务架构中，都会选择依赖服务中心来进行注册，这通常需要对每个服务提供者进行单独的配置，Gateway 的出现爱你提供了默认转发的工作，<strong>当网关注册到服务中心后，网关则会代替服务中心来提供转发的服务</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-gateway<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h4><p>在 <code>application.yml</code> 配置文件中，需要开启服务转发的选项，即<code> spring.cloud.gateway.discovery.locator.enabled</code> 即可，之后在启动类中添加 <code>@EnableDiscoveryClient</code> 注解以此来实现服务发现：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Gateway</span> <span class="string">Consul</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8515</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="过滤器（Filter）"><a href="#过滤器（Filter）" class="headerlink" title="过滤器（Filter）"></a>过滤器（Filter）</h2><h3 id="过滤器的存在"><a href="#过滤器的存在" class="headerlink" title="过滤器的存在"></a>过滤器的存在</h3><p>过滤器之所以在网关中存在，是因为在微服务系统中，服务提供者非常的多，因此如果在每个服务中都有诸如鉴权、限流以及日志输出等则会占用服务的消耗（也就是说每个服务我都要写一遍这些功能，则会让开发很烦躁）因此可以直接通过网关来进行处理。</p>
+<blockquote>
+<p>网关应可以处理鉴权、限流等工作</p>
+</blockquote>
+<h4 id="PRE-and-POST"><a href="#PRE-and-POST" class="headerlink" title="PRE and POST"></a>PRE and POST</h4><h5 id="PRE"><a href="#PRE" class="headerlink" title="PRE"></a>PRE</h5><p>根据请求的生命周期，在 Gateway 中，过滤器会分为 <strong>PRE、POST</strong> 两种，其中 PRE 代表 <strong>在路由执行之前的请求</strong> 执行该过滤，因此主要应用在参数校验、鉴权、流量监控、日志输出、协议转换功能。</p>
+<h5 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h5><p>POST 主要是在 <strong>请求被路由跳到微服务之后所执行</strong> 的过滤器，因此这种过滤器可以实现出相应头（HTTP Header）以及收集统计信息和指标、响应转发、日志输出、流量监控等功能。</p>
+<h4 id="GatewayFilter-and-GlobalFilter"><a href="#GatewayFilter-and-GlobalFilter" class="headerlink" title="GatewayFilter and GlobalFilter"></a>GatewayFilter and GlobalFilter</h4><h5 id="GatewayFilter-网关过滤器"><a href="#GatewayFilter-网关过滤器" class="headerlink" title="GatewayFilter (网关过滤器)"></a>GatewayFilter (网关过滤器)</h5><p>过滤器分为两类，其中网关过滤器（GatewayFilter）只会在 <strong>单个路由或者分组路由中</strong>。网关过滤器是一种 <strong>可以修改请求传入的 HTTP 请求或输出 HTTP 相应</strong> 的特定路由使用，Gateway 内置了 20 多种网关过滤器工厂来编写网关过滤器：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>type</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>AddRequestHeader</td>
+<td>Request</td>
+<td>用于在请求头中添加自定义的键值对</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AddRequestParameter</td>
+<td>Request</td>
+<td>用于在请求参数中添加请求参数的键值对</td>
+</tr>
+<tr>
+<td>3</td>
+<td>AddResponseHeader</td>
+<td>Response</td>
+<td>用于在相应头中添加</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Hystrix</td>
+<td>断路器</td>
+<td>用于将断路器引入网关路由中，可以让服务免受级联故障影响，并在故障时提供回退响应（使用时需要使用名为 <code>HystrixCommand</code> 的参数）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PrefixPath</td>
+<td>Path</td>
+<td>用于使用简单的 Prefix</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PreserveHostHeader</td>
+<td>Header</td>
+<td>设置路由过滤器的请求属性，检查是否发送原主机头或由 HTTP 客户端确定主机头</td>
+</tr>
+<tr>
+<td>7</td>
+<td>RequestRateLimiter</td>
+<td>Request</td>
+<td>用于确定当前请求是否继续（如果不允许则会返回 <code>HTTP 429 - Too Many Request</code> ）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>RedirectTo</td>
+<td>Request</td>
+<td>用于接受请求的状态和 URL 参数（该状态是一个重定向的 300 系列 HTTP 代码，类似与 301。但 URL 是 Location 头部的值）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>RemoveNonProxyHeaders</td>
+<td>Headers</td>
+<td>从转发的请求中删除请求头</td>
+</tr>
+<tr>
+<td>10</td>
+<td>RemoveRequestHeader</td>
+<td>Request</td>
+<td>通过请求头名删除请求头</td>
+</tr>
+<tr>
+<td>11</td>
+<td>RemoveResponseHeader</td>
+<td>Response</td>
+<td>通过响应头名删除响应头</td>
+</tr>
+<tr>
+<td>12</td>
+<td>RewritePath</td>
+<td>Path</td>
+<td>通过 Java 正则表达式重写请求路径</td>
+</tr>
+<tr>
+<td>13</td>
+<td>SaveSession</td>
+<td>Session</td>
+<td>在转发下游调用之前，强制执行保存 Session 的操作</td>
+</tr>
+<tr>
+<td>14</td>
+<td>SecureHeaders</td>
+<td>Headers</td>
+<td>为响应头添加安全头</td>
+</tr>
+<tr>
+<td>15</td>
+<td>SetPath</td>
+<td>Path</td>
+<td>该方法允许通过路径的模板段来操作请求路径，使用 Spring 的 URI 模板，支持多种匹配</td>
+</tr>
+<tr>
+<td>16</td>
+<td>SetResponseHeader</td>
+<td>Response</td>
+<td>需要通过 Key-Value 对来设置响应头</td>
+</tr>
+<tr>
+<td>17</td>
+<td>SetStatus</td>
+<td>Response</td>
+<td>用于设置请求响应状态，但需要 <code>Status</code> 参数（需要有效的 <code>Spring HttpStatus</code>，例如整形的 404 或枚举类型字符串 <code>NOT_FOUND</code>）</td>
+</tr>
+<tr>
+<td>18</td>
+<td>StripPrefix</td>
+<td>Request</td>
+<td>用于剥离前缀（需要 <code>parts</code> 参数，用于表明请求被发送到下游之前从请求路径中所剥离的元素数量）</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Retry</td>
+<td>Request</td>
+<td>主要用于重试，但需要 Retries、Statuses、Methods、Series 等参数</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Retries：重试的次数</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Statuses：重试的 HTTP 状态码（通过 <code>org.springframework.http.HttpStatus</code> 表示）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Methods：重试的 HTTP 状态码（通过 <code>org.springframework.http.HttpMethod</code> 表示）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Series：重试的状态码（通过 <code>org.springframework.http.HttpStatus.Series</code> 表示）</td>
+</tr>
+<tr>
+<td>20</td>
+<td>RequestSize</td>
+<td>Request</td>
+<td>用于限制请求大小，当请求超过限制时启用，限制请求达到下游服务，该过滤器将 RequestSize 作为参数</td>
+</tr>
+</tbody></table>
+<h6 id="AddRequestHeader（在请求头中添加自定义的键值对）"><a href="#AddRequestHeader（在请求头中添加自定义的键值对）" class="headerlink" title="AddRequestHeader（在请求头中添加自定义的键值对）"></a>AddRequestHeader（在请求头中添加自定义的键值对）</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210713131356.png"></p>
+<p>AddRequestHeader 即主要在请求头中来添加自定义的键值对，其主要将应用过滤器 <code>AddRequestHeader=X-Request-Name,X-Request-Value</code> 应用并添加至请求头中：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Gateway</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">/guonei</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Method=GET</span></span><br><span class="line">          <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">AddRequestHeader=X-Request-Name,X-Request-Value</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br><span class="line"></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">ROOT:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>会将 ```X-Request-Name</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### AddRequestParameter (添加请求参数)</span><br><span class="line">![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210713131345.png)</span><br><span class="line"></span><br><span class="line">AddRequestParameter 主要的作用就是在请求头（Header）中添加请求参数的键值对，即将 ```RouteDefinition /guonei``` 过滤器 ```_genkey_0=KEY_NAME, _genkey_1=KEY_VALUE``` 应用在 ```AddRequestParameter``` （添加请求参数）中</span><br><span class="line"></span><br><span class="line">```yml</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: Gateway</span><br><span class="line">  cloud:</span><br><span class="line">    gateway:</span><br><span class="line">      routes:</span><br><span class="line">        - id: /guonei</span><br><span class="line">          uri: http://news.baidu.com</span><br><span class="line">          predicates:</span><br><span class="line">            - Method=GET</span><br><span class="line">          filters:</span><br><span class="line">            - AddRequestParameter=KEY_NAME,KEY_VALUE</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: 8210</span><br><span class="line"></span><br><span class="line">logging:</span><br><span class="line">  level:</span><br><span class="line">    ROOT: DEBUG</span><br></pre></td></tr></table></figure>
+<p>这回将 <code>KEY_NAME=KEY_VALUE</code> 添加到所有匹配请求的下游请求所查询的字符串中，<code>AddRequestParameter</code> 即添加请求参数会用于匹配路径或主机的 URI 变量。</p>
+<h6 id="AddResponseHeader-添加响应头"><a href="#AddResponseHeader-添加响应头" class="headerlink" title="AddResponseHeader (添加响应头)"></a>AddResponseHeader (添加响应头)</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210713202834.png"></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Gateway</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">/guonei</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">http://news.baidu.com</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Method=GET</span></span><br><span class="line">          <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">AddResponseHeader=X-Response-Name,X-Response-Value</span>    </span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br><span class="line"></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">ROOT:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+
+<p>此刻 <code>AddResponseHeader</code> 会将 <code>X-Response-Name=X-Response-Value</code> 所添加至响应头中。</p>
+<h6 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210716191257.png"><br>路由容错控制器的主要的运用场景就是在遇到超时、服务器端错误来发挥作用，通过 Gateway 来集成 Hystrix（含 resilience4j）通过过滤器来加入 <code>fallbackUri</code> 得以实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容错控制器</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NotFoundController</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/fallback&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Mono&lt;Map&lt;String, String&gt;&gt; <span class="title function_">notFound</span><span class="params">()</span> &#123;</span><br><span class="line">        Map&lt;String, String&gt; stringMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        stringMap.put(<span class="string">&quot;code&quot;</span>, <span class="string">&quot;503&quot;</span>);</span><br><span class="line">        stringMap.put(<span class="string">&quot;data&quot;</span>, <span class="string">&quot;Current service is unavailable&quot;</span>);</span><br><span class="line">        stringMap.put(<span class="string">&quot;gateway&quot;</span>, <span class="string">&quot;GatewayConfigurationFaultToleranceRouting&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> Mono.just(stringMap);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>.</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayConfigurationFaultToleranceRouting</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">hey</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://service-provider/hey</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/hey</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Method=GET</span></span><br><span class="line">          <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">AddRequestParameter=name,key</span></span><br><span class="line">            <span class="comment"># 服务熔断后使用的地址 @RequestMapping(value = &quot;/fallback&quot;)</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">CircuitBreaker</span></span><br><span class="line">              <span class="attr">args:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">fallback</span></span><br><span class="line">                <span class="attr">fallbackUri:</span> <span class="string">forward:/fallback</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="comment"># 允许服务发现</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">service-provider</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是由于我们这个是熔断，需要服务提供者的存在，因此你可以将服务提供者快速关闭来达到他短时间无法提供服务，之后网关才可认定这是由于服务出错导致的，如果直接关闭服务提供者那返回的只是 404</p>
+</blockquote>
+<p>最后启动 consul 集群以及服务提供者，通过 GET 方式请求 <code>http://localhost/hey</code> 即可完成路由容错控制器的实现，当然你也可以直接通过 <code>lb://service-provider</code> 来进行配置你的服务路由。</p>
+<h5 id="GlobalFilter-全局过滤器"><a href="#GlobalFilter-全局过滤器" class="headerlink" title="GlobalFilter (全局过滤器)"></a>GlobalFilter (全局过滤器)</h5><p>另一种则为全局过滤器（GlobalFilter）这种过滤器与网关过滤器的区别是会 <strong>应用到所有路由中</strong>，在 Gateway 内置中，有九种全局过滤器：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Forward Routing Filter</td>
+<td>在 exchange 的 <code>ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR</code> 属性值中查找 URI（如果 URI 是 forward 协议，则将它用于 DispatcherHandler (调度程序处理程序) 处理请求）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LoadBalancerClient Filter</td>
+<td>在 exchange 的 <code>ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR</code> 值中查找 URI，如果 URI 是 lb 协议，则会使用 Spring cloud LoadBalancerClient 将名称（lb:&#x2F;&#x2F;myservice 中的 myservice）解析为实际的主机和端口，并替换 URI 中相同属性。（除此过滤器还会查看 <code>ServerWebExchangeU体力是。GATEWAY_SCHEME_PREFIX_ATTR</code> 属性来判断他是否等于 <strong>lb</strong> ）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Netty Routing Filter</td>
+<td>假设 <code>ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR</code> 中的 URI 使用的是 HTTP 或 HTTPS 协议，则运行 Netty Routing Filter。他用 Netty HttpClient 所发出的下游代理请求。相应应该放在 <code>ServerWebExchangeUtils.CLIENT_RESPONSE_ATTR</code> 的 exchange 中以便在以后的过滤器中使用</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Netty Write Response Filter</td>
+<td>当 <code>ServerWebExchangeUtils.CLIENT_RESPONSE_ATTR</code> 值中存在 <code>NettyHttpClientResponse</code> 则会运行 Netty Write Response Filter。（他在所有其他过滤器完成后运行，并将代理相应写回到网关客户端的响应数据中）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>RouteToRequestUriFilter</td>
+<td>如果 <code>ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR</code> 值中存在 Route 对象，则会将路由到请求地址，他会根据请求 URI 创建一个新的 URI。新的 URI 则会位于 <code>ServerWebExchangeUtils.GATEWAY_REQUEST_URI_ATTR</code> 值中（假设 URI 具有协议前缀，如 <code>lb:ws://serviceid</code> 则会将从 URI 中所剥离 lb 协议，并防止在 <code>ServerWebExchangeUtils.GATEWAY_SCHEMEPREFIX_ATTR</code> 中以便稍后在过滤器中所使用）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Websocket Routing Filter</td>
+<td>假设 <code>ServerWebExhcangeUtils.GATEWAY_REQUEST_URL_ATTR</code> 值中的 URI 是 ws 或 wss 协议，则运行 <code>Websocket Routing Filter</code> （利用 Spring Web Socket 底层代码将 WebSocket 请求转发到下游）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>也可以通过 URI 前面添加 lb 来对 Websocket 来进行负载均衡，如 <code>lb:ws://serviceid</code>（需要注意的是如果在普通 HTTP 上使用 SockJS 来作为回退，则会匹配正常的 HTTP 路由以及 <code>Websocket</code> 路由）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Gateway Metrics Filter</td>
+<td>使用需要添加 <code>spring-boot-starter-actuator</code> 依赖，默认会通过 <code>spring.cloud.gateway.mertics.enable</code> 设置为 <code>false</code> Gateway Metrics Filter 才会运行。该过滤器会添加一个名为 <code>gateway.request</code> 指标（Metrics），并包含四个属性：</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>routeId：路由器 ID</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>routeUri：API将会被路由转到 URI</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>outcome：由 <code>HttpStatus.Series</code> 所分类的结果</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>status：HTTP 请求返回给客户端的状态</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Combined Global Filter and GatewayFilter Ordering（组合是全局过滤器和网管过滤器排序）</td>
+<td>当请求进入并匹配到一个路由时， Filtering Web Handler 会将 GlobalFilter 的所有实例和 GatewayFilter 的所有路由特定实例添加到过滤器链中。（这个组合的过滤器链由 <code>org.springframeworking.core.Ordered</code> 接口的排序，并通过 <code>gegOrder()</code> 方法或注解 <code>@Order</code> 来设置）同时网关也会对过滤器逻辑执行的 “PRE” 和 ”POST“ 阶段来进行区分</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Marking An Exchange As Routed （路由交换）</td>
+<td>网关在路由 WEB 服务交换后（ServerWebExchange），会将 <code>Gateway Already Routed</code> 添加到 exchange 属性来将该交换标识为 ”路由”（一旦被请求标识为路由，则其他的路由过滤器会跳过该请求，也可以通过便携方法将交换标识为路由，或检查交换是否已经成为路由）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>更多可以参考 <a target="_blank" rel="noopener" href="https://cloud.spring.io/spring-cloud-gateway/reference/html/#the-addrequestheader-gatewayfilter-factory">https://cloud.spring.io/spring-cloud-gateway/reference/html/#the-addrequestheader-gatewayfilter-factory</a> - Spring cloud gateway 官方文档</p>
+</blockquote>
+<h2 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210723224018.png"></p>
+<p>限流的主要目的是防止过渡的消耗资源，从而来保障服务对所有用户的可用性，常见的限流措施如诸以限制并发数为目的的数据库连接池&#x2F;线程池，以及瞬时并发数的限制，和限制每秒的平均速率都是最为常见的。而这些基本上都会在网关层上进行实现，如使用 nginx、zuul、gateway、openresty、kong 等方式进行限流。</p>
+<blockquote>
+<p>以维基百科的话来说就是在计算机网络中，控制网络接口请求速率</p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210723224217.png"></p>
+<p>如果没有进行限流的话，则有几率会被恶意提交，导致后续服务无法得到提供，从而达到拒绝服务攻击，而限流在高并发中，是一个必不可少的一个因素之一，通过限流发挥的作用从而保护用户的可用性，甚至防止一些恶意请求等问题的发生。</p>
+<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><h4 id="计数器算法（固定窗口）"><a href="#计数器算法（固定窗口）" class="headerlink" title="计数器算法（固定窗口）"></a>计数器算法（固定窗口）</h4><p>计数器算法是一个简单以及暴力的，他从第一个请求开始计数，在假设我们设置一个 QPS（每秒查询数为 100），一秒内请求超过了设定值，那么接下来的请求都会被拒绝，等过一秒后才可继续查询，这时会将计数恢复成0。</p>
+<p>看似这个算法很好且可以解决一些简单的问题，但这个算法也存在的一些问题，如我在 100ms 内通过了 100 个请求，则后续的 900ms 内的请求都会被拒绝，因此这种现象也被称之为 “突刺现象”。虽然我们可以通过将单位时间设置的更短，但依旧无法解决核心的问题，这时就诞生了漏桶算法和令牌桶算法。</p>
+<h4 id="计数器算法（滑动窗口）"><a href="#计数器算法（滑动窗口）" class="headerlink" title="计数器算法（滑动窗口）"></a>计数器算法（滑动窗口）</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210723224029.png"></p>
+<p>滑动窗口又是计数器算法的一个改进，主要解决了固定窗口上的 <strong>临界值</strong> 的问题，将一个计时器分为了诺干个小的计时器，这些计时器都是独立的，当请求时间大于第一个计时器最大时间时，那么将会向前平移一个计时器（同时将前一个计时器丢弃，然后将当前的计时器设置为第一个计时器）。</p>
+<p>如上图中，窗口大小为 1s，那么每过 0.2ms就会删除前一个格子，从而向右移一个格子，滑动窗口最为主要的就是他的滑动，使得可以控制的更加细密，以此来解决临界值的问题，但滑动窗口和固定窗口都无法解决突刺现象这一问题。</p>
+<h4 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210717200946.png"></p>
+<p>漏桶算法（Leaky Bucket）内主要有两个变量，分别为 <strong>桶的大小以及漏洞（孔的大小）的大小</strong>，可以将请求比喻水，当水倒入漏桶中，需要有一定的处理速度（孔的大小决定处理的速度），而桶的大小决定了可以容纳请求的大小，如果请求太大，则会导致漏桶装不下请求从而拒绝后续的请求。</p>
+<h4 id="令牌桶算法"><a href="#令牌桶算法" class="headerlink" title="令牌桶算法"></a>令牌桶算法</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210717200956.png"></p>
+<p>令牌桶算法（Token Bucket）这种算法和我们在医院排队叫号比较相似，当请求到达的时候，会去令牌桶（由令牌工厂生产令牌）中取得一个令牌，之后等待响应。</p>
+<p>这也达到了一定限流的目的，首先我们可以决定令牌工厂放入令牌的速率，也可以定时或者根据一些特定的规则来达到目的，从而达到增加&#x2F;减少令牌的数量达到限流的效果。</p>
+<h3 id="限流的实现"><a href="#限流的实现" class="headerlink" title="限流的实现"></a>限流的实现</h3><p>Spring cloud Gateway 内置了限流工厂 <code>RequestRateLimiterGatewayFilterFactory</code> 底层使用 redis lua 脚本进行实现，因此需要添加 Consul、Gateway、Redis 的依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis-reactive&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后编写我们的限流配置类，主要通过名称、地址、以及 API 进行限流三种，也可以根据不同的状况自定义配置（还有一个跟均 CPU 进行限流的？）</p>
+<h4 id="LimitConfig-java"><a href="#LimitConfig-java" class="headerlink" title="LimitConfig.java"></a>LimitConfig.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Primary;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 限流配置文件，根据名称、地址、API</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LimitConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    KeyResolver <span class="title function_">userKeyResolver</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> exchange -&gt;</span><br><span class="line">                Mono.just(exchange.getRequest().getQueryParams().</span><br><span class="line">                        getFirst(<span class="string">&quot;user&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    KeyResolver <span class="title function_">ipKeyResolver</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> exchange -&gt;</span><br><span class="line">                Mono.just(exchange.getRequest().getRemoteAddress().</span><br><span class="line">                        getHostName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    KeyResolver <span class="title function_">apiKeyResolver</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> exchange -&gt;</span><br><span class="line">                Mono.just(exchange.getRequest().getPath().</span><br><span class="line">                        value());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h5><p>最后通过配置文件 <code>application.yml</code> 来链接 consul、redis 以及配置路由规则和全局过滤等。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">GatewayLimit</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">toor</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">hey</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://service-provider/hey</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/hey</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Method=GET</span></span><br><span class="line">          <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">RequestRateLimiter</span>                <span class="comment"># 用于确定当前请求是否继续（如果不允许则会返回 429</span></span><br><span class="line">              <span class="attr">args:</span></span><br><span class="line">                <span class="attr">key-resolver:</span> <span class="string">&#x27;#&#123;@ipKeyResolver&#125;&#x27;</span></span><br><span class="line">                <span class="attr">redis-rate-limiter.replenishRate:</span> <span class="number">1</span>   <span class="comment"># 令牌桶每秒填充的平均速率</span></span><br><span class="line">                <span class="attr">redis-rate-limiter.burstCapacity:</span> <span class="number">3</span>   <span class="comment"># 令牌桶总流量</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="comment"># 允许服务发现</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">service-provider</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>保证 redis、consul 等已经启动且可提供服务</p>
+</blockquote>
+<h3 id="端点"><a href="#端点" class="headerlink" title="端点"></a>端点</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210724001731.png"></p>
+<p>端点在 Spring cloud Gateway 中主要提供的作用就是方便开发或者运维人员进行调试，以此来获取过滤器列表、路由列表、路由信息、刷新路由信息以及添加\删除路由等操作，这依赖于 <code>Spring boot Actuator</code> ，需要注意的是这些端点都会在 <code>/actuator/gateway</code> 路径下，分别提供对应的服务：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Method</th>
+<th>Info</th>
+<th>Uri</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>globalfilters</td>
+<td>GET</td>
+<td>展示所有全局过滤器</td>
+<td><code>/actuator/gateway/globalfilters</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>routefilters</td>
+<td>GET</td>
+<td>展示所有过滤器工厂</td>
+<td><code>/actuator/gateway/routefilters</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>refresh</td>
+<td>POST</td>
+<td>清空路由缓存</td>
+<td><code>/actuator/gateway/refresh</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>routes</td>
+<td>GET</td>
+<td>获取路由列表</td>
+<td><code>/actuator/gateway/routes</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>routes{name}</td>
+<td>GET</td>
+<td>获取指定的路由信息</td>
+<td><code>/actuator/gateway/routes/&#123;name&#125;</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>routes{name}</td>
+<td>POST</td>
+<td>添加一个路由</td>
+<td><code>/actuator/gateway/routes/&#123;name&#125;</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>routes{name}</td>
+<td>DELETE</td>
+<td>移出一个路由</td>
+<td><code>/actuator/gateway/routes/&#123;name&#125;</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-data-redis-reactive&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.5.2&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.5.2&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>.</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">……</span></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span>  <span class="string">&#x27;*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>开启后，可以访问 <a target="_blank" rel="noopener" href="http://localhost:8210/actuator/gateway/routes/hey">http://localhost:8210/actuator/gateway/routes/hey</a> 来进行测试是否可以该路由的信息，如果没有返回则可能是 Actuator 配置上有一点点的问题</p>
+<p>在 <code>management</code> 中，默认只开启了两个端点，分别为 health、info 两个 因此我们可以通过上述配置开启全部的断点访问，更详细的可以查阅 Actuator API: <a target="_blank" rel="noopener" href="https://cloud.spring.io/spring-cloud-gateway/multi/multi__actuator_api.html">https://cloud.spring.io/spring-cloud-gateway/multi/multi__actuator_api.html</a></p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/9.Spring%20cloud%20Gateway/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

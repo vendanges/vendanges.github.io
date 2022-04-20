@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel URL | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel URL</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Laravel框架之中，为我们提供了丰富的url方法，分别可以实现访问、输出、返回、签名等效果的url，本文我们将会使用该方法进行一系列的url演示：</p>
+<h2 id="输出url"><a href="#输出url" class="headerlink" title="输出url"></a>输出url</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210105508464_646762168.png"><br>在Laravel之中，读者最为期待的是输出url信息的方法，使用Laravel框架，输出url方法只需要使用<code>current</code>即可：</p>
+<h3 id="web-php"><a href="#web-php" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/url/&#123;name&#125;&#x27;</span>, function (<span class="variable">$name</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">url</span>()-&gt;<span class="title function_ invoke__">current</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取上一个请求的url"><a href="#获取上一个请求的url" class="headerlink" title="获取上一个请求的url"></a>获取上一个请求的url</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210110029879_2074840744.png"><br>当然，除了获取url，Laravel还为我们提供了另一种用于获取上一个url的方法<code>previous</code>，我们可以通过使用该方法来获取用户上一个页面的url:</p>
+<h3 id="web-php-1"><a href="#web-php-1" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">| Web Routes</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">|</span><br><span class="line">| Here is where you can register web routes for your application. These</span><br><span class="line">| routes are loaded by the RouteServiceProvider within a group which</span><br><span class="line">| contains the &quot;web&quot; middleware group. Now create something great!</span><br><span class="line">|</span><br><span class="line">*/</span><br><span class="line">use Illuminate\Support\Facades\View;</span><br><span class="line"></span><br><span class="line">Route::get(&#x27;/&#x27;, function () &#123;</span><br><span class="line">    return view(&#x27;welcome&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Route::get(&#x27;/url/&#123;name&#125;&#x27;, function ($name) &#123;</span><br><span class="line">    echo url()-&gt;previous();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="命名url路由"><a href="#命名url路由" class="headerlink" title="命名url路由"></a>命名url路由</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210110911124_876713428.png"><br>Laravel还为我们提供了一种命名url路由的方式，如果阅读过以往篇幅的读者可能会对此感到熟悉，就是<code>命名路由</code>，可以根据路由名称进行输出对应的信息：</p>
+<h3 id="web-php-2"><a href="#web-php-2" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/url/&#123;name&#125;&#x27;</span>, function (<span class="variable">$name</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">route</span>(<span class="string">&#x27;url.name&#x27;</span>,</span><br><span class="line">        [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="variable">$name</span>]);</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;url.name&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="设置默认值？"><a href="#设置默认值？" class="headerlink" title="设置默认值？"></a>设置默认值？</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210110840168_900074866.png"><br>当然我们还可以为此设置一个默认值，也就就是说不管你的url是多少，都会输出这个默认值：</p>
+<h5 id="web-php-3"><a href="#web-php-3" class="headerlink" title="web.php"></a>web.php</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/url/&#123;name&#125;&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">route</span>(<span class="string">&#x27;url.name&#x27;</span>,</span><br><span class="line">        [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;hello&#x27;</span>]);</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;url.name&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="URL-签名"><a href="#URL-签名" class="headerlink" title="URL 签名"></a>URL 签名</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210122939324_534901254.png"><br>在这里面的url签名指的是如果你访问的是<code>localhost:8000/url/111</code>，那么他会修改下url的相关数据如修改成：“<a target="_blank" rel="noopener" href="http://localhost:8000/url/jiangxue?signature=7ec0cf1d32c6189a1a9b3be402f870427686e5528dd912ceb27e9bc89ed85417%E2%80%9D%EF%BC%8C%E8%80%8C%E7%94%9F%E6%88%90%E7%9A%84%E8%BF%99%E4%B8%AA%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BD%A0%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE%60%60%60localhost:8000/url/111%60%60%60%E6%95%88%E6%9E%9C%E6%98%AF%E7%9B%B8%E5%90%8C%E7%9A%84%EF%BC%8C%E8%BF%99%E9%A1%B9%E6%8A%80%E6%9C%AF%E4%B9%9F%E8%A2%AB%E8%BF%90%E7%94%A8%E5%9C%A8%E4%BA%86%E9%82%AE%E7%AE%B1%E5%8F%91%E9%80%81%E4%B8%8E%E8%AE%A4%E8%AF%81%E5%BD%93%E4%B8%AD%EF%BC%9A">http://localhost:8000/url/jiangxue?signature=7ec0cf1d32c6189a1a9b3be402f870427686e5528dd912ceb27e9bc89ed85417”，而生成的这个连接与你直接访问```localhost:8000/url/111```效果是相同的，这项技术也被运用在了邮箱发送与认证当中：</a></p>
+<h3 id="web-php-4"><a href="#web-php-4" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">URL</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/url/&#123;name&#125;&#x27;</span>, function (<span class="variable">$name</span>) &#123;</span><br><span class="line">    <span class="variable">$url</span> = <span class="title class_">Url</span>::<span class="title function_ invoke__">signedRoute</span>(<span class="string">&#x27;url.name&#x27;</span>, [<span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;jiangxue&#x27;</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$url</span>;</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;url.name&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="临时-URL"><a href="#临时-URL" class="headerlink" title="临时 URL"></a>临时 URL</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/laravel/11.laravel%20url.md/20210210123407296_1086119123.png"><br>Laravel对url的支持还远不于以上所列举的方法，为了更好的应用在以上邮箱认证的场景下，Laravel还提供了一个临时的url生成方法<code>temporaySignedRoute</code>，<strong>就是说他是会变的</strong>：</p>
+<h3 id="web-php-5"><a href="#web-php-5" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/url/&#123;name&#125;&#x27;</span>, function (<span class="variable">$name</span>) &#123;</span><br><span class="line">    <span class="variable">$url</span> = <span class="title class_">Url</span>::<span class="title function_ invoke__">temporarySignedRoute</span>(<span class="string">&#x27;url.name&#x27;</span>, <span class="title function_ invoke__">now</span>()-&gt;<span class="title function_ invoke__">addHour</span>(), [</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;jiangxue&#x27;</span></span><br><span class="line">    ]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$url</span>;</span><br><span class="line">&#125;)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;url.name&#x27;</span>);</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/11.Laravel%20URL/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

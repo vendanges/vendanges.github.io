@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 组建注册 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 组建注册</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="组建名"><a href="#组建名" class="headerlink" title="组建名"></a>组建名</h2><p>关于 Vue 的组建名特别是全局组件的注册格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#x27;components-name&#x27;, &#123;</span><br><span class="line">    // ……</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>其中在全局组件注册中第一个参数是<strong>全局组件</strong>的名称，而第二参数则为组件中的<strong>code</strong>。</p>
+<h3 id="组件名的命名方式"><a href="#组件名的命名方式" class="headerlink" title="组件名的命名方式"></a>组件名的命名方式</h3><p>组建名的定义主要命名方式为 <code>kebab-case</code>即“短横线分割命名方法”还有<code>驼峰式命名</code>，他们的命名方式主要体现在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&quot;component-name&quot;, &#123;</span><br><span class="line">    // ……</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>以及驼峰式命名方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&quot;componentName&quot; , &#123;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>短横线命名以及驼峰式命名主要区分在<code>component-name</code>和<code>componentName</code>，通常使用短横线明明更加的明显但在一些语言中并不支持，所以驼峰式命名方法受众更多。</p>
+<p>在官方文档中，虽然<strong>短横线分割</strong>以及<strong>驼峰式</strong>命名方式都会被接受，但是直接在DOM中使用时只支持以<strong>短横线分割</strong>即<code>Kebab-case</code>是有效的</p>
+<h2 id="全局注册与局部注册"><a href="#全局注册与局部注册" class="headerlink" title="全局注册与局部注册"></a>全局注册与局部注册</h2><h3 id="全局注册"><a href="#全局注册" class="headerlink" title="全局注册"></a>全局注册</h3><p>通过全局注册通常会使用<code>Vue.component</code>来创建一个全局组件即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#x27;component-name&#x27;, &#123;</span><br><span class="line">    // ……</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在他们注册之后可以用在任何新的Vue实例中，就比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#x27;componente-one&#x27;, &#123;</span><br><span class="line">    // …… </span><br><span class="line">&#125;)</span><br><span class="line">Vue.component(&#x27;componente-two&#x27;, &#123;</span><br><span class="line">    // …… code</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue (&#123;</span><br><span class="line">    el: &#x27;#app&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>之后可以可以用过使用下放实例直接使用刚刚所注册的全局组件:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">componente-one</span>&gt;</span><span class="tag">&lt;/<span class="name">componente-one</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">componente-two</span>&gt;</span><span class="tag">&lt;/<span class="name">componente-two</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="局部注册"><a href="#局部注册" class="headerlink" title="局部注册"></a>局部注册</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615626087_20210313165644557_1926240209.png"><br>全局注册通常往往都不会是太于理想的，如果你有很多的组件，但是你用到的只有那一两个，则会造成很多的代码行数增加（经管全局注册的初始结构会比局部注册的少几行），通过局部注册，即<code>有多少，注册多少</code>，但全局注册则是<code>尽管来，趁热，来者不惧的</code>的方式进行组件的注册。通过上述的对比我们可以更快的理解全局注册与局部注册相互之间的差异以及区别，读者可根据在开发项目中时自行进行使用两种方法来构建一个项目。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/10.Vue%20%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

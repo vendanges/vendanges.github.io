@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue Prop | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue Prop</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在组建基础中，我们讲解了 Prop是作为一个DOM属性绑定，而不是属性绑定，如果有不了解或不知道的读者可以阅读下前面几章的内容最后来阅读本章。</p>
+<h2 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h2><p>通常情况下，HTML中的属性名称是不存在大小写敏感的，所以浏览器大多都会将<code>大写字母</code>解释为<code>小写字母</code>，这也就意味着驼峰命名的方式需要使用其<code>段横线分割的命名</code>方式。</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p>通常的情况下，我们的Props类型都会为<code>字符串</code>类型，对此，Vue为我们提供了一个多种类型的选择方式，如：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>数字</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>布尔</td>
+</tr>
+<tr>
+<td>Array</td>
+<td>数组</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>对象</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>功能</td>
+</tr>
+<tr>
+<td>Promise</td>
+<td>承诺</td>
+</tr>
+</tbody></table>
+<p>对此，我们的 code 可以将之前单纯的定义属性之后，在指定其类型，如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">props: [&#x27;title&#x27;, &#x27;age&#x27;]</span><br></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">    title: String,</span><br><span class="line">    age: Number,</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&quot;props&quot;, &#123;</span><br><span class="line">        props: &#123;</span><br><span class="line">            title: String,</span><br><span class="line">            age: Number,</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue (</span><br><span class="line">        &#123;el: &#x27;#props&#x27;&#125;</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="传递静态和动态"><a href="#传递静态和动态" class="headerlink" title="传递静态和动态"></a>传递静态和动态</h2><p>当一切执行完成之后你会发现，即使我使用的是 <code>age</code>，但vue并没有起到什么实质性的效果，甚至还可以输入<code>Hello,world</code>字符串类型的数据。在这个时候，由于我们传递给 <code>prop</code>中是<code>静态 Prop</code>即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;props&quot;&gt;</span><br><span class="line">    &lt;props age=&quot;10&quot;&gt;&lt;/props&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&quot;props&quot;, &#123;</span><br><span class="line">        props: &#123;</span><br><span class="line">            title: String,</span><br><span class="line">            age: Number,</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;h1&gt;&#123;&#123;age&#125;&#125;&lt;/h1&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue (</span><br><span class="line">        &#123;el: &#x27;#props&#x27;&#125;</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果想传递一个<code>动态 Prop</code>，需要使用<code>v-bind</code>或<code>:</code>即v-bind的缩写来让其成为一个<code>动态的 prop</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;props&quot;&gt;</span><br><span class="line">    &lt;props :age=&quot;10&quot;&gt;&lt;/props&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&quot;props&quot;, &#123;</span><br><span class="line">        props: &#123;</span><br><span class="line">            title: String,</span><br><span class="line">            age: Number,</span><br><span class="line">            text: [String, Number]</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;h1&gt;&#123;&#123;age&#125;&#125;&lt;/h1&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue (</span><br><span class="line">        &#123;el: &#x27;#props&#x27;&#125;</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当使用过<code>v-bind</code>来传递 Prop的时候，那么所有的数据都将是<code>动态的 prop</code>，所以 vue 也可以根据所<code>定义的属性</code>来进行判断 Prop数据是否符合所定义的<code>Prop 类型</code></p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615745433_20210315010205921_1751733013.png"><br>除了指定 Prop 的类型之外，我们也可以使用 vue 为我们所提供的 <code>Prop 验证</code>，（虽然这一点有点像是 Laravel 所提供的表单验证，但在Vue中也被发挥的琳琳尽至）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;props-component :title-data=&quot;titleData&quot;&gt;&lt;/props-component&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var propsComponent = &#123;</span><br><span class="line">        props: &#123;</span><br><span class="line">            titleData: &#123;</span><br><span class="line">                type: String,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;h1&gt;&#123;&#123;titleData&#125;&#125;&#x27;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        components: &#123;</span><br><span class="line">            &#x27;props-component&#x27;:propsComponent</span><br><span class="line">        &#125;,</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在上图之中，主要来验证<code>titleData</code>属性是否存在数据，如果存在数据则进行显示，但如果没有数据则会在控制台中输出错误。</p>
+<h2 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615745434_20210315021023489_735669898.png"><br>在通常的情况下，如果你不指定相关数据，那么将会被输出为<code>null</code>即空，且不可见，对于这种情况，我们可以使用 vue 所提供的<code>default</code>方法来设置一个组件的默认值，而默认值的数据则是其<code>属性</code>内的信息，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;props&quot;&gt;</span><br><span class="line">    &lt;props :age=&quot;101&quot;&gt;&lt;/props&gt;</span><br><span class="line">    &lt;props&gt;&lt;/props&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&quot;props&quot;, &#123;</span><br><span class="line">        props: &#123;</span><br><span class="line">            age: &#123;</span><br><span class="line">                type: Number,</span><br><span class="line">                default: 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;h1&gt;&#123;&#123;age&#125;&#125;&lt;/h1&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue (</span><br><span class="line">        &#123;el: &#x27;#props&#x27;&#125;</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/11.Vue%20Prop/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

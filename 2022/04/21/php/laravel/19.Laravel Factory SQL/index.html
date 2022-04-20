@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel Factory SQL | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel Factory SQL</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Laravel 为开发者提供了 <code>Factory</code>解决数据库的创建以及填充，这也在Laravel v6中被称之为“数据库测试”，但本文中主要根据实际情况来创建一个模型工厂（Model factory）。模型工厂主要用于来<strong>新建数据库和相应的模型</strong>，最后映射在数据库中，当然也可以进行数据库的随机填充。</p>
+<p>如果将 Laravel Factory 与 Java Spring boot 相比的话，单纯通过数据库映射来进行比较，因为 Spring 是根据你在运行时直接判断是否创建字段和数据库的，如果配置正确则在运行时<strong>直接给你创建</strong>，相比之下 Spring 还是较为方便的。但是如果根据总体功能来将，Laravel Factory 将会更上一层，因为其默认将 fakerr 库作为依赖项，即随着 Laravel 一起进行提供，因此 Factory 还可以对数据库进行<strong>随机填充</strong></p>
+<h2 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h2><p>在此之前，希望您已经配置了数据库相关的文件，如数据库名称(dataname)、帐号(username)、密码（password）等配置的正确，以及已经成功构建了一个 Laravel 项目并保证<code>php artisan serv</code>可以正确的运行，在此之后您可以进行新建工厂的步骤(create factory）。</p>
+<figure class="highlight php"><figcaption><span>artisan make:model Issues -m``` 通过使用 make:model 来创建一个模型，之后会在 **/database/migrations/** 下创建一个名为“2021_05_07_002215_create_issues_table.php”的文件，以及在```app/```路径下新建一个**Issues.php**文件，我们可以通过```2021_05_07_002215_create_issues_table.php```文件中写入**数据库表名和字段类型和名称等**：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```php</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateIssuesTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="title class_">Schema</span>::<span class="title function_ invoke__">create</span>(<span class="string">&#x27;issues&#x27;</span>, function (Blueprint <span class="variable">$table</span>) &#123;</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">bigIncrements</span>(<span class="string">&#x27;id&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;titles&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">dateTime</span>(<span class="string">&#x27;datetimes&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;names&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;category&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;harms&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;paths&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">text</span>(<span class="string">&#x27;types&#x27;</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="title class_">Schema</span>::<span class="title function_ invoke__">dropIfExists</span>(<span class="string">&#x27;issues&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的数据库命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">create table issues</span><br><span class="line">(</span><br><span class="line">    id         bigint unsigned auto_increment</span><br><span class="line">        primary key,</span><br><span class="line">    titles     text      not null,</span><br><span class="line">    datetimes  datetime  not null,</span><br><span class="line">    names      text      not null,</span><br><span class="line">    category   text      not null,</span><br><span class="line">    harms      text      not null,</span><br><span class="line">    paths      text      not null,</span><br><span class="line">    types      text      not null,</span><br><span class="line">    created_at timestamp null,</span><br><span class="line">    updated_at timestamp null</span><br><span class="line">)</span><br><span class="line">    collate = utf8mb4_unicode_ci;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="映射数据库"><a href="#映射数据库" class="headerlink" title="映射数据库"></a>映射数据库</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210507093541.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br><span class="line">Migrating: 2021_05_07_002215_create_issues_table</span><br><span class="line">Migrated:  2021_05_07_002215_create_issues_table (0.02 seconds)</span><br></pre></td></tr></table></figure>
+<p>当我们创建完模型（create model）之后，需要通过使用<code>php artisan migrate</code>来映射到数据库中，此时数据库将会生成并创建一个名为<code>issues</code>的数据表，在此下包含了对应的字段名称和相应类型。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/19.Laravel%20Factory%20SQL/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

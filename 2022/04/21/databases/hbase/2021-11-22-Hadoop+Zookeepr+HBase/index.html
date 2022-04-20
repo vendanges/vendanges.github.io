@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Hadoop+Zookeeper+HBase | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Hadoop+Zookeeper+HBase</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/hbase/" rel="tag">hbase</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/29141209211166.png"><br>Hbase 是一个依赖于 Hadoop+ZooKeeper 的开源的非关系型数据库，而 Hadoop 是一个 Google File System 论文的实现，用于支持数据密集型分布式应用程序。在此之前 HBase 只是 Hadoop 的子项目，而 Hadoop 是在 Google File System 在 2003 年之后的 2004 年 Doug Cutting 基于 MapReduce、Nutch 搜索引擎实现了自己的分布式文件存储系统被命名为 *NDFS(Nutch Distributed File System)*，而 Google 自己的分布式文件存储系统被称之为 <em>GFS(Google File System)</em></p>
+<p>同年 Google 又发布了一篇技术学术论文，展示了 MapReduce 编程模型，用于大规模数据集的并行分析运算，而后的 1 年时间里，也就是 2005 年,Docug Cutting 基于 MapReduce 在 Nutch 搜索引擎中实现了这一功能并命名为 MapReduce，之后 Diug Cutting 被 Yahoo 收购后改名 Hadoop，</p>
+<p>2006 年<em>Bigtable: A Distributed Storage System for Structured Data</em>  发布而后 Diug Cutting 在自己的 Hadoop 进行集成了 Bigtable 后加入到 Hadoop 中命名为 HBase，这也意味着 HBase 具有高性能、高可扩展性基于 HDFS 的文件存储系统，用于存储大规模结构化数据，适用于云计算。</p>
+<h2 id="HBase-核心"><a href="#HBase-核心" class="headerlink" title="HBase 核心"></a>HBase 核心</h2><h3 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h3><h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><p>HBase 核心就是 HDFS（Hadoop File System）和 MapReduce，由于 HBase 是基于 HDFS 上运行，每个存储的文件也被称之为 HDFS 文件，具有高度的容错能力，可在部署在低成本的硬件中，并提供高吞吐量的访问，适用于具有大型数据集的应用程序。</p>
+<p>大概设计上是通过 <em>The Google File System</em> 进行实现，阅读 HDFS 的 <a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">官方文档</a> 基本上等同于阅读 <a target="_blank" rel="noopener" href="https://research.google/pubs/pub51/">The Google File System
+</a></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>硬件故障</td>
+<td>HDFS 通常可能由几百台或几千台计算机组成，每台计算机都村粗文件系统数据的一部分，实际上大量的组件可能会出现故障概率，因此 HDFS 可以检测故障并从中快速且自动回复故障是架构的核心目标</td>
+</tr>
+<tr>
+<td>2</td>
+<td>流数据访问</td>
+<td>流式数据访问的特点就是像水一样，不是一次写入而是一点一点写入，如果是全部收到数据后在处理，那么延迟会加大，会消耗大量的内存。HDFS 更多的是为了批处理而进行设计，重点的数据访问的高吞吐量而不是数据访问的低延迟。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>大型数据集</td>
+<td>在 HDFS 上运行的程序具有大型数据集，HDFS 中典型的文件大小为 GB~TB ,因此 HBase 也支持大文件，应提供高举和数据贷款并扩展到单个集群中的数百个节点</td>
+</tr>
+<tr>
+<td>4</td>
+<td>简单的一致性模型</td>
+<td>HDFS 应用程序对文件采用一次写入多次读取的访问模型，文件一旦创建后写入和关闭除追加和截断意外无需更改。支持i将内容追加到文件末尾但不能在任意节点中更新，这简化了一致性问题并实现了高吞吐量数据访问</td>
+</tr>
+<tr>
+<td>5</td>
+<td>移动计算比移动数据更便宜</td>
+<td>应用程序请求的计算在他所操作的数据附近所执行的，那么他的效率会搞得很多，当数据集规模较大的时候依然如此。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>跨异构硬件和软件平台的可移植性</td>
+<td>HDFS 被设计易于从移植到另一个平台，可移植性有益于 HDFS 作为大量应用程序的首选平台</td>
+</tr>
+</tbody></table>
+<p>上述六个是 HBase 的假设和目标，来让 HBase 成为一个非关系型数据库，在 Eric Brewer 的 CAP 理论中，HBase 属于 CP 类系统，保证了一致性但对可用性或缺，可能会有几个节点不可用,通常适用与银行系统。</p>
+<h5 id="Namenode-and-Datanode"><a href="#Namenode-and-Datanode" class="headerlink" title="Namenode and Datanode"></a>Namenode and Datanode</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/182035415211163.png"><br>HDFS 是一个主&#x2F;从架构，集群由 NameNode 组成，作为主服务器，用于管理文件系统命名空间并调节客户端对文件的访问。而 Datanode 管理附加到运行他们的节点存储，HDFS 文件系统命名空间，并允许用户数据存储在文件夹中，在内部被拆分为一个或多个块，这些块都存储在 DataNode 中。</p>
+<p>NameNode 执行文件系统命名空间操作，如打开、关闭和重命名目录，并确定块到 DataNode 的映射，DataNode 负责为来自文件系统客户端的读取和请求提供服务，DataNode 还根据 NameNode 的执行来执行块的创建和删除以及复制。</p>
+<h4 id="Hadoop-HA"><a href="#Hadoop-HA" class="headerlink" title="Hadoop HA"></a>Hadoop HA</h4><p>Hadoop 分为 HA(High Avaliable，高可用性)模式和非 HA 模式，在生产环境中 Hadoop 都应为 HA 模式，以保障整个集群中 Namenode 节点没有单点故障的问题，HA 模式主要用于解决单点故障。</p>
+<p>如果一个集群太依赖一个点，而那个点宕掉了就算其他集群是好的，而整个集群也相当于整体瘫痪，他通常会出现在元数据存储节点中，而这种节点通常出现在 namenode 上，Hadoop HA 的做法就是启动两个或多个 Namenode，一个处于 active(活跃) 状态，其他的机器则处于 standby(后备机) 状态，他只是单纯同步 active 数据，当活跃机宕掉后可直接自动切换过去，这也被称之为 HA 模式。</p>
+<h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p>Zookeeper 是一个轻量级的分布式架构集群，同时也是 Hadoop 和 HBase 的重要组件，提供了配置维护、域名服务、分布式同步、组服务、服务治理等功能，Zookeeper 的集成使得我们可以直接依赖 Zookeeper 来维护节点，而不是自己在编写节点的注册、取消、维持和存活检测、节点失效等代码。</p>
+<h2 id="Hadoop-1"><a href="#Hadoop-1" class="headerlink" title="Hadoop"></a>Hadoop</h2><h3 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h3><p>在正式安装 Hadoop 之前我们需要依赖于 vagrant 以及 Oracle VM VirtualBox 来搭建 Centos 系统环境，共为 5 台机器。</p>
+<p>前三台分别被称之为 nn01、nn02，作为 <code>namenode</code>，后三台作为 <code>datanode</code>，分别为 dn01、dn02、dn3。</p>
+<p>对于第一次使用 vagrant 作为主要的虚拟机管理工具的读者，我们首先需要通过 <code>vagrant init centos/7</code> 然后直接 <code>vagrant up</code> 即可。</p>
+<p>但由于一系列不可抗拒的因素国内可能通过这样下载很慢，我们也可以借助工具来下载他的 <code>.box</code> 文件，下载后可以通过下述几个命令来进行启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vagrant init &#x27;D:\Vagrant Dabatables\hbase\CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box&#x27;</span><br><span class="line">vagrant add box CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box --name centos/7</span><br><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
+
+<p>当看到 vagrant up 成功启动 Centos 之后，接下来输入 <code>vagrant ssh</code> 以连接虚拟机的 Shell 进行操作，除此我们还可以使用 <code>supend(挂起)、reload(重启)、halt(关机)、status(查看状态)</code> 等参数提升效率。</p>
+<p>在上述的操作过程中（泛指 <code>vagrant init</code>） 之后会产生一个 Vagrantfile 文件，我们需要修改并设置与物理机共享的文件夹，以及固定的 IP 等配置：</p>
+<blockquote>
+<p>尽管 <code>config.vm.box</code> 可能会报错，改为 <code>.box</code> 所在地址即可。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Create a private network, which allows host-only access to the machine</span><br><span class="line"># using a specific IP.</span><br><span class="line">config.vm.network &quot;private_network&quot;, ip: &quot;192.168.115.10&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Create a public network, which generally matched to bridged network.</span><br><span class="line"># Bridged networks make the machine appear as another physical device on</span><br><span class="line"># your network.</span><br><span class="line">config.vm.network &quot;public_network&quot;</span><br><span class="line"></span><br><span class="line"># Share an additional folder to the guest VM. The first argument is</span><br><span class="line"># the path on the host to the actual folder. The second argument is</span><br><span class="line"># the path on the guest to mount the folder. And the optional third</span><br><span class="line"># argument is a set of non-required options.</span><br><span class="line">config.vm.synced_folder &quot;src/&quot;, &quot;/srv/website&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Host-Configuration"><a href="#Host-Configuration" class="headerlink" title="Host Configuration"></a>Host Configuration</h3><h4 id="Host-name"><a href="#Host-name" class="headerlink" title="Host name"></a>Host name</h4><p>在了解到 vagrant 基本的使用方法后我们可以搭建 HBase 所需要的环境，当然这是通用的，我们只演示 nn01 的配置方法，之后 nn02、dn01、dn02、dn03 跟着随后即可，可以说名称和IP不一样。</p>
+<p>通过 <code>vi /etc/hosts</code> 文件将所有机器的 IP 和机器名都配置到 hosts 文件中，以方便我们使用 <code>ssh</code> 根据对应的节点名称来进行连接（对于网段可以根据自身环境来进行配置）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">192.168.115.10 nn01</span><br><span class="line">192.168.115.11 nn02</span><br><span class="line">192.168.115.12 dn01</span><br><span class="line">192.168.115.13 dn02</span><br><span class="line">192.168.115.14 dn03</span><br></pre></td></tr></table></figure>
+
+<p>为防止之后通过 <code>ssh nn1</code> 的时候可能会提示 Permission denied (publickey,gssapi-keyex,gssapi-with-mic). 的错误消息，我们可以通过 <code>vi /etc/ssh/sshd_config</code> 来进行更改配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># To disable tunneled clear text passwords, change to no here!</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">#PermitEmptyPasswords no</span><br><span class="line">#PasswordAuthentication no</span><br><span class="line"></span><br><span class="line"># Change to no to disable s/key passwords</span><br><span class="line">#ChallengeResponseAuthentication yes</span><br><span class="line">ChallengeResponseAuthentication no</span><br></pre></td></tr></table></figure>
+
+<p>最后通过 <code>sudo systemctl restart sshd</code> 来重启下 sshd 服务，在重新进行测试即可，为区分节点之间的名称建议通过 <code>hostnamectl set-hostname &lt;name&gt;</code> 来修改当前主机名称以方便之后在 ssh 还是在控制台内的查看集群信息。</p>
+<p>同样的还有 <code>/etc/sysconfig/network</code> 文件下配置当前的 hostname 之后通过 <code>service network restart</code> 重新穷下。</p>
+<h4 id="Shell-No-password"><a href="#Shell-No-password" class="headerlink" title="Shell No password"></a>Shell No password</h4><p>以 <code>useradd hadoop</code> 新建用户 hadoop 并为其设置 <code>passwd hadoop</code> 密码后通过 <code>sudo chmod u+w /etc/sudoers</code> 将 hadoop 添加到 sudoers 列表，向 <code>/etc/sudoers</code> 文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line">hadoop ALL=NOPASSWD:ALL</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ssh-keygen -t rsa</code> 生成 id_rsa.pub 后以 <code>scp</code> 将自身的 rsa 密钥分发给 nn01，<code>scp .ssh/id_rsa.pub hadoop@nn01:/home/hadoop/.ssh/nn02_keys</code>，当然也包括自己的，这将使得可以自己 shell 免密连接自己，并设置目录权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd .ssh/</span><br><span class="line">cat dn01_keys dn02_keys dn03_keys nn01_keys nn02_keys &gt;&gt; authorized_keys</span><br><span class="line">sudo chmod 700 /home/hadoop/</span><br><span class="line">sudo chown hadoop:hadoop ./.ssh/</span><br><span class="line">sudo chmod 700 .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>最后使用 <code>scp authorized_keys hadoop@nn02:/home/hadoop/.ssh/</code> 将 <em>authorized_keys</em>  文件分发给 nn02、dn01、dn02、dn03 机器中。</p>
+<h4 id="Java-1-8-install"><a href="#Java-1-8-install" class="headerlink" title="Java 1.8 install"></a>Java 1.8 install</h4><p>在安装和配置 Hadoop 之前，我们需要安装 Java 环境且至少实在 1.8 版本以上，我们直接从 <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html">https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html</a> 下载系统对应的文件并通过 <code>sudo vi /etc/profile</code> 添加环境变量后刷新即可 <code>source /etc/profile</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/jdk1.8.0_202</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p>为了防止普通用户无法使用 Java 还需要设置普通用户的环境变量 <code>sudo vi ~/.bashrc</code> 同样的向此文件添加 JDK 所在位置并使用 <code>source ~/.bashrc</code> 刷新即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/jdk1.8.0_202</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>正常环境下直接通过 <code>/etc/profile</code> 配置全局的环境变量即可，可根据实际环境自行选择</p>
+</blockquote>
+<h3 id="单机模式与集群模式"><a href="#单机模式与集群模式" class="headerlink" title="单机模式与集群模式"></a>单机模式与集群模式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/537634301229590.png"><br>当上述配置完成之后，开始安装 Hadoop，这也是 HBase 的运行基础，在此之前我们先看下当前系统的磁盘最大分区，以决定是否要修改日志存储目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        237M     0  237M   0% /dev</span><br><span class="line">tmpfs           244M     0  244M   0% /dev/shm</span><br><span class="line">tmpfs           244M  4.5M  240M   2% /run</span><br><span class="line">tmpfs           244M     0  244M   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1        40G  3.4G   37G   9% /</span><br><span class="line">tmpfs            49M     0   49M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+
+<p>我的系统分区最大是 <code>/</code> 也就是说无需更改他的日志存储路径，如果你的磁盘大小和我的不一样那么建议之后在 Hadoop 的配置文件中更改日志存储位置即可，可通过清华大学镜像站直接进行下载 Hadoop 并解压：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-3.3.1/">https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-3.3.1/</a></p>
+<p>通过 <code>tar zxvf hadoop-3.3.1.tar.gz</code> 解压文件并重命名为 hadoop(<code>mv hadoop-3.3.1 hadoop</code>)并移动到 <code>usr/local</code> 文件夹中，之后在 <code>~/.bashrc</code> 添加环境变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Hadoop_Home</span><br><span class="line">export HADOOP_HOME=/usr/local/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>保证可以输入 <code>hadoop</code> 出现参数提示即可，但不要忘记使用 <code>source ~/.bashrc</code> 刷新配置，以及在 <code>/usr/local</code> 目录那为 hadoop 设置用户组为 hadoop（<code>sudo chown hadoop:hadoop /usr/local/hadoop/*</code>）</p>
+</blockquote>
+<p>进入到 <code>/usr/local/hadoop/etc/hadoop</code> 目录下配置 <code>core-site.xml</code> 文件并写入节点名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://nn01:8020&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后编辑 <code> hdfs-site.xml</code> 文件被指 HDFS 相关属性并增加数据备份(dfs.replication)、namenode\datanode 存储文件位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;file:///data/hadoop/hdfs/nn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;file:///data/hadoop/hdfs/dn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>并建立 datanode&#x2F;namenode 存储文件以及为其分配权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /</span><br><span class="line">sudo mkdir -p /data/hadoop/hdfs/nn</span><br><span class="line">sudo mkdir -p /data/hadoop/hdfs/dn</span><br><span class="line">sudo chown hadoop:hadoop data/*</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/79735502217457.png"></p>
+<p>切换到 hadoop 用户使用 <code> hdfs namenode -format</code> 来格式化 namenode 后启动单机模式 <code>bash /usr/local/hadoop/sbin/start-dfs.sh</code>，结束后访问 <code>http://&lt;ip&gt;:9870/</code> 即可看到 Hadoop 单机模式的控制台页面来验证上述配置的正确，之后将上述配置全部在 nn02、dn01、dn02、dn03 中在配置一遍。</p>
+<blockquote>
+<p>可使用 <code>bash /usr/local/hadoop/sbin/stop-dfs.sh</code> 来停止单机模式</p>
+</blockquote>
+<p>并在所有机器上执行 <code>hdfs namenode -format</code> 用于格式化来调试，并启动 <code>bash /usr/local/hadoop/sbin/start-dfs.sh</code> 进行单机启动来保证所有机器配置都是正确的，之后在所有节点中删除数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /data/hadoop/hdfs/nn/*</span><br><span class="line">rm -rf /data/hadoop/hdfs/dn/*</span><br></pre></td></tr></table></figure>
+
+<p>之后在 nn01 节点中使用 <code>hdfs namenode</code> 来启动主节点，之后在其他节点中启动 <code>start-dfs.sh</code> 即可将此连接为一个集群。</p>
+<p>在没有配置 ZooKeeper 之前，datanode 和 namenode 是通过 <code>core-site.xml</code> 中的 <code>fs.defaultFS</code> 属性去连接 namenode 的 8020 端口，并建立连接，在没有 ZooKeeper 之前，是不允许有两个 Namenode 节点存在的，也就是非HA模式，他只会有一个 Namenode 节点，对于其他的都会被 Hadoop 视为 Datanode 节点，在后续步骤中我们要完成 Hadoop HA 的配置。</p>
+<h2 id="Hadoop-HA-and-ZooKeeper"><a href="#Hadoop-HA-and-ZooKeeper" class="headerlink" title="Hadoop HA and ZooKeeper"></a>Hadoop HA and ZooKeeper</h2><h3 id="ZooKeeper-install-x2F-run"><a href="#ZooKeeper-install-x2F-run" class="headerlink" title="ZooKeeper install &#x2F; run"></a>ZooKeeper install &#x2F; run</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/498362619211164.png"><br>在开始 ZooKeeper 之前我们已经了解到为什么 Hadoop HA 需要 ZooKeeper 了，ZooKeeper 同样是 Apache 基金会下的开源项目，他用于分布式应用程序协调服务，是 Google Chubby 的开源实现，为分布式应用提供一致性服务，包括了配置维护、域名服务、配置同步以及组服务等。</p>
+<p>ZooKeeper 集群最好是奇数，这样会有利于仲裁，感兴趣的读者可以去了解下 Raft（Reliable,Replicated,Redundant,And Fault-Tolerant）这和 Hadoop HA 有异曲同工之妙。</p>
+<p>以 <code>useradd zookeeper</code> 新建用户 zooke 并为其设置 <code>passwd zookeeper</code> 密码后通过 <code>sudo chmod u+w /etc/sudoers</code> 将 hadoop 添加到 sudoers 列表，向 <code>/etc/sudoers</code> 文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line">hadoop  ALL=NOPASSWD:ALL</span><br><span class="line">zookeeper ALL=NOPASSWD:ALL</span><br></pre></td></tr></table></figure>
+
+<p>之后通过清华大学开源镜像站获取 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.6.3/apache-zookeeper-3.6.3-bin.tar.gz">https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.6.3/apache-zookeeper-3.6.3-bin.tar.gz</a> 并解压到 <code>/usr/local/</code> 中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf apache-zookeeper-3.6.3.tar.gz</span><br><span class="line">sudo mv apache-zookeeper-3.6.3/ /usr/local/zookeeper</span><br><span class="line">sudo chown -R zookeeper:zookeeper /usr/local/zookeeper</span><br></pre></td></tr></table></figure>
+
+<p>通过在 <code>/etc/profile</code> 增加全局变量后以 <code>source /etc/profile</code> 命令让配置生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ZOOKEEPER=/usr/local/zookeeper</span><br><span class="line">export PATH=$PATH:$ZOOKEEPER/bin</span><br></pre></td></tr></table></figure>
+
+<p>进入到 <code>/usr/local/zookeeper/conf</code> 目录下将 <code>zoo_sample.cfg</code> 文件复制一份并改名 <strong>zoo.cfg</strong>：<code>cp -r zoo_sample.cfg zoo.cfg</code> ，并编辑 <code>daraDir</code> 这一行的文件夹位置为 <code>/data/zookeeper</code>。</p>
+<p>在 <code>/usr/local/zookeeper/bin/</code> 文件内的 <code>zkEnv.sh</code> 文件中增加 <code>ZOO_LOG_DIR=/data/logs/zookeeper</code> 日志存放目录并新建目录和权限的设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /data/zookeeper</span><br><span class="line">sudo chown zookeeper:zookeeper /data/zookeeper/</span><br><span class="line">sudo mkdir /data/logs</span><br><span class="line">sudo mkdir /data/logs/zookeeper</span><br><span class="line">sudo chown -R zookeeper:zookeeper /data/logs/zookeeper</span><br></pre></td></tr></table></figure>
+
+<p>然后在 <code>/data/zookeeper</code> 新建一个文件命名为 myid，并写入这台服务器的 Zookeeper id，取值范围为 1~255，配置如下：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>host</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>nn01</td>
+</tr>
+<tr>
+<td>2</td>
+<td>nn02</td>
+</tr>
+<tr>
+<td>3</td>
+<td>dn01</td>
+</tr>
+<tr>
+<td>4</td>
+<td>dn02</td>
+</tr>
+<tr>
+<td>5</td>
+<td>dn03</td>
+</tr>
+</tbody></table>
+<p>通过 <code>zkServer.sh start</code> 启动 Zookeeper，之后使用 <code>zkCli.sh</code> 测试是否可以连接上，如无报错执行下列命令查看 ZooKeeper 根目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 1] ls /</span><br><span class="line">[zookeeper]</span><br></pre></td></tr></table></figure>
+
+<p>之后 <code>zkServer.sh stop</code> 来停止 Zookeeper 的运行并清空数据文件夹和日志文件夹，并在 <code>/usr/local/zookeeper/conf/zoo.cfg</code> 添加节点信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server.1=nn01:2888:3888</span><br><span class="line">server.2=nn02:2888:3888</span><br><span class="line">server.3=dn01:2888:3888</span><br><span class="line">server.4=dn02:2888:3888</span><br><span class="line">server.5=dn03:2888:3888</span><br></pre></td></tr></table></figure>
+
+<p>此时在执行过 <code>zkServer.sh start</code> 后 Zookeeper 会将配置中所有的节点连接成一个集群，可以通过 <code>zkServer.sh status</code> 来进行查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[zookeeper@nn01 local]$ zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/bin/../conf/zoo.cfg</span><br><span class="line">Client port found: 2181. Client address: localhost. Client SSL: false.</span><br><span class="line">Mode: leader</span><br><span class="line"></span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/bin/../conf/zoo.cfg</span><br><span class="line">Client port found: 2181. Client address: localhost. Client SSL: false.</span><br><span class="line">Mode: follower</span><br><span class="line"></span><br><span class="line">[zookeeper@dn01 zookeeper]$ zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/bin/../conf/zoo.cfg</span><br><span class="line">Client port found: 2181. Client address: localhost. Client SSL: false.</span><br><span class="line">Mode: follower</span><br><span class="line"></span><br><span class="line">[zookeeper@dn02 zookeeper]$ zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/bin/../conf/zoo.cfg</span><br><span class="line">Client port found: 2181. Client address: localhost. Client SSL: false.</span><br><span class="line">Mode: follower</span><br><span class="line"></span><br><span class="line">[zookeeper@dn03 zookeeper]$ zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/bin/../conf/zoo.cfg</span><br><span class="line">Client port found: 2181. Client address: localhost. Client SSL: false.</span><br><span class="line">Mode: follower</span><br></pre></td></tr></table></figure>
+
+<h4 id="自启动脚本"><a href="#自启动脚本" class="headerlink" title="自启动脚本"></a>自启动脚本</h4><p>自启动脚本在 <code>etc/init.d</code> 下，通过 root 账号来进行操作，我们通过建立 <code>zookeeper</code> 文件后写入下述内容，即可通过 <code>service zookeeper status | start | stop</code> 来进行对 zookeeper 的操作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">chkconfig:2345 80 10</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">description: zookeeper service</span></span><br><span class="line">export JAVA_HOME=&quot;/usr/jdk1.8.0_202&quot;</span><br><span class="line">RETVAL=0</span><br><span class="line">start() &#123;</span><br><span class="line">    su zookeeper -c &quot;bash /usr/local/zookeeper/bin/zkServer.sh start&quot;</span><br><span class="line">&#125;</span><br><span class="line">stop() &#123;</span><br><span class="line">    su zookeeper -c &quot;bash /usr/local/zookeeper/bin/zkServer.sh stop&quot;</span><br><span class="line">&#125;</span><br><span class="line">status() &#123;</span><br><span class="line">    su zookeeper -c &quot;bash /usr/local/zookeeper/bin/zkServer.sh status&quot;</span><br><span class="line">&#125;</span><br><span class="line">case $1 in</span><br><span class="line">start)</span><br><span class="line">    start</span><br><span class="line">;;</span><br><span class="line">status)</span><br><span class="line">    status</span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">    stop</span><br><span class="line">;;</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为脚本赋予可执行权限 <code>sudo chmod +x /etc/init.d/zookeeper</code>  添加 Zookeeper 在自启动，重启机器后通过 <code>jps</code> 命令再次查看服务是否正常启动。</p>
+</blockquote>
+<h3 id="Hadoop-HA-1"><a href="#Hadoop-HA-1" class="headerlink" title="Hadoop HA"></a>Hadoop HA</h3><p>Haddoop HA (High Avaliable，高可用) 的主要作用就是 <strong>保证当一个 namenode 宕机的时候，另一台 namenode 可以立即切换来替代宕掉的 namenode</strong>，这样就大概上解决了单点故障的问题。这样的原理基本就是同时启动两台 namenode，一台是活跃状态(active)，另一台则是处于 <strong>支持(standby)</strong> 状态，其主要的作用就是将处于 <strong>active</strong> 状态的机器上所做过的事情进行同步，以方便在 active 挂掉的时候 standy 可以无缝切换。</p>
+<p>在 Hadoop HA 模式下，主要通过 ZooKeeper 来进行对节点的维护，因此 Hadoop HA 的搭建与 ZooKeeper 密不可分，而 ZooKeeper 在整个流程当中都处于服务治理、故障检测、节点维护的身份进行工作。</p>
+<h4 id="JournalNode"><a href="#JournalNode" class="headerlink" title="JournalNode"></a>JournalNode</h4><p>日志节点(JournalNode) 主要的作用就是在 standby 同步 active 这个流程中充当与数据同步的方式，standby 就是通过 journalnode 集群来同步 active 节点的操作。</p>
+<p>JournalNodde 与 dataname 和 namenode 一样，都是 Hadoop 集群中的角色，只不过他主要用于同步 namenode 之间的操作，以防止脑裂现象。</p>
+<blockquote>
+<p>假设测试环境的配置不是很好，那么可以通过在 <code>hdfs-site.xml</code> 文件内添加 <code>dfs.qjournal.start-segment.timeout.ms</code> 的配置，来增加和 JournalNode 集群之间的超时时间</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.qjournal.start-segment.timeout.ms&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;60000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="手动-Failover"><a href="#手动-Failover" class="headerlink" title="手动 Failover"></a>手动 Failover</h5><p>failover 的配置分为手动和自动，本文我们选择手动进行操作，failover 即故障切换或故障转移。当一个 Haddop 中有一台 namenode 宕掉了，那么就可以将另外台处于 standby 状态的机器切换成 active 的 namenode 。</p>
+<p>这样就可以大幅程度上减少了单点故障所给服务集群带来的影响和损失，在 failover 没有运用之前，相对于单点应用只有一个台 namenode，假设这台刚好宕掉了，那么集群就约等于无法正常提供服务了。当 failover 配置成功后，当这台 namenode 宕掉了还会有另一台 namenode 进入 active 状态从而继续提供服务。</p>
+<p>修改所有 namenode 机器上的 <code>/usr/local/hadoop/etc/hadoop/hdfs-site.xml</code> 文件并写入以下配置，分别作为服务id，以及服务 id 内所含有的 namenode：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.nameservices&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mycluster&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.ha.namenodes.mycluster&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn01,nn02&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.namenode.rpc-address.mycluster.nn01&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn01:8020&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.namenode.rpc-address.mycluster.nn02&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn02:8020&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.namenode.http-address.mycluster.nn01&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn01:9870&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.namenode.http-address.mycluster.nn02&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn02:9870&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.namenode.shared.edits.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;qjournal://nn01:8485;nn02:8485;dn01:8485;dn02:8485;dn03:8485/mycluster&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.client.failover.proxy.provider.mycluster&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.ha.fencing.ssh.private-key-files&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/home/hadoop/.ssh/id_rsa&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.journalnode.edits.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/data/hadoop/hdfs/jn&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.ha.fencing.methods&lt;/name&gt;</span><br><span class="line">   &lt;value&gt;</span><br><span class="line">       sshfence</span><br><span class="line">       shell(/bin/true)</span><br><span class="line">   &lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>dfs.nameservices</td>
+<td>服务 id</td>
+</tr>
+<tr>
+<td>2</td>
+<td>dfs.ha.namenodes.mycluster</td>
+<td>服务 id 内所含有的 namenode</td>
+</tr>
+<tr>
+<td>3</td>
+<td>dfs.namenode.rpc-address.mycluster.nn01</td>
+<td>设置两个 Namenode 的 RPC 访问地址</td>
+</tr>
+<tr>
+<td></td>
+<td>dfs.namenode.rpc-address.mycluster.nn02</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>dfs.namenode.http-address.mycluster.nn01</td>
+<td>设置两个 Namenode 的 HTTP 访问地址</td>
+</tr>
+<tr>
+<td></td>
+<td>dfs.namenode.http-address.mycluster.nn02</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>dfs.namenode.shared.edits.dir</td>
+<td>配置 journalnode 集群的访问地址</td>
+</tr>
+<tr>
+<td>6</td>
+<td>dfs.client.failover.proxy.provider.mycluster</td>
+<td>配置 dfs 客户端的类名，以判断哪个 namenode 是活跃的</td>
+</tr>
+<tr>
+<td>7</td>
+<td>dfs.ha.fencing.methods</td>
+<td>故障迁移方法，通过 ssh 直接过去将被判断为故障的 namenode 直接杀掉，以防止脑裂现象</td>
+</tr>
+<tr>
+<td></td>
+<td>dfs.ha.fencing.ssh.private-key-files</td>
+<td>ssh 免密登录的 id_rsa 位置，以实现上面的故障迁移</td>
+</tr>
+<tr>
+<td>8</td>
+<td>dfs.journalnode.edits.dir</td>
+<td>journalnode 的数据文件夹位置</td>
+</tr>
+<tr>
+<td>9</td>
+<td>dfs.ha.fencing.methods</td>
+<td>隔离机制方法 (多个机制用换行分割，即每个机制暂用一行)</td>
+</tr>
+</tbody></table>
+<p>之后修改 <code>core-site.xml</code> 文件，将之前的 <code>fd.defaultFS</code> value 值改为 <code>hdfs://mycluster</code> 。此前的 <code>fs.defaultFS</code> 内是需要单独配置 8020 端口的，但是这个端口被移植到了 hdfs-site.xml 中，因此在 core-site.xml 中不需要专门填写一个端口，他们已经组成了一个集群，只需要向外暴漏 nameserver ID 在 ZooKeeper 集群中找出 active 的 namenode 所对应的 ip:port 来进行连接。</p>
+<p>并为 journalnode 建立需要的文件夹和赋予权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/hadoop/hdfs/jn</span><br><span class="line">sudo chown -R hadoop:hadoop /data/hadoop/</span><br></pre></td></tr></table></figure>
+
+<p>在此之前我强烈的建议你清口所有 hadoop 生成过数据的目录，否则你可能会在启动 journalnode 之后出现一系列的问题，比如 <code>hdfs namenode -format</code> 格式化失败等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /data/hadoop/hdfs/dn/*</span><br><span class="line">sudo rm -rf /data/hadoop/hdfs/nn/*</span><br><span class="line">sudo rm -rf /data/hadoop/hdfs/jn/*</span><br><span class="line">sudo rm -rf /tmp/*</span><br></pre></td></tr></table></figure>
+
+<p>然后在所有节点中启动 journalnode，数量必须为奇数即可，分别执行 <code>hdfs --daemon start journalnode</code> 之后通过 <code>jps</code> 来查看是否 journalnode 节点启动成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ jps</span><br><span class="line">2900 JournalNode</span><br><span class="line">2938 Jps</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可通过 <code>hdfs --daemon stop journalnode</code> 停止 journalnode 节点</p>
+</blockquote>
+<p>然后在 nn01 上使用 <code>hdfs namenode -format</code> 来进行格式化，然后在在启动 Namenode ：<code>hdfs namenode</code>。</p>
+<p>切换到 nn02 中同步 namenode 让他完全做好成为备份机(standby) 的准备 <code>hdfs namenode -bootstrapStandby</code>，然后在 dn01~dn03 机器中启动 HDFS: <code>start-dfs.sh</code> 使得启动 Datanode 节点后使用 <code>jps</code> 进行查看节点的启动状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2615 JournalNode</span><br><span class="line">2895 DataNode</span><br><span class="line">3231 Jps</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/376853600211165.png"></p>
+<p>最后访问 <code>&lt;namenode ip&gt;:9870</code> 可以直接查看到 Hadoop 控制台状态，显示两个 namenode 节点都处于 <code>standby</code> 状态中，并执行手动 failover :<code>hdfs haadmin -failover nn02 nn01</code>，此时会提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failover from nn02 to nn01 successful</span><br></pre></td></tr></table></figure>
+
+<p>但查看 namenode 1 节点的控制台中可以发现已经将 nn01 切换为 <code>active</code> 状态了，而 namenode 2 则仍然处于 standby 状态</p>
+<h5 id="自动-Failover"><a href="#自动-Failover" class="headerlink" title="自动 Failover"></a>自动 Failover</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/499881401229591.png"><br>在此前我们提到过 Failover 即故障切换和 Hadoop HA 主要是为了应对脑裂现象，而脑裂现象主要由 Namenode 所产生。在这里就需要引入 zkfc 的概述，zkfc 主要是检测 Hadoop HA 集群中处于 active 状态的 namenode 是否宕机，如果宕机了则会迅速的将 standby 状态的 namenode 切换为 active ，并将当前已经宕机的 namenode kill，以防止脑裂现象的出现，这也是 Failover 核心所解决的问题。</p>
+<p>本地的测试环境中，通常机器的性能不是很高，那么就会遇到 zkfc 启动不起来的问题，也就是超过 5s 连接不上 Zookeeper 就自动推出，那么可以在 <code>core-site.xml</code> 中加入下述配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;ha.zookeeper.session-timeout.ms&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;30000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.ha.automatic-fallover.enabled&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;ha.zookeeper.quorum&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn01:2181,nn02:2181,dn01:2181,dn02:2181,dn03:2181&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>ha.zookeeper.session-timeout.ms</td>
+<td>设置 zkfc 连接 Zookeeper 的延迟时间</td>
+</tr>
+<tr>
+<td>2</td>
+<td>dfs.ha.automatic-fallover.enabled</td>
+<td>启动自动 failover</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ha.zookeeper.quorum</td>
+<td>ZooKeeper 集群访问地址</td>
+</tr>
+</tbody></table>
+<p>在所有节点中启动 journalnode: <code>hdfs --daemon start journalnode</code> ，以及所有 namenode 节点中启动 zkfc: <code>hdfs --daemon start zkfc</code></p>
+<blockquote>
+<p>在此之前可能需要使用 <code>hdfs zkfc -formatZK</code> 进行格式化 &#x2F;  <code>hdfs namenode -format</code></p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/123930404217458.png"></p>
+<p>和 Namenode 主节点中启动：<code>hdfs namenode</code> &#x2F; <code>hdfs --daemon start namenode</code>，然后切换到 nn02 中同步 namenode 让他完全做好成为备份机(standby) 的准备 <code>hdfs namenode -bootstrapStandby</code>，最后在 dn01~dn03 机器中启动 HDFS: <code>start-dfs.sh</code> 那么再次查看 Hadoop 控制台则会在两个 namenode 之间任选一个节点为 active</p>
+<h5 id="自启动脚本-1"><a href="#自启动脚本-1" class="headerlink" title="自启动脚本"></a>自启动脚本</h5><p>为方便之后环境的便捷启动，我们需要为 journalnode(nn01<del>dn03) 、zkfs(nn01</del>nn02) 设置自启动，在 <code>/etc/init.d/</code> 目录下新建 hadoop-journalnode 并写入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">chkconfig:2345 81 09</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">description: hadoop-namenode service</span></span><br><span class="line">RETVAL=0</span><br><span class="line">. /home/hadoop/.bashrc</span><br><span class="line">start() &#123;</span><br><span class="line">    su hadoop -c &quot;hdfs --daemon start journalnode&quot;</span><br><span class="line">&#125;</span><br><span class="line">stop() &#123;</span><br><span class="line">    su hadoop -c &quot;hdfs --daemon start journalnode&quot;</span><br><span class="line">&#125;</span><br><span class="line">case $1 in</span><br><span class="line">start)</span><br><span class="line">    start</span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">    stop</span><br><span class="line">;;</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure>
+
+
+<p>之后在为 zkfs 设置自启动服务，这主要用于 nn01~nn02 机器中，之后同样的赋予他们 <code>+x</code> 权限以及通过 <code>chkconfig</code> 将服务加入到启动项中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">chkconfig:2345 98 07</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">description: hadoop-zkfc service</span></span><br><span class="line">RETVAL=0</span><br><span class="line">. /home/hadoop/.bashrc</span><br><span class="line">start() &#123;</span><br><span class="line">    su hadoop -c &quot;hdfs --daemon start zkfc&quot;</span><br><span class="line">&#125;</span><br><span class="line">stop() &#123;</span><br><span class="line">    su hadoop -c &quot;hdfs --daemon stop zkfc&quot;</span><br><span class="line">&#125;</span><br><span class="line">case $1 in</span><br><span class="line">start)</span><br><span class="line">    start</span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">    stop</span><br><span class="line">;;</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>没有将 namenode 和 datanode 设置为自启动服务的主要原因是因为 namenode 需要 active 和 standby 主&#x2F;备机器，所以建议手动启动</p>
+</blockquote>
+<h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/369732610211165.png"><br>安装 HBase 的前提是拥有 Zookeeper 虽然 HBase 自带了一个 Zookeeper 但是无法满足 Hadoop 的使用，因此我们通过 <a target="_blank" rel="noopener" href="https://downloads.apache.org/hbase/stable/">https://downloads.apache.org/hbase/stable/</a> 下载 HBase 稳定版本。</p>
+<p>在 HBase 中主要通过 <em>HMaster</em> 来管理元数据，也就是 Hadoop 中的 namenode，之后 RegionServer(区域服务器) 负责存储数据，，也就类似于 Hadoop 中的 datanode。同样的，Zookeeper 在此的作用依然是维护节点（需要注意的是 HDFS 是基于完全部署模式的，也就是通过 HDFS 存储数据，在单机模式下直接使用的是普通文件系统来存储数据。）</p>
+<blockquote>
+<p>这里需要引入一个点是，在 HBase 官方文档中：<a target="_blank" rel="noopener" href="http://hbase.apache.org/book.html#standalone_dist%EF%BC%8C%E5%B0%86">http://hbase.apache.org/book.html#standalone_dist，将</a> HBase 的启动分为了三大类，分别为：独立 HBase、伪分布式和完全分布式集群启动，通常独立 HBase 也被称之为快速上手并理解 HBase 的不二之选。</p>
+</blockquote>
+<h3 id="hbase-user-create-and-Shell-nopasswd"><a href="#hbase-user-create-and-Shell-nopasswd" class="headerlink" title="hbase user create and Shell nopasswd"></a>hbase user create and Shell nopasswd</h3><p>以 <code>useradd hbase</code> 新建用户 hbase 并为其设置 <code>passwd hbase</code> 密码后通过 <code>sudo chmod u+w /etc/sudoers</code> 将 hbase 添加到 sudoers 列表，向 <code>/etc/sudoers</code> 文件中增加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line">hadoop ALL=NOPASSWD:ALL</span><br><span class="line">hbase ALL=NOPASSWD:ALL</span><br></pre></td></tr></table></figure>
+
+<p>之后切换到 hbase 用户下执行 <code>sudo whoami</code> 来查看 <code>etc/sudoers</code> 是否配置成功(一般是 sudo su root 无需输入密码并返回 root 即完成此配置)</p>
+<p>同样的为了应对之后的 HBase 伪分布式模式，我们需要为其配置免密登录，使用 <code>ssh-keygen -t rsa</code> 生成 id_rsa.pub 后以 <code>scp</code> 将自身的 rsa 密钥分发给 nn01，<code>scp .ssh/id_rsa.pub hbase@nn01:/home/hbase/.ssh/nn01_keys</code>，当然也包括自己的，这将使得可以自己 shell 免密连接自己，并设置目录权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 700 /home/hbase/</span><br><span class="line">sudo chown hbase:hbase ./.ssh/</span><br><span class="line">cd .ssh/</span><br><span class="line">cat dn01_keys dn02_keys dn03_keys nn01_keys nn02_keys &gt;&gt; authorized_keys</span><br><span class="line">sudo chmod 700 authorized_keys</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>之后在通过 scp 将 authorized_keys 分发到 nn01~dn03 的 <code>/.ssh</code> 文件夹中，切记也为其赋予 700 权限</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 700 /home/hbase/</span><br><span class="line">sudo chown hbase:hbase ./.ssh/</span><br><span class="line">cd .ssh/</span><br><span class="line">sudo chmod 700 authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java-bashrc-and-HBase-install"><a href="#Java-bashrc-and-HBase-install" class="headerlink" title="Java bashrc and HBase install"></a>Java bashrc and HBase install</h3><p>在 <a target="_blank" rel="noopener" href="https://downloads.apache.org/hbase/stable/">https://downloads.apache.org/hbase/stable/</a> 内下载一个稳定版本的 HBase 并在节点机器中使用 <code>wgethttps://downloads.apache.org/hbase/2.3.7/</code> 进行下载并直接使用 <code>sudo mv hbase-2.3.7 /usr/local/hbase</code> 移动到 &#x2F;usr&#x2F;local 目录下。</p>
+<p>最后我们还需要通过<code>sudo vi ~/.bashrc</code> 向用户变量内添加 JDK 所在位置和 HBase 的环境变量，然后使用 <code>source ~/.bashrc</code> 刷新即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/jdk1.8.0_202</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"></span><br><span class="line"># hbase</span><br><span class="line">export HBASE_HOME=/usr/local/hbase</span><br><span class="line">export PATH=$PATH:$HBASE_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h3><p>进入到 <code>/usr/local/hbase</code> 目录下追加或修改 <code>hbase.rootdir</code> 和 <code>hbase.zookeeer.property.dataDir</code> 配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;./tmp&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.unsafe.stream.capability.enforce&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;file:///home/hbase/hbase&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>单机模式下我们启动了 HBase 自带的 Zookeeper</p>
+</blockquote>
+<p>这个操作只需要在单个节点中进行测试，因为只是单机模式，会临时使用到 <code>/home/hbase/hbase</code> 和 <code>/home/hbase/zookeeper</code> 目录</p>
+<p>接下来通过 <code>start-hbase.sh</code> 来启动 hbae，<code>jps</code> 查看进程正常启动后由 <code>hbase shell</code> 来连接到 hbase，并进行建表(create)、插入(put)、查询(scan) 等三个测试：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):<span class="number">001</span>:<span class="number">0</span><span class="operator">&gt;</span> <span class="keyword">create</span> <span class="string">&#x27;testTable&#x27;</span>,<span class="string">&#x27;testFamily&#x27;</span></span><br><span class="line">Created <span class="keyword">table</span> testTable</span><br><span class="line">Took <span class="number">3.0652</span> seconds</span><br><span class="line"><span class="operator">=</span><span class="operator">&gt;</span> Hbase::<span class="keyword">Table</span> <span class="operator">-</span> testTable</span><br><span class="line"></span><br><span class="line">hbase(main):<span class="number">002</span>:<span class="number">0</span><span class="operator">&gt;</span> put <span class="string">&#x27;testTable&#x27;</span>,<span class="string">&#x27;title&#x27;</span>,<span class="string">&#x27;testFamily:heyinfo&#x27;</span>,<span class="string">&#x27;hello,hbase&#x27;</span></span><br><span class="line">Took <span class="number">0.8718</span> seconds</span><br><span class="line"></span><br><span class="line">hbase(main):<span class="number">003</span>:<span class="number">0</span><span class="operator">&gt;</span> scan <span class="string">&#x27;testTable&#x27;</span></span><br><span class="line"><span class="type">ROW</span>                                                              <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"> title                                                           <span class="keyword">column</span><span class="operator">=</span>testFamily:heyinfo, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-11</span><span class="number">-24</span>T15:<span class="number">31</span>:<span class="number">45.381</span>, <span class="keyword">value</span><span class="operator">=</span>hello,hbase</span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.2130</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>当一切完成后我们可通过 <code>stop-hbase.sh</code> 来停止单机模式的 HBase 并 <code>rm -rf /home/hbase/hbase /home/hbase/zookeeper/</code> 删除掉 HBase 在启动之前自动建立的文件夹。</p>
+<p>在这里我们需要引入一个 HBase 对于伪分布式的概念，伪分布式很类似完全分布式，但是他是介于 HDFS 为非 HA 状态的，音译仅此将此模式用于原型设计和测试目的，无法用于开发环境和性能评估，我们直接进入完全分布式模式。</p>
+<h3 id="完全分布式"><a href="#完全分布式" class="headerlink" title="完全分布式"></a>完全分布式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/2.hadoop+zookeeper+hbase.md/423330101211166.png"><br>默认情况下 HBase 在独立模式（单机模式）下运行，以提供最小规模测试(同样包含了非分布式)，对于生产环境加以使用分布式模式，在分布式模式下 HBase 守护程序将会在多个实例集群中服务器运行，但需要注意的完全分布式需要 HDFS 为 HA 模式即可，之后记得在 <code>hbase-env.sh</code> 文件中关闭 HBase 自带的 Zookeeper:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Tell HBase whether it should manage it&#x27;s own instance of ZooKeeper or not.</span><br><span class="line"> export HBASE_MANAGES_ZK=false</span><br></pre></td></tr></table></figure>
+
+<p>之后通过<code>sudo groupadd supergroup</code> 建立 supergroup 用户组，然后将 hbase 用户加入到该组中 <code>sudo groupmems -g supergroup -a hbase</code> ，这也是 hdfs 所默认的超级用户组，也就是超级用户，可以无限制权限访问的特殊用户，之后为 Hbase 建立日志文件存储目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /data/logs/hbase</span><br><span class="line">sudo chown hbase:hbase /data/logs/hbase</span><br></pre></td></tr></table></figure>
+<p>HBase 会根据 HDFS 的客户端配置来做册罗调整，而让 HBase 读取到 HDFS 最为直接的方法就是把 <code>HADOOP__CONF_DIR</code> 的配置文件目录地址添加到 <code>HBASE_CLASSPATH</code> 中，以及 hbase 的日志文件夹配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Extra Java CLASSPATH elements.  Optional.</span><br><span class="line"> export HBASE_CLASSPATH=/usr/local/hadoop/etc/hadoop</span><br><span class="line"></span><br><span class="line"># Where log files are stored.  $HBASE_HOME/logs by default.</span><br><span class="line"> export HBASE_LOG_DIR=/data/logs/hbase</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>hbase-site.xml</code> 中增加并修改 <code>hbase.cluster.distributed</code> 为 true 以开启 HBase 分布式启模式启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!--</span><br><span class="line">    The following properties are set for running HBase as a single process on a</span><br><span class="line">    developer workstation. With this configuration, HBase is running in</span><br><span class="line">    &quot;stand-alone&quot; mode and without a distributed file system. In this mode, and</span><br><span class="line">    without further configuration, HBase and ZooKeeper data are stored on the</span><br><span class="line">    local filesystem, in a path under the value configured for `hbase.tmp.dir`.</span><br><span class="line">    This value is overridden from its default value of `/tmp` because many</span><br><span class="line">    systems clean `/tmp` on a regular basis. Instead, it points to a path within</span><br><span class="line">    this HBase installation directory.</span><br><span class="line"></span><br><span class="line">    Running against the `LocalFileSystem`, as opposed to a distributed</span><br><span class="line">    filesystem, runs the risk of data integrity issues and data loss. Normally</span><br><span class="line">    HBase will refuse to run in such an environment. Setting</span><br><span class="line">    `hbase.unsafe.stream.capability.enforce` to `false` overrides this behavior,</span><br><span class="line">    permitting operation. This configuration is for the developer workstation</span><br><span class="line">    only and __should not be used in production!__</span><br><span class="line"></span><br><span class="line">    See also https://hbase.apache.org/book.html#standalone_dist</span><br><span class="line">  --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;./tmp&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.unsafe.stream.capability.enforce&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://mycluster/hbase&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;nn01,nn02,dn01,dn02,dn03&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>hbase.cluster.distributed</td>
+<td>告诉 hbase 开启了分布式模式启动</td>
+</tr>
+<tr>
+<td>2</td>
+<td>hbase.rootdir</td>
+<td>HBase 的根存储目录，其中 mycluster 为集群的 namenode，如果是伪分布式模式可以替换为机器的 namenode</td>
+</tr>
+<tr>
+<td>3</td>
+<td>hbase.zookeeper.quorum</td>
+<td>Zookeeper 集群地址</td>
+</tr>
+</tbody></table>
+<p>然后将上述配置推送&#x2F;复制到所有节点后，在 nn01 节点(任意节点都可在作为 Master )作为 Master 执行 <code>hbase-daemon.sh start master</code>，之后查看 jps HMaster 是否启动，在其余的集群中(nn01~dn02) 启动 RegionServer:<code>hbase-daemon.sh start regionserver</code>，然后浏览器访问 <code>&lt;master&gt;:16010</code> 即可，hbase 模式下的服务为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ jps</span><br><span class="line">9841 HRegionServer</span><br><span class="line">10437 Jps</span><br><span class="line">9548 HMaster</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/hbase/2021-11-22-Hadoop+Zookeepr+HBase/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

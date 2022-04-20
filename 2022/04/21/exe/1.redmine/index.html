@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>redmine | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>redmine</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" rel="tag">项目管理</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Redmine 是一个基于Web项目的管理和权限管理和跟踪工具，与其他主流的项目管理平台不同的是 Redmine 是一个开源的。它用日历和甘特图辅助项目及进度可视化显示。同时它又支持多项目管理。Redmine 是一个自由开放 源码软件解决方案，它提供集成的项目管理功能，问题跟踪，并为多个版本控制选项的支持。需要注意的是 Redmine 是建立在 Ruby and Rails 的框架之上，因此他支持跨平台和多种数据库，但是缺点是安装的过程会非常折腾。</p>
+<h2 id="安装-redmine"><a href="#安装-redmine" class="headerlink" title="安装 redmine"></a>安装 redmine</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>最新版的 redmine 可以通过<a target="_blank" rel="noopener" href="https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Step-9-Test-the-installation">https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Step-9-Test-the-installation</a> 内进行下载，本文使用 <strong>4.0.9 (2021-04-26)</strong> 作为演示。</p>
+<blockquote>
+<p>需要注意的是下面的所有步骤均在 redmine 文件下进行（除了你 ruby 编译安装）</p>
+</blockquote>
+<h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><p>首先按照 redmine 官方文档的意思是，我们需要创建一个 <strong>redmine</strong> 的用户，并创建一个 <strong>redmine</strong> 库，为了让操作变得简单我们忽略<strong>新建用户</strong>的这个步骤，需们需要创建一个库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database redmine</span><br></pre></td></tr></table></figure>
+<p>当然你如果非常讲究我们也可以根据官方文档中一样，创建一个 redmine 用户：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE redmine CHARACTER SET utf8mb4;</span><br><span class="line">CREATE USER &#x27;redmine&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;my_password&#x27;;</span><br><span class="line">GRANT ALL PRIVILEGES ON redmine.* TO &#x27;redmine&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="redmine"><a href="#redmine" class="headerlink" title="redmine"></a>redmine</h5><p>之后进入到 <code>redmine-4.0.9/config</code>目录，之后将 <strong>database.yml.example</strong> 文件下的 <code>production</code> 复制到 <strong>database.yml</strong>文件下（需要创建一个 database.yml）</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">production:</span></span><br><span class="line">  <span class="attr">adapter:</span> <span class="string">mysql2</span></span><br><span class="line">  <span class="attr">database:</span> <span class="string">redmine</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">  <span class="attr">username:</span> <span class="string">username</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">&quot;password&quot;</span></span><br><span class="line">  <span class="attr">encoding:</span> <span class="string">utf8</span></span><br></pre></td></tr></table></figure>
+<p>此时也是一个必然的过程，你还需要修改 <code>production</code>内的<code>username、password</code>等信息，来配置你的数据库<strong>帐号密码</strong>。</p>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby"></a>ruby</h3><p>值得注意的是 redmine 所依赖的 <strong>ruby&amp;gem and bundle</strong> 如果你选择使用 <strong>MySQL</strong>数据库作为数据存储方式的话还需要有一个 MySQL 的环境。通常在 debian 的系统中已经内置了<strong>ruby&amp;gem</strong> 的语言环境，如果没有您还需要执行 <code>apt-get install ruby</code>来进行安装，如果您已经存在了<strong>ruby&amp;gem</strong>则不需要重新安装。</p>
+<h4 id="自动安装"><a href="#自动安装" class="headerlink" title="自动安装"></a>自动安装</h4><p>本文使用的 <code>ruby</code>版本为<strong>2.5.5p157</strong>，gem 的版本为 <strong>3.2.16</strong>，通常 gem 版本可通过使用<code>gem update --system</code>直接进行升级，但需要注意的是</p>
+<h4 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h4><p>本文基于 debian bunsen labs 发行版进行演示，通常除了<strong>Arch Linux</strong>系的系统基本上都可以进行安装，需要注意的是由于 Arch Linux 滚动更新的缘故，因此他的软件包都非常的新。</p>
+<p>现在是 2021年05月11日，此时 debian 系官方提供的 ruby 版本是 2019-03-15 所发布的<strong>2.5.5p157</strong>版本，而此时的 Arch Linux 可能已经用上了前年，即<strong>2020-12-25</strong>所发布的 <strong>ruby 3.0</strong>了，而值得庆幸的是 redmine 也支持 ruby 3.0：</p>
+<table>
+<thead>
+<tr>
+<th>redmine 版本</th>
+<th>支持的 ruby 版本</th>
+<th>使用的 rails 版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trunk (&gt;&#x3D; r20913)</td>
+<td>Ruby 2.5, 2.6, 2.7, 3.0</td>
+<td>Rails 6.1</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td>Ruby 2.4, 2.5, 2.6, 2.7</td>
+<td>Rails 5.2</td>
+</tr>
+<tr>
+<td>4.1</td>
+<td>Ruby 2.3, 2.4, 2.5, 2.6</td>
+<td>Rails 5.2</td>
+</tr>
+<tr>
+<td>4.0</td>
+<td>Ruby 2.2, 2.3, 2.4, 2.5, 2.6</td>
+<td>Rails 5.2</td>
+</tr>
+</tbody></table>
+<ol>
+<li>Redmine 4.2不支持Ruby 2.7.0和2.7.1。使用Ruby 2.7.2或更高版本</li>
+<li>24.0.6 之前的 Redmine 支持 Ruby &gt;&#x3D; 2.2.2。Redmine 4.0.6及更高版本不支持Ruby 2.2。</li>
+</ol>
+<h5 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h5><p>下载 ruby 2.4.2 版的压缩文件，更多全新版本你可以在 <a target="_blank" rel="noopener" href="https://cache.ruby-lang.org/pub/ruby/">https://cache.ruby-lang.org/pub/ruby/</a> 进行下载。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://cache.ruby-lang.org/pub/ruby/ruby-2.4.2.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>之后解压并进入文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf ruby-2.4.2.tgz</span><br><span class="line">cd ruby-2.4.2</span><br></pre></td></tr></table></figure>
+
+<p>进入后配置并编译源代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>最后通过使用 <code>ruby -v</code>来验证是否安装成功，如果你本机中已经存在了 ruby或其他版本，您需要注意下安装的位置不要与其他版本冲突，否则你无论使用 <code>ruby&amp;gem</code>都会报错：<br><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210511110904.png"></p>
+<p>如果遇到这个问题我会选择将所有 ruby 文件删除，只安装一个 ruby 版本。这个时候你 google 就会有人让你执行 <code>gem install bundler</code>，但是你换个思路想：“我执行 gem update 都报错了，我还能执行 gem install bundler 来安装 bundler 吗？”，很明显这个方法并不适用。如果你有其他的方法欢迎联系我 <a href="mailto:&#107;&#x6c;&#64;&#x73;&#x69;&#102;&#46;&#111;&#x6e;&#101;">&#107;&#x6c;&#64;&#x73;&#x69;&#102;&#46;&#111;&#x6e;&#101;</a>。</p>
+<h3 id="gem"><a href="#gem" class="headerlink" title="gem"></a>gem</h3><p>RubyGem(gem)，是一个Ruby 的一个包管理器，他提供了一个分发 ruby 程序和库的标准格式，还提供了一个管理程序包的安装工具，类似于 npm、pip。</p>
+<h4 id="配置源"><a href="#配置源" class="headerlink" title="配置源"></a>配置源</h4><p>RubyGems 一直以来在国内都非常难访问到，在本地你或许可以翻墙，当你要发布上线的时候，你就很难搞了。RubyGems 是由一个非常高端也非常有优越感的一个社区，他们为此提供了一个 Gem 的 CDN，来确保几乎无延迟的同步。</p>
+<p>在本文中我们除了使用 RubyChina 所提供的 CDN，以及由 Ruby 官方社区所提供的 GemCDN 源，<a target="_blank" rel="noopener" href="https://rubygems.org/">https://rubygems.org/</a> 国内是可以访问的，因此我们<strong>不需要移出</strong>，只需要添加一个 <a target="_blank" rel="noopener" href="https://gems.ruby-china.com/">https://gems.ruby-china.com/</a> 源即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem sources -a https://gems.ruby-china.com/</span><br></pre></td></tr></table></figure>
+
+<p>之后通过<code>gem sources</code>来查看源列表存在 <strong>rubychina</strong>社区所提供的源即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gem source</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line"></span><br><span class="line">https://gems.ruby-china.com/</span><br><span class="line">https://rubygems.org/</span><br></pre></td></tr></table></figure>
+
+<h4 id="bundler"><a href="#bundler" class="headerlink" title="bundler"></a>bundler</h4><h5 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h5><p>bundler 是一个能够跟踪并安装所需特定版本的 gem，以此来为 ruby 项目提供一致的运行环境，安装 bundler 安装的方式可以通过 gem 也可通过外部文件安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br></pre></td></tr></table></figure>
+
+<p>当然我们也可以制定安装 bundler 版本<strong>2.2.17</strong>，只需要在安装时指定版本即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler:2.2.17</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后我们需要新的 bundle，来以防下面的操作报错。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle install</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在<code>bundler install</code>时你可能会出现两个错误</p>
+<blockquote>
+<p><strong>Gem::Ext::BuildError: ERROR: Failed to build gem native extension error</strong><br>gem install jaro_winkler -v ‘1.5.2’ –source ‘<a target="_blank" rel="noopener" href="https://cernerrepos.net/api/gems/rubygems/&#39;">https://cernerrepos.net/api/gems/rubygems/&#39;</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.</strong><br>如果出现了这种错误我们需要通过 apt-get 安装 <code>install build-essential patch ruby-dev zlib1g-dev liblzma-dev</code>以及<code>nokogiri</code>等依赖：<br>sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev<br>gem install nokogiri</p>
+</blockquote>
+</blockquote>
+<p>然后安装 redmine 所需的所有 gem 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle install --without development test</span><br></pre></td></tr></table></figure>
+
+<p>接着我们来生成一个随机密钥，rails 使用他来编码存储会话数据的 cookies，从而防止被篡改（重新启动后生成的令牌将会使得现有会话无效）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec rake generate_secret_token</span><br></pre></td></tr></table></figure>
+
+<h5 id="依赖项"><a href="#依赖项" class="headerlink" title="依赖项"></a>依赖项</h5><p>本文所使用的 redmine 4.2 版本，因此我们需要使用下面步骤来跳过 rmagick gem 的安装</p>
+<blockquote>
+<p>rmagick 对于 redmine 4.1.0 之前的版本主要用于将甘特图导出至 png 或 pdf 格式文件</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle install --without development test rmagick</span><br></pre></td></tr></table></figure>
+
+<h4 id="rails"><a href="#rails" class="headerlink" title="rails"></a>rails</h4><p>在上述配置 redmine 库的时候你可能非常疑问为什么又有新建表，因此在下面的步骤中会给你一个非常好的答案。我们在 redmine 项目下运行下述命令来创建数据结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAILS_ENV=production bundle exec rake db:migrate</span><br></pre></td></tr></table></figure>
+
+<p>之后通过下属命令，在数据库中插入默认的配置数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAILS_ENV=production bundle exec rake redmine:load_default_data</span><br></pre></td></tr></table></figure>
+
+<h3 id="run"><a href="#run" class="headerlink" title="run"></a>run</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210511110704.png"><br>当上述步骤完成之后，我们可以试着通过下述命令运行 redmine:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec rails server webrick -e production</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在此时你可能还会遇到一个错误</p>
+<blockquote>
+<p>RubyGems warning&#x2F;error: Gem::Specification# default_executable &#x3D; is deprecated with no replacement. It will be removed</p>
+</blockquote>
+<blockquote>
+<p>这是一个 RubyGem 团队的最新公告声明，这是在 RubyGem 1.8 之后才有的，因此我们需要通过使用下述命令进行更新。<br>gem pristine –all –no-extensions</p>
+</blockquote>
+</blockquote>
+<p>当该命令运行成功后，我们可以通过使用<code>localhost:3000</code>进入到 redmine 页面，如果可以看到程序 view 则表示已经部署完成。可以通过使用 <code>admin\admin</code>来登入你的管理员帐号。</p>
+<h1 id="redmine-run"><a href="#redmine-run" class="headerlink" title="redmine-run"></a>redmine-run</h1><p>读者在运行时可能非常迷惑 redmine 的启动命令太长而记不住，导致每次需要时都需要找到资料粘贴上去。因此为了解决这个问题国内开发者为此开发了 redmine-run 脚本来解决 redmien 启动的问题。</p>
+<p>需要注意的是，此项目基于 <code>Linux 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux</code> 环境进行开发，<strong>理论</strong>上来讲系统只要存在<strong>ln</strong>以及<strong>mv</strong>和支持 <strong>.sh</strong> 脚本基本上就可以使用本项目。</p>
+<p>通过使用 redmine run ，可以直接通过<code>redmine</code>来启动 redmine 项目管理平台，避免输入长且毫无规律的 <code>bundle exec rails server webrick -e production</code>，还需要进入到 redmine 目录中运行。</p>
+<blockquote>
+<p>下述操作需要全部使用 <strong>root</strong> 权限运行</p>
+</blockquote>
+<p>首先我们需要拉取 redmine run：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/analysis-of-river-snow/radmine-run.git</span><br></pre></td></tr></table></figure>
+
+<p>将里面的 <strong>install.sh</strong>以及<strong>redmine.sh</strong>拖到 redmine <strong>目录中</strong></p>
+<blockquote>
+<p>redmine 目录即你可以执行<code>bundle exec rails server webrick -e production</code></p>
+</blockquote>
+<p>让 install.sh 和 redmine.sh 成为可执行文件:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 install.sh</span><br><span class="line">chmod 777 redmine.sh</span><br></pre></td></tr></table></figure>
+
+<p>之后我们先修改 <strong>install.sh</strong> 文件内容，并将<code>/opt/redmine/redmine-4.0.9/</code>修改为你的 redmine 所在目录即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd /opt/redmine/redmine-4.0.9/</span><br><span class="line">redmine_run=`bundle exec rails server webrick -e production`</span><br><span class="line">echo &quot;[echo] 正在进入目录&quot; $path_use</span><br><span class="line">echo &quot;[echo] 执行 redmine run 命令 =&gt; bundle exec rails server webrick -e production&quot; $redmine_run</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>./install.sh</code>即可，之后通过使用<strong>redmine</strong> 来运行项目。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/1.redmine/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

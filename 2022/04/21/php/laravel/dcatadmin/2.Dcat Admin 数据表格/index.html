@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Dcat Admin 数据表格 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Dcat Admin 数据表格</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/dcatadmin/" rel="tag">dcatadmin</a> <a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Dcat Admin 的数据表格直译过来就是将数据的数据，以列表的形式展示在 DcatAdmin 页面中，在 Dcat Admin 的官方文档中有大量的篇幅描写了基于 bootstrap 的特性，与 Laravel 相互结合的各种语法糖进行演示。</p>
+<p>通过 Dcat Admin 所提供的数据表格我们可以通过 Dcat Admin 方法来在表格的基础上，添加工具栏、过滤查询、过滤器、搜索、筛选器、编辑、创建、时间、软删除、渲染等，同时也有数据表格的样式来进行选择。</p>
+<h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><a href="!%5B%5D(https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215153624.png)"></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215163550.png"></p>
+<p>在接触到 Dcat Admin 数据表格之前，我们需要了解到 <code>Dcat\Admin\Grid</code> 类，它主要通过数据模型来生成表格，在之前我们可以使用 Dcat Admin 所提供的 Repositories(数据仓库) ，也可以直接从数据库中调用 Model，都是可以的。</p>
+<p>在数据表格中，我们会了解到 DcatAdmin 中的 Repositories 和 Models 以及 Admin Controller 的使用与构造，首先，Dcat Admin 并没有为我们提供诸如 Laravel-Admin 类似的命令。</p>
+<p>你需要做的是，通过 Factory SQL 来创建一个 SQL model，具体的你可以参考下 <a target="_blank" rel="noopener" href="https://kunlunsiqu.github.io/kunlsq/2022/02/10/php/laravel/19.Laravel%20Factory%20SQL/">Laravel Factory SQL | kunlsq (kunlunsiqu.github.io)</a> 文档进行操作，然后使用 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin/helpers/scaffold">Admin | 代码生成器</a> 选择已经创建的数据表，最后通过页面脚手架来进行操作。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/7Z0KX070%7DT%7D%7DMCNUV7X%5D086.jpg"></p>
+<p>点击提交后，我们可以清楚的看到 DcatAdmin 为我们构建了 Model、Controller、Repository，甚至是 Lang 语言文件等，在此之后，我们就可以通过<a target="_blank" rel="noopener" href="https://learnku.com/docs/dcat-admin/2.x">《Dcat Admin 中文文档》 | Laravel China 社区 (learnku.com)</a>官方文档中进行下一步的自定义。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于官方文档主要起到的是参考作用，并不适用于从零开始构建一个 Dcat Admin 应用，因从我们建议你通过 [jqhph/dcat-admin-demo (github.com)](https://github.com/jqhph/dcat-admin-demo) 下载 [Admin | Dashboard](http://103.39.211.179:8080/admin) 的 Demo，根据需求进行自定义并参照官方文档，进行开发，会加快理解。</span><br></pre></td></tr></table></figure>
+
+<p>之后我们需要做的就是需要在 <code>app/Admin/routes.php</code> 中为我们刚刚所创建的 MovieController 加入一行路由，即：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$router</span>-&gt;<span class="title function_ invoke__">resource</span>(<span class="string">&#x27;movie&#x27;</span>,<span class="string">&#x27;MovieController&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>之后，你可以访问 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin/movie">Admin | 订单管理</a> 来访问刚刚通过页面脚手架所创建的页面，但在此之前，我们还需要在 <code>app/Admin/bootstrap.php</code> 目录中加入菜单，即 DcatAdmin 左侧导航栏中的数据：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">&lt;?php</span>  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Admin</span>;  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Grid</span>;  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Form</span>;  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Grid</span>\<span class="title">Filter</span>;  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Show</span>;  </span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Layout</span>\<span class="title">Menu</span>;  </span><br><span class="line"><span class="comment">/**  </span></span><br><span class="line"><span class="comment"> * Dcat-admin - admin builder based on Laravel. * <span class="doctag">@author</span> jqh &lt;https://github.com/jqhph&gt;  </span></span><br><span class="line"><span class="comment"> * * Bootstraper for Admin. * * Here you can remove builtin form field: * * extend custom field: * Dcat\Admin\Form::extend(&#x27;php&#x27;, PHPEditor::class); * Dcat\Admin\Grid\Column::extend(&#x27;php&#x27;, PHPEditor::class); * Dcat\Admin\Grid\Filter::extend(&#x27;php&#x27;, PHPEditor::class); * * Or require js and css assets: * Admin::css(&#x27;/packages/prettydocs/css/styles.css&#x27;); * Admin::js(&#x27;/packages/prettydocs/js/main.js&#x27;); * */</span>  </span><br><span class="line"><span class="title class_">Admin</span>::<span class="title function_ invoke__">menu</span>(function (Menu <span class="variable">$menu</span>) &#123;  </span><br><span class="line"> <span class="variable">$menu</span>-&gt;<span class="title function_ invoke__">add</span>([  </span><br><span class="line"> [ <span class="string">&#x27;id&#x27;</span> =&gt; <span class="string">&#x27;1&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;title&#x27;</span> =&gt; <span class="string">&#x27;亚马逊&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;icon&#x27;</span> =&gt; <span class="string">&#x27;fa fa-amazon&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;uri&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;parent_id&#x27;</span> =&gt; <span class="number">0</span>,  </span><br><span class="line"> <span class="string">&#x27;permission_id&#x27;</span> =&gt; <span class="string">&#x27;test&#x27;</span>, // 权限绑定  </span><br><span class="line"> <span class="string">&#x27;roles&#x27;</span> =&gt; <span class="string">&#x27;test-roles&#x27;</span>, // 角色绑定  </span><br><span class="line"> ],  </span><br><span class="line"> [  </span><br><span class="line"> <span class="string">&#x27;id&#x27;</span> =&gt; <span class="string">&#x27;2&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;title&#x27;</span> =&gt; <span class="string">&#x27;订单管理&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;icon&#x27;</span> =&gt; <span class="string">&#x27;fa-reorder&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;uri&#x27;</span> =&gt; <span class="string">&#x27;movie&#x27;</span>,  </span><br><span class="line"> <span class="string">&#x27;parent_id&#x27;</span> =&gt; <span class="string">&#x27;1&#x27;</span>  </span><br><span class="line"> ]  </span><br><span class="line"> ]);  </span><br><span class="line">&#125;);](&lt;%<span class="number">3</span>C?php</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Admin</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Grid</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Form</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Grid</span>\<span class="title">Filter</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Show</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dcat</span>\<span class="title">Admin</span>\<span class="title">Layout</span>\<span class="title">Menu</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dcat-admin - admin builder based on Laravel.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> jqh &lt;https://github.com/jqhph%3E</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Bootstraper for Admin.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Here you can remove builtin form field:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * extend custom field:</span></span><br><span class="line"><span class="comment"> * Dcat\Admin\Form::extend(&#x27;php&#x27;, PHPEditor::class);</span></span><br><span class="line"><span class="comment"> * Dcat\Admin\Grid\Column::extend(&#x27;php&#x27;, PHPEditor::class);</span></span><br><span class="line"><span class="comment"> * Dcat\Admin\Grid\Filter::extend(&#x27;php&#x27;, PHPEditor::class);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Or require js and css assets:</span></span><br><span class="line"><span class="comment"> * Admin::css(&#x27;/packages/prettydocs/css/styles.css&#x27;);</span></span><br><span class="line"><span class="comment"> * Admin::js(&#x27;/packages/prettydocs/js/main.js&#x27;);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Admin</span>::<span class="title function_ invoke__">menu</span>(function (Menu <span class="variable">$menu</span>) &#123;</span><br><span class="line">    <span class="variable">$menu</span>-&gt;<span class="title function_ invoke__">add</span>([</span><br><span class="line">        [</span><br><span class="line">            <span class="string">&#x27;id&#x27;</span>                =&gt;       <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>             =&gt;       <span class="string">&#x27;亚马逊&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;icon&#x27;</span>              =&gt;       <span class="string">&#x27;fa fa-amazon&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;uri&#x27;</span>               =&gt;       <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;parent_id&#x27;</span>         =&gt;       <span class="number">0</span>,             // 菜单子集</span><br><span class="line">            <span class="string">&#x27;permission_id&#x27;</span>     =&gt;       <span class="string">&#x27;test&#x27;</span>,        // 权限绑定</span><br><span class="line">            <span class="string">&#x27;roles&#x27;</span>             =&gt;       <span class="string">&#x27;test-roles&#x27;</span>,  // 角色绑定</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">            <span class="string">&#x27;id&#x27;</span>                =&gt;      <span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;title&#x27;</span>             =&gt;      <span class="string">&#x27;订单管理&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;icon&#x27;</span>              =&gt;      <span class="string">&#x27;fa-reorder&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;uri&#x27;</span>               =&gt;      <span class="string">&#x27;movie&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;parent_id&#x27;</span>         =&gt;      <span class="number">1</span></span><br><span class="line">        ],</span><br><span class="line">    ]);</span><br><span class="line">&#125;);&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>再次需要注意的是参数是调整菜单的上下级，以上面的 Code 举例，亚马逊是一级菜单，而订单管理是二级菜单，这主要通过 <code>permission_id</code> 来进行调整。</p>
+<p>同样的，配置完菜单后，我们还需要对该页面的标题进行设置，进入到 <code>\resources\lang\zh_CN\movie.php</code> 然后更改对应的元素在该语言下的翻译即可。</p>
+<p>最后你可以<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin/movie">Admin | 订单管理</a> 访问，来进行查看刚刚我们修改和创建后的页面即效果，然后按照官方文档，进一步根据场景来进行调整即可。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/dcatadmin/2.Dcat%20Admin%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

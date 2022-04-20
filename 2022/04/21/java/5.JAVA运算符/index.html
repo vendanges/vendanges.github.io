@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JAVA 运算符 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JAVA 运算符</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>JAVA运算符可用于计算一些数学晕眩,主要分为算数运算符\关系运算符\位运算符\逻辑运算符\赋值运算符\其他运算符等.</p>
+<h2 id="一-算数运算符"><a href="#一-算数运算符" class="headerlink" title="一 算数运算符"></a>一 算数运算符</h2><table>
+<thead>
+<tr>
+<th>符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+</tr>
+<tr>
+<td>++</td>
+<td>自增:数值增加1</td>
+</tr>
+<tr>
+<td>–</td>
+<td>子减:数值减少1</td>
+</tr>
+</tbody></table>
+<h3 id="1-实例"><a href="#1-实例" class="headerlink" title="1.实例"></a>1.实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 加法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;1+1 = &quot;</span> + (a+a));</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 减法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;1-1 = &quot;</span> + (a-a));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 乘法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;1x1 = &quot;</span> + (a*a));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 除法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;1/1 = &quot;</span> + (a/a));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 自增</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a++ = &quot;</span> + (++a));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 自减</span></span><br><span class="line">		System.out.println(<span class="string">&quot;b-- = &quot;</span> + (--b));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-自增-x2F-自减"><a href="#2-自增-x2F-自减" class="headerlink" title="2.自增&#x2F;自减"></a>2.自增&#x2F;自减</h3><h4 id="2-1-子增"><a href="#2-1-子增" class="headerlink" title="2.1 子增"></a>2.1 子增</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自曾</span></span><br><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> ++a;</span><br><span class="line">System.out.println(<span class="string">&quot;1+1? = &quot;</span> + b);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-子减"><a href="#2-2-子减" class="headerlink" title="2.2 子减"></a>2.2 子减</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自减</span></span><br><span class="line"><span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> --c;</span><br><span class="line">System.out.println(<span class="string">&quot;3-1? = &quot;</span> + d);</span><br></pre></td></tr></table></figure>
+
+<p><strong>自检的保底数为”1”</strong></p>
+<h2 id="二-关系运算符"><a href="#二-关系运算符" class="headerlink" title="二 关系运算符"></a>二 关系运算符</h2><table>
+<thead>
+<tr>
+<th>符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;</td>
+<td>是否相等</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>是否为不相等</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>左是否大于右</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>右是否后大于左</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>左是否等于&#x2F;小于右</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>右是否等于&#x2F;小于左</td>
+</tr>
+</tbody></table>
+<h3 id="1-实例-1"><a href="#1-实例-1" class="headerlink" title="1.实例"></a>1.实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 相等</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a = b = &quot;</span> + (a==b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 不相等</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a != b = &quot;</span> + (a!=b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 左大于右</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a &gt; b = &quot;</span> + (a&gt;b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 右大于左</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a &lt; b = &quot;</span> + (a&lt;b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 左大于小于右?</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a &gt;= b = &quot;</span> + (a&gt;=b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 右大于小于左?</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a &lt;= b = &quot;</span> + (a&lt;=b));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三-位运算符"><a href="#三-位运算符" class="headerlink" title="三 位运算符"></a>三 位运算符</h2><table>
+<thead>
+<tr>
+<th>符</th>
+<th>如果</th>
+<th>否则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>都是1为1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>|</td>
+<td>都会是0为0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>^</td>
+<td>相同为0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>~</td>
+<td>翻转运算</td>
+<td>1&#x3D;-2 | -1 &#x3D; 0</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>按位左移运算符</td>
+<td>左移右</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>按位右移运算符</td>
+<td>右移左</td>
+</tr>
+<tr>
+<td>&gt;&gt;&gt;</td>
+<td>按位右移补零操作符</td>
+<td>左操作数的值按右操作数指定的位数右移</td>
+</tr>
+</tbody></table>
+<h3 id="1-实例-2"><a href="#1-实例-2" class="headerlink" title="1.实例"></a>1.实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">20</span>;</span><br><span class="line">		<span class="type">int</span> c;</span><br><span class="line">		</span><br><span class="line">		c = a&amp;b;</span><br><span class="line">		System.out.println(<span class="string">&quot;c&amp;b = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = a|b;</span><br><span class="line">		System.out.println(<span class="string">&quot;c|b = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = a^b;</span><br><span class="line">		System.out.println(<span class="string">&quot;c^b = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = ~a;</span><br><span class="line">		System.out.println(<span class="string">&quot;c~  = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = a&lt;&lt;<span class="number">1</span>;</span><br><span class="line">		System.out.println(<span class="string">&quot;a&lt;&lt; = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = a&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		System.out.println(<span class="string">&quot;a&gt;&gt; = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">		c = a&gt;&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		System.out.println(<span class="string">&quot;a&gt;&gt;&gt;1 = &quot;</span> + c);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四-逻辑运算符"><a href="#四-逻辑运算符" class="headerlink" title="四 逻辑运算符"></a>四 逻辑运算符</h2><table>
+<thead>
+<tr>
+<th>符</th>
+<th>描述</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>逻辑运算符</td>
+<td>仅当两个参数为真,条件才为真</td>
+</tr>
+<tr>
+<td>| |</td>
+<td>逻辑或操作符</td>
+<td>任何两个操作为真,条件为才</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非运算符</td>
+<td>用于反转操作数的逻辑状态,如果条件为真,则逻辑非运算符为false</td>
+</tr>
+</tbody></table>
+<h3 id="1-实例-3"><a href="#1-实例-3" class="headerlink" title="1.实例"></a>1.实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">boolean</span> <span class="variable">a</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="type">boolean</span> <span class="variable">b</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// a&amp;&amp;b</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a&amp;&amp;b = &quot;</span> + (a&amp;&amp;b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// a||b</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a||b = &quot;</span> + (a||b));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// a!b</span></span><br><span class="line">		System.out.println(<span class="string">&quot;a!b  = &quot;</span> +! (a&amp;&amp;b));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五-赋值运算符"><a href="#五-赋值运算符" class="headerlink" title="五 赋值运算符"></a>五 赋值运算符</h2><table>
+<thead>
+<tr>
+<th>符</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;</td>
+<td>简单赋值运算符</td>
+<td>右赋左</td>
+</tr>
+<tr>
+<td>+&#x3D;</td>
+<td>加和赋值操作符</td>
+<td>左和右相加赋值给左</td>
+</tr>
+<tr>
+<td>-&#x3D;</td>
+<td>减和赋值操作符</td>
+<td>左和右相减赋值给左</td>
+</tr>
+<tr>
+<td>*&#x3D;</td>
+<td>乘和赋值操作符</td>
+<td>左和右相乘赋值给左</td>
+</tr>
+<tr>
+<td>&#x2F;&#x3D;</td>
+<td>除和赋值操作符</td>
+<td>左和右相除赋值给左</td>
+</tr>
+<tr>
+<td>(%) &#x3D;</td>
+<td>取模和赋值操作符</td>
+<td>左和右取摸赋值给左</td>
+</tr>
+<tr>
+<td>&lt;&lt;&#x3D;</td>
+<td>左移位赋值运算符</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;&gt;&#x3D;</td>
+<td>右移位赋值运算符</td>
+<td></td>
+</tr>
+<tr>
+<td>&amp;&#x3D;</td>
+<td>按位与复制赋值操作符</td>
+<td></td>
+</tr>
+<tr>
+<td>^&#x3D;</td>
+<td>按位移或赋值运算符</td>
+<td></td>
+</tr>
+<tr>
+<td>|&#x3D;</td>
+<td>按位或赋值运算符</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/5.JAVA%E8%BF%90%E7%AE%97%E7%AC%A6/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

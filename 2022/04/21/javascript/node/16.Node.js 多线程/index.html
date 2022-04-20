@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js 多线程 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js 多线程</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="进程-线程-协程"><a href="#进程-线程-协程" class="headerlink" title="进程\线程\协程"></a>进程\线程\协程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>在此之前，我们需要了解到进程、协程、以及并发、并行的概念。首先进程(process) 是指计算机中已运行的程序，进程的出现是指为了更好的利用 CPU 资源使得并发的可能性。</p>
+<p>假设有两个任务，A 和 B ，A 遇到 I&#x2F;O 操作的时候 CPU 就会默默的等待任务 A 读取完成再去执行 B 任务，这样救护导致 CPU 资源造成了浪费。</p>
+<p>因此就会有人在想，将任务 A 读取数据时让 B 任务执行，当任务 B 读取完整数据后又切换到任务 A 执行。</p>
+<p>这时候因为 “切换” 的问题，需要涉及到保存和状态回复，以及 A 与 B 的系统资源不一，就需要有一个东西记录 A 和 B 分别需要什么样的资源和如何识别 A 和 B 等，因此进程就被创建出来</p>
+<p>通过进程可以分配资系统资源、标识任务，以及分配 CPU 执行进程为调度，进程的状态记录、恢复。其中切换又被称之为 “上下文切换”，其中进程是指系统分配的最小单位，进程所占用的资源共有地址空间，全局变量、文件描述符、各种硬件资源等。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>线程(tread) 是操作系统能够进行运算调度的最小单位，大部分情况下他被包含在进程中，他的出现主要是为了降低上下文的消耗以提高系统的并发性，并解决一个进程只能完成一件任务的问题，使得进程内并发成为可能。</p>
+<p>在之前进程处理任务的时候，当只有一个进程的时候只能干一件事，而假设有了多个进程，每个进程只能负责一个任务，A 负责接收一个信息，B 负责显示信息，C 负责保存信息，这里的各个进程之间就会涉及到进程通信的问题，假设共同维护一个文本内容或切换，则会造成性能上的消耗。</p>
+<p>此时线程主要的作用就是使得 A、B、C 共享资源，并参与 CPU 的调度，同时进程也是线程的容器，当一个现成挂掉则全部线程也会失效。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程(coroutine) 通过线程中实现调度以避免陷入内核级别的上下文切换所造成的性能损失，进而突破了线程在 I&#x2F;O 上的性能瓶颈。</p>
+<p>当涉及到较大的并发连接时，以线程作为处理单元（系统调度开销开始过大），当连接数过多时则需要大量的线程，可能部分的线程处于 ready(准备) 状态，系统会不断的进行上下文切换。</p>
+<p>而瓶颈就是上下文切换，在线程中自己实现调度从而不陷入内核级的上下文切换，这也是协程的主要作用。</p>
+<h2 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a>并发与并行</h2><h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>并发计算(Concurrent computing) 是一种程序的计算形式，通常是指有两个以上工作单位的计算在同时运行，这也是多核的前提，但单线程或单核是很难利用多进程达到并行状态。</p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>并行(parallel computing) 一般是指许多工作任务同时进行的计算模式，可以将计算的过程分为许多小部分，之后以并发来解决。</p>
+<p>总结来说并发是指可以同时出发，而并行则是指一起执行，你可以理解为一边一吃饭一边玩游戏是并发。而你将外卖摆在桌上和游戏，你先吃饭再打游戏是并发。</p>
+<h2 id="JavaScript-单线程的异步和非阻塞"><a href="#JavaScript-单线程的异步和非阻塞" class="headerlink" title="JavaScript 单线程的异步和非阻塞"></a>JavaScript 单线程的异步和非阻塞</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/16.node.js%20%E5%A4%9A%E7%BA%BF%E7%A8%8B.md/5095316069184.png"></p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>单线程的 JavaScript 保证了线程的绝对安全，不会单行同一个变量被多个线程读写从而造成崩溃，从而免去了在多线程开发中忘记对变量加锁或者解锁所造成的问题。</p>
+<h3 id="单线程的异步非阻塞"><a href="#单线程的异步非阻塞" class="headerlink" title="单线程的异步非阻塞"></a>单线程的异步非阻塞</h3><p>Node.js 是一个单进程的，因此提供了一个 <code>libuv</code> 库来进行实现多进程，如在 <code>fs</code> 库中的多进程就通过 <code>libuv</code> 库进行实现，他主要提供了异步 I&#x2F;O 。</p>
+<blockquote>
+<p>虽然 node.js 是单线程异步非阻塞的，但在某一个情况下他采用的还是阻塞式的单线程</p>
+</blockquote>
+<h2 id="libuv"><a href="#libuv" class="headerlink" title="libuv"></a>libuv</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/16.node.js%20%E5%A4%9A%E7%BA%BF%E7%A8%8B.md/5724306626707.png"><br>libuv 是一个跨平台的 I&#x2F;O 库，用于实现和让 node.js 支持多线程，同时也被 <code>fs</code> 使用他主要提供事件循环（Event Loops）、文件系统（Filesystem）、网络支持（Networking）、线程（Threads）、进程（Process）以及其他工具（Utilities）</p>
+<h2 id="Web-Worker-实现多进程"><a href="#Web-Worker-实现多进程" class="headerlink" title="Web Worker 实现多进程"></a>Web Worker 实现多进程</h2><p>实现多进程可以通过 Node API 中的 <code>child_process</code> ，所提供的 <code>fork</code> 方法来创建一个 Node.js 文件并将它作为 worker 文件，类似与 <code>express</code> 库:</p>
+<h3 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h3><p>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fork = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="property">fork</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> worker = <span class="title function_">fork</span>(<span class="string">&#x27;./work.js&#x27;</span>)  <span class="comment">// 创建进程</span></span><br><span class="line">    worker.<span class="title function_">on</span>(<span class="string">&#x27;message&#x27;</span>, <span class="keyword">function</span> (<span class="params">m</span>) &#123;     <span class="comment">// 接收计算结果</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&#x27;object&#x27;</span> === <span class="keyword">typeof</span> m &amp;&amp; m.<span class="property">type</span> == <span class="string">&#x27;fibo&#x27;</span>) &#123;</span><br><span class="line">            <span class="comment">// 发送关闭进程信号</span></span><br><span class="line">            worker.<span class="title function_">kill</span>()</span><br><span class="line">            res.<span class="title function_">send</span>(m.<span class="property">result</span>.<span class="title function_">toString</span>())   <span class="comment">// 返回结果</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    worker.<span class="title function_">send</span>(&#123;<span class="attr">type</span>:<span class="string">&#x27;fibo&#x27;</span>, <span class="attr">num</span>:~~req.<span class="property">query</span>.<span class="property">n</span> || <span class="number">1</span>&#125;)</span><br><span class="line">&#125;)</span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8210</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>worker.kill</code> 的用法是通过 work.js 中的 <code>process.on</code> 监听 <code>SIGHUP</code> 事件函数并通过 <code>process.exit</code> 从而使子进程推出的</p>
+<h3 id="work-js"><a href="#work-js" class="headerlink" title="work.js"></a>work.js</h3><p>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义算法</span></span><br><span class="line"><span class="keyword">var</span> fibo = <span class="keyword">function</span> <span class="title function_">fibo</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> n &gt; <span class="number">1</span> ? <span class="title function_">fibo</span>(n -<span class="number">1</span>) + <span class="title function_">fibo</span>(n -<span class="number">2</span>) :<span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受 app.js 主进程所发送的消息</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&#x27;message&#x27;</span>, <span class="keyword">function</span> (<span class="params">m</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> m === <span class="string">&#x27;object&#x27;</span> &amp;&amp; m.<span class="title function_">type</span>() === <span class="string">&#x27;fibo&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// 计算 fibo</span></span><br><span class="line">        <span class="keyword">var</span> num = <span class="title function_">fibo</span>(~~m.<span class="property">num</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发送结果</span></span><br><span class="line">        process.<span class="title function_">send</span>(&#123;<span class="attr">type</span>:<span class="string">&#x27;fibo&#x27;</span>, <span class="attr">result</span>:num&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到消息后进程退出</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&#x27;SIGHUP&#x27;</span>,<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    process.<span class="title function_">exit</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/16.Node.js%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

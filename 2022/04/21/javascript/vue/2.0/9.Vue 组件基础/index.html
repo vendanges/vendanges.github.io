@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 组件基础 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 组件基础</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365000_20210310161122936_614826169.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;button-counts&quot;&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&#x27;button-conters&#x27;, &#123;</span><br><span class="line">        data: function() &#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                count: 0</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        template: &#x27;&lt;button v-on:click=&quot;count += 1&quot;&gt;增加 count &#123;&#123; count &#125;&#125;&lt;/button&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#button-counts&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当创建完成组建之后，我们可以无限次的进行引用，而<code>组件</code>中通常会带有一个名字，就比如上述创建的组件名称就是<code>&lt;button-conters&gt;</code>并根据创建一个创建Vue根实例化将组件<strong>作为自定义元素进行使用</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: &#x27;#button-counts&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615364999_20210310160730329_1462647028.gif"><br>之后直接在<code>HTML</code>中直接引入刚刚创建的组件即可作为HTML元素进行使用如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;button-counts&quot;&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复用组件"><a href="#复用组件" class="headerlink" title="复用组件"></a>复用组件</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365001_20210310161454618_50002259.gif"><br>当组件创建完成之后我们可以在上述的基础上进行多次复用且独立，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;button-counts&quot;&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">    &lt;button-conters&gt;&lt;/button-conters&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当点击按钮的时候，上述的flag将会被证实，就因为每个组件都会各自独立并维护他的<code>count</code>，每次使用<code>&lt;button-conters&gt;</code>都会有一个新的<code>实例</code>会被新建。</p>
+<blockquote>
+<p>同步</p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365002_20210310162924216_1549208238.png"><br>当以往常一样通过<code>data</code>直接定义且不通过<code>data 函数</code>则可返回对象的独立访问，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var buttonRepeat =  &#123;</span><br><span class="line">    count: 0</span><br><span class="line">&#125;</span><br><span class="line">Vue.component(&#x27;button-conters&#x27;, &#123;</span><br><span class="line">    data: function() &#123;</span><br><span class="line">        return buttonRepeat</span><br><span class="line">    &#125;,</span><br><span class="line">    template: &#x27;&lt;button v-on:click=&quot;count += 1&quot;&gt;增加 count &#123;&#123; count &#125;&#125;&lt;/button&gt;&#x27;</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: &#x27;#button-counts&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365003_20210310162946541_7817017.gif"><br>由于每个<code>count</code>是共享的所以当点击一个组件的同时，所有复用的组件都会被增加，所以正确的方式是通过使用独立函数进行编写组件，来不影响组件之间的复用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#x27;button-conters&#x27;, &#123;</span><br><span class="line">    data: function() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            count: 0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: &#x27;&lt;button v-on:click=&quot;count += 1&quot;&gt;增加 count &#123;&#123; count &#125;&#125;&lt;/button&gt;&#x27;</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: &#x27;#button-counts&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件的组织"><a href="#组件的组织" class="headerlink" title="组件的组织"></a>组件的组织</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615400558_20210310192815148_917373609.png"><br>通常一个应用会一一棵嵌套的组建树形式来组织，在vue当中，组件的注册需要让vue能够进行<strong>识别</strong>，所以注册主键一共分为两种类型，分别为<code>全局注册</code>以及<code>局部注册</code>，vue中所有的组件都是通过<code>Vue.component</code>来进行注册。</p>
+<p>而局部注册主要通过使用<code>var ComponentOne &#123;&#125;</code>来进行注册，全局注册主要通过使用<code>Vue.component(&#39;组件名&#39;, &#123;&#125;)</code>来进行注册，这里两者的区别就是<strong>命名方式的不同</strong>。</p>
+<blockquote>
+<p>全局注册组件格式</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#x27;组件名称&#x27; &#123;</span><br><span class="line">	// ……</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>局部注册</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var ComponentOne = &#123;</span><br><span class="line">	// ……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Prop-向子组件传递数据"><a href="#Prop-向子组件传递数据" class="headerlink" title="Prop 向子组件传递数据"></a>Prop 向子组件传递数据</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615400559_20210310203455104_1344367290.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615400560_20210310232123160_1093282140.png)</span><br><span class="line">在官方文档中，Prop向子组件传递数据主要用于**向这个组件传递一个标题或者内容之类的展示数据**，Prop是你可以在组建上注册一些自定义的**属性**，当一个**值传递给一个 prop 属性**。</span><br><span class="line"></span><br><span class="line">```vue</span><br><span class="line">    &lt;div id=&quot;data-title&quot;&gt;</span><br><span class="line">        &lt;data-title title=&quot;Hello,world&quot;&gt;&lt;/data-title&gt;</span><br><span class="line">        &lt;data-title title=&quot;Hello,Vue&quot;&gt;&lt;/data-title&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        Vue.component(&#x27;data-title&#x27;, &#123;</span><br><span class="line">            props: [&#x27;title&#x27;],</span><br><span class="line">            template: &#x27;&lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">        new Vue(&#123;el: &#x27;#data-title&#x27;&#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615400560_20210311010809741_506810279.png"><br>除此之外我们还可以使用动态赋予一个变量的值:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;data-title&quot;&gt;</span><br><span class="line">    &lt;data-title </span><br><span class="line">        v-for=&quot;post in posts&quot;</span><br><span class="line">        v-bind:key=&quot;post.id&quot;</span><br><span class="line">        v-bind:title=&quot;post.title&quot;&gt;&lt;/data-title&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#data-title&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            posts: [</span><br><span class="line">                &#123; id: 1, title: &#x27;Hello,world!&#x27;&#125;,</span><br><span class="line">                &#123; id: 2, title: &#x27;Hello,Vue!&#x27;&#125;,</span><br><span class="line">                &#123; id: 3, title: &#x27;Hello,Laravel!&#x27;&#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    Vue.component(&#x27;data-title&#x27;, &#123;</span><br><span class="line">        props: [&#x27;title&#x27;],</span><br><span class="line">        template: &#x27;&lt;h4&gt;&#123;&#123;title&#125;&#125;&lt;/h4&gt;&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">    new Vue(&#123;el: &#x27;#data-title&#x27;&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="监听子组件事件"><a href="#监听子组件事件" class="headerlink" title="监听子组件事件"></a>监听子组件事件</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615400561_20210311021456531_105270985.png"><br>在开发<code>&lt;text-post</code>组件的时候，就会涉及到父级组件的协调来实现一个文字的放大效果以及默认字体大小。首先我们在父组件，即<code>#text-posts-events</code>中添加一个<code>postFontSize</code>数据属性来设置默认的字号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;text-posts-events&quot;&gt;</span><br><span class="line">    &lt;div :style=&quot;&#123; fontSize: postFontSize + &#x27;em&#x27; &#125;&quot;&gt;</span><br><span class="line">        &lt;text-post</span><br><span class="line">            v-for=&quot;post in posts&quot;</span><br><span class="line">            v-bind:key=&quot;post.id&quot;</span><br><span class="line">            v-bind:post=&quot;post&quot;</span><br><span class="line">            v-on:enlarge-text=&quot;postFontSize += 0.1&quot;</span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/text-post&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">   Vue.component(&#x27;text-post&#x27;, &#123;</span><br><span class="line">       props: [&#x27;post&#x27;],</span><br><span class="line">       template: &#x27;\</span><br><span class="line">            &lt;div class=&quot;text-post&quot;&gt;\</span><br><span class="line">                &lt;h3&gt;&#123;&#123;post.title&#125;&#125;\</span><br><span class="line">                &lt;button v-on:click=&quot;$emit(\&#x27;enlarge-text\&#x27;)&quot;&gt;\</span><br><span class="line">                    字体放大\</span><br><span class="line">                &lt;/button&gt;\</span><br><span class="line">                &lt;div v-html=&quot;post.content&quot;&gt;&lt;/div&gt;\</span><br><span class="line">            &lt;/div&gt;\</span><br><span class="line">        &#x27;</span><br><span class="line">   &#125;)</span><br><span class="line">   new Vue(&#123;</span><br><span class="line">       el: &#x27;#text-posts-events&#x27;,</span><br><span class="line">       data: &#123;</span><br><span class="line">           posts: [</span><br><span class="line">               &#123;id:1, title: &#x27;Hello,vue!&#x27;, content:&#x27;vue&#x27;&#125;,</span><br><span class="line">               &#123;id:2, title: &#x27;Hello,Laravel!&#x27;, content:&#x27;laravel&#x27;&#125;</span><br><span class="line">           ],</span><br><span class="line">           postFontSize: 1</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/9.Vue%20%E7%BB%84%E4%BB%B6%E5%9F%BA%E7%A1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

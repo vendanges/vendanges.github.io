@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Python 数据结构 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Python 数据结构</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/python/" rel="tag">python</a> <a class="article__tag-none-link" href="/tags/python-cookbook/" rel="tag">python cookbook</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>python cookbook 是 python3&amp;2 等版本中适合开发者进阶的一本书，其中主要讲解了核心语法，同时也是 Python3 的参考书，所有代码都是在 Python 3.3 的版本下进行编写和测试的。</p>
+<p>此书主要对数据结构等进行非常详细的介绍和案例处理，基本上包含了目前所有 Python 可以涉猎的内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编写的主要目的就是在 Python cookbook 所忽视的基础问题上，增加一点描述和更加通俗的理解方便进行阅读。</span><br></pre></td></tr></table></figure>
+
+<h2 id="解构器"><a href="#解构器" class="headerlink" title="解构器"></a>解构器</h2><h3 id="解构序列赋值多个变量"><a href="#解构序列赋值多个变量" class="headerlink" title="解构序列赋值多个变量"></a>解构序列赋值多个变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在有一个包含 N 个元素的元组或者是序列，怎样将它里面的值解构后同时赋值给 N 个变量？</span><br></pre></td></tr></table></figure>
+
+<p>首先我们需要知道，元组(tuple) 了类似于列表，元组的区别在于一旦赋值给元组，<strong>就无法更改元组的元素，而列表可以更改</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元组是将所有元素放在括号中的，也就是 my_tuple = (1,2)，括号是可选的，它可以包含 int、float、list、strig 等</span><br></pre></td></tr></table></figure>
+
+<p>而题目要求是将包含 n 个的元组变量或数据，来将它里面的值解构后复制给其他变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p = (<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将元组解构赋值给多个变量</span></span><br><span class="line">x, y = p</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x) <span class="comment"># 4</span></span><br><span class="line"><span class="built_in">print</span>(y) <span class="comment"># 5</span></span><br></pre></td></tr></table></figure>
+
+<p>在 python 中，任何序列或是可以 <strong>迭代</strong> 的对象，都可以通过赋值语句解构并赋值给多个变量，<strong>前提是变量和数量的序列是一样的</strong>，而且这适用于列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span> = [<span class="string">&#x27;BNB&#x27;</span>, <span class="string">&#x27;WBNB&#x27;</span>, <span class="string">&#x27;BUSD&#x27;</span>]</span><br><span class="line"></span><br><span class="line">get_bnb, get_wbnb, get_busd = <span class="built_in">list</span></span><br><span class="line"><span class="built_in">print</span>(get_bnb) <span class="comment">#BNB</span></span><br></pre></td></tr></table></figure>
+
+<p>同时在书中也提供了一个列表(list) 包含 元组(tuple) 的示例，但数据类型是列表的序列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data = [ <span class="string">&#x27;ACME&#x27;</span>, <span class="number">50</span>, <span class="number">91.1</span>, (<span class="number">2012</span>, <span class="number">12</span>, <span class="number">21</span>) ]</span><br><span class="line"></span><br><span class="line">name, shares, price, date = data</span><br><span class="line"><span class="built_in">print</span>(date) <span class="comment"># (2012, 12, 21)</span></span><br><span class="line"></span><br><span class="line">name, shares, price, (year, mon, day) = data</span><br><span class="line"><span class="built_in">print</span>(year , mon , day) <span class="comment"># 2012 12 21</span></span><br></pre></td></tr></table></figure>
+
+<p>实际上上述这种解构器复制可以用于任何可以 <strong>迭代的对象</strong>，包括字符串和文件等，同时对字符串则可以是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">&#x27;Hello&#x27;</span></span><br><span class="line">a, b, c, d, e = <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(a,b,c,d,e, sep=<span class="string">&#x27;&#x27;</span>) <span class="comment"># H e l l o &gt; Hello</span></span><br></pre></td></tr></table></figure>
+
+<p>上面我们使用了一个 <code>python()</code> 函数中的 <code>sep</code> 参数(只有 <code>python()</code> 函数可以使用)，以此来去掉多余部分的空格，<a target="_blank" rel="noopener" href="https://www.adamsmith.haus/python/answers/how-to-print-with-sep-in-python">如何在Python中使用sep打印 (adamsmith.haus)</a>，在此连接中有较为详细的介绍。</p>
+<p>假设有时候我们只需要解构一部分，而忽略掉其他的值，那么我们就可以通过使用 <code>_</code> 的方式来进行忽略：</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220318015408.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data = [ <span class="string">&#x27;ACME&#x27;</span>, <span class="number">50</span>, <span class="number">91.1</span>, (<span class="number">2012</span>, <span class="number">12</span>, <span class="number">21</span>) ]</span><br><span class="line"></span><br><span class="line">_, shares, price, _ = data</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(shares) <span class="comment"># 50</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果我们的元素个数，超出了变量的个数，那么将会抛出一个 ```ValueError: need more than 2 values to unpack``` 错误，为了避免此类问题，我们可以使用 ```*``` 解决</span><br></pre></td></tr></table></figure>
+
+<p><img src="/%5B%5D(%3Chttps:/49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220318020503.png)%3E"><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220318020833.png"></p>
+<p>在书中，这一章节主要被称之为：“将可迭代的对象赋值给多个变量”，根据提议和问题来进行理解，就是说对象的数量太多，而变量的数量太少不对应所造成的问题，可以通过 <code>*</code> 进行解决，也就是说后面的对象，都解构给了 <code>date</code> 这个变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data = [ <span class="string">&#x27;ACME&#x27;</span>, <span class="number">91.1</span>, (<span class="number">2012</span>, <span class="number">12</span>, <span class="number">21</span>), (<span class="number">2022</span>, <span class="number">3</span>, <span class="number">18</span>)  ]</span><br><span class="line"></span><br><span class="line">name, pcrice, date = data</span><br><span class="line"><span class="built_in">print</span>(date) <span class="comment">#[(2012, 12, 21), (2022, 3, 18)]</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220318022116.png"></p>
+<p>为了更好的展示数据类型的改变，我们直接使用书上所进行展示的元组(tuple) 来进行演示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">record = (<span class="string">&#x27;Dave&#x27;</span>, <span class="string">&#x27;dave@example.com&#x27;</span>, <span class="string">&#x27;773-555-1212&#x27;</span>, <span class="string">&#x27;847-555-1212&#x27;</span>)</span><br><span class="line"></span><br><span class="line">name, email, *phone = record</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(phone))</span><br></pre></td></tr></table></figure>
+
+<p>最后原来 <code>recird</code> 的元组通过使用 <code>*</code> 的方式，输出为了一个列表，上面 <code>phone</code> 解构出的也永远都是列表类型，<strong>因此在特殊时候我们还需要进行转换</strong>。</p>
+<h3 id="解构在迭代器的使用"><a href="#解构在迭代器的使用" class="headerlink" title="解构在迭代器的使用"></a>解构在迭代器的使用</h3><p>迭代解构是专门为解构<strong>不确定</strong>的个数或任意可迭代的对象而设计的，通过 <code>*</code> 可以很容易利用解构器的方式结构出元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">records = [  </span><br><span class="line">    (<span class="string">&#x27;foo&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>),  </span><br><span class="line">    (<span class="string">&#x27;bar&#x27;</span>, <span class="string">&#x27;hey&#x27;</span>),  </span><br><span class="line">    (<span class="string">&#x27;foo&#x27;</span>, <span class="number">3</span>, <span class="number">4</span>),  </span><br><span class="line">]  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_foo</span>(<span class="params">x, y</span>):  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;do_foo&#x27;</span>, x, y)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_bar</span>(<span class="params">s</span>):  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;do_bar&#x27;</span>, s)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">for</span> tag, *args <span class="keyword">in</span> records:  </span><br><span class="line">    <span class="keyword">if</span> tag == <span class="string">&#x27;foo&#x27;</span>:  </span><br><span class="line">        do_foo(*args)  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">elif</span> tag == <span class="string">&#x27;bar&#x27;</span>:  </span><br><span class="line">        do_bar(*args)</span><br></pre></td></tr></table></figure>
+
+<p>如果根据上述 Code 运行以及输出后都不理解的话，我们可以看分解后的数据</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220318032835.png"></p>
+<p>我们可以将迭代器中的 <code>for tag, *args in records</code> 理解为 <code>tag, *args = records</code>，之后这样 <code>tag</code> 就对应了 <code>foo,bar,foo</code> 而 <code>*args</code> 对应的就是之后的对象。</p>
+<p>因为有时候 list 元素中，可能会有 1~2 个索引值，为了通用性所以写了 <code>*</code>，之后就是添加循环迭代以及在 <code>if</code> 语句中引入对应的函数即可循环迭代 list 中的数据。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/python/python%20cookbook/1.%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

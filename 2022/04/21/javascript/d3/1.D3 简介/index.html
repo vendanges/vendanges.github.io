@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 简介 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 简介</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>D3（Data-Driven Document）即<code>数据驱动文档</code>，是一个主要用于数据可视化所开发的<code>javascript</code>库，启动主要是<strong>数据决定绘图流程以及程序设计模型</strong>。或者另一个称呼为<strong>“事件驱动    ——由用户动作来决定程序流程的设计模型”</strong>。在版本控制中，D3主要使用了<strong>语义话版本控制</strong>，格式为<code>主板本号.次版本号.修订号</code> 即：</p>
+<ol>
+<li>主版本号：做了不兼容的API修改</li>
+<li>次版本号：当你做了向下兼容的功能增加</li>
+<li>修订号：当你做了向下兼容的问题修正。</li>
+</ol>
+<h2 id="数据与DOM的绑定"><a href="#数据与DOM的绑定" class="headerlink" title="数据与DOM的绑定"></a>数据与DOM的绑定</h2><p>同样的，在WEB中数据可视化中不仅仅只有D3，还有不少的类似与：Highcharts、Echarts、Chart。当然除此之外还有维度更高的，如<code>蚂蚁空间地理可视化框架</code>，D3 能够将数据与DOM对象进行绑定，使得数据与图形为一体，我们当修改DOM的时候，数据自然而然的会进行更新，这意味着我们配合各种各样的语言来呈现不同的数据展示。</p>
+<h2 id="计算和绘图的独立"><a href="#计算和绘图的独立" class="headerlink" title="计算和绘图的独立"></a>计算和绘图的独立</h2><p>在D3中数据变成一个数据图表将会被分为两个步骤为<code>计算</code>与<code>绘图</code>，在Highcharts等框架中，计算和绘图shingle整体，并输入数据。而D3中数据与绘图是进行分开的，而计算内所做的就是<code>计算所得到的节点或坐标</code>而<code>绘图</code>则是渲染图表。</p>
+<h2 id="支持-SVG-与-Canvas"><a href="#支持-SVG-与-Canvas" class="headerlink" title="支持 SVG 与 Canvas"></a>支持 SVG 与 Canvas</h2><p>在 D3 中，SVG与Canvas中通常会出现在不同的环境中，如地图中的<strong>飞线图</strong>，都可以使用SVG或Canvas路径以及SVG动画进行实现，在3.X之前的版本主要支持SVG，但从4.X开始也支持 Canvas。</p>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><p>数据可视化即<code>Data Visualization</code>，起源与18世纪，在19世纪中叶时期，数据可视化主要被运用与军事用途没来表示军队的死亡以及分布当中。而进入20世纪，由于大数据以及移动互联网的飞速发展，数据可视化也会运用在产品分析、行为分析以及数据统计等场景中。</p>
+<h2 id="图标的分类及用途"><a href="#图标的分类及用途" class="headerlink" title="图标的分类及用途"></a>图标的分类及用途</h2><h3 id="柱形图"><a href="#柱形图" class="headerlink" title="柱形图"></a>柱形图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365116_20210310153616458_780643451.png"><br>柱形图是最为常见的，也是最容易理解的一个图表，使用柱形图的长短可以表示数据的大小，或者需要表现随着时间变化，数据的大小等。如果将柱形图的<code>x或y轴</code>进行一环，的可以得到一个横向的柱状图，也被称之为<code>条形图</code>。</p>
+<h3 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365117_20210310153834291_544469312.png"><br>散点图使用三维数据集，将其中的二维数据分别对应到x和y轴，之后将第三维用点来作为表示。</p>
+<h3 id="折线图"><a href="#折线图" class="headerlink" title="折线图"></a>折线图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365119_20210310154234247_1173287566.png"><br>折线图的目的与柱状图类似，适合在二维的数据集中，某一维相对另一维度的变化趋势，不哦那个的是折线图适合连续的数据，柱状图适合较为离散的数据，折线图也适用一些数量较大的数据而住装图适合少量的数据。</p>
+<h3 id="饼状图"><a href="#饼状图" class="headerlink" title="饼状图"></a>饼状图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365121_20210310154516414_177876055.png"><br>饼状图可以用于表述数值的大小，缺点就是数值之间的差距不大，基本上通过饼状图的颜色以及注释来进行分辨，因此饼状图一般用于表示一个值站总体的百分比。</p>
+<h3 id="弦图"><a href="#弦图" class="headerlink" title="弦图"></a>弦图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365121_20210310154708336_615430199.png"><br>弦图用于表示点与点之间的联系，两点之间的连线来表示那个点具有联系以及线的粗细表示权重。</p>
+<h3 id="力导向图"><a href="#力导向图" class="headerlink" title="力导向图"></a>力导向图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365122_20210310154954245_1289846978.png"><br>力导向图适合描述打来那个节点之间的关系，各个节点之间具有相互的作用里来表示节点之间的用线相连，而相连的定点表示具有一定的关系，适合用于任务关系以及力导向图等。</p>
+<h3 id="树图"><a href="#树图" class="headerlink" title="树图"></a>树图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365123_20210310155120859_210097567.png"><br>树图用于表示层级、上下级以及包含与被包含的关系，与之类似的还有集群图等。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/1.D3%20%E7%AE%80%E4%BB%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

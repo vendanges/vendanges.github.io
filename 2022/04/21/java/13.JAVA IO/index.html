@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JAVA IO | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JAVA IO</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>I&#x2F;O即input&#x2F;output <strong>输入&#x2F;输出</strong>,通常指数据在内部存储器和外部存储器或其他周边设备内进行输出.</p>
+<h2 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h2><p>​		程序使用字节流执行<strong>8位</strong>的输入(input)和输出(output).而所有字节流最小的单元为<strong>字节</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.io.FileInputStream</span><br><span class="line">java.io.FileOutpuStream</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="将1-txt文件内容写入-覆盖到2-txt之中"><a href="#将1-txt文件内容写入-覆盖到2-txt之中" class="headerlink" title="将1.txt文件内容写入\覆盖到2.txt之中"></a>将1.txt文件内容写入\覆盖到2.txt之中</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		<span class="type">FileInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">FileOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="literal">null</span>;		</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				in = <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;/home/sunli/1.txt&quot;</span>);</span><br><span class="line">				out = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;/home/sunli/2.txt&quot;</span>);</span><br><span class="line">				<span class="type">int</span> i;</span><br><span class="line">				 <span class="comment">// in.read从此输入流中读取一个字节数据据</span></span><br><span class="line">					<span class="keyword">while</span>((i = in.read()) !=-<span class="number">1</span>) &#123;</span><br><span class="line">						<span class="comment">// 将指定的字节写入此文件输出流。  </span></span><br><span class="line">						out.write(i);</span><br><span class="line">					&#125;</span><br><span class="line">			&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">				<span class="comment">// finally 将处理收尾工作</span></span><br><span class="line">				<span class="keyword">if</span> (in != <span class="literal">null</span>) &#123;</span><br><span class="line">					in.close();</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> (out != <span class="literal">null</span>) &#123;</span><br><span class="line">					out.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h2><p>字符流是以<strong>16</strong>位作为数据单元数据流中的最小数据单元就是<strong>单元字符</strong>,也就是<strong>Unicode</strong>每位即占<strong>2位</strong>字符</p>
+<h3 id="Writer"><a href="#Writer" class="headerlink" title="Writer"></a>Writer</h3><p>​		writer是所有<strong>输出字符流的父类</strong>.是一个抽象的类;</p>
+<p>​		CharArrayWriter\StringWriter是两种基本介质流,分别想<strong>char\String</strong>中写入数据.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写单个字符</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> c)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符数组cbuf[] 写到输出流</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">(<span class="type">char</span> cbuf[])</span> <span class="keyword">throws</span> IOException</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符数组cbuf[]中的从索引为off的位置处开始的len字符写入输出流</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">(<span class="type">char</span> cbuf[],<span class="type">int</span> off,<span class="type">int</span> len)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符串str中的字符写入输出流</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">(String str)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符串str中从索引off处的len字符写入输出流中</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">(String str,<span class="type">int</span> off,<span class="type">int</span> len)</span> <span class="keyword">throws</span> IOException</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="读取文件内信息"><a href="#读取文件内信息" class="headerlink" title="读取文件内信息"></a>读取文件内信息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		<span class="type">FileReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="type">File</span> <span class="variable">readFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;/home/sunli/1.txt&quot;</span>);</span><br><span class="line">			reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>(readFile);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// length 返回由该抽象路径名表示的文件长度。如果该路径名表示目录，则				返回值未指定。</span></span><br><span class="line">			<span class="type">char</span> [] byteArray = <span class="keyword">new</span> <span class="title class_">char</span>[(<span class="type">int</span>) readFile.length()];</span><br><span class="line">			<span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> reader.read(byteArray);</span><br><span class="line">			System.out.println(<span class="keyword">new</span> <span class="title class_">String</span>(byteArray));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			reader.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="非流式部分"><a href="#非流式部分" class="headerlink" title="非流式部分"></a>非流式部分</h2><p>​	  非流式部分主要包含一些<strong>辅助流式</strong>部分的类,如:<strong>SerializablePermission\File\RandomAccessFile\FileDescriptor</strong></p>
+<h3 id="读取目录"><a href="#读取目录" class="headerlink" title="读取目录"></a>读取目录</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">dir</span> <span class="operator">=</span> <span class="string">&quot;/home/&quot;</span>;</span><br><span class="line">		<span class="type">File</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(dir);</span><br><span class="line">		<span class="keyword">if</span>(f.isDirectory()) &#123;</span><br><span class="line">			String s[] = f.list();</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;s.length;i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(f.isDirectory()) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;/&quot;</span> + s[i]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/13.JAVA%20IO/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

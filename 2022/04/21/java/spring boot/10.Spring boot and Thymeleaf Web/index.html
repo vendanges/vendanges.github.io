@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring boot and Thymeleaf Web | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring boot and Thymeleaf Web</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a> <a class="article__tag-none-link" href="/tags/spring-boot/" rel="tag">spring boot</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在上述文章之中我们主要撰写并列举了常用的Thymeleaf标签及表达式，通过上述文章我们将会在本章中列举一些真实的项目案例如表单的提交、国际化页面的撰写等。</p>
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><p>表单是在前端页面中不可缺失的一部分，通常应用在搜索、登入&#x2F;注册、提交等页面之中，通过本书列举的Thymeleaf例子可更容易编写由Thymeleaf的动态页面：</p>
+<h3 id="login-html"><a href="#login-html" class="headerlink" title="login.html"></a>login.html</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;login&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Thymeleaf is login&lt;/h5&gt;</span><br><span class="line">    &lt;hr /&gt;</span><br><span class="line">    &lt;form action=&quot;#&quot; th:action=&quot;@&#123;/login&#125;&quot; th:object=&quot;$&#123;loginBean&#125;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">        &lt;p&gt;username: &lt;input type=&quot;text&quot; th:field=&quot;*&#123;username&#125;&quot; th:placeholder=&quot;username&quot; /&gt;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;age: &lt;input type=&quot;text&quot; th:field=&quot;*&#123;age&#125;&quot; th:placeholder=&quot;age&quot; /&gt;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;submit&quot; /&gt;&lt;input type=&quot;reset&quot; value=&quot;reset&quot; /&gt;&lt;/p&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="result-html"><a href="#result-html" class="headerlink" title="result.html"></a>result.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;result&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Thymeleaf submit an result&lt;/h5&gt;</span><br><span class="line">    &lt;hr/&gt;</span><br><span class="line">    &lt;p th:text=&quot;&#x27;username: &#x27; + $&#123;loginBean.username&#125;&quot; /&gt;</span><br><span class="line">    &lt;p th:text=&quot;&#x27;age: &#x27; + $&#123;loginBean.age&#125;&quot; /&gt;</span><br><span class="line">    &lt;a href=&quot;/toLogin&quot; th:text=&quot;@&#123;toLogin&#125;&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="LoginController-java"><a href="#LoginController-java" class="headerlink" title="LoginController.java"></a>LoginController.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ModelAttribute;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> com.example.model.LoginBean;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginController</span> &#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;toLogin&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toLogin</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">        model.addAttribute(<span class="string">&quot;loginBean&quot;</span>,<span class="keyword">new</span> <span class="title class_">LoginBean</span>());</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;login&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;login&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">greetingSubmit</span><span class="params">(<span class="meta">@ModelAttribute</span> LoginBean loginBean)</span> &#123;</span><br><span class="line">        <span class="comment">// LoginBean username&amp;age</span></span><br><span class="line">            System.out.println(<span class="string">&quot;Test one data:&quot;</span> + loginBean.getUsername());</span><br><span class="line">            System.out.println(<span class="string">&quot;Test two data:&quot;</span> + loginBean.getAge());</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="LoginBean-java"><a href="#LoginBean-java" class="headerlink" title="LoginBean.java"></a>LoginBean.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginBean</span> &#123;</span><br><span class="line">    String username;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// username</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// age</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="国际化（i18n）"><a href="#国际化（i18n）" class="headerlink" title="国际化（i18n）"></a>国际化（i18n）</h2><p>国际化是一个大型网站中必备的一个服务之一，主要用于服务于不同种族、宗教信仰、国家和地区的人们沟通的一个非常重要的工具，通过Thymeleaf来实现站点国际化服务无非是一件非常不错的事情，甚至比原生的更加顺利。<br>至于标题中的国际化 i18n的意思为 国际化英文单词 internationalization，18为中间的字符数，是“国际化”的简称，通常在资讯领域，国际化是指让产品、出版物、软件，无需做大的改变就可适应不同的地区和语言需要，而对程序来说则是&#96;&#96;&#96;不需要修改内部代码的情况下，根据不同语言及其地区显示相应的页面。</p>
+<h3 id="i18n-properties"><a href="#i18n-properties" class="headerlink" title="i18n properties"></a>i18n properties</h3><p>本书我们通过IDEA作为主要的集成开发环境进行开发，首先建立一个spring boot web + thymeleaf 的maven项目即通过spring Initializr工具构建的web项目，在<code>src/main/resources/static/</code>中新建目录为<code>i18n</code>用于存储i18n语言文件。</p>
+<p>之后右键<code>resources/static/i18n/</code>目录选择 New-&gt;Resource Bundle，出现Create Resource Bundle窗口下，此时可通过项目语言（Project Locales）移动到（&gt;） 语言添加（Locales to Add）</p>
+<p>在然后双击在IDEA中双击 <code>src/main/resources/static/i18n/Resource Bundle &#39;home&#39;</code>出现.properties配置页面，点击“+”号建立其各语言变量名。</p>
+<h4 id="home-properties"><a href="#home-properties" class="headerlink" title="home.properties"></a>home.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为默认语言文件，可为空，但文件不可不存在。</span></span><br></pre></td></tr></table></figure>
+<h4 id="home-en-US-properties"><a href="#home-en-US-properties" class="headerlink" title="home_en_US.properties"></a>home_en_US.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">home.i8n</span>=<span class="string">en_US</span></span><br><span class="line"><span class="attr">home.title</span>=<span class="string">Hello,world!</span></span><br></pre></td></tr></table></figure>
+<h4 id="home-zh-CN-properties"><a href="#home-zh-CN-properties" class="headerlink" title="home_zh_CN.properties"></a>home_zh_CN.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">home.i8n</span>=<span class="string">zh_CN</span></span><br><span class="line"><span class="attr">home.title</span>=<span class="string">你好世界！</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h3><p>在application.yml中，主要存放于和<code>application.properties</code>同级目录下，用于配置我们的i18n文件所在目录和项目的编码信息，通过设置application.yml可设置 i18n文件目录及文件名（相对目录，不要使用绝对目录）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  messages:</span><br><span class="line">    basename: static/i18n/home</span><br><span class="line">    encoding: UTF-8</span><br></pre></td></tr></table></figure>
+<h3 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h3><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.thymeleaf.cache</span>=<span class="string">false</span></span><br><span class="line"><span class="attr">spring.messages.basename</span>=<span class="string">static/i18n/home</span></span><br></pre></td></tr></table></figure>
+<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><h4 id="LocaleConfigucation-java"><a href="#LocaleConfigucation-java" class="headerlink" title="LocaleConfigucation.java"></a>LocaleConfigucation.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.LocaleResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.i18n.LocaleChangeInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.i18n.SessionLocaleResolver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LocaleConfigucation</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> LocaleResolver <span class="title function_">localeResolver</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 默认语言</span></span><br><span class="line">            <span class="type">SessionLocaleResolver</span> <span class="variable">sessionLocaleResolver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SessionLocaleResolver</span>();</span><br><span class="line">            sessionLocaleResolver.setDefaultLocale(Locale.US);</span><br><span class="line">            <span class="comment">// 断点测试拦截器是否执行</span></span><br><span class="line">            System.out.println(<span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> sessionLocaleResolver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> WebMvcConfigurer <span class="title function_">localeInterceptor</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">WebMvcConfigurer</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry interceptorRegistry)</span> &#123;</span><br><span class="line">                <span class="type">LocaleChangeInterceptor</span> <span class="variable">localeInterceptor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LocaleChangeInterceptor</span>();</span><br><span class="line">                localeInterceptor.setParamName(<span class="string">&quot;lang&quot;</span>);</span><br><span class="line">                interceptorRegistry.addInterceptor(localeInterceptor);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="首页文件"><a href="#首页文件" class="headerlink" title="首页文件"></a>首页文件</h3><h4 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;index&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h5&gt;Java Thymeleaf i18n &lt;span th:text=&quot;#&#123;home.i8n&#125;&quot;&gt;&lt;/span&gt; &lt;/h5&gt;&lt;br&gt;</span><br><span class="line">    &lt;a href=&quot;?lang=zh_CN&quot;&gt;中文&lt;/a&gt;/&lt;a href=&quot;/?lang=en_US&quot;&gt;English&lt;/a&gt;</span><br><span class="line">    &lt;hr/&gt;</span><br><span class="line">    &lt;h5 th:text=&quot;#&#123;home.title&#125;&quot;&gt;&lt;/h5&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20boot/10.Spring%20boot%20and%20Thymeleaf%20Web/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

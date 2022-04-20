@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 选择集 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 选择集</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>选择集与数据通常被称之为<code>数据绑定</code>（Data-Join）也是D3的核心知识之一，被称之为<code>Data-Driven</code>主要原因是共解决了两个问题，分别为<code>根据数据添加元素</code>以及<code>当数据发生更新时，来修改元素等</code>。</p>
+<h2 id="选择元素与修改元素"><a href="#选择元素与修改元素" class="headerlink" title="选择元素与修改元素"></a>选择元素与修改元素</h2><h3 id="选择元素"><a href="#选择元素" class="headerlink" title="选择元素"></a>选择元素</h3><p>D3可通过使用<code>d3.select</code>或<code>d3.selectAll</code>来进行选择，通常<code>d3.select</code>来选择地一个匹配的元素，而<code>d3.selectAll</code>来匹配所有元素，就比如：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.select(“body”)</td>
+<td>选择 body元素</td>
+</tr>
+<tr>
+<td>d3.select(“#node”)</td>
+<td>选择 id为 node的元素</td>
+</tr>
+<tr>
+<td>d3.select(“.class”)</td>
+<td>选择类为 class 的地一个元素</td>
+</tr>
+</tbody></table>
+<p>如果说通过上述的表格无法更加直观理解的话，也许下面的这个例子会让你更加的生动形象以及感觉到他的作用，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d3.<span class="title function_">selectAll</span>(<span class="string">&quot;ui ll&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="修改元素"><a href="#修改元素" class="headerlink" title="修改元素"></a>修改元素</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615433457_20210311092226118_1871744607.png"><br>选择元素与修改元素的区别主要在于选择元素是<code>d3.select、d3.selectAll</code>而修改元素则是当选择后，在进行修改的，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var svg = d3.select(&quot;body&quot;)</span><br><span class="line">    .style(&#x27;fill&#x27;,&#x27;red&#x27;)</span><br></pre></td></tr></table></figure>
+<p>就比如上述的codo先选择一个<code>body</code>元素，之后通过<code>.style</code>来修改元素的颜色为<code>red</code>，在d3.js中，修改元素共有6个，分别为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.style</td>
+<td>修改style元素</td>
+<td><code>d3.selectAll(&#39;client&#39;).style(&#39;fill&#39;,&#39;red&#39;)</code></td>
+</tr>
+<tr>
+<td>.attr</td>
+<td>更新一个属性</td>
+<td><code>d3.selectAll(&#39;client&#39;).attr(&#39;cx&#39;,&quot;50px&quot;)</code></td>
+</tr>
+<tr>
+<td>.classed</td>
+<td>添加或移除一个属性</td>
+<td><code>d3.select(&#39;.client&#39;).classed(&#39;checked&#39;,true)</code></td>
+</tr>
+<tr>
+<td>.property</td>
+<td>更新元素中的属性</td>
+<td><code>d3.selectAll(&#39;client&#39;).property(&#39;checked&#39;,false)</code></td>
+</tr>
+<tr>
+<td>.text</td>
+<td>更新文本中的内容</td>
+<td><code>d3.select(&#39;div.title&#39;).text(&#39;Hello,d3&#39;)</code></td>
+</tr>
+<tr>
+<td>.html</td>
+<td>更新或增加html内容</td>
+<td><code>d3.select(&#39;.legend&#39;).html(&#39;&lt;div&gt;hello,d3&lt;/div&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2 id="设定以及获取属性"><a href="#设定以及获取属性" class="headerlink" title="设定以及获取属性"></a>设定以及获取属性</h2><h3 id="select-与-selectAll"><a href="#select-与-selectAll" class="headerlink" title="select 与 selectAll"></a>select 与 selectAll</h3><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>select</td>
+<td>选择单个元素</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615433458_20210311094146472_1950508537.png"></td>
+</tr>
+<tr>
+<td>selectAll</td>
+<td>选择全部元素</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615433459_20210311094231957_872054106.png"></td>
+</tr>
+</tbody></table>
+<h3 id="classed"><a href="#classed" class="headerlink" title="classed"></a>classed</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p id=&quot;title&quot;&gt;This is D3.js&lt;/p&gt;</span><br><span class="line">&lt;p id=&quot;data&quot;&gt;This data&lt;/p&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .colorRed &#123;</span><br><span class="line">        color: red;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    d3.select(&quot;p&quot;)</span><br><span class="line">        .attr(&#x27;id&#x27;,&#x27;title&#x27;)</span><br><span class="line">        .classed(&#x27;colorRed&#x27;,true);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>.classed('colorRed font',true);```来进行实现，其中```true```以及```false```分别是使用或不使用该类，通俗点就是```true```是使用，```false```是不使用。当然除此之外我们也可以使用一个万能修改元素```attr```，即：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">            d3.select(&quot;p&quot;)</span><br><span class="line">                .attr(&#x27;id&#x27;,&#x27;title&#x27;)</span><br><span class="line">                .attr(&#x27;class&#x27;,&#x27;colorRed font&#x27;)</span><br></pre></td></tr></table></figure>
+<p>都可实现与:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d3.<span class="title function_">select</span>(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">    .<span class="title function_">classed</span>(<span class="string">&#x27;colorRed&#x27;</span>,<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="style"><a href="#style" class="headerlink" title="style"></a>style</h3><p>不仅仅支持class，修改元素中依然还支持<code>style</code>属性的设置，通常我们可以使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d3.<span class="title function_">select</span>(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">    .<span class="title function_">style</span>(<span class="string">&#x27;color&#x27;</span>,<span class="string">&#x27;red&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>来进行设置，但此时就会有读者发现，要如何设置多条<code>css</code>语句？，通常我们可以通过多个css写在一起来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d3.<span class="title function_">select</span>(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">    .<span class="title function_">style</span>(&#123;<span class="string">&quot;color&quot;</span>:<span class="string">&quot;red&quot;</span>, </span><br><span class="line">        <span class="string">&quot;font-size&quot;</span>:<span class="string">&quot;20px&quot;</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>上述的code同等于<code>&lt;p id=&quot;title&quot; style=&quot;color: red; font-size: 20px;&quot;&gt;This is D3.js&lt;/p&gt;</code>。</p>
+<h3 id="property"><a href="#property" class="headerlink" title="property"></a>property</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615433459_20210311103442915_2096785879.png"></p>
+<figure class="highlight plaintext"><figcaption><span>```元素在```d3```中主要用于**更新元素中的属性**，如：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">        &lt;input id=&quot;input&quot; type=&quot;text&quot; name=&quot;inputname&quot; /&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            d3.select(&quot;#input&quot;)</span><br><span class="line">                .property(&quot;value&quot;,&quot;Hello&quot;);</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>也就是说表单并不存在<code>value</code>值，之后通过<code>property</code>设置了id为<code>input</code>的<code>value</code>为<code>Hello</code>，所以我们可以通过使用<code>.property(&quot;value&quot;,&quot;Hello&quot;)</code>，来设置<code>input</code>的<code>value</code>值，当然也不仅仅可以设置<code>value</code>还可以更新<code>input</code>的属性为<code>submit</code>，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input id=&quot;input&quot; type=&quot;text&quot; value=&quot;Go&quot; name=&quot;inputname&quot; /&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    d3.select(&quot;#input&quot;)</span><br><span class="line">        .property(&quot;type&quot;,&quot;submit&quot;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>上述的code与更新<code>value</code>一样，只不过更新的<code>type</code>不一样，<code>input</code>将<code>text</code>更新为<code>submit</code>为按钮类型。</p>
+<h3 id="text"><a href="#text" class="headerlink" title="text"></a>text</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615433461_20210311110607228_899398452.png"></p>
+<figure class="highlight plaintext"><figcaption><span>is d3.js”之后被```d3.select("p")```所进行获取，在修改```text```数据为```Hello,d3.js```：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">        &lt;p&gt;This is d3.js&lt;/p&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            d3.select(&quot;p&quot;)</span><br><span class="line">                .text(&#x27;Hello,d3.js&#x27;)</span><br><span class="line">        &lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="html"><a href="#html" class="headerlink" title="html"></a>html</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js+html</span><br><span class="line">        &lt;p&gt;This is d3.js&lt;/p&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            d3.select(&quot;body&quot;)</span><br><span class="line">                .html(&#x27;&lt;h1&gt;Hello,html&lt;/h1&gt;&#x27;)</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如上述的code则是更新&#x2F;修改<code>body</code>元素内的信息，并修改为<code>Hello,html</code>。</p>
+<h2 id="添加插入和删除（append、insert、remove）"><a href="#添加插入和删除（append、insert、remove）" class="headerlink" title="添加插入和删除（append、insert、remove）"></a>添加插入和删除（append、insert、remove）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615450805_20210311152502941_1980943617.png"><br>选择集可以支持添加和删除以及插入信息，主要通过<code>append、insert、remove</code>来完成上述操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Vue&lt;/p&gt;</span><br><span class="line">&lt;p id=&quot;ejs&quot;&gt;Ejs&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Laravel&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var body = d3.select(&quot;body&quot;)</span><br><span class="line">        body.append(&quot;p&quot;).text(&quot;D3&quot;)</span><br><span class="line">        body.insert(&quot;p&quot;,&quot;#ejs&quot;).text(&#x27;Less&#x27;)</span><br><span class="line"></span><br><span class="line">    var ejs = d3.select(&quot;#ejs&quot;)</span><br><span class="line">        ejs.remove()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><p>数据绑定即<code>Data-Join</code>，数据选择以及数据绑定通常是一起的，所谓数据绑定即将<strong>数据绑定到DOM中</strong>，网页中的数据可以和元素绑定到一起，之后可以进行更改并操作元素会非常的方便，也是D3处理选择集数据的方法，在默认的情况下<code>d3.select</code>以及<code>d3.selectAll</code>是不存在数据的，所以通过数据绑定就可以使得<strong>拥有数据</strong>，通常可以使用<code>selection.datum</code>以及<code>selection.data</code>，他们的作用是：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>selection.datum</td>
+<td>绑定一个数据到选择集中</td>
+</tr>
+<tr>
+<td>selection.data</td>
+<td>绑定一个数组到<strong>选择集</strong>上，数组各项值与选择集的<strong>各个元素</strong>进行绑定</td>
+</tr>
+</tbody></table>
+<h4 id="datum"><a href="#datum" class="headerlink" title="datum()"></a>datum()</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615466648_20210311201104396_988678617.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```html+js</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;p&gt;Vue&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Ejs&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Laravel&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var p = d3.select(&quot;body&quot;)</span><br><span class="line">                .selectAll(&quot;p&quot;);</span><br><span class="line">                p.datum(&#x27;good&#x27;);</span><br><span class="line">            console.log(</span><br><span class="line">                    p.datum()</span><br><span class="line">            );</span><br><span class="line">        &lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615466650_20210311203218940_976433926.png"><br>将 “body” 元素内的所有<code>&quot;p&quot;</code>标签，绑定数据到 “good”中，<code>datum() </code>绑定了一个字符串到”good”选择集中，调用<code>text()</code>中的无名参数 “function(d,i)”，其中 d &#x3D; data、而 i d &#x3D; index，即数据与索引，之后无名函数返回了由 “d”以及”i”所结合的字符串，最终所绑定的数据被替换为了 “共有”……</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;Vue&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;Ejs&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;Laravel&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var p = d3.select(&quot;body&quot;)</span><br><span class="line">            .selectAll(&quot;p&quot;);</span><br><span class="line">            p.datum(&#x27;good&#x27;)</span><br><span class="line">                .text(function(d,i) &#123;</span><br><span class="line">                    return d = &quot;共有: &quot; + i + &quot; 个数据&quot;;</span><br><span class="line">                &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>在d3.js中，我们可以使用一个被绑定的数据传递给子元素，即使用<code>append</code>方法即可实现，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Vue&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Ejs&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Laravel&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var p = d3.select(&quot;body&quot;)</span><br><span class="line">        .selectAll(&quot;p&quot;);</span><br><span class="line">        p.datum(&#x27;is good!&#x27;)</span><br><span class="line">            .append(&quot;good&quot;)</span><br><span class="line">            .text(function(d,i) &#123;</span><br><span class="line">                return &quot; &quot; + d;</span><br><span class="line">            &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>之后所输出的信息将会为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vue is good!</span><br><span class="line"></span><br><span class="line">Ejs is good!</span><br><span class="line"></span><br><span class="line">Laravel is good!</span><br></pre></td></tr></table></figure>
+<p>通过<code>console.log</code>在控制台内输出，<strong>被绑定的数据选择集添加后</strong>，新元素也会被继承</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">__data__: &quot;is good!&quot;</span><br><span class="line">__proto__: HTMLParagraphElement</span><br></pre></td></tr></table></figure>
+
+<h4 id="data"><a href="#data" class="headerlink" title="data()"></a>data()</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| ID | DA |</span><br><span class="line">| --- | --- |</span><br><span class="line">| 数组长度 &gt; 元素数量 | 为多余数据预留元素位置，用于将来插入新的元素 | </span><br><span class="line">| 数组长度 &lt; 元素数量 | 获取多余的元素位置，用于将来的删除 |</span><br><span class="line">| 数组长度 = 元素数量 | 即将用于更新数据 |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通常用于处理上述的方法被d3称之为```Data-Join```即数据连接，Data-join主要的三个关键词就是```Update、Enter、Exit```起大致意思为```更新、进入、退出```三个其作用是：</span><br><span class="line"></span><br><span class="line">| ID | DA |</span><br><span class="line">| --- | --- |</span><br><span class="line">| Update | 即存在的元素，可以进行修改 |</span><br><span class="line">| Enter | 代表已经丢失的元素，可以修改这些元素的属性 |</span><br><span class="line">| Exit | 指多余的元素，可以进行删除 |</span><br><span class="line"></span><br><span class="line">当我们了解到 ```data()```以及```data-Join```之后，将会来定义一个data()方法的数据绑定：</span><br><span class="line"></span><br><span class="line">![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615487000_20210311234258097_1656765781.png)</span><br><span class="line">```html+js</span><br><span class="line">        &lt;p&gt;Vue&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Ejs&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Laravel&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var dataset = [1,2,3];</span><br><span class="line">            var p = d3.select(&quot;body&quot;)</span><br><span class="line">                .selectAll(&quot;p&quot;);</span><br><span class="line">            </span><br><span class="line">            var update = p.data(dataset);</span><br><span class="line">            console.log(update);</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>通过上述的code中，主要使用了<code>var dataset = [1,2,3];</code>来定义数组的<code>1,2,3</code>并对应了<code>Vue、Ejs、Laravel</code>等元素并进行绑定，并最终通过<code>console.log</code>来输出绑定的结果。</p>
+<h5 id="Update、Enter、Exit"><a href="#Update、Enter、Exit" class="headerlink" title="Update、Enter、Exit"></a>Update、Enter、Exit</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615487001_20210312002211105_1450000371.png"><br>通常，数组长度与元素长度相等的情况较少，通常并不为相等，这就会导致数组长度为3，元素长度为5,或数组长度为3，元素长度为5的这种问题，所以引入了<code>Update、enter、exit</code>的概念来解决这个问题，他们的直接意思可以为：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Enter</td>
+<td>如果数组长度大于元素的数量，则部分不存在的元素将<strong>即将进入可视化</strong>状态</td>
+<td>给选择集足够的元素</td>
+</tr>
+<tr>
+<td>Exit</td>
+<td>如果数组长度小于元素数量，多余的元素将会进入<strong>即将进入退出可视状态</strong></td>
+<td>删除多余的元素</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>如果数组长度等于元素的树立那个，则绑定数据的元素<strong>即将被更新</strong></td>
+<td>修改或更新</td>
+</tr>
+</tbody></table>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615487001_20210312013657376_1728931520.png"><br>通过上图我们可以发现，当<strong>数组大于元素时</strong>，D3为多余的数组预留了一个空位，以为后来的数据做准备。而当数组小于元素的时候，超过的<strong>数组</strong>将不会被数据进行绑定。</p>
+<h6 id="enter-处理方法"><a href="#enter-处理方法" class="headerlink" title="enter 处理方法"></a>enter 处理方法</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615993659_20210317222219309_1773155967.png"><br>enter及表示<code>数组</code>大于了<code>元素</code>的数量，因此处理 enter 的方法就是为其添加元素，就如本文中的 绑定数组 “1” 对应的是一个 “<p>“，即是 Update，而2、3之后的则是 Enter：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> databases = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> p = d3.<span class="title function_">selectAll</span>(<span class="string">&quot;body&quot;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        .<span class="title function_">selectAll</span>(<span class="string">&quot;p&quot;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> update = p.<span class="title function_">data</span>(databases)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> enter = update.<span class="title function_">enter</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    update.<span class="title function_">text</span>( <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">return</span> d;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    enter.<span class="title function_">append</span>(<span class="string">&quot;p&quot;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        .<span class="title function_">text</span>(<span class="keyword">function</span>(<span class="params">d</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span> d;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615993738_20210317223245253_1903448225.png"><br>在上述的code中，我们还为此预留了一个元素，而通常的情况中，页面是没有其对应元素的，这个时候就可以通过<code>选择一个空集，之后通过 enter</code>来补足元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> databases = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">    <span class="keyword">var</span> body = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    body.<span class="title function_">selectAll</span>(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(databases)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">        .<span class="title function_">text</span>(<span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> e;</span><br><span class="line">        &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="exit-处理方法"><a href="#exit-处理方法" class="headerlink" title="exit 处理方法"></a>exit 处理方法</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615993741_20210317225729230_1261432080.png"></p>
+<figure class="highlight plaintext"><figcaption><span>指的是：”如果数组长度小于元素数量“则符合 exit 的条件，那么多余的元素将不会被进行显示（俗称”删除元素“）。而处理 exit的方法也就是，当数据与数组之间没有**对应**的时候，即可删除元素：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var databases = [1,2,3];</span><br><span class="line">            var p = d3.select(&quot;body&quot;)</span><br><span class="line">                .selectAll(&quot;p&quot;)</span><br><span class="line"></span><br><span class="line">            var update = p.data(databases)</span><br><span class="line">            var exit = update.exit();</span><br><span class="line"></span><br><span class="line">            update.text(function(e) &#123;</span><br><span class="line">                return e;</span><br><span class="line">            &#125;)</span><br><span class="line">            exit.remove()</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="绑定的顺序"><a href="#绑定的顺序" class="headerlink" title="绑定的顺序"></a>绑定的顺序</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615487002_20210312021435355_1743912206.png"><br>默认的情况下<code>data()</code>是按照<strong>索引号</strong>来进行绑定的，就比如，第0个元素绑定数组第0项……，通常<code>data()</code>的一个参数是被绑定的数据，而第二个则是键值，使用此方法即可改变绑定的顺序，但通常使用此方法之后会更改其默认的绑定方式，是的其通过<strong>键值</strong>依次对应的方式来改变：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var dataset = [</span><br><span class="line">        &#123;id:1 , name:&quot;Ejs&quot;&#125;,</span><br><span class="line">        &#123;id:2 , name:&quot;Vue&quot;&#125;,</span><br><span class="line">        &#123;id:3 , name:&quot;Laravel&quot;&#125;</span><br><span class="line">    ];</span><br><span class="line">    var p = d3.select(&quot;body&quot;).selectAll(&quot;p&quot;);</span><br><span class="line"></span><br><span class="line">    p.data(dataset)</span><br><span class="line">        .text(function(d) &#123;</span><br><span class="line">            return d.id + &quot;.&quot; + d.name;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        dataset = [</span><br><span class="line">            &#123; id:1, name:&quot;d3.js&quot;&#125;,</span><br><span class="line">            &#123; id:3, name:&quot;Less&quot;&#125;</span><br><span class="line">        ];</span><br><span class="line">        p.data(dataset, function(d) &#123;</span><br><span class="line">            return d.id;</span><br><span class="line">        &#125;)</span><br><span class="line">            .text(function(d) &#123;</span><br><span class="line">                return d.id + &quot;.&quot; + d.name;</span><br><span class="line">            &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>首先我们定义了三个空的元素，并也相应的建立了三个数组，符合了<code>update</code>的更新及修改的条件，之后听过再次定义<code>dataset</code>来根据<strong>键值</strong>进行修改或更新信息，最终的出的结果将是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.d3.js</span><br><span class="line">2.vue</span><br><span class="line">3.Less</span><br></pre></td></tr></table></figure>
+
+<h2 id="选择集常用方法"><a href="#选择集常用方法" class="headerlink" title="选择集常用方法"></a>选择集常用方法</h2><h3 id="ascending-and-descending-（排序）"><a href="#ascending-and-descending-（排序）" class="headerlink" title="ascending and descending （排序）"></a>ascending and descending （排序）</h3><h4 id="ascending"><a href="#ascending" class="headerlink" title="ascending"></a>ascending</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983423_20210317091704044_1476435379.png"></p>
+<figure class="highlight plaintext"><figcaption><span>d3.js 中主要用于进行数据的排序，而```descending```方法将用于从大到小的排序，需要注意的是在下述的 code 中，```sort```并不是由 d3所提供的```selection.sort```而是 js 所提供的数组方法。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">            var number = [20,11,23,44,11,2]</span><br><span class="line">            number.sort(d3.ascending)</span><br><span class="line">            console.log(number)</span><br></pre></td></tr></table></figure>
+
+<h4 id="descending"><a href="#descending" class="headerlink" title="descending"></a>descending</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983424_20210317092021161_472386720.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number = [<span class="number">20</span>,<span class="number">11</span>,<span class="number">23</span>,<span class="number">44</span>,<span class="number">11</span>,<span class="number">2</span>]</span><br><span class="line"> number.<span class="title function_">sort</span>(d3.<span class="property">descending</span>)</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(number)</span><br></pre></td></tr></table></figure>
+
+<h3 id="求值与计算"><a href="#求值与计算" class="headerlink" title="求值与计算"></a>求值与计算</h3><h4 id="min-or-max-and-extent"><a href="#min-or-max-and-extent" class="headerlink" title="min or max and extent"></a>min or max and extent</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983425_20210317093041225_1598713927.png"><br>d3.js 为我们提供了个三种的求值方法，分别为 <code>最小值(min)、最大值(max)、以及一个中间值(extent)</code>三种方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义数组</span></span><br><span class="line"><span class="keyword">var</span> number = [<span class="number">20</span>,<span class="number">11</span>,<span class="number">23</span>,<span class="number">44</span>,<span class="number">11</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    min@ 最小值</span></span><br><span class="line"><span class="comment">    max@ 最大值</span></span><br><span class="line"><span class="comment">    extent @中间值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> min = d3.<span class="title function_">min</span>(number)</span><br><span class="line"><span class="keyword">var</span> max = d3.<span class="title function_">max</span>(number)</span><br><span class="line"><span class="keyword">var</span> extent = d3.<span class="title function_">extent</span>(number)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最小值：&#x27;</span> + min)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最大值：&#x27;</span> + max)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;中间值：&#x27;</span> + extent)</span><br></pre></td></tr></table></figure>
+
+<h4 id="处理数据"><a href="#处理数据" class="headerlink" title="处理数据"></a>处理数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义数组</span></span><br><span class="line"><span class="keyword">var</span> number = [<span class="number">20</span>,<span class="number">11</span>,<span class="number">23</span>,<span class="number">44</span>,<span class="number">11</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    min@ 最小值 加1</span></span><br><span class="line"><span class="comment">    max@ 最大值 减1</span></span><br><span class="line"><span class="comment">    extent @中间值 求余</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> min = d3.<span class="title function_">min</span>(number, <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> num + <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> max = d3.<span class="title function_">max</span>(number, <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> num - <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> extent = d3.<span class="title function_">extent</span>(number, <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> num % <span class="number">61</span>  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最小值加1：&#x27;</span> + min)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最大值减1：&#x27;</span> + max)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;中间值求余：&#x27;</span> + extent)</span><br></pre></td></tr></table></figure>
+
+<h4 id="sun-and-mean"><a href="#sun-and-mean" class="headerlink" title="sun and mean"></a>sun and mean</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983426_20210317100519294_1695115272.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义数组</span></span><br><span class="line"><span class="keyword">var</span> number = [<span class="number">20</span>,<span class="number">11</span>,<span class="number">23</span>,<span class="number">44</span>,<span class="number">11</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    sum @求和</span></span><br><span class="line"><span class="comment">    mean @平均值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> sum = d3.<span class="title function_">sum</span>(number)</span><br><span class="line"><span class="keyword">var</span> mean = d3.<span class="title function_">mean</span>(number)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;总和：&#x27;</span> + sum)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;平均值：&#x27;</span> + mean)</span><br></pre></td></tr></table></figure>
+
+<h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983426_20210317103347328_1487376718.png"></p>
+<figure class="highlight plaintext"><figcaption><span>d3提供的生成和操作数组的一系列方法，可通过 range 来根据```start,stop,step```即“开始，停止，步骤”三个参数来决定数组的输出顺序及长度。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">            var a = d3.range(10)</span><br><span class="line">            var b = d3.range(2,9)</span><br><span class="line">            var c = d3.range(2,10,3)</span><br><span class="line"></span><br><span class="line">            console.log(a)</span><br><span class="line">            console.log(b)</span><br><span class="line">            console.log(c)</span><br></pre></td></tr></table></figure>
+
+<h3 id="shuffle"><a href="#shuffle" class="headerlink" title="shuffle"></a>shuffle</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```js</span><br><span class="line">            var num = [1,2,3,4,5,6,7,8]</span><br><span class="line">            d3.shuffle(num)</span><br><span class="line">            console.log(num)</span><br></pre></td></tr></table></figure>
+<p>在上述的code中分别定义了数组<code>[1,2,3,4,5,6,7,8]</code>在i通过<code>shuffle</code>方法后贝重新进行随机排列为<code>[2,3,8,1,4,7,5,6]</code>。</p>
+<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615983427_20210317113105521_340784427.png"><br>映射（Map），是一个常见的数据结构，由<code>键(key)</code>以及<code>值(value)</code>组成，每个key分别对应一个 value，且可以根据使用 key来获取其对应的value，在 d3中，映射方法主要包括如下:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.map</td>
+<td>构建映射</td>
+<td>d3.map([对象][,key])</td>
+</tr>
+<tr>
+<td>map.has</td>
+<td>指定的 key 是否存在</td>
+<td>true@存在、false@不存在</td>
+</tr>
+<tr>
+<td>map.get</td>
+<td>如果存在则返回其对应 key 的 value</td>
+<td>不存在则返回 undefined</td>
+</tr>
+<tr>
+<td>map.set</td>
+<td>为指定的 key 设置 value ，如果存在则进行覆盖</td>
+<td></td>
+</tr>
+<tr>
+<td>map.remove</td>
+<td>删除或移除一个 key</td>
+<td>不存在即返回 false</td>
+</tr>
+<tr>
+<td>map.keys</td>
+<td>以数组的形式返回该 map 下的所有 key</td>
+<td></td>
+</tr>
+<tr>
+<td>map.entries</td>
+<td>以数组的形式返回该 map 下的所有 key and value</td>
+<td></td>
+</tr>
+<tr>
+<td>map.empty</td>
+<td>如果数组为空，返回 teue，否则返回 false</td>
+<td></td>
+</tr>
+<tr>
+<td>map.size</td>
+<td>返回映射大小</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbar = [</span><br><span class="line">    &#123; <span class="attr">id</span>:<span class="number">1</span>, <span class="attr">name</span>:<span class="string">&#x27;one&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>:<span class="number">2</span>, <span class="attr">name</span>:<span class="string">&#x27;two&#x27;</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>:<span class="number">3</span>, <span class="attr">name</span>:<span class="string">&#x27;three&#x27;</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定 numbaer 数组 </span></span><br><span class="line"><span class="keyword">var</span> map = d3.<span class="title function_">map</span>(numbar, <span class="keyword">function</span>(<span class="params">d</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> d.<span class="property">id</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    remove @移除 key 为1的数据</span></span><br><span class="line"><span class="comment">    haser @key是否存在</span></span><br><span class="line"><span class="comment">    seter @ 将key 为1的数组修改为 &#123; id: 01, name:&#x27;oner&#x27;&#125;</span></span><br><span class="line"><span class="comment">    geter @输出指定key中的 key以及value</span></span><br><span class="line"><span class="comment">    keys @输出当前所有的键值</span></span><br><span class="line"><span class="comment">    values @返回所有的值</span></span><br><span class="line"><span class="comment">    entries @返回所有的 key and value</span></span><br><span class="line"><span class="comment">    size @返回索引大小</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">map.<span class="title function_">remove</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">var</span> haser =  map.<span class="title function_">has</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">var</span> seter = map.<span class="title function_">set</span>(<span class="number">1</span>, &#123; <span class="attr">id</span>: <span class="number">01</span>, <span class="attr">name</span>:<span class="string">&#x27;oner&#x27;</span>&#125;)</span><br><span class="line"><span class="keyword">var</span> geter = map.<span class="title function_">get</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> keys = map.<span class="title function_">keys</span>()</span><br><span class="line"><span class="keyword">var</span> values = map.<span class="title function_">values</span>()</span><br><span class="line"><span class="keyword">var</span> entries = map.<span class="title function_">entries</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> size = map.<span class="title function_">size</span>()</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;key 1 是否存在：&#x27;</span> + haser)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(geter)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(keys)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(values)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(entries)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(size)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/3.D3%20%E9%80%89%E6%8B%A9%E9%9B%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

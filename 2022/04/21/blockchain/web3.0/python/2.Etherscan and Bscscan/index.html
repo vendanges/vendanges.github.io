@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Etherscan and Bscscan | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Etherscan and Bscscan</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/blockchain/" rel="tag">blockchain</a> <a class="article__tag-none-link" href="/tags/python/" rel="tag">python</a> <a class="article__tag-none-link" href="/tags/web3-0/" rel="tag">web3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><a target="_blank" rel="noopener" href="https://etherscan.io/">Etherscan</a> 和 <a target="_blank" rel="noopener" href="https://www.bscscan.com/">Bscscan</a> 的区别就是以太坊链和币安链，由于两者在其自己的链浏览器中都相差不大，所以我们可以通过任意一个链的学习来了解两个链浏览器的功能和开发中需要的几个参数点。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202241623300.png"></p>
+<p>在其首页中 <strong>Latest Blocks -&gt; #<a target="_blank" rel="noopener" href="https://www.bscscan.com/block/15528806">Block</a></strong> 中，我们可以从其交易数据中来了解到链的整个交易过程和所涉及的知识点等信息，通过这些信息可以让我们之后在开发中进行利用并熟练的操作。</p>
+<p>在之前的 web3.0 中我们通过 Provider 所提供的方法来进行获取块中的数据信息，那么我们可以在 <a target="_blank" rel="noopener" href="https://etherscan.io/">Etherscan</a> \ <a target="_blank" rel="noopener" href="https://www.bscscan.com/">Bscscan</a>  中来看到他们链官方是如何使用这些信息且展示的。</p>
+<h2 id="Block-view"><a href="#Block-view" class="headerlink" title="Block view"></a>Block view</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202241716249.png"></p>
+<p>区块是一个核心的概念，我们可以理解为是将其分类帐中的页面，区块包含了交易数据和前一个区块的哈希值，从而确保区块链网络中的不可变性和安全性，因此一个完整的 Block 中，他通常包含了下列数据：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Block Height</td>
+<td>区块的高度，通常被称之为区块编号，表示该区块在链中的位置</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Timestamp</td>
+<td>时间戳</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Transactions</td>
+<td>区块中的交易数量,以及合约内部交易数据(指从合约执行中所创建并进行交易的以太币数量)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Mined by</td>
+<td>成功开采这个区块的矿工</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Block Rewad</td>
+<td>矿机因将该块包含在区块链中而获得的总块奖励。奖励明细(静态块奖励、总交易费、扣除烧费、叔叔包含奖励)也会显示出来。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Uncles Reward</td>
+<td>奖励采矿者在观察到的区块中开采未开采的区块。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Difficulty</td>
+<td>开采一个新区块所需的工作量。难度根据区块链上的总哈希幂挖掘进行调整。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Total Difficultty</td>
+<td>到目前为止的区块挖掘总难度</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Size</td>
+<td>块的大小，他由区块的 GAS 限制所决定</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Gas Used</td>
+<td>块中所使用的总 GAS，还包括使用 gas 百分百以及超过 gas 目标使用的 gas 百分比。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Gas Limit</td>
+<td>区块中的总 gas 限制</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Base Fee Per Gas</td>
+<td>包含在块中的 tx 所需的最小 gasUsed 乘数</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Burnt Fees</td>
+<td>代表 tx 费用中被烧掉的部分：baseFeePerGas * gasUsed</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Burnt Data</td>
+<td>矿工可以包含在区块中的任何数据</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Hash</td>
+<td>当前区块的区块头哈希</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Parent Hash</td>
+<td>生成此块的块哈希，通常称之为其夫块</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Sha3Uncle</td>
+<td>以太坊 Javascript RLP 编码空字符串的机制</td>
+</tr>
+<tr>
+<td>18</td>
+<td>StateRoot</td>
+<td>状态树的根</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Nonce</td>
+<td>区块随机量数是在挖掘过程中用于展示区块工作量证明的值</td>
+</tr>
+</tbody></table>
+<p>这在以太坊的官方知识库中均有记录，我们可以翻阅其官方的知识库来查阅有关以太坊链的相关信息和资料 <a target="_blank" rel="noopener" href="https://info.etherscan.com/exploring-block-details-page/">Exploring the Block Details (etherscan.com)</a>。无论是在 Etherscan 还是之前我们通过 web3.0 来请求块数据所返回的信息内，均都涉及一个概念类的东西，即 <code>GAS</code> :</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    &#x27;author&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xad5C1768e5974C231b2148169da064e61910f31a</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;difficulty&#x27;<span class="punctuation">:</span> <span class="number">735512610763</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;extraData&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x476574682f76312e302e302f6c696e75782f676f312e342e32</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;gasLimit&#x27;<span class="punctuation">:</span> <span class="number">5000</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;gasUsed&#x27;<span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;hash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x767c2bfb3bdee3f78676c1285cd757bcd5d8c272cef2eb30d9733800a78c0b6d</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;logsBloom&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;miner&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xad5c1768e5974c231b2148169da064e61910f31a</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;mixHash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x31d9ec7e3855aeba37fd92aa1639845e70b360a60f77f12eff530429ef8cfcba</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;nonce&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x549f882c5f356f85</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;number&#x27;<span class="punctuation">:</span> <span class="number">12345</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;parentHash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x4b3c1d7e65a507b62734feca1ee9f27a5379e318bd52ae62de7ba67dbeac66a3</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;receiptsRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;sealFields&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span>&#x27;<span class="number">0x31d9ec7e3855aeba37fd92aa1639845e70b360a60f77f12eff530429ef8cfcba</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;<span class="number">0x549f882c5f356f85</span>&#x27;<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;sha3Uncles&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;size&#x27;<span class="punctuation">:</span> <span class="number">539</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;stateRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xca495e22ed6b88c61714d129dbc8c94f5bf966ac581c09a57c0a72d0e55e7286</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;timestamp&#x27;<span class="punctuation">:</span> <span class="number">1438367030</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;totalDifficulty&#x27;<span class="punctuation">:</span> <span class="number">3862140487204603</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;transactions&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;transactionsRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;uncles&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于以太坊网络是一个分散的区块链，没有单一的实体或机构监管或其运营，因此建立了一个机制来避免网络堵塞或者垃圾邮件的交易信息，这种机制的主要原理是<strong>向交易发送者收取一笔称之为 GAS 费的小额费用</strong> ETH 将使用这类资金奖励网络上验证交易的矿工。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这笔费用将会以 ETH 形式出现，也应用在以太坊网络中，从而促进价值来进行转移，采矿指出和智能合约的执行，GAS 的工作方式主要类似于汽油费的方式，类似于**车辆//燃料的工作方式，为了从 A~B 点，车辆所加满足够的汽油** 因此如果要让 ETH 交易成功，发送方必须提供足够的 ETH 来支付 GAS 费用。</span><br></pre></td></tr></table></figure>
+
+<p>GAS 的交易是从交易方地址剩余的 ETH 余额中所扣除的，而不是从发送的 ETH 或代币数量中扣除的，他还会再单个事件中自动与交易方进行扣除，更多关于 GAS 的信息，比如如何计算或设置 GAS 费用，我们可以通过 <a target="_blank" rel="noopener" href="https://info.etherscan.com/what-is-gas-fee/">什么是汽油费 (etherscan.com)</a> 来进行详细查看。</p>
+<h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202241917572.png"></p>
+<p>交易数据(Transaction) 这是在 Etherscan 中所公开的，可与在 Latest Transaction 中来进行查看，<strong>Latest Transactions -&gt; TX</strong> 在这你可以看到一个钱包到另一个钱包中的 ETH 余额的流动。</p>
+<p>之后我们点进支付方的钱包地址可以看到详细的交易数据，<a target="_blank" rel="noopener" href="https://etherscan.io/tx/0xf2587a71690655cbd5427b7da727fdf19d611c3526c57ebc7d736846310b3c45">Ethereum Transaction Hash (Txhash) Details | Etherscan</a> 他主要包含了如下信息：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Transaction Hash</td>
+<td>事务散列，每单执行事务时所生成的唯一标识符称之为 TxnHash可用于追踪事务的状态</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Status</td>
+<td>当前的交易数据，分为成功和失败，分别对应着交易成功和交易未成功(交易金额将在 gas 后退还 )</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Block</td>
+<td>记录此事务块的编号</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Timestamp</td>
+<td>记录交易后的持续时间，以及记录交易的确切日期和时间。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>From</td>
+<td>发钱人地址</td>
+</tr>
+<tr>
+<td>6</td>
+<td>To</td>
+<td>收款人地址</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Value</td>
+<td>本次交易的金额</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Transaction Fee</td>
+<td>本次交易所产生的费用或实际成本(Txn x GAS)，无论交易是否成功 gas 都会是支付给矿工的</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Gas Price</td>
+<td>这一交易中所使用的最大 gas 单位</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Gas Limit &amp; Usage by Txn</td>
+<td>此次交易使用 gas 的确切单位</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Gas Price</td>
+<td>Gwei 为此交易所指定的天然气单位成本</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Outher</td>
+<td>与该事务相关的一些其他数据</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Input Data</td>
+<td>此事务包含其他数据，通常包含合约交互的一部分或者发给收钱人的信息</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Private Note</td>
+<td>记录交易中的私人注释，只有登入 etherscan 中才可查看</td>
+</tr>
+</tbody></table>
+<p>对于上述 14 中信息的注解，我们可以查阅 Etherscan 中的官方文档来解答我们的问题，通过官方文档中可以了解到很多信息: <a target="_blank" rel="noopener" href="https://info.etherscan.com/what-is-a-transaction-hash-txhash/">What is a Transaction Hash (etherscan.com)</a></p>
+<p>在此之前，我们还需要先了解下<a href="obsidian://open?vault=_posts&file=blockchain%2F2.%E6%B5%81%E5%8A%A8%E6%B1%A0%E4%B8%8EAMM%E8%87%AA%E5%8A%A8%E5%81%9A%E5%B8%82%E6%9C%BA%E5%88%B6">流动池与AMM自动做市</a>机制，之后在通过 <a target="_blank" rel="noopener" href="https://www.bscscan.com/tx/0x00f13be959dfb17688009ddef13d3727d51bd0a6d254a0785ab95500442f6495">BscScan</a> 看块中方法为 <code>Swap Exact Token...</code> 的数据。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202202260937632.png"></p>
+<p>根据上图的解释，我们可以大致看清楚关于<code>Swap Exact Token...</code> 的流动池的交易数据，在区块链中是不存在 <strong>买和卖</strong> 的概念的，只有交易，<code>Value</code> 是交易中的BNB数量，可能为空也有可能有值。</p>
+<p>这些都需要通过 <code>Tokens Transferred</code> 中来进行整理顺序，理清逻辑关系才可以理解到整个交易数据链的意思。</p>
+<p>还需要主要的是，在上述页面中的 <code>Gas Price</code> 即本次交易的 gas 费用为 0.000000005 BNB 也就是 5 gwei，而 “gwei” 是什么我们可以通过 <a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/examples.html?highlight=Gwei#converting-currency-denominations">web3.0 官方文档</a>中的解释来进行对照。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/blockchain/web3.0/python/2.Etherscan%20and%20Bscscan/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/17">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/3.JSP 指令标记和动作标记/">JSP 指令标记</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>常用的Java Server page语言指令有page 和 include指令，而JSP指令用于<strong>h转换阶段</strong>，主要提供整个<strong>JSP 页面的相关信息</strong>，影响由JSP生成的Servlet（应用连接器）整体结构。</p>
+<h2 id="page"><a href="#page" class="headerlink" title="page"></a>page</h2><p>page指令可以用于标记整个Java Server pages页面的一些属性，如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>language</td>
+<td>设置当前页面开发语言</td>
+<td>目前仅仅可以使用java</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>用于应用程序来打开的方式类型</td>
+<td>contentType</td>
+</tr>
+<tr>
+<td></td>
+<td>text&#x2F;html</td>
+<td>HTML网页形式</td>
+</tr>
+<tr>
+<td></td>
+<td>text&#x2F;plain</td>
+<td>普通文本</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;pdf</td>
+<td>PDF文档</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;msword</td>
+<td>Word 应用程序</td>
+</tr>
+<tr>
+<td></td>
+<td>application&#x2F;vnd.ms-powerpowerpoint</td>
+<td>PowerPoint 应用程序</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;jpeg</td>
+<td>JPEG 图像</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;png</td>
+<td>PNG 图像</td>
+</tr>
+<tr>
+<td></td>
+<td>image&#x2F;gif</td>
+<td>GIF 图像</td>
+</tr>
+<tr>
+<td>pageEncoding</td>
+<td>charset 服务器发送给客户浏览器时所见到的网页内容编码</td>
+<td>pageEncoding是指JSP文件自身存储时的所用编码</td>
+</tr>
+<tr>
+<td>charset</td>
+<td>charset 和pageEncoding 一样，都是网页内容编码，如果pageEncoding不存在则使用<code>charset</code></td>
+<td>如果都不存在这使用默认编码<code>ISO-8859-1</code></td>
+</tr>
+</tbody></table>
+<h2 id="include"><a href="#include" class="headerlink" title="include"></a>include</h2><p>include指令可以用于当一个网站中有多个Java Server pages页面需要显示同样的信息时，为了减少代码量和易于阅读可以使用<code>include</code>指令进行处理。Inculde指令的作用就是将一个jsp文件、Html网页文件或其他文本静态嵌入到当前jsp页面之中。</p>
+<h3 id="NewFile-jsp"><a href="#NewFile-jsp" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;%@ include file=<span class="string">&quot;NewFile1.jsp&quot;</span>%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile1-jsp"><a href="#NewFile1-jsp" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;Hello,world!&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JSP-动作标记"><a href="#JSP-动作标记" class="headerlink" title="JSP 动作标记"></a>JSP 动作标记</h1><p>JSP 指令标记和动作标记的区别主要是指令标记以<code>&lt;%@</code>开始，的指令。而JSP动作标记则是由Java Server pages引起在请求阶段时处理的，而不是和指令一样在翻译为Servlet(应用连接器)阶段处理的。<br>在通常的情况之下，动作标记主要有 <strong>include、forward、param、useBean、getProperty、setProperty、useBean、getProperty、setProperty等</strong></p>
+<h2 id="include-动作标记"><a href="#include-动作标记" class="headerlink" title="include 动作标记"></a>include 动作标记</h2><p>include动作标记的主要作用就是将JSP文件、HTML文件或其他文本文件动态嵌入到当前的Java Server Pages页面之中</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:include page=<span class="string">&quot;file&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>例子</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;jsp:include page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile-jsp-1"><a href="#NewFile-jsp-1" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	out.println(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;jsp:include page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NewFile1-jsp-1"><a href="#NewFile1-jsp-1" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h3><figure class="highlight plaintext"><figcaption><span>page language</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(&quot;Hello,world!&quot;);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="forward-动作标记"><a href="#forward-动作标记" class="headerlink" title="forward 动作标记"></a>forward 动作标记</h2><p>forward 动作标记的作用是从该标记出现出停止当前的Java server pages 页面的继续执行并转向<code>指定</code>的forward动作标记中page属性值的指定JSP页面。</p>
+<h3 id="判断数值"><a href="#判断数值" class="headerlink" title="判断数值"></a>判断数值</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;%</span><br><span class="line">	<span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"> 	<span class="keyword">if</span> (min == <span class="number">10</span>) &#123;</span><br><span class="line"> 		out.println(<span class="string">&quot;min = 10&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">        <span class="comment">// 当数字型成员变量min为10时，forward将会执行NewFile1.jsp内的内容</span></span><br><span class="line"> 		&lt;jsp:forward page=<span class="string">&quot;NewFile1.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;%</span><br><span class="line"> 	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> 		out.println(<span class="string">&quot;min != 10&quot;</span>);</span><br><span class="line"> 	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">        <span class="comment">// 当数字型成员变量min不为10时，forward将会执行NewFile2.jsp内的内容</span></span><br><span class="line">	&lt;jsp:forward page=<span class="string">&quot;NewFile2.jsp&quot;</span>/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/2.JSP 元素与变量/">JSP 元素</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Java Server pages 语言元素之中，可一份为注释、成员变量、程序片、方法等都可以被称之为Java Server pages元素。其中成员变量的元素为“**&lt;%! %&gt;<strong>”，而局部变量为“</strong>&lt;% %&gt;”**。</p>
+<h2 id="Java-Server-pages-注释"><a href="#Java-Server-pages-注释" class="headerlink" title="Java Server pages 注释"></a>Java Server pages 注释</h2><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%--</span><br><span class="line">	创建一个字符串成类型成员变量 <span class="string">&quot;content&quot;</span></span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	输出成员变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(content);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>在Java Server pages语言之中，注释可以使用<code>&lt;%-- --%&gt;</code>进行注释，Jsp引擎将JSP注释当作是该语言之中真正的注释，在编译JSP页面时候将会忽略注释代码行，因此当编译后用户访问JSP页面是无法查看其JSP注释的。由于Java Server pages语言属于非脚本语言，所以Java Server pages也支持“<code>\\</code>”注释。</p>
+<h2 id="成员变量-lt"><a href="#成员变量-lt" class="headerlink" title="成员变量 (&lt;%!)"></a>成员变量 (&lt;%!)</h2><h3 id="创建成员变量"><a href="#创建成员变量" class="headerlink" title="创建成员变量"></a>创建成员变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>Java Server pages语言可以使用<code>&lt;%! %&gt;</code>来创建Jsp成员变量，凡是在标记符<code>&lt;%! %&gt;</code>中的变量都将被称之为“<strong>成员变量</strong>”，可以是Java Server pages语言当前允许的任何数据类型。</p>
+<h3 id="调用成员变量"><a href="#调用成员变量" class="headerlink" title="调用成员变量"></a>调用成员变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%--</span><br><span class="line">	创建一个字符串成类型成员变量 <span class="string">&quot;content&quot;</span></span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	<span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> <span class="string">&quot;Hello,world!&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	输出成员变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(content);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>通过创建Java Server pages中的成员变量，然后根据使用Java Server pages 程序片（<code>&lt;% %&gt;</code>）来调用刚刚的字符串类型成员变量（<code>content</code>），然后我们输出成员变量:</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">    out.println(content);</span><br><span class="line">&amp;&gt;</span><br></pre></td></tr></table></figure>
+<p>来输出<code>content</code>成员变量中的字符串类型成员变量</p>
+<h2 id="局部变量-lt"><a href="#局部变量-lt" class="headerlink" title="局部变量 (&lt;%)"></a>局部变量 (&lt;%)</h2><h3 id="创建与输出局部变量"><a href="#创建与输出局部变量" class="headerlink" title="创建与输出局部变量"></a>创建与输出局部变量</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%-- </span><br><span class="line">	局部变量</span><br><span class="line"> --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="comment">// 创建整数型变量&quot;num&quot;，默认值为“10”</span></span><br><span class="line">	<span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">	<span class="comment">// num 整数类变量+1.</span></span><br><span class="line">	num++;</span><br><span class="line">	out.println(<span class="string">&quot;num = &quot;</span> + num);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>凡是在Java Server pages内声明的变量都被Java Server pages语言的成员方法，在<strong>整个方法JSP内有效</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;%–</td>
+<td>注释</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>&#x2F;&#x2F;</td>
+<td>注释</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;%!</td>
+<td>成员变量</td>
+<td>变量</td>
+</tr>
+<tr>
+<td>&lt;%</td>
+<td>局部变量</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/12.JSP JDBC MySQL 数据库访问与操作/">JSP JDBC  MySQL 数据库访问与操作</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Java Server Pages语言之中，可通过各种关系数据库Oracle、SQL Server、MySQL来与Java Server pages进行访问与操作。</p>
+<h2 id="什么是-JDBC"><a href="#什么是-JDBC" class="headerlink" title="什么是 JDBC"></a>什么是 JDBC</h2><p>JDBC（Java DataBase Connectivity）是Java平台核心类库的一个部分，他主要由一组标准接口和类组成，通常可使用JBDC执行<code>与指定的数据库建立连接、向以连接的数据库建立连接、处理SQL命令的返回结果</code>，本文主要使用JDBC进行对数据库进行操作即访问。</p>
+<h3 id="添加数据库驱动程序"><a href="#添加数据库驱动程序" class="headerlink" title="添加数据库驱动程序"></a>添加数据库驱动程序</h3><p>由于本书使用的是MySQL8数据库，所以需要添加相应的MySQL8数据库驱动程序，而流程就是<code>http://www.jiangxue.org.cn/mysql-connector-java-8.0.19.jar</code>进行下载，之后将下载后的jar文件添加到项目工程中的<code>WEB-INF/bin</code>目录下即可。</p>
+<h3 id="导入数据库驱动程序语法"><a href="#导入数据库驱动程序语法" class="headerlink" title="导入数据库驱动程序语法"></a>导入数据库驱动程序语法</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="连接数据库前期操作"><a href="#连接数据库前期操作" class="headerlink" title="连接数据库前期操作"></a>连接数据库前期操作</h2><h3 id="新建数据库"><a href="#新建数据库" class="headerlink" title="新建数据库"></a>新建数据库</h3><p>在Java Server pages中，连接数据库前提是指定一个数据库进行连接，之后在进行一些相关的操作，本章我们需要新建一个<code>testsp</code>库，其MySQL语法为：<br><img src="/_v_images/20201203092845546_1991465929.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE testsp;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+<h4 id="查看数据库列表"><a href="#查看数据库列表" class="headerlink" title="查看数据库列表"></a>查看数据库列表</h4><p>在新建完数据库后，可使用以下MySQL语法进行查询：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| message_tal        |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">| testsp             |</span><br><span class="line">| user_zsun          |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建数据库表"><a href="#新建数据库表" class="headerlink" title="新建数据库表"></a>新建数据库表</h3><h4 id="进入数据库"><a href="#进入数据库" class="headerlink" title="进入数据库"></a>进入数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use testsp</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
+<h4 id="新建数据库表-1"><a href="#新建数据库表-1" class="headerlink" title="新建数据库表"></a>新建数据库表</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE testuser (</span><br><span class="line">    -&gt; name char(15),</span><br><span class="line">    -&gt; age int(20)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.03 sec)</span><br></pre></td></tr></table></figure>
+<h3 id="插入表数据"><a href="#插入表数据" class="headerlink" title="插入表数据"></a>插入表数据</h3><h4 id="sunone"><a href="#sunone" class="headerlink" title="sunone"></a>sunone</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO testuser(name,age) VALUES(&#x27;sunone&#x27;,21);</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+<h4 id="kuntwo"><a href="#kuntwo" class="headerlink" title="kuntwo"></a>kuntwo</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO testuser(name,age) VALUES(&#x27;kuntwo&#x27;,22);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="JSP数据库操作"><a href="#JSP数据库操作" class="headerlink" title="JSP数据库操作"></a>JSP数据库操作</h2><p>在Java Server Pages之中，可通过Java Server Pages 中的指令标记（<code>page</code>）以及动作标记（<code>include</code>）或者使用局部变量（<code>&lt;%</code>）进行连接，本书主要使用include动作标记进行连接即操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql:setDataSource var=&quot;snapshot&quot; driver=&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">	url=&quot;jdbc:mysql://localhost:3306/数据库?characterEncoding=utf-8&quot;</span><br><span class="line">	 user=&quot;数据库帐号&quot; password=&quot;数据库密码&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sql:DataSource</td>
+<td>连接数据库</td>
+<td></td>
+</tr>
+<tr>
+<td>sql:query</td>
+<td>执行数据库语句</td>
+<td></td>
+</tr>
+<tr>
+<td>forEach</td>
+<td>定义迭代标记</td>
+<td></td>
+</tr>
+<tr>
+<td>out</td>
+<td>输出数据</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="连接MySQL数据库"><a href="#连接MySQL数据库" class="headerlink" title="连接MySQL数据库"></a>连接MySQL数据库</h3><h4 id="普通连接"><a href="#普通连接" class="headerlink" title="普通连接"></a>普通连接</h4><h5 id="添加外部驱动"><a href="#添加外部驱动" class="headerlink" title="添加外部驱动"></a>添加外部驱动</h5><p>在连接数据库之前，需要引入<code>jstl.jar，以及mysql-connector-java-8.0.22.jar</code>外部jar包，可通过分别访问<code>http://www.jiangxue.org.cn/jstl-1.2.jar</code>以及&#96;&#96;&#96;&#96;<a target="_blank" rel="noopener" href="http://www.jiangxue.org.cn/mysql-connector-java-8.0.22.jar%60%60%60%E8%BF%9B%E8%A1%8C%E4%B8%8B%E8%BD%BD%EF%BC%8C%E5%90%8E%E7%A7%BB%E5%8A%A8%E6%B7%BB%E5%8A%A0%E5%88%B0%60%60%60WEB-INF/lib%60%60%60%E4%B9%8B%E4%B8%AD%E5%8D%B3%E5%8F%AF%EF%BC%8C%E5%A6%82%E7%BC%BA%E5%B0%91jstl.jar%E5%8C%85%E5%88%99%E4%BC%9A%E5%9C%A8%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF500%E7%9A%84%E9%94%99%E8%AF%AF%E3%80%82">http://www.jiangxue.org.cn/mysql-connector-java-8.0.22.jar```进行下载，后移动添加到```WEB-INF/lib```之中即可，如缺少jstl.jar包则会在运行过程中出现错误500的错误。</a></p>
+<h5 id="引入import-taglib"><a href="#引入import-taglib" class="headerlink" title="引入import taglib"></a>引入import taglib</h5><p>Java Server Pages之中可通过分别引入Java 对应包以及外部驱动可进行MySQL Jsp&amp;Java类及页面的编写，需要引入的包如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.io.*,java.util.*,java.sql.*&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;javax.servlet.http.*,javax.servlet.*&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/sql&quot;</span> prefix=<span class="string">&quot;sql&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="连接池链接"><a href="#连接池链接" class="headerlink" title="连接池链接"></a>连接池链接</h4><p>在所有的开发语言之中，使当前页面或程序连接数据库都是一个消耗资源的活动，需要及分钟或几秒中的时间来执行连接数据库在最后操作数据库这一时间消耗，如对一个大型的动态网站，在几百人甚至几千人、几万人频繁的分别请求或连接数据库则会导致服务器崩溃或服务器连接较慢的问题。<br>从上图可以看出，用户1通过请求数据库中的线程，然后在请求到<code>连接池（也即缓冲池）</code>来取得一个链接<code>（首先连接池中有一定的数量连接）</code>，然后使用<code>完毕之后将当前的连接放回到连接池之中</code>。<br>通常，在第一次连接池时，需要花费几秒或几分的连接时间，&#96;&#96;&#96;导致这种问题的原因则是连接池中没有连接，而第二次连接中连接池就有了可用的连接，可直接从连接池中获得连接来访问目标数据库。</p>
+<h5 id="NewFile-jsp"><a href="#NewFile-jsp" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">    &lt;%@ page import=&quot;java.sql.*&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;jsp:useBean id=&quot;conpool&quot; class=&quot;bean.SqlLink&quot; scope=&quot;application&quot; /&gt;</span><br><span class="line">&lt;body bgcolor=&quot;AliceBule&quot;&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		Connection connection = null;</span><br><span class="line">		Statement statement = null;</span><br><span class="line">		ResultSet resultset = null;</span><br><span class="line">		</span><br><span class="line">		try &#123;</span><br><span class="line">			// 使用在SqlLink中定义的构造方法getOneCon连接池中获取一个连接对象</span><br><span class="line">			connection = conpool.getOneCon();</span><br><span class="line">			if (connection == null) &#123;</span><br><span class="line">			    // // 如数据库连接池不足或为空则输出</span><br><span class="line">			 	out.print(&quot;No!&quot;);			</span><br><span class="line">			 	return;</span><br><span class="line">			&#125;</span><br><span class="line">			statement = connection.createStatement();</span><br><span class="line">			resultset = statement.executeQuery(&quot;SELECT * FROM testuser&quot;);</span><br><span class="line">			out.print(&quot;&lt;table border=1&gt;&quot;);</span><br><span class="line">				out.print(&quot;&lt;tr&gt;&quot;);</span><br><span class="line">					out.print(&quot;&lt;th&gt;name&lt;/th&gt;&quot;);</span><br><span class="line">					out.print(&quot;&lt;th&gt;age&lt;/th&gt;&quot;);</span><br><span class="line">				out.print(&quot;&lt;/tr&gt;&quot;);</span><br><span class="line">			while (resultset.next()) &#123;</span><br><span class="line">				out.print(&quot;&lt;tr&gt;&quot;);</span><br><span class="line">					out.print(&quot;&lt;td&gt;&quot;+ resultset.getString(1) + &quot;&lt;/td&gt;&quot;);</span><br><span class="line">					out.print(&quot;&lt;td&gt;&quot;+ resultset.getString(2) + &quot;&lt;/td&gt;&quot;);</span><br><span class="line">				out.print(&quot;&lt;/tr&gt;&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">			out.print(&quot;&lt;/table&gt;&quot;);</span><br><span class="line">		&#125; catch (SQLException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				if (resultset != null) &#123;</span><br><span class="line">					resultset.close();</span><br><span class="line">				&#125;</span><br><span class="line">				if (statement != null) &#123;</span><br><span class="line">					statement.close();</span><br><span class="line">				&#125;</span><br><span class="line">				if (resultset != null) &#123;</span><br><span class="line">					// 通过调用releaseCon方法将连接返回至连接池中</span><br><span class="line">					conpool.releaseCon(connection);</span><br><span class="line">				&#125; </span><br><span class="line">			&#125; catch (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="SqlLink-java"><a href="#SqlLink-java" class="headerlink" title="SqlLink.java"></a>SqlLink.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> bean;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SqlLink</span> &#123;</span><br><span class="line">	ArrayList&lt;Connection&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Connection&gt;();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//Set SqlLink 15</span></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">SqlLink</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Sql Link set up 15</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> link=<span class="number">0</span>;link&lt;<span class="number">15</span>;link++) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql://localhost:3306/testsp?characterEncoding=utf-8&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;password&quot;</span>);</span><br><span class="line">				list.add(connection);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Link SQL</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">synchronized</span> Connection <span class="title function_">getOneCon</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="comment">// 移除连接池中的一个连接</span></span><br><span class="line">			<span class="keyword">return</span> list.remove(<span class="number">0</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// 如连接对象用完</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 将连接返还连接池中</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">releaseCon</span><span class="params">(Connection connection)</span> &#123;</span><br><span class="line">		list.add(connection);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库查询、插入、删除"><a href="#数据库查询、插入、删除" class="headerlink" title="数据库查询、插入、删除"></a>数据库查询、插入、删除</h2><h3 id="数据库查询"><a href="#数据库查询" class="headerlink" title="数据库查询"></a>数据库查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.*,java.util.*,java.sql.*&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;javax.servlet.http.*,javax.servlet.*&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/sql&quot; prefix=&quot;sql&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;sql:setDataSource var=&quot;snapshot&quot; driver=&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">	url=&quot;jdbc:mysql://localhost:3306/testsp?characterEncoding=utf-8&quot;</span><br><span class="line">	 user=&quot;username&quot; password=&quot;password&quot;/&gt;</span><br><span class="line">&lt;sql:query var=&quot;result&quot; dataSource=&quot;$&#123;snapshot&#125;&quot;&gt;SELECT * FROM testuser;&lt;/sql:query&gt;</span><br><span class="line"></span><br><span class="line">&lt;table border=&quot;1&quot; width=&quot;100%&quot;&gt;</span><br><span class="line">	&lt;tr&gt;</span><br><span class="line">		&lt;th&gt;name&lt;/th&gt;</span><br><span class="line">		&lt;th&gt;age&lt;/th&gt;</span><br><span class="line">	&lt;/tr&gt;</span><br><span class="line">&lt;c:forEach var=&quot;row&quot; items=&quot;$&#123;result.rows&#125;&quot;&gt;</span><br><span class="line">	&lt;tr&gt;</span><br><span class="line">		&lt;td&gt;&lt;c:out value=&quot;$&#123;row.name&#125;&quot;/&gt;&lt;/td&gt;</span><br><span class="line">		&lt;td&gt;&lt;c:out value=&quot;$&#123;row.age&#125;&quot;/&gt;&lt;/td&gt;</span><br><span class="line">	&lt;/tr&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库插入"><a href="#数据库插入" class="headerlink" title="数据库插入"></a>数据库插入</h3><p>在Java Server pages之中，可使用executeUpdate(String sql)方法主要用于执行<code>INSERT\UPDATE</code>的操作，即插入和删除等数据库语句，本次主要使用局部语句进行编写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.*,java.util.*,java.sql.*&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;javax.servlet.http.*,javax.servlet.*&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/sql&quot; prefix=&quot;sql&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	Connection connection = null;	</span><br><span class="line">	Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</span><br><span class="line">	connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/testsp&quot;,&quot;root&quot;,&quot;password&quot;);</span><br><span class="line">	</span><br><span class="line">	try &#123;</span><br><span class="line">		Statement stringdata = connection.createStatement();</span><br><span class="line">		String myData = &quot;INSERT INTO testuser(name,age) VALUES(&#x27;kunkun&#x27;,10)&quot;;</span><br><span class="line">		stringdata.executeUpdate(myData);</span><br><span class="line">		out.print(&quot;Yes!&quot;);</span><br><span class="line">	&#125; catch(SQLException e) &#123;</span><br><span class="line">		out.print(&quot;No!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="数据库删除"><a href="#数据库删除" class="headerlink" title="数据库删除"></a>数据库删除</h3><p>于数据库插入语句一样，都是使用<code>executeUpdate(String sql)</code>方法来执行<code>INSERT\UPDATE</code>的插入和删除的数据库语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.*,java.util.*,java.sql.*&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;javax.servlet.http.*,javax.servlet.*&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/sql&quot; prefix=&quot;sql&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	Connection connection = null;	</span><br><span class="line">	Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</span><br><span class="line">	connection = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/testsp&quot;,&quot;root&quot;,&quot;password&quot;);</span><br><span class="line">	</span><br><span class="line">	try &#123;</span><br><span class="line">		Statement stringdata = connection.createStatement();</span><br><span class="line">		String myData = &quot;DELETE FROM testuser WHERE name = &#x27;kunkun&#x27;&quot;;</span><br><span class="line">		stringdata.executeUpdate(myData);</span><br><span class="line">		out.print(&quot;Yes!&quot;);</span><br><span class="line">	&#125; catch(SQLException e) &#123;</span><br><span class="line">		out.print(&quot;No!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/11.Servlet 文件上传/">JSP Servlet 文件上传</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Java Server Pages语言之中，文件上传功能主要通过<code>Servlet</code>或<code>Part</code>文件对象进行实现，其中在Servlet3.0之前的版本无法直接进行文件上传的支持，需要使用第三方框架。</p>
+<h2 id="MultipartConfig"><a href="#MultipartConfig" class="headerlink" title="@MultipartConfig"></a>@MultipartConfig</h2><p>@MultipartConfig 主要引用与Servlet中,其可提供对文件上传的支持，该注解主要写在Servlet之上。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>location</td>
+<td>string</td>
+<td>指定上传目录</td>
+</tr>
+<tr>
+<td>maxFileSize</td>
+<td>long</td>
+<td>对上传文件大小进行限制（默认值为-1，即没有限制）</td>
+</tr>
+<tr>
+<td>maxRequestSize</td>
+<td>login</td>
+<td>指定上传文件个数 （默认值为-1，即没有限制）</td>
+</tr>
+</tbody></table>
+<h2 id="Part"><a href="#Part" class="headerlink" title="Part"></a>Part</h2><p>在文件上传之中，每个文件通常使用<code>javax.servlet.http.Part</code>对象进行表示，当单个上传文件时会通过对象调用方法<code>getPart(String name)</code>来获取Part文件对象。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void delete()</td>
+<td>上出任何相关的临时文件</td>
+<td></td>
+</tr>
+<tr>
+<td>String getContentType()</td>
+<td>获取客户端浏览器设置的MIME类型</td>
+<td></td>
+</tr>
+<tr>
+<td>String getHeader(String name)</td>
+<td>获取指定part头的一个字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>InputStream getInputStream()</td>
+<td>获取一个输入流、用于读取文件内容</td>
+<td></td>
+</tr>
+<tr>
+<td>String getName()</td>
+<td>获取表单文件域名称</td>
+<td></td>
+</tr>
+<tr>
+<td>long getSize()</td>
+<td>获取文件大小</td>
+<td></td>
+</tr>
+<tr>
+<td>void write(String fileName)</td>
+<td>将文件上传到fileName指定的目录</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="multipart-x2F-form-data"><a href="#multipart-x2F-form-data" class="headerlink" title="multipart&#x2F;form-data"></a>multipart&#x2F;form-data</h3><p>在Java Server Pages之中，一般常用的Servlet文件上传主要使用<code>multipart/form-data</code>来进行实现。而如果使用multipart&#x2F;form-data实现需要使用外部扩展jar包，可通过<code>http://www.jiangxue.org.cn/MultipartRequest.jar</code>进行下载后放入<code>WEB-INF/lib</code>之中即可。</p>
+<h4 id="index-jsp"><a href="#index-jsp" class="headerlink" title="index.jsp"></a>index.jsp</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;Upfile&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">	File:&lt;input type=&quot;file&quot; name=&quot;filename&quot;/&gt;</span><br><span class="line">	&lt;input type=&quot;submit&quot; value=&quot;up file&quot;/&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="Upfile-jsp"><a href="#Upfile-jsp" class="headerlink" title="Upfile.jsp"></a>Upfile.jsp</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">import com.oreilly.servlet.MultipartRequest;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Servlet implementation class Upfile</span><br><span class="line"> */</span><br><span class="line">public class Upfile extends HttpServlet &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line">       </span><br><span class="line">    /**</span><br><span class="line">     * @see HttpServlet#HttpServlet()</span><br><span class="line">     */</span><br><span class="line">    public Upfile() &#123;</span><br><span class="line">        super();</span><br><span class="line">        // TODO Auto-generated constructor stub</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">	 */</span><br><span class="line">	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		response.getWriter().append(&quot;Served at: &quot;).append(request.getContextPath());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">	 */</span><br><span class="line">	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		response.setContentType(&quot;text/html;charset=utf-8&quot;);</span><br><span class="line">		PrintWriter out = response.getWriter();</span><br><span class="line">		</span><br><span class="line">		// Part</span><br><span class="line">		MultipartRequest multipartrequest = new MultipartRequest(request,&quot;/home/sun/Downloads&quot;);</span><br><span class="line">		out.print(&quot;File,ok!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">id</span>=<span class="string">&quot;WebApp_ID&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Upfile<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>Upfile<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Upfile<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/Upfile<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/10.Expression Language与Java Server Pages Standard Tag Library/">JSP Expression Language与Java Server Pages Standard Tag Library</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>介绍表达式语言（Expression Language）和JSP标准标签库（Java Sever Pages Standard Tag Libray），在Java Server Pages页面之中， 可以显示逻辑，由于一般页面之中会夹杂很多HTML与Java的代码会给开发维护人员造成困难，这时可以使用EL来访问和处理应用程序数据，减少了Java的代码块使用。</p>
+<h2 id="EL（Expression-Language）"><a href="#EL（Expression-Language）" class="headerlink" title="EL（Expression Language）"></a>EL（Expression Language）</h2><p>EL是JSP2.0规范之中的语言，基本语法和PHP代码风格相似，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;code&#125;</span><br></pre></td></tr></table></figure>
+<p>EL语句中的表达式会被直接显示到浏览器中进行显示，可通过<code>isLIgnored</code>属性来查看是否支持EL的表达式，当返回false时即JSP可以使用EL表达式，如isELIgnored属性微true时则JSP页面不能使用EL表达式输出，但会将原有EL表达式转换为字符串字符串进行输出。</p>
+<h3 id="错误处理机制"><a href="#错误处理机制" class="headerlink" title="错误处理机制"></a>错误处理机制</h3><p>Expression Language中存在一个对开发人员非常友好的错误处理机制，那就是当Java Server Pages页面中Expression Language语法是不会报错的，如果出错则在Java Server Pages中不会出现。则不会像Eclipse web内置服务器中启动时的红色状态提醒，相比只想Expression Language简直对开发人员非常友好。</p>
+<h3 id="EL-常量与操作符"><a href="#EL-常量与操作符" class="headerlink" title="EL 常量与操作符"></a>EL 常量与操作符</h3><h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>Expression Language与其他开发语言一样，常量中包含布尔、整数、浮点数、字符串以及NULL等，其在Java Server Pages页面中可以通过Expression Language语法进行定义如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&quot;Hello,world!&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>在Java Server pages中，可以使用Expression Language来去除数组中的元素，可通过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;array[0]&#125;</span><br></pre></td></tr></table></figure>
+<p>Code</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;%@ page isELIgnored=&quot;false&quot; %&gt;</span><br><span class="line">    </span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">String dogs[] = &#123;&quot;jiangxue&quot;,&quot;zhongshan&quot;,&quot;sif&quot;&#125;;</span><br><span class="line">request.setAttribute(&quot;array&quot;,dogs);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">$&#123;array[0]&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><p>Expression Language与通常的开发语言一样，可通过el进行运算符进行计算：</p>
+<h5 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+<td>${1+1}</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+<td>${2-1}</td>
+</tr>
+<tr>
+<td>×</td>
+<td>乘法</td>
+<td>${1*2}</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+<td>${1&#x2F;2}</td>
+</tr>
+<tr>
+<td>%</td>
+<td>求余</td>
+<td>${1%2}</td>
+</tr>
+</tbody></table>
+<h5 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;</td>
+<td>等于</td>
+<td>eq</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不等于</td>
+<td>ne</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>lt</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+<td>gt</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于或等于</td>
+<td>le</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于或等于</td>
+<td>ge</td>
+</tr>
+</tbody></table>
+<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+<td>and</td>
+</tr>
+<tr>
+<td>ll</td>
+<td>逻辑或</td>
+<td>or</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+<td>not</td>
+</tr>
+</tbody></table>
+<h4 id="隐含对象"><a href="#隐含对象" class="headerlink" title="隐含对象"></a>隐含对象</h4><p>在Java Server Pages Expression Language隐含对象共有11个，而常用的隐含对象则有：&#96;&#96;&#96;pageScope、requestScope、sessionScope、applicationScope、param和param Values。</p>
+<h5 id="作用范围"><a href="#作用范围" class="headerlink" title="作用范围"></a>作用范围</h5><p>通常，常用的Expression Language的隐含对象分别微：<code>pageScope、requestScope、sessionScope、applicationScope，</code>分别可以对Java Server Pages获取内置对象<code>pageContext、request、session、application</code>中的数据。</p>
+<h6 id="param"><a href="#param" class="headerlink" title="param"></a>param</h6><p>param对象可用于获取请求参数值，本书主要分为<code>NewFile.jsp</code>和<code>login.jsp</code>，NewFile.jsp用于提交，login.jsp主要用于获取NewFile.jsp中的值。</p>
+<p><strong>NewFile.jsp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;%@ page isELIgnored=&quot;false&quot; %&gt;</span><br><span class="line">    </span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language NewFile&lt;/h1&gt;</span><br><span class="line">&lt;form action=&quot;login.jsp&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;input type = &quot;text&quot; name = &quot;user&quot; id = &quot;user&quot;&gt;</span><br><span class="line">	&lt;button type=&quot;sumbit&quot;&gt;up&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>login.jsp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Expression Language login&lt;/h1&gt;</span><br><span class="line">$&#123;param.user&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="pageContext"><a href="#pageContext" class="headerlink" title="pageContext"></a>pageContext</h6><p>pageContext即页面上下文对象，可用于访问Java Server Pages中内置对象中的&#96;&#96;&#96;request、response、out、session、exception、page、servletContext，获取相关的属性。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pageContext.request.serverPort</td>
+<td>当前端口</td>
+<td>request</td>
+</tr>
+<tr>
+<td>pageContext.response.contentType</td>
+<td>页面编码</td>
+<td>response</td>
+</tr>
+<tr>
+<td>pageContext.out.bufferSize</td>
+<td>访问out对象</td>
+<td>out</td>
+</tr>
+<tr>
+<td>pageContext.session.maxInactiveInterval</td>
+<td>访问session 对象</td>
+<td>session</td>
+</tr>
+<tr>
+<td>pageContext.exception.message</td>
+<td>访问exception 对象</td>
+<td>exception</td>
+</tr>
+<tr>
+<td>pageContext.servletContext.contextPath</td>
+<td>当前工作目录</td>
+<td>servletContext</td>
+</tr>
+</tbody></table>
+<h2 id="JSTL-Java-Server-Pages-Standard-Tag-Library"><a href="#JSTL-Java-Server-Pages-Standard-Tag-Library" class="headerlink" title="JSTL (Java Server Pages Standard Tag Library)"></a>JSTL (Java Server Pages Standard Tag Library)</h2><p>JSTL是Sun公司进行制定的规范，由Apache Jarkarta小组进行负责并实现，JSTL由标准标签库由五个不同功能的标签库所组成。</p>
+<h3 id="lt-c-out-gt"><a href="#lt-c-out-gt" class="headerlink" title="&lt;c:out&gt;"></a>&lt;c:out&gt;</h3><p>&lt;c:out&gt;标签可以用来显示一个过大是的结果，与<code>&lt;%= %&gt;作用相似</code>。，在Java Server Pages Stajdard Tag Library<code>&lt;c:out&gt;</code>由如下属性：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>输出内容</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td>默认输出值</td>
+<td></td>
+</tr>
+<tr>
+<td>escapeXml</td>
+<td>是否忽略xml特殊字符</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="使用JSTL-输出文字"><a href="#使用JSTL-输出文字" class="headerlink" title="使用JSTL 输出文字"></a>使用JSTL 输出文字</h4><h5 id="添加环境"><a href="#添加环境" class="headerlink" title="添加环境"></a>添加环境</h5><p>在编写JSTL（Java Server Pages Standard Tag Library）时，可使用Tomcat或直接使用语法进行引用，本书仅使用第二种进行演示，以下语法主要插入在第二行之中：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="value"><a href="#value" class="headerlink" title="value"></a>value</h5><p>value在Java Server Pages Standard Tag Library中可以输出指定的内容，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:out value=&quot;Hello&quot;&gt;</span><br><span class="line">	defaultValue</span><br><span class="line">&lt;/c:out&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="default"><a href="#default" class="headerlink" title="default"></a>default</h5><p>在Java Server Pages Standard Tag Library中的<code>default</code>主要用于当<code>value</code>中值不存在时，就会输出<code>default</code>中的数据，即默认输出值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;param.data&#125;&quot; default=&quot;Value No data&quot; /&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-c-set-gt-与-lt-c-remove-gt-即赋值与删除赋值"><a href="#lt-c-set-gt-与-lt-c-remove-gt-即赋值与删除赋值" class="headerlink" title="&lt;c:set&gt; 与 &lt;c:remove&gt; 即赋值与删除赋值"></a>&lt;c:set&gt; 与 &lt;c:remove&gt; 即赋值与删除赋值</h3><p>&lt;c:set&gt;主要在Java Server Pages Standard Tag Library中主要用于<code>设置作用域变量</code>，也可设置JavaBean属性：</p>
+<h4 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h4><p>将value 赋值给变量Name，其主要通过<code>&lt;c:set&gt;</code>进行赋值，之后<code>$&#123;&#125;</code>进行获取：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sif&quot; var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 获取变量 --&gt;</span><br><span class="line">$&#123;Name&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>其主要相当于Java中的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% session.setAttribute(<span class="string">&quot;Name&quot;</span>,<span class="string">&quot;sif&quot;</span>); %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除赋值-（-lt-c-remove-gt-）"><a href="#删除赋值-（-lt-c-remove-gt-）" class="headerlink" title="删除赋值 （&lt;c:remove&gt;）"></a>删除赋值 （&lt;c:remove&gt;）</h4><p>&lt;c:remove&gt;主要可以进行删除某个变量，可以写为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sif&quot; var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">&lt;!-- remove Name --&gt;</span><br><span class="line">&lt;c:remove var=&quot;Name&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">$&#123;Name&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="流程控制标签"><a href="#流程控制标签" class="headerlink" title="流程控制标签"></a>流程控制标签</h3><h4 id="lt-c-if-gt-x2F-lt-c-else-gt"><a href="#lt-c-if-gt-x2F-lt-c-else-gt" class="headerlink" title="&lt;c:if&gt; &#x2F; &lt;c:else&gt;"></a>&lt;c:if&gt; &#x2F; &lt;c:else&gt;</h4><p>在Java Server Pages Standard Tag Library中，可以使用<code>&lt;c:if&gt;</code>来实现if语句，其中条件表达式可以是EL、JSP等。如果满足则执行&lt;c:if&gt;中的code，如果不满足则会使用&lt;c:esle&gt;中的code，但这也只仅仅是给想法，<code>&lt;c:else&gt; 不在JSTL中存在</code>。<br>如果像实现在条件成立时执行一块code,不成立时执行的code，则可以使用<code>:&lt;c:choose&gt;、&lt;c:when&gt;以及&lt;c:otherwise&gt;标签</code>，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:choose&gt;</span><br><span class="line">    &lt;c:when test=&quot;条件1&quot;&gt;</span><br><span class="line">        // code</span><br><span class="line">    &lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test=&quot;条件2&quot;&gt;</span><br><span class="line">        // code</span><br><span class="line">    &lt;/c:when&gt;</span><br><span class="line">    &lt;c:otherwise&gt;</span><br><span class="line">        表达式不正确时，执行主体</span><br><span class="line">    &lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="if……if……else"><a href="#if……if……else" class="headerlink" title="if……if……else"></a>if……if……else</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;c:set value=&quot;sun&quot; var=&quot;user&quot; scope=&quot;page&quot;/&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">    // 满足li时执行</span><br><span class="line">	&lt;c:when test=&quot;$&#123;user == &#x27;li&#x27;&#125;&quot;&gt;</span><br><span class="line">		&lt;c:out value=&quot;li&quot;/&gt;</span><br><span class="line">	&lt;/c:when&gt;</span><br><span class="line">	// 满足sun时执行</span><br><span class="line">	&lt;c:when test=&quot;$&#123;user == &#x27;sun&#x27;&#125;&quot;&gt;</span><br><span class="line">		&lt;c:out value=&quot;sun&quot;/&gt;</span><br><span class="line">	&lt;/c:when&gt;</span><br><span class="line">	// 都不满足时执行</span><br><span class="line">	&lt;c:otherwise&gt;</span><br><span class="line">		&lt;c:out value=&quot;other&quot;/&gt;</span><br><span class="line">	&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环标签"><a href="#循环标签" class="headerlink" title="循环标签"></a>循环标签</h3><h4 id="lt-c-forEach-gt"><a href="#lt-c-forEach-gt" class="headerlink" title="&lt;c:forEach&gt;"></a>&lt;c:forEach&gt;</h4><p>&lt;c:forEach&gt;标签可以用于在Java Server Pages Standard Tag Library中实现for循环。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot;</span><br><span class="line">	contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;c:out&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span><br><span class="line">	list.add(&quot;one&quot;);</span><br><span class="line">	list.add(&quot;two&quot;);</span><br><span class="line">	list.add(&quot;three&quot;);</span><br><span class="line">	request.setAttribute(&quot;list&quot;,list);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;requestScope.list&#125;&quot; var=&quot;keyword&quot; varStatus=&quot;id&quot;&gt;</span><br><span class="line">	$&#123;id.index &#125; $&#123;keyword &#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他标签"><a href="#其他标签" class="headerlink" title="其他标签"></a>其他标签</h3><h4 id="lt-e-forTokens-gt"><a href="#lt-e-forTokens-gt" class="headerlink" title="&lt;e:forTokens&gt;"></a>&lt;e:forTokens&gt;</h4><p>&lt;e:forTokens&gt;标签主要用于分割字符串，其主要可通过<code>&quot;:&quot;</code>来实现字符串的分割：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forTokens items=&quot;one:two:three&quot; delims=&quot;:&quot; var=&quot;name&quot;&gt;</span><br><span class="line">	$&#123;name&#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forTokens&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="URL标签"><a href="#URL标签" class="headerlink" title="URL标签"></a>URL标签</h5><p>在Java Server Pages Standard Tag Library中，主要提供来三种URL操作的相关标签，分别为<code>&lt;c:url&gt;、&lt;c:redirect&gt;、&lt;c:import&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;c:url&gt;</td>
+<td>标签主要构建一个url地址</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;c:param&gt;</td>
+<td>指定url地址传递参数</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;c:redirect&gt;</td>
+<td>主要用于重定向其他url，即直接跳转：</td>
+<td></td>
+</tr>
+</tbody></table>
+<h6 id="lt-c-url-gt"><a href="#lt-c-url-gt" class="headerlink" title="&lt;c:url&gt;"></a>&lt;c:url&gt;</h6><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>指定构造URL</td>
+<td></td>
+</tr>
+<tr>
+<td>var</td>
+<td>指定报构造的url保存到范围域中的属性名称</td>
+<td></td>
+</tr>
+<tr>
+<td>scope</td>
+<td>指定构造url保存到范围域中</td>
+<td></td>
+</tr>
+<tr>
+<td>context</td>
+<td>指定url地址所属到同一web下</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;Java Server Pages Standard Tag Library&lt;/h1&gt;</span><br><span class="line">&lt;a href=&quot;&lt;c:url value=&quot;http://zsdk.org.cn/&quot;/&gt;&quot;&gt;Up zsdk.org.cn&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，&lt;c:url&gt;标签主要构建一个url地址，可通过上述或以下写法进行编写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot;/&gt;</span><br><span class="line">&lt;a href=&quot;$&#123;gourl&#125;&quot;&gt;up zsdk.org.cn&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="lt-c-param-gt"><a href="#lt-c-param-gt" class="headerlink" title="&lt;c:param&gt;"></a>&lt;c:param&gt;</h6><p>&lt;c:param&gt;标签向指定url地址传递参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot; context=&quot;/src&quot; scope=&quot;page&quot;&gt;</span><br><span class="line">	&lt;c:param name=&quot;user&quot; value=&quot;chenheng&quot;/&gt;</span><br><span class="line">	&lt;c:param name=&quot;pass&quot; value=&quot;pass&quot;/&gt;</span><br><span class="line">&lt;/c:url&gt;</span><br><span class="line">&lt;a href=&quot;$&#123;gourl&#125;&quot;&gt;go url&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h6 id="lt-c-redirect-gt"><a href="#lt-c-redirect-gt" class="headerlink" title="&lt;c:redirect&gt;"></a>&lt;c:redirect&gt;</h6><p>&lt;c:redirect&gt;主要在Java Server Pages Standard Tag Library 主要用于重定向其他url，即直接跳转：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:url value=&quot;http://zsdk.org.cn/&quot; var=&quot;gourl&quot;/&gt;</span><br><span class="line">&lt;c:redirect url=&quot;$&#123;gourl &#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Java server pages/1.JSP 基础/">JSP 基础</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>JSP即Java Server Pages 即“JAVA 服务器页面”，是一种动态网页技术，由Sun Microsystems公司所倡导的一种动态网页技术标准。JSP主要实在传统网页HTML文件中插入JAVA程序代码块，和JSP标记，从而形成的*.jsp文件，主要应用在跨平台，可通过各种系统中运行。</p>
+<h2 id="什么是JSP文件"><a href="#什么是JSP文件" class="headerlink" title="什么是JSP文件"></a>什么是JSP文件</h2><p>JSP文件即Java Server Pages保存的文件格式，在一个JSP文件之中可以拥有普通的HTML标记，JSP规定的标记以及JAVA程序。其保存的扩展名也是”.jsp”，保存名称可以由字母、下划线、数字等组成。</p>
+<h2 id="JSP-运行原理"><a href="#JSP-运行原理" class="headerlink" title="JSP 运行原理"></a>JSP 运行原理</h2><p>当WEB Server上的页面被客户端进行请求时，WEB上的JSP文件将会被JSP引擎将JSP文件<strong>转译</strong>成Java文件，并将Java文件编译成字节码文件。而字节码在服务端上创建一个Java Servlet服务连接器对象，然后执行该对象。同时发送一个HTML页面到客户端响应的请求。<br>当JSP页面被再次请求时，JSP引擎为每个客户端启动一个线程并将执行的对应服务连接器（Java Servlet）请求。（这也是JSP响应速度比较快的原因之一，可以理解为浏览器缓存一样的技术）</p>
+<h3 id="Jsp引擎处理流程"><a href="#Jsp引擎处理流程" class="headerlink" title="Jsp引擎处理流程"></a>Jsp引擎处理流程</h3><h4 id="1-HTML"><a href="#1-HTML" class="headerlink" title="1.HTML"></a>1.HTML</h4><p>将JSP页面中的静态元素即HTML代码块直接发欧式那个客户端浏览器进行显示；</p>
+<h4 id="2-HTML-gt-JAVA"><a href="#2-HTML-gt-JAVA" class="headerlink" title="2.HTML -&gt; JAVA"></a>2.HTML -&gt; JAVA</h4><p>将JSP页面中的动态元素即Java和JSP代码块进行必要的处理，然后将需要显示的结果发送给客户端浏览器。</p>
+<h3 id="创建一个JSP文件"><a href="#创建一个JSP文件" class="headerlink" title="创建一个JSP文件"></a>创建一个JSP文件</h3><h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4><p>首先启动Eclipse ，之后选择File -&gt; New -&gt; Other</p>
+<p>然后选择Web -&gt; Dynamic Web Project</p>
+<p>填写后信息在Mawen项目构建目录中选中WebContent中右击New -&gt; Jsp File输入名称后即可完成项目的创建。</p>
+<h4 id="编写的一个JSP页面"><a href="#编写的一个JSP页面" class="headerlink" title="编写的一个JSP页面"></a>编写的一个JSP页面</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+<p>需要用上述代码块让Java Server Pages来识别该文件和代码是Jsp项目文件，否则将无法输出或输出的不是预期项目。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello,world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>有前端基础的读者会发现JSP还支持简单的HTML语句，在JSP之中，我们可以在<code>&lt;body&gt;</code>中加入需要的Java Server Pages代码块，也可以使用基本的Html元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;center&gt;&lt;p&gt;Hello,world!&lt;/p&gt;&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>以上是完整的Java Script Pages代码块实例</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/Maven/">Java Maven</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="archetype"><a href="#archetype" class="headerlink" title="archetype"></a>archetype</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">|- archetype</span><br><span class="line">|		|- bin</span><br><span class="line">|		|		|- src</span><br><span class="line">|		|		|	|- main</span><br><span class="line">|		|		|		|- resources</span><br><span class="line">|		|		|			|- archetype-resources</span><br><span class="line">|		|		|			|	|- src</span><br><span class="line">|		|		|			|	|	|- main</span><br><span class="line">|		|		|			|	|	|	|- java</span><br><span class="line">|		|		|			|	|	|		|- App.class</span><br><span class="line">|		|		|			|	|	|- test</span><br><span class="line">|		|		|			|	|		|- java</span><br><span class="line">|		|		|			|	|			|- AppTest.class</span><br><span class="line">|		|		|			|	|- pom.xml</span><br><span class="line">|		|		|			|- META-INF</span><br><span class="line">|		|		|				|- maven</span><br><span class="line">|		|		|					|- archetype.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|		|- main</span><br><span class="line">|		|			|- resources</span><br><span class="line">|		|				|- archetype-resources</span><br><span class="line">|		|				|	|- src</span><br><span class="line">|		|				|	|	|- main</span><br><span class="line">|		|				|	|		|- java</span><br><span class="line">|		|				|	|			|- App.java</span><br><span class="line">|		|				|	|	|- test</span><br><span class="line">|		|				|	|		|- java</span><br><span class="line">|		|				|	|			|- AppTest.java</span><br><span class="line">|		|				|	|- pom.xml</span><br><span class="line">|		|				|- META-INF</span><br><span class="line">|		|					|- maven</span><br><span class="line">|		|					|- archetype.xml</span><br><span class="line">|		|- target</span><br><span class="line">|		|		|- classes</span><br><span class="line">|		|		|	|- META-INF</span><br><span class="line">|		|		|		|- maven</span><br><span class="line">|		|		|			|- archetype</span><br><span class="line">|		|		|				|- archetype</span><br><span class="line">|		|		|- pom.pro.perties</span><br><span class="line">|		|		|- pom.xml</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="Simple"><a href="#Simple" class="headerlink" title="Simple"></a>Simple</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">|- project</span><br><span class="line">|		|- ear</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- m2e-wtp</span><br><span class="line">|		|	|		|- ear-resources</span><br><span class="line">|		|	|		|- MATE-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- root.project</span><br><span class="line">|		|	|					|- ear</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- ejbs</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|		|- resources</span><br><span class="line">|		|	|			|- META-INF</span><br><span class="line">|		|	|				|- ejb-jar.xml</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes	</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- root.project</span><br><span class="line">|		|	|					|- ejbs</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- primary-source</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- root.project</span><br><span class="line">|		|	|					|- primary-source</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- projects</span><br><span class="line">|		|	|- logging</span><br><span class="line">|		|	|	|- bin</span><br><span class="line">|		|	|	|	|- target</span><br><span class="line">|		|	|	|	|	|- classes</span><br><span class="line">|		|	|	|	|		|- META-INF</span><br><span class="line">|		|	|	|	|			|- maven</span><br><span class="line">|		|	|	|	|				|- root.project.projects</span><br><span class="line">|		|	|	|	|					|- logging</span><br><span class="line">|		|	|	|	|						|- pom.properties</span><br><span class="line">|		|	|	|	|						|- pom.xml</span><br><span class="line">|		|	|	|	|- pom.xml</span><br><span class="line">|		|	|	|- target</span><br><span class="line">|		|	|	|	|- classes</span><br><span class="line">|		|	|	|	|	|- META-INF</span><br><span class="line">|		|	|	|	|		|- maven</span><br><span class="line">|		|	|	|	|			|- root.project.projects</span><br><span class="line">|		|	|	|	|				|- logging</span><br><span class="line">|		|	|	|	|					|- pom.properties</span><br><span class="line">|		|	|	|	|					|- pom.xml</span><br><span class="line">|		|	|	|	|- test-classes</span><br><span class="line">|		|	|	|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- serviets</span><br><span class="line">|		|	|- servlet</span><br><span class="line">|		|	|	|- src</span><br><span class="line">|		|	|	|	|- main</span><br><span class="line">|		|	|	|		|- webapp</span><br><span class="line">|		|	|	|			|- WEB-INF</span><br><span class="line">|		|	|	|				|- web.xml</span><br><span class="line">|		|	|	|			|- index.jsp</span><br><span class="line">|		|	|	|- target</span><br><span class="line">|		|	|	|	|- m2e-wtp</span><br><span class="line">|		|	|	|		|- web-resources</span><br><span class="line">|		|	|	|			|- META-INF</span><br><span class="line">|		|	|	|				|- maven</span><br><span class="line">|		|	|	|					|- root.project.servlets</span><br><span class="line">|		|	|	|						|- servlet</span><br><span class="line">|		|	|	|							|- pom.properties</span><br><span class="line">|		|	|	|							|- pom.xml</span><br><span class="line">|		|	|	|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- main</span><br><span class="line">|		|	|	|- resources</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">|- plugin</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- it</span><br><span class="line">|		|	|	|- simple-it</span><br><span class="line">|		|	|	|	|- pom.xml</span><br><span class="line">|		|	|	|	|- verify.groovy</span><br><span class="line">|		|	|	|- settings.xml</span><br><span class="line">|		|	|- main</span><br><span class="line">|		|	|	|- java</span><br><span class="line">|		|	|		|- plugin</span><br><span class="line">|		|	|		|- plugin</span><br><span class="line">|		|	|			|- MyMojo.java</span><br><span class="line">|		|- bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- it</span><br><span class="line">|		|	|	|	|- simple-ti</span><br><span class="line">|		|	|	|	|	|- pom.xml</span><br><span class="line">|		|	|	|	|	|- verify.groovy</span><br><span class="line">|		|	|	|	|- settings.xml</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|	|	|- java</span><br><span class="line">|		|	|	|		|- plugin</span><br><span class="line">|		|	|	|		|- plugin</span><br><span class="line">|		|	|	|			|- MyMojo.class</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- plugin</span><br><span class="line">|		|	|				|- plugin</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|	|- META-INF</span><br><span class="line">|		|	|		|- maven</span><br><span class="line">|		|	|			|- plugin</span><br><span class="line">|		|	|			|- plugin</span><br><span class="line">|		|	|				|- pom.properties</span><br><span class="line">|		|	|				|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugin-site"><a href="#plugin-site" class="headerlink" title="plugin-site"></a>plugin-site</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">|- plugin-site</span><br><span class="line">|		| - bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- site</span><br><span class="line">|		|	|		|- apt</span><br><span class="line">|		|	|		|	|- examples</span><br><span class="line">|		|	|		|	|	|- example.apt</span><br><span class="line">|		|	|		|	|- index.apt</span><br><span class="line">|		|	|		|	|- usage.apt</span><br><span class="line">|		|	|		|- site.xml</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- plugin-site</span><br><span class="line">|		|	|				|- plugin-site</span><br><span class="line">|		|	|					|- pom.properties</span><br><span class="line">|		|	|					|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- site</span><br><span class="line">|		|		| - apt</span><br><span class="line">|		|		|	|- examples</span><br><span class="line">|		|		|	|	|- example.apt</span><br><span class="line">|		|		|	|- index.apt</span><br><span class="line">|		|		|	|- usage.apt</span><br><span class="line">|		|		|- site.xml</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|	|- META-INF</span><br><span class="line">|		|	|		|- maven</span><br><span class="line">|		|	|		|- plugin-site</span><br><span class="line">|		|	|		|- plugin-site</span><br><span class="line">|		|	|			|- pom.properties</span><br><span class="line">|		|	|			|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="portlet"><a href="#portlet" class="headerlink" title="portlet"></a>portlet</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">|- portlet</span><br><span class="line">|		|- bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|		|- java</span><br><span class="line">|		|	|		|	|- portlet</span><br><span class="line">|		|	|		|	|- portlet</span><br><span class="line">|		|	|		|	|	|- MyPortlet.class</span><br><span class="line">|		|	|		|- jetspeed</span><br><span class="line">|		|	|		|	|- web.xml</span><br><span class="line">|		|	|		|- resources</span><br><span class="line">|		|	|		|- webapp</span><br><span class="line">|		|	|		|	|- WEB-INF</span><br><span class="line">|		|	|		|	|	|- tld</span><br><span class="line">|		|	|		|	|	|- portlet.tld</span><br><span class="line">|		|	|		|	|- help.jsp</span><br><span class="line">|		|	|		|	|- maximized.jsp</span><br><span class="line">|		|	|		|	|- normal.jsp</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|	|-m2e-wtp</span><br><span class="line">|		|	|		|- web-resources</span><br><span class="line">|		|	|			|- META-INF</span><br><span class="line">|		|	|			|	|- maven</span><br><span class="line">|		|	|				|- portlet</span><br><span class="line">|		|	|						|- portlet</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|		|- java</span><br><span class="line">|		|	|		|	|- portlet</span><br><span class="line">|		|	|		|	|- portlet</span><br><span class="line">|		|	|		|	|	|- MyPortlet.class</span><br><span class="line">|		|	|		|- jetspeed</span><br><span class="line">|		|	|		|	|- web.xml</span><br><span class="line">|		|	|		|- resources</span><br><span class="line">|		|	|		|- webapp</span><br><span class="line">|		|	|		|	|- WEB-INF</span><br><span class="line">|		|	|		|	|	|- tld</span><br><span class="line">|		|	|		|	|	|- portlet.tld</span><br><span class="line">|		|	|		|	|	|- web.xml</span><br><span class="line">|		|	|		|	|- help.jsp</span><br><span class="line">|		|	|		|	|- maximized.jsp</span><br><span class="line">|		|	|		|	|- normal.jsp</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|- m22e-wtp</span><br><span class="line">|		|	|	|- web-resources</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- portlet</span><br><span class="line">|		|	|					|- portlet</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="profiles"><a href="#profiles" class="headerlink" title="profiles"></a>profiles</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">|- profiles</span><br><span class="line">|		|- bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|	|	|- java</span><br><span class="line">|		|	|	|		|- profiles</span><br><span class="line">|		|	|	|			|- profiles</span><br><span class="line">|		|	|	|				|- App.class</span><br><span class="line">|		|	|	|- test</span><br><span class="line">|		|	|		|- java</span><br><span class="line">|		|	|			|- profiles</span><br><span class="line">|		|	|				|- profiles</span><br><span class="line">|		|	|					|- AppTest.class</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- profiles</span><br><span class="line">|		|	|					|- profiles</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- main</span><br><span class="line">|		|	|	|- java</span><br><span class="line">|		|	|		|- profiles</span><br><span class="line">|		|	|			|- profiles</span><br><span class="line">|		|	|				|- App.java</span><br><span class="line">|		|	|- test</span><br><span class="line">|		|		|- java</span><br><span class="line">|		|			|- profiles</span><br><span class="line">|		|				|- profiles</span><br><span class="line">|		|					|- AppTest.java</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|	|- META-INF</span><br><span class="line">|		|	|		|- maven</span><br><span class="line">|		|	|			|- profiles</span><br><span class="line">|		|	|				|- profiles</span><br><span class="line">|		|	|					|- pom.properties</span><br><span class="line">|		|	|					|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="quickstart"><a href="#quickstart" class="headerlink" title="quickstart"></a>quickstart</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">|- quickstart</span><br><span class="line">|		|-bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- main</span><br><span class="line">|		|	|	|	|- java</span><br><span class="line">|		|	|	|		|- quickstart</span><br><span class="line">|		|	|	|			|- quickstart</span><br><span class="line">|		|	|	|				|- App.class</span><br><span class="line">|		|	|	|- test</span><br><span class="line">|		|	|		|- java</span><br><span class="line">|		|	|			|- quickstart</span><br><span class="line">|		|	|				|- quickstarat</span><br><span class="line">|		|	|					|- AppTest.class</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- quickstart</span><br><span class="line">|		|	|					|- quickstart</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- main</span><br><span class="line">|		|	|	|- java</span><br><span class="line">|		|	|		|- quickstart</span><br><span class="line">|		|	|			|- quickstart</span><br><span class="line">|		|	|				|- App.java</span><br><span class="line">|		|	|- test</span><br><span class="line">|		|		|- java</span><br><span class="line">|		|			|- quickstart</span><br><span class="line">|		|				|- quickstart</span><br><span class="line">|		|					|- AppTest.java</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|	|- META-INF</span><br><span class="line">|		|	|		|- maven</span><br><span class="line">|		|	|			|- quickstart</span><br><span class="line">|		|	|				|- quickstart</span><br><span class="line">|		|	|					|- pom.properties</span><br><span class="line">|		|	|					|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|-pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="site"><a href="#site" class="headerlink" title="site"></a>site</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">|- site</span><br><span class="line">|		|- bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- site</span><br><span class="line">|		|	|		|- apt</span><br><span class="line">|		|	|		|	|- format.apt</span><br><span class="line">|		|	|		|	|- index.apt</span><br><span class="line">|		|	|		|- fml</span><br><span class="line">|		|	|		|	|- faq.fml</span><br><span class="line">|		|	|		|- fr</span><br><span class="line">|		|	|		|	|- apt</span><br><span class="line">|		|	|		|	|	|- format.apt</span><br><span class="line">|		|	|		|	|	|- index.apt</span><br><span class="line">|		|	|		|	|- fml</span><br><span class="line">|		|	|		|	|	|-faq.fml</span><br><span class="line">|		|	|		|	|- xdoc</span><br><span class="line">|		|	|		|	|- xdoc.xml</span><br><span class="line">|		|	|		|- xdoc</span><br><span class="line">|		|	|		|	|- site.xml</span><br><span class="line">|		|	|		|	|- site.fr.xml</span><br><span class="line">|		|	|		|- site.xml</span><br><span class="line">|		|	|		|- site_fr.xml</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- site</span><br><span class="line">|		|	|					|- site</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- site</span><br><span class="line">|		|		|- apt</span><br><span class="line">|		|		|		|- format.apt</span><br><span class="line">|		|		|		|- index.apt</span><br><span class="line">|		|		|- fml</span><br><span class="line">|		|		|		|- faq.fml</span><br><span class="line">|		|		|- fr</span><br><span class="line">|		|		|		|- apt</span><br><span class="line">|		|		|		|	|- format.apt</span><br><span class="line">|		|		|		|	|- index.apt</span><br><span class="line">|		|		|		|- fml</span><br><span class="line">|		|		|		|	|-faq.fml</span><br><span class="line">|		|		|		|- xdoc</span><br><span class="line">|		|		|		|- xdoc.xml</span><br><span class="line">|		|		|- xdoc</span><br><span class="line">|		|		|		|- xdox.xml</span><br><span class="line">|		|		|- site.xml</span><br><span class="line">|		|		|- site_fr.xml</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|	|- META-INF</span><br><span class="line">|		|	|		|- maven</span><br><span class="line">|		|	|			|- site</span><br><span class="line">|		|	|				|- site</span><br><span class="line">|		|	|					|- pom.properties</span><br><span class="line">|		|	|					|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="Simple-1"><a href="#Simple-1" class="headerlink" title="Simple"></a>Simple</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|- simple</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- apt</span><br><span class="line">|		|	|	|- index.apt</span><br><span class="line">|		|	|- site.xml</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="webapp"><a href="#webapp" class="headerlink" title="webapp"></a>webapp</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">|- webapp</span><br><span class="line">|		|- bin</span><br><span class="line">|		|	|- src</span><br><span class="line">|		|	|	|- resources</span><br><span class="line">|		|	|	| - webapp</span><br><span class="line">|		|	|		|- WEB-INF</span><br><span class="line">|		|	|		|	|- web.xml</span><br><span class="line">|		|	|		| index.jsp</span><br><span class="line">|		|	|- target</span><br><span class="line">|		|	|	|- classes</span><br><span class="line">|		|	|	|- m2e-wtp</span><br><span class="line">|		|	|		|- web-resources</span><br><span class="line">|		|	|			|- META-INF</span><br><span class="line">|		|	|				|- maven</span><br><span class="line">|		|	|					|- webapp</span><br><span class="line">|		|	|						|- webapp</span><br><span class="line">|		|	|							|- pom.properties</span><br><span class="line">|		|	|							|- pom.xml</span><br><span class="line">|		|	|- pom.xml</span><br><span class="line">|		|- src</span><br><span class="line">|		|	|- main</span><br><span class="line">|		|		|- resources</span><br><span class="line">|		|		|- webapp</span><br><span class="line">|		|			|- WEB-INF</span><br><span class="line">|		|			|	|- web.xml</span><br><span class="line">|		|			|- index.jsp</span><br><span class="line">|		|- target</span><br><span class="line">|		|	|- classes</span><br><span class="line">|		|	|- m2e-wtp</span><br><span class="line">|		|	|	|- web-resources</span><br><span class="line">|		|	|		|- META-INF</span><br><span class="line">|		|	|			|- maven</span><br><span class="line">|		|	|				|- webapp</span><br><span class="line">|		|	|					|-webapp</span><br><span class="line">|		|	|						|- pom.properties</span><br><span class="line">|		|	|						|- pom.xml</span><br><span class="line">|		|	|- test-classes</span><br><span class="line">|		|- pom.xml</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/JAVA 正则表达式实例/">JAVA 正则表达式实例</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="1-手机号规则"><a href="#1-手机号规则" class="headerlink" title="1.手机号规则"></a>1.手机号规则</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;18123739515&quot;</span>;</span><br><span class="line"><span class="comment">// ^为正则开始，￥为表示正则结束</span></span><br><span class="line"><span class="type">String</span> <span class="variable">reg</span> <span class="operator">=</span> <span class="string">&quot;^1[3|4|5|8][1-9]\\d&#123;8&#125;$&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化正则表达式</span></span><br><span class="line"><span class="type">patter</span> <span class="variable">patter</span> <span class="operator">=</span> Pattern.compile(reg);</span><br><span class="line"><span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(str);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是否符合正则表达式要求</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">bo</span> <span class="operator">=</span> matcher.matches();</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-1-3-4-5-8"><a href="#1-1-1-3-4-5-8" class="headerlink" title="1.1 1[3|4|5|8]"></a>1.1 1[3|4|5|8]</h3><p>​		首先我们的手机号一般以1×× 开头，那正则表达式应为 <strong>“1[3|4|5|8]”</strong> [1|3]的意思就是1 or 3.</p>
+<h3 id="1-2-0-9"><a href="#1-2-0-9" class="headerlink" title="1.2 [0-9]"></a>1.2 [0-9]</h3><p>​		然后我们手机号除去开头三位数为**8位，构造正则表达式为 [0-9]**，也就是0～8.</p>
+<p>​		</p>
+<h3 id="1-3-d"><a href="#1-3-d" class="headerlink" title="1.3 [\\d]"></a>1.3 [\\d]</h3><p>​		之后我们要匹配任意数字自然需要使用<strong>\\d</strong>来表达匹配任意数字.</p>
+<h3 id="1-4-8"><a href="#1-4-8" class="headerlink" title="1.4 {8}"></a>1.4 {8}</h3><p>​		然后我们还需要精准匹配前三位的开头数字需要使用 **{8}**，也就是精准匹配8前面的数字。</p>
+<h2 id="2-名称规则"><a href="#2-名称规则" class="headerlink" title="2.名称规则"></a>2.名称规则</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;a__123213_3asdas!#&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">reg</span> <span class="operator">=</span> <span class="string">&quot;[a-z_!@#][A-Z_!@#][A-Za-z1-9_!@#]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化</span></span><br><span class="line"><span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Patterncompile(reg);</span><br><span class="line"><span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(str);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检测是否正确</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">bo</span> <span class="operator">=</span> matcher.matches();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-a-z"><a href="#2-1-a-z" class="headerlink" title="2.1 [a-z_!@#]"></a>2.1 [a-z_!@#]</h3><p>​	首先我们可以让名称A~Z如**[a-z_!@#]**，让用户可以输入a～z和一些特殊符号_!@#。</p>
+<h3 id="2-2-A-Z"><a href="#2-2-A-Z" class="headerlink" title="2.2 [A-Z_!@#]"></a>2.2 [A-Z_!@#]</h3><p>​	当然你也可以使用大写的定义正则为**[A-Z_!@#]**，让用户可以输入A~Z的字母和特殊符号_!@#。</p>
+<h3 id="2-3-A-Za-z1-9"><a href="#2-3-A-Za-z1-9" class="headerlink" title="2.3 [A-Za-z1-9_!@#]"></a>2.3 [A-Za-z1-9_!@#]</h3><p>​		如果还想让用户可以输入数字可以定义为**[A-Za-z1-9_!@#]**，使用户可以输出A～Z、a~z、1～9和特殊字符！@#等。</p>
+<h3 id="2-4"><a href="#2-4" class="headerlink" title="2.4 +"></a>2.4 +</h3><p>​	而**+是匹配0或1个在他之钱的字符，放在最后用于匹配他之前的正则式子**	</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/9.JAVA 日期时间/">JAVA 日期时间</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="java-util-Date"><a href="#java-util-Date" class="headerlink" title="java.util.Date"></a>java.util.Date</h2><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toString</td>
+<td>Sun Aug 02 15:57:31 CST 2020</td>
+</tr>
+<tr>
+<td>%t<strong>c</strong>%n</td>
+<td>周日 8月 02 16:11:04 CST 2020</td>
+</tr>
+<tr>
+<td>%t<strong>F</strong>%n</td>
+<td>2020-08-02</td>
+</tr>
+<tr>
+<td>%t<strong>D</strong>%n</td>
+<td>08&#x2F;02&#x2F;20</td>
+</tr>
+<tr>
+<td>%t<strong>r</strong>%n</td>
+<td>04:14:24 下午</td>
+</tr>
+<tr>
+<td>%t<strong>T</strong>%n</td>
+<td>16:14:24</td>
+</tr>
+<tr>
+<td>%t<strong>R</strong>%n</td>
+<td>16:14</td>
+</tr>
+</tbody></table>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">Date</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> (Date &lt; <span class="number">1</span>)&#123;</span><br><span class="line">			Date++;</span><br><span class="line">			System.out.println(<span class="string">&quot;&quot;</span> + date.toString());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="tN-n"><a href="#tN-n" class="headerlink" title="%tN%n"></a>%tN%n</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 周日 8月 02 16:14:24 CST 2020</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tc%n&quot;</span>,date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 2020-08-02</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tF%n&quot;</span>,date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 08/02/20</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tD%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 04:14:24 下午</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tr%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 16:14:24</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tT%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 16:14</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tR%n&quot;</span>, date);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/java/8.JAVA Switch case/">JAVA Switch case</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>​		Switch case 语句可进行匹配,比如将<strong>char</strong>定义为<strong>10</strong>,然后根据<strong>Switch case <strong>语句进行查询,如</strong>char &#x3D; 10 <strong>的时候,如果</strong>Switch case 的值正好为 10 时,则执行case &#x3D; 10 的语句</strong>.如果<strong>不是</strong>则<strong>默认输出</strong>*<strong>default</strong>内的信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (c) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">		<span class="comment">// 10</span></span><br><span class="line">		<span class="keyword">break</span>:</span><br><span class="line">	<span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">	 	<span class="comment">// 20</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="comment">// 如果都不是?</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​		</p>
+<p>​		实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> <span class="number">10</span>; </span><br><span class="line">		<span class="keyword">switch</span> (c) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">				System.out.println(<span class="string">&quot;小孩子&quot;</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">				</span><br><span class="line">			<span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="number">18</span>:</span><br><span class="line">				System.out.println(<span class="string">&quot;年轻人&quot;</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				System.out.println(<span class="string">&quot;你还是个人?&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/19">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

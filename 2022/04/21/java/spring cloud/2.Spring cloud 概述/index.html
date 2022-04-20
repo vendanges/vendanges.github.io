@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud 概述 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud 概述</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525030152.png"></p>
+<p>Spring cloud 是一个基于 Spring boot 的一个快速开发的微服务框架，有一句话是 <strong>小项目用 spring boot，大项目用 spring cloud</strong>，他主要九个非常重要且显著的特征。</p>
+<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>在介绍Spring cloud 各类特性和主要项目以及开源生态之前，我们需要了解表现层状态转换（REST，Representational State Transfer），由 Roy T. Fielding博士于 2000年在博士论文中提出。其提供出来的主要是一种互联网软件 <strong>设计风格</strong>，目的是方便软件或程序在互联网中互相传递信息。</p>
+<p>在 Roy 的博士论文中我们可以看到其清楚的定义了下列六种知道原则，也就是我们将满足 REST 六种指导原则的风格称之为 RESTful：</p>
+<ol>
+<li>客户端-服务器（Client-Server）</li>
+<li>无状态（Stateless）</li>
+<li>缓存 (Cache)</li>
+<li>统一接口（Uniform Interface）</li>
+<li>分层系统（Layered System）</li>
+<li>按需编码（Code On Demand）</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</a></p>
+</blockquote>
+<p>在这之后根据这篇论文进行了详细和系统的完善，使得更加具有了可读性：<a target="_blank" rel="noopener" href="https://restfulapi.net/">https://restfulapi.net/</a></p>
+<h3 id="客户端-服务器（Client-Server）"><a href="#客户端-服务器（Client-Server）" class="headerlink" title="客户端-服务器（Client-Server）"></a>客户端-服务器（Client-Server）</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210608033023.png"><br>在REST中，被第一个添加的则是客户端和服务器之间的架构风格约束，而他的关注点是客户端-服务器约束背后的原则。<strong>通过将用户界面与存数据存储问题进行分开， 这提高了用户界面跨平台的移植性以及简化了服务器组建，提高了扩展性。</strong></p>
+<h3 id="无状态（Stateless）"><a href="#无状态（Stateless）" class="headerlink" title="无状态（Stateless）"></a>无状态（Stateless）</h3><p>根据客户端和-服务器通信中，我们假设通信本质是无状态（Stateless）的，即客户端到服务器的每个请求都不会存储上下文（会话完全保留在客户机上）。</p>
+<p>而这些约束改善了 可见性、可靠性、可扩展性等，其中最为明显的则是可扩展性。</p>
+<blockquote>
+<p>This constraint induces the properties of visibility, reliability, and scalability. Visibility is improved because a monitoring system does not have to look beyond a single request datum in order to determine the full nature of the request. Reliability is improved because it eases the task of recovering from partial failures. Scalability is improved because not having to store state between requests allows the server component to quickly free resources, and further simplifies implementation because the server doesn’t have to manage resource usage across requests.</p>
+</blockquote>
+<p>他的缺点是可能会增加一系列请求中发送的重复数据，从而降低网络性能等方面。</p>
+<h3 id="缓存-Cache"><a href="#缓存-Cache" class="headerlink" title="缓存 (Cache)"></a>缓存 (Cache)</h3><p>缓存存在的意义则是在 REST 中提高网络效率，缓存主要被约束为请求的响应中内的数据隐式（或显示）标记为 <strong>可缓存或不可缓存</strong>。</p>
+<p>如果是可缓存的，则在客户端缓存有权为以后同样效果的请求重新应用该响应数据。</p>
+<h3 id="统一接口（Uniform-Interface）"><a href="#统一接口（Uniform-Interface）" class="headerlink" title="统一接口（Uniform Interface）"></a>统一接口（Uniform Interface）</h3><p>在 REST 架构风格中与其他类似架构风格有明显区分的就是组件之间的统一接口，他简化了整个系统架构并提高了交互的可见性。</p>
+<p>为了实现和获得统一接口，需要多个架构约束来指导组件的行为，而 REST 则是由四个接口约束定义：</p>
+<h4 id="资源识别-identification-of-resources"><a href="#资源识别-identification-of-resources" class="headerlink" title="资源识别 (identification of resources)"></a>资源识别 (identification of resources)</h4><p>请求中包含了各种独立资源的标识，如 Url等。除此之外还可以将自身的数据库信息以 HTML、XML、JSON等方式发送给客户端。</p>
+<h4 id="操纵资源-manipulation-of-resources-through-representations"><a href="#操纵资源-manipulation-of-resources-through-representations" class="headerlink" title="操纵资源 ( manipulation of resources through representations)"></a>操纵资源 ( manipulation of resources through representations)</h4><p>当客户端拥有资源标识后，就可以根据足够的信息删除这个资源</p>
+<h4 id="描述信息-self-descriptive-messages"><a href="#描述信息-self-descriptive-messages" class="headerlink" title="描述信息 (self-descriptive messages)"></a>描述信息 (self-descriptive messages)</h4><p>每个消息都包含了可以描述来如何处理这个信息的方式，如媒体类型（media type）以及最后修改时间 (modified time)</p>
+<h3 id="分层系统（Layered-System）"><a href="#分层系统（Layered-System）" class="headerlink" title="分层系统（Layered System）"></a>分层系统（Layered System）</h3><p><img src="https://www.ics.uci.edu/~fielding/pubs/dissertation/layered_uccss.gif"><br>分层系统的样式允许通过约束组件行为为使得每个组件 <strong>”不能“</strong> 看到与其直接交互的直接层之外的其他层，将架构由分层组成。2</p>
+<blockquote>
+<p>需要注意的是很多文档都将  用超媒体驱动应用状态，“hypermedia as the engine of application state” 夹在里面，实际上他的意思为 ”超媒体 <strong>作为</strong> 应用程序状态引擎“</p>
+</blockquote>
+<h3 id="按需编码（Code-On-Demand）"><a href="#按需编码（Code-On-Demand）" class="headerlink" title="按需编码（Code On Demand）"></a>按需编码（Code On Demand）</h3><p>按照 Roy 论文来理解，按需编码在 REST 其实是一个可选约束，并提供了一个非常不错的例子：</p>
+<blockquote>
+<p>例如，如果已知组织内的所有客户端软件都支持 Java，则可以构建该组织内的服务，以便通过下载的Java 类来获得增强功能的好处。</p>
+<p>但问题在于组织的防火墙可能会组织外部资源传输到 Java 小程序，对于 Web 的其他部分，某些客户端可能不支持该代码。</p>
+</blockquote>
+<p>而按需编码所提供的 可选约束就允许我们设计一个在一般情况下支持所需行为的架构。</p>
+<p>当然这是一种理解，而第二种理解就偏向与实际，大多数形式下返回的资源都以 XML或JSON表示，但是需要的时候，我们可以自由的返回可执行代码。</p>
+<p>来支持自己应用程序的部分，根据按需编码的约束这是允许的，因为这属于 ”可选约束“。</p>
+<blockquote>
+<p>应用与 Web 服务</p>
+<p>我们可以根据 REST 的设计风格为 Web API 进行设计，符合其统一接口约束即可以被称之为 ”RESTful API“，他主要就是以统一接口的三个约束原则而定义的。</p>
+<p><strong>资源识别</strong> 我们可以理解为 资源地址的 URL，如 <code>http://example.com/resources</code><br><strong>传输的资源（描述信息）</strong>  Web服务接受与返回的媒体类型，如 <code>JSON、XML</code>等<br>而对 <strong>操纵资源</strong>则是所支持的一系列请求方法，如 POST、GET、PUT、DELETE 等。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210608033034.png"></p>
+<p>如果你说你要实现一个 REST设计风格的 RESTful API，则可以参照下述例子：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 所有文章</span><br><span class="line">GET http://www.example.com/list</span><br><span class="line"></span><br><span class="line">2. 阅读某篇文章</span><br><span class="line">GET http://www.example.com/list/&#123;id&#125;</span><br><span class="line"></span><br><span class="line">3. 发布文章</span><br><span class="line">POST http://www.example.com/list/release</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>推荐阅读 <a target="_blank" rel="noopener" href="https://restfulapi.net/resource-naming/">https://restfulapi.net/resource-naming/</a></p>
+</blockquote>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><blockquote>
+<p>Spring cloud 很早就提供了下述特征的实现，但由于早期相关代码和介绍存在与 Spring cloud 的子项目 Spring Cloud Cluster 中，到最后被迁移至 Spring Integration 中。</p>
+<p>这也是为什么 Spring cloud 在官方文档中说了自己的 xx 特征，但又很难找到相关文档的原因，这是因为人家早就把代码和文档迁移到了 Spring Integration 中了。</p>
+</blockquote>
+<h3 id="分布式-版本化管理（Distributed-x2F-versioned-configuration）"><a href="#分布式-版本化管理（Distributed-x2F-versioned-configuration）" class="headerlink" title="分布式\版本化管理（Distributed&#x2F;versioned configuration）"></a>分布式\版本化管理（Distributed&#x2F;versioned configuration）</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525113032.png"></p>
+<blockquote>
+<p>Spring cloud Config 与 Spring cloud Bus 经常一起搭配使用，这可以让他无需重新启动服务可以刷新配置文件的信息。</p>
+</blockquote>
+<p>通过 Spring Cloud Config 来统一管理服务配置，可以将所有服务的配置文件 <strong>放置在本地仓库或者远程仓库中</strong>。让Spring cloud config 配置中心来负责读取仓库的配置文件，而客户端（服务）从配置中心读取配置。</p>
+<h3 id="服务注册和发现（Service-registration-and-discovery）"><a href="#服务注册和发现（Service-registration-and-discovery）" class="headerlink" title="服务注册和发现（Service registration and discovery）"></a>服务注册和发现（Service registration and discovery）</h3><p>服务治理组件主要由 Eurake、Consul 等进行，他在此相当于交易的信息员，可以 <strong>发现</strong> 服务提供者（Service Provider），还可以将自己注册到 <strong>服务中心（Eureka Server）中</strong></p>
+<h3 id="路由（Routing）"><a href="#路由（Routing）" class="headerlink" title="路由（Routing）"></a>路由（Routing）</h3><p>通过智能路由网管组件 Zuul、Spring Cloud Gateway 来实现智能路由和请求过滤功能。内部服务接口通过网关统一对外暴露，来避免内部服务敏感信息信息在未经授权情况下对外暴露。</p>
+<h3 id="服务到服务的通信（Service-to-service-calls）"><a href="#服务到服务的通信（Service-to-service-calls）" class="headerlink" title="服务到服务的通信（Service to service calls）"></a>服务到服务的通信（Service to service calls）</h3><blockquote>
+<p>Service to service calls 在官方文档中并没有进行概述，所以本文仅是个人观点。</p>
+</blockquote>
+<p>Spring cloud 中服务到服务的通信组要通过 Eureka 组件来调用微服务的顺序。</p>
+<h3 id="负载均衡（Load-balancing）"><a href="#负载均衡（Load-balancing）" class="headerlink" title="负载均衡（Load balancing）"></a>负载均衡（Load balancing）</h3><p>负载均衡主要可以通过 Feign、Ribbon来实现负载均衡。</p>
+<h3 id="断路器（Circuit-Breakers）"><a href="#断路器（Circuit-Breakers）" class="headerlink" title="断路器（Circuit Breakers）"></a>断路器（Circuit Breakers）</h3><p>断路器使用服务容错组件 Hystrix、Resilience4j来控制服务的API接口荣段，以实现故障转移、服务限流、服务降级等功能。防止微服务系统发生 <strong>雪崩效应</strong>，可以使用 Hystrix Dashboard 组件监控 <strong>单个融断状态</strong>，使用 Hystrix Turbine 组件监控 <strong>多个服务的融断状态</strong>。</p>
+<h3 id="全局锁（Global-locks）"><a href="#全局锁（Global-locks）" class="headerlink" title="全局锁（Global locks）"></a>全局锁（Global locks）</h3><p>也许可以通过 <a target="_blank" rel="noopener" href="https://github.com/spring-cloud-samples/locks#readme">https://github.com/spring-cloud-samples/locks#readme</a> 来进行了解 Spring cloud 全局锁的作用。</p>
+<p>全局锁（Global locks）是对某部分进行加锁，当你只需要将某个部分只处于 <strong>只读状态</strong> 时，可以使用，之后这些部分进行更新、删除等将会造成阻塞。</p>
+<h3 id="领导选举和集群状态（Leadership-election-and-cluster-state）"><a href="#领导选举和集群状态（Leadership-election-and-cluster-state）" class="headerlink" title="领导选举和集群状态（Leadership election and cluster state）"></a>领导选举和集群状态（Leadership election and cluster state）</h3><p>领导选举和集群状态（Leadership election and cluster state）由 <strong>Spring Cloud Cluster</strong> 所提供分布式系统集群功能，以及包含了领导选举、集群状态以及全局锁。</p>
+<p>这些都被 Spring Integration 中的代码取代。</p>
+<h3 id="分布式消息传递（Distributed-messaging）"><a href="#分布式消息传递（Distributed-messaging）" class="headerlink" title="分布式消息传递（Distributed messaging）"></a>分布式消息传递（Distributed messaging）</h3><p>通过消息总线（Bus）组件，数据流操作组件可以 Redis、RabbitMQ、Kafka等进行封装，<strong>来实现消息的接收和发送</strong>。</p>
+<h2 id="主要项目"><a href="#主要项目" class="headerlink" title="主要项目"></a>主要项目</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525113017.png"></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210608202600.png"><br>下述有些并不完全是 Spring cloud 自己的，而是通过根据 Spring boot 风格对这些组件进行封装，屏蔽了复杂的配置和原理，最终给开发人员提供了一个简单易懂和易部署以及平滑的的微服务框架。</p>
+<h3 id="Spring-Cloud-Config"><a href="#Spring-Cloud-Config" class="headerlink" title="Spring Cloud Config"></a>Spring Cloud Config</h3><p>Spring cloud config 是 spring cloud 的配置管理工具，通过此项目可以将配置信息放到远程服务器中，从而集中管理集群配置。除此之外还可支持：本地存储、git、subversion 三种方式，<strong>这些资源还可直接映射到 Spring 环境</strong>。</p>
+<h3 id="Spring-Cloud-Netflix"><a href="#Spring-Cloud-Netflix" class="headerlink" title="Spring Cloud Netflix"></a>Spring Cloud Netflix</h3><p>各种 Netifix OSS组件，由 Eureka，Hystrix ，Zuul，Archaius 等集成。</p>
+<h3 id="Spring-Coud-Bus"><a href="#Spring-Coud-Bus" class="headerlink" title="Spring Coud Bus"></a>Spring Coud Bus</h3><p>将 <strong>服务实例与分布式消息传递</strong> 连接在一起的 <strong>事件总线</strong>，可以在集群中传播状态更改（如配置更改），还可与 Spring Cloud Config 联合实现热部署。</p>
+<h3 id="Spring-Cloud-Cloudfoundry"><a href="#Spring-Cloud-Cloudfoundry" class="headerlink" title="Spring Cloud Cloudfoundry"></a>Spring Cloud Cloudfoundry</h3><p>Spring cloud 集成了 Foundry ，他是由 VMware 第一个业界推出的开源 Paas（Platform as a Service，平台即服务）的云平台。支持多种框架、语言、运行环境、平台及应用服务，基于这些可让开发人员快速在几秒中能进行部署和扩展，提供了服务发现，还可以轻松的实现 SSO、OAuth2保护资源。</p>
+<h3 id="Spring-Cloud-Open-Service-Broker"><a href="#Spring-Cloud-Open-Service-Broker" class="headerlink" title="Spring Cloud Open Service Broker"></a>Spring Cloud Open Service Broker</h3><p>为实现构建 Open Service Broker API（开放服务器代理接口），可以为开发人员能够为开发人员对平台（如Spring Foundry、Kubernetes）中运行的应用提供服务。</p>
+<h3 id="Spring-Cloud-Cluster"><a href="#Spring-Cloud-Cluster" class="headerlink" title="Spring Cloud Cluster"></a>Spring Cloud Cluster</h3><p>提供了分布式系统集群所需要的基础功能支持，如选举、集群状态一致性、全局锁、Tokens 等常见状态模式的抽象和实现。</p>
+<h3 id="Spring-Cloud-Consul"><a href="#Spring-Cloud-Consul" class="headerlink" title="Spring Cloud Consul"></a>Spring Cloud Consul</h3><blockquote>
+<p>Consul 是由 HashiCorp 公司所使用 Go 所开发的服务治理项目</p>
+</blockquote>
+<p>Spring cloud Consul 主要封装了 Consul 来实现服务治理、健康检查、key-Values 存储、数据中心集群的呢个。</p>
+<h3 id="Spring-Cloud-Security"><a href="#Spring-Cloud-Security" class="headerlink" title="Spring Cloud Security"></a>Spring Cloud Security</h3><p>提供对 Zuul 代理中复杂均衡的 OAuth2、REST 客户端和身份验证头中继的支持。</p>
+<h3 id="Spring-Cloud-Sleuth"><a href="#Spring-Cloud-Sleuth" class="headerlink" title="Spring Cloud Sleuth"></a>Spring Cloud Sleuth</h3><p>Spring cloud sleuth 为 spring cloud 服务之间的调用提供了链路追踪，封装了 Dapper、Log-based 追踪（ELK）、Zipkin 和 HTrace 操作。</p>
+<h3 id="Spring-Cloud-Data-Flow"><a href="#Spring-Cloud-Data-Flow" class="headerlink" title="Spring Cloud Data Flow"></a>Spring Cloud Data Flow</h3><p>针对现代运行时可组合的微服务应用程序的原生编排服务，易用于 DSL、拖放 GUI 和 restAPI 一起简化了基于微服务的数据管道整体编排。即提供了统一变成模型和托管服务，用于开发和执行 ETL、一种用于处理大规模数据的模式。</p>
+<h3 id="Spring-Cloud-Stream"><a href="#Spring-Cloud-Stream" class="headerlink" title="Spring Cloud Stream"></a>Spring Cloud Stream</h3><p>一个轻量级事件驱动的微服务框架，用于快速构建可以链接到外部系统的应用程序。基于 Spring boot 创建，通过事件触发任务，封装了 Redis、Rabbit、Kafka等发送和接收消息，用来创建工业级的 Spring 应用。</p>
+<h3 id="Spring-Cloud-Stream-Application"><a href="#Spring-Cloud-Stream-Application" class="headerlink" title="Spring Cloud Stream Application"></a>Spring Cloud Stream Application</h3><p>Spring cloud Stream 应用程序是现成的 Spring 引导应用程序，使用 spring cloud stream 中的 binder 抽象提供与外部中间件系统（ApacheKafka、RabbitMQ……）的集成。</p>
+<h3 id="Spring-Cloud-Task"><a href="#Spring-Cloud-Task" class="headerlink" title="Spring Cloud Task"></a>Spring Cloud Task</h3><p>一个短暂的微服务框架，主要用于进行微服务的任务管理和调度等。</p>
+<h3 id="Spring-Cloud-Task-App-Starters"><a href="#Spring-Cloud-Task-App-Starters" class="headerlink" title="Spring Cloud Task App Starters"></a>Spring Cloud Task App Starters</h3><p>Spring cloud 任务应用启动程序是 spring boot 应用程序，可以是任何进程，包括不会永远运行的 Spring 批处理作业，他们可以在有限的数据处理周期后 <strong>结束或停止</strong></p>
+<h3 id="Spring-Cloud-Zookeeper"><a href="#Spring-Cloud-Zookeeper" class="headerlink" title="Spring Cloud  Zookeeper"></a>Spring Cloud  Zookeeper</h3><p>Spring cloud 集成了 Zookeeper，他是 Hadoop 和 Hbase 的重要组件，<strong>提供了配置维护、域名服务、分布式同步、组服务、服务治理等功能</strong>。</p>
+<h3 id="Spring-Cloud-Connectors"><a href="#Spring-Cloud-Connectors" class="headerlink" title="Spring Cloud Connectors"></a>Spring Cloud Connectors</h3><p>使各种平台上的PaaS（Platform as a Service，平台即服务）应用程序能够轻松地连接到后端服务。也就是说可以通过他来链接到服务和从云平台获取操作的过程，拥有很强的扩展性，可用于构建云平台。</p>
+<h3 id="Spring-Cloud-Starters"><a href="#Spring-Cloud-Starters" class="headerlink" title="Spring Cloud Starters"></a>Spring Cloud Starters</h3><p>一个 Spring boot 风格的启动应用项目，可以简化 Spring Cloud 使用者的依赖管理关系（在 Angel.SR2之后停止为一个项目，并与其他项目合并），为 Spring cloud 提供了一个 <strong>开箱即用</strong> 的依赖管理。</p>
+<h3 id="Spring-Cloud-CLI"><a href="#Spring-Cloud-CLI" class="headerlink" title="Spring Cloud CLI"></a>Spring Cloud CLI</h3><p>Spring boot CLI 插件，用于在 Groovy 中快速创建 SPring Clound 组件应用程序，即通过 Spring cloud CLI 可以 <strong>快速构建云组件</strong>。</p>
+<h3 id="Spring-Clound-Contract"><a href="#Spring-Clound-Contract" class="headerlink" title="Spring Clound Contract"></a>Spring Clound Contract</h3><p>Spring cloud 通过 CDC (Customer Driven Contracts，客户驱动合同)开发，基于JVM（Java 虚拟机，Java virtual machine）的应用提供了支持，为TDD（测试驱动开发）提供一种新的基于接口的测试方法。</p>
+<h3 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h3><p>Spring cloud Gateway 是一个基于Project Reactor 项目，为 Spring cloud 提供了一种简单和有效的方式来对 <strong>为服务的 API 进行路由</strong>。</p>
+<h3 id="Spring-Cloud-OpenFeign"><a href="#Spring-Cloud-OpenFeign" class="headerlink" title="Spring Cloud OpenFeign"></a>Spring Cloud OpenFeign</h3><p>Spring cloud OpenFeign 由于封装声明试 Web Service 客户端的 Feign，可以让编写 Web Service client 变得容易。支持 Feign 注解和 JAX-RS 注解，支持热插拔的编码器和解码器，并支持 Feign 在 Spring MVC 中使用，由于整合了 Ribbon 和 Eureka 可以在使用 Feighn 时提供负载均衡。</p>
+<h3 id="Spring-Cloud-Pipelines"><a href="#Spring-Cloud-Pipelines" class="headerlink" title="Spring Cloud Pipelines"></a>Spring Cloud Pipelines</h3><p>Spring Cloud Pipelines 提供了一个可靠的部署管道，其中包含了一些步骤，来确保应用程序可以零停机的方式部署，并且在出现问题时可以轻松的回滚。</p>
+<h3 id="Spring-Cloud-Function"><a href="#Spring-Cloud-Function" class="headerlink" title="Spring Cloud Function"></a>Spring Cloud Function</h3><p>Spring Cloud Function 提供了一通用的模型，在类似与 AWS Lambda 这种 FaaS（Function as a Service，函数驱动服务）平台上部署函数软件。</p>
+<h2 id="Netfix-项目"><a href="#Netfix-项目" class="headerlink" title="Netfix 项目"></a>Netfix 项目</h2><p>除了 Spring cloud 项目本身，其他厂商也对其微服务等开源产品作出巨大的公司，如 Netfix 和 Alibaba 等公司，但 Netfix 要早于 Alibaba 对微服务及其相关产品或项目的贡献。</p>
+<p>Spring Cloud 集成了 Netfix 公司所开源的各种项目和组建其中主要以 Eureka、Hystrix、Zuul、Archaius 作为为代表项目。</p>
+<h3 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h3><p>Eureka 是一个基于 REST 服务的服务治理组件，主要包含了服务注册和服务发现两个最为核心的功能。</p>
+<h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><p>Spring cloud 可以整合 Hystrix 来对微服务进行容错管理，即使将服务做成集群也不 100% 保证安全可用。为了防止服务与服务之间的依赖性，<strong>单个服务出现故障</strong> 从而导致整个为服务系统崩溃，则需要进行容错管理。</p>
+<h3 id="Zuul"><a href="#Zuul" class="headerlink" title="Zuul"></a>Zuul</h3><p>Zuul 为 Spring cloud 提供了路由和过滤的功能，他是一种服务的统一入口，除此还提供了动态路由、监控、授权、安全、调度等功能。</p>
+<h3 id="Archaius"><a href="#Archaius" class="headerlink" title="Archaius"></a>Archaius</h3><p>Spring cloud 整合了 Archaius 来进行 管理和配置 API，Archaius 提供了动态类型化属性、线程安全配置操作，轮询框架，回调机制等功能。</p>
+<blockquote>
+<p>Archaius 可以实现出动态获取配置，如默认每隔60s从配置源读取一次内容，<strong>这样在修改配置文件后不需要重新启动服务，即可使得修改的内容生效</strong></p>
+</blockquote>
+<h2 id="Alibaba-项目"><a href="#Alibaba-项目" class="headerlink" title="Alibaba 项目"></a>Alibaba 项目</h2><p>在 2019年10月所发布的《颠覆性公司和商业模式》报告中，Alibaba 以 15% 成功位居第三位，百度、腾讯等均位列第十和第十一位。</p>
+<h3 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h3><p>Sentinel 是一个流控制组件，可以将流量作为切入点，从流量控制、熔断降级、系统负载保护等多个阶段保证服务的稳定性。</p>
+<h3 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h3><p>Nacos 是一个服务治理的项目，与 Eureka、Consul 一样，提供了动态服务发现、配置管理和服务管理平台。</p>
+<h3 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h3><p>RocketMQ 是基于分布式高可用集群提供的低延迟、高可靠的消息发布&#x2F;订阅服务，类似与 RabbitMQ 的一种消息中间件。</p>
+<h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><p>Dubbo 是一个高性能、轻量级的开源 Java 服务框架，提供了面向接口代理的高性能RPC（Romote Procedure Call，远程过程调用），智能容错、负载均衡、服务自动注册和发现、运行期流量调整、可视化服务治理与运维等。</p>
+<h3 id="Seata"><a href="#Seata" class="headerlink" title="Seata"></a>Seata</h3><p>Seata是一款分布式事务解决方案，致力于在微服务架构下提供高性能和简单易用的分布式事务服务。</p>
+<h3 id="Alibaba-Cloud-ACM"><a href="#Alibaba-Cloud-ACM" class="headerlink" title="Alibaba Cloud ACM"></a>Alibaba Cloud ACM</h3><p>Alibaba Cloud ACM 是一个应用配置中心，用于分布式架构环境中对 <strong>应用配置进行集中的管理和推送。</strong></p>
+<h3 id="Alibaba-Cloud-SchedulerX"><a href="#Alibaba-Cloud-SchedulerX" class="headerlink" title="Alibaba Cloud SchedulerX"></a>Alibaba Cloud SchedulerX</h3><blockquote>
+<p>Cron 是一个基于时间的任务管理系统，可通过 cron 在固定时间、日期、间隔的情况下运行任务。</p>
+<p>除此之外他的表达式特别的不具有可读性：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件格式說明</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">┌──分鐘（0 - 59）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">│ ┌──小時（0 - 23）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">│ │ ┌──日（1 - 31）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">│ │ │ ┌─月（1 - 12）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">│ │ │ │ ┌─星期（0 - 6，表示从周日到周六）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">│ │ │ │ │</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">*  *  *  *  * 被執行的命令</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如 <code>1-6 * * * * echo hello world</code> 及每小时的 1～6分钟内，都会都会打印 Hello,world符号。</p>
+<p>更多可参考 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Cron">https://zh.wikipedia.org/wiki/Cron</a></p>
+</blockquote>
+<p>基于 Cron 表达式的任务调度服务，可以提供秒级、精准、高可靠、高可用的定时任务调度功能，可以支持  cron、fixed_rate、second_delay 定时调度，能精确到秒级别。</p>
+<h2 id="架构对比"><a href="#架构对比" class="headerlink" title="架构对比"></a>架构对比</h2><h3 id="Spring-cloud"><a href="#Spring-cloud" class="headerlink" title="Spring cloud"></a>Spring cloud</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525113017.png"></p>
+<h3 id="Dubbo-1"><a href="#Dubbo-1" class="headerlink" title="Dubbo"></a>Dubbo</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525161842.png"></p>
+<p>Dubbo 比 Spring cloud <strong>少了很多配套项目（因为不是 spring 全家桶内的）</strong>，所以 Dubbo 专注与 RPC 领域，未来将会成为微服务生态体系中一个重要的 <strong>组件</strong>，而不是 <strong>微服务的全面解决方案</strong>。</p>
+<h3 id="lstio"><a href="#lstio" class="headerlink" title="lstio"></a>lstio</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525161902.png"><br>lstio 主要使用网格服务 Service Mesh 架构来实现，因此在 lstio 中，服务之间的通信主要通过 Envoy 代理来使用 <strong>HTTP&#x2F;1.1、HTTP2、gRPC、TCP</strong> 来进行，Pilot、Mixer、Citadel 来组成的控制平台。</p>
+<h4 id="pilot"><a href="#pilot" class="headerlink" title="pilot"></a>pilot</h4><p>为 Envoy 提供服务发现、流量管理、智能路由、错误处理（含超时、重试、融断）的功能，因此用户可以通过 Pilot 的 API 管理网络相关的资源对象。Pilot 会根据用户的配置和服务的信息将网络流量管理信息分发到各个 Envoy 中。</p>
+<h4 id="Mixer"><a href="#Mixer" class="headerlink" title="Mixer"></a>Mixer</h4><p>主要为整个 集群执行访问控制、跨服务网格使用策略（Policy）、管理（Rate Limit、Quota）bing souji cong  Envoy 代理和其他服务自动探测到的数据，Mixer 包含了一个非常灵活的模型插件。<strong>可以与各种主机环境和后端基础架构进行交互，他是一个独立于平台的组件</strong>。</p>
+<h4 id="Citadel"><a href="#Citadel" class="headerlink" title="Citadel"></a>Citadel</h4><p>提供了服务之间的认证和证书管理，能够自动升级到 TLS 协议</p>
+<h4 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h4><p>在原有的客户端和服务器端之间添加了一个代理程序。</p>
+<h4 id="Envoy"><a href="#Envoy" class="headerlink" title="Envoy"></a>Envoy</h4><p>提供了服务发现，负载均衡和路由表动态更新的 API这些分别解决了 lstio 和 Envoy 的问题，Proxy 作为 SideCar 会和控制中心动心，来获取需要的服务之间的信息，以及回报服务调用的  Metrics（指标） 数据</p>
+<h1 id="Sprng-cloud-优缺点"><a href="#Sprng-cloud-优缺点" class="headerlink" title="Sprng cloud 优缺点"></a>Sprng cloud 优缺点</h1><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210528095543.png"></p>
+<h2 id="微服务优点"><a href="#微服务优点" class="headerlink" title="微服务优点"></a>微服务优点</h2><h3 id="模块化开发"><a href="#模块化开发" class="headerlink" title="模块化开发"></a>模块化开发</h3><p>以上图作为参考，我们可以首先得知微服务是以 <strong>分布式</strong> 作为必要技术。有多个微小服务所组成的一个应用，由于他将一个功能划分为一个很小的服务，可以将一个微服务交给不同的开发人员或团队进行开发。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210530202957.png"></p>
+<p>也就是说不同的开发团队可以同时完成多个属于自己任务范围内的 “微服务”，进行项目开发，因此可以 <strong>易于开发和维护</strong>，而不是向单一应用一样一个项目几百个文件夹，都涉及不同的功能和服务。</p>
+<h3 id="代码量"><a href="#代码量" class="headerlink" title="代码量"></a>代码量</h3><p>与单个服务相比，微服务由于功能只针对一个功能所进行提供服务。因此代码量不会像正常的单一应用较多，所以项目的启动速度是比单一应用较快的。（但这也不算是优点，因为启动时还很麻烦，一个一个启动多个微服务）</p>
+<h3 id="易于更新迭代"><a href="#易于更新迭代" class="headerlink" title="易于更新迭代"></a>易于更新迭代</h3><p>如果只是小型的项目迭代的话，那么微服务由于是多个服务应用组成的一个庞大服务，所以我们可以根据目标 <strong>功能对应的微服务</strong> 模块直接进行修改后上传。不需要向单体应用一样直接暂停项目并进行修改后发布。</p>
+<h3 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h3><p>由于微服务是以业务单一性为原则的开发模式，因此他的开发也不会是统一一种语言，他可以是多个，且不冲突。</p>
+<h3 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h3><p>解耦是在设计模式中较为常见的名词之一，各类书籍中经常出现但就是不给你解释。解耦通俗来说就是两个东西 <strong>原来互相影响</strong>，现在然他们 <strong>分别发展</strong>，但不是完全的分别发展，而是在原有的基础上降低两者互相的依赖关系。其核心思想是最小职责，每个地方做一件事情。</p>
+<p>通常情况下 <strong>松耦合</strong> 也可以被称之为 <strong>解藕</strong>，瞬间让此变得高端大气上档次。因此除了松耦合外，</p>
+<blockquote>
+<p>他还有一个反意为 <strong>紧耦合</strong>，指的是两个模块之间相互影响且关系紧密，存在着互相关系调用。</p>
+</blockquote>
+<h3 id="具有弹性"><a href="#具有弹性" class="headerlink" title="具有弹性"></a>具有弹性</h3><p>由于微服务非常可以简单的实现 <strong>服务集群</strong>，通过 <strong>服务治理组件</strong>来实现服务的治理，通常都是两三个集群一起工作。一台蹦了还有另一台，另一台蹦了又换下一台的局面，可以保证服务的正常运行。除此之外还具有水平扩展独立以及扩展性高等优点。</p>
+<h2 id="微服务缺点"><a href="#微服务缺点" class="headerlink" title="微服务缺点"></a>微服务缺点</h2><h3 id="分布式复杂性"><a href="#分布式复杂性" class="headerlink" title="分布式复杂性"></a>分布式复杂性</h3><p>对微服务来说分布式架构是一个非常必要的技术，但因为分布式依赖服务较多，一旦其中某个 <strong>依赖服务</strong> 以及系统的容错能力都会带来挑战。</p>
+<h3 id="分布式事务问题"><a href="#分布式事务问题" class="headerlink" title="分布式事务问题"></a>分布式事务问题</h3><p>所谓分布式事务问题可以分为 <strong>可靠事件模式（Reliable Event Mode）、补偿模式（Confirm Cancel）、TCC（Try Confirm Cancel）</strong> 三种，用于解决分布式的 <strong>事务一致性问题</strong>。</p>
+<p>首先我们需要知道为什么要有服务一致性，假设你在 Wechat 中将 100RMB 转账给 B，那么 B 的 Wechat 钱包就会多 100RMB。但如果这个过程中 Wechat 服务崩了，那你将会少 100RMB，而B的钱包数额不变。</p>
+<h4 id="可靠事件模式（Reliable-Event-Mode）"><a href="#可靠事件模式（Reliable-Event-Mode）" class="headerlink" title="可靠事件模式（Reliable Event Mode）"></a>可靠事件模式（Reliable Event Mode）</h4><p>他也被称之为 可靠事件记录协议（RELP，Reliable Event Logging Protocol），是一种用于计算机网络中记录 <strong>计算机数据的网络协议</strong>。</p>
+<p>他可以提供消息的可靠传递，常用与不能让数据丢失的环境，如转账。在这里我们需要认清 <strong>可靠事件记录协议和可靠事件模式</strong>，在通常的情况下，<strong>可靠事件模式是可靠事件记录协议的实现</strong></p>
+<p>一般情况下事件操作可以被分为三种可能，分别为：</p>
+<ol>
+<li>操作成功，投递事件</li>
+<li>操作失败，投递事件失败</li>
+<li>操作成功，投递失败，抛出异常 | 回滚</li>
+</ol>
+<h5 id="本地事件表"><a href="#本地事件表" class="headerlink" title="本地事件表"></a>本地事件表</h5><p>因此可靠事件模式主要通过 <strong>本地事件表和外部事件表</strong> 两者来就进行可靠事件投递。</p>
+<p>本地事件表通过将事件和业务数据保存在同一个数据库中，来以一个额外的 <strong>事件恢复服务</strong> 来恢复事件。</p>
+<blockquote>
+<p>原子性指一个操作不可中断，要么全部成功，要么全部失败的原则即称之为 原子性。</p>
+</blockquote>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210531112717.png"></p>
+<p>这些都将会由本地事务来保证更新业务的发布事件中的不可中断，要么全部成功，要么全部失败，即原子性。</p>
+<h5 id="外部事件表"><a href="#外部事件表" class="headerlink" title="外部事件表"></a>外部事件表</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210531112826.png"><br>外部事件表是针对本地事件表出现的问题，单个提出外部事件表的方法。将 <strong>事件持久话到外部事件系统服务中</strong>，事件系统需要提供一个实时的事件服务以用于接收 <strong>为服务发布的事件</strong> 。与此同时还需要提供一个恢复服务来确定和恢复事件。</p>
+<p>事物提交前，业务系统会通过实时事件服务向系统请求发送事件，事件系统 <strong>只记录事件但并不发送</strong>。</p>
+<p>之后业务服务提交后，通过实时事件服务向 &#x3D;&gt;<strong>事件系统</strong> 确认发布，事件得到确认后 <strong>事件系统</strong> 进行发布到消息代理。</p>
+<p>当业务系统回滚时，通过实时事件向时间系统<strong>去取消</strong>事件。假设事件系统的事件恢复服务定期找到未确定发送事件向业务服务查询状态时，根据业务服务返回的状态来决定事件是否需要发布。</p>
+<h4 id="补偿模式（Confirm-Cancel）"><a href="#补偿模式（Confirm-Cancel）" class="headerlink" title="补偿模式（Confirm Cancel）"></a>补偿模式（Confirm Cancel）</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210601041306.png"><br>补偿模式主要有 <strong>业务异常和技术异常</strong> 两个概念，是自身业务所造成的。而技术异常则是非业务逻辑产生的一系列问题，如网络异常等。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210601041315.png"><br>因此补偿模式需要使用一个 <strong>额外的协调服务来协调微服务保证一致性</strong>，这时候协调服务通过按照顺序调用服务，如果某个服务出现异常则直接取消之前所有已经成功调用的服务(所以他也具有原子性)。</p>
+<p>也就是说当数据文件为空时提交，那么之前所填写的端口信息以及提交数据都将会被取消，而这所取消的就是一个 <strong>补偿</strong></p>
+<h4 id="TCC-模式（Try-Confirm-Cancel）"><a href="#TCC-模式（Try-Confirm-Cancel）" class="headerlink" title="TCC 模式（Try Confirm Cancel）"></a>TCC 模式（Try Confirm Cancel）</h4><p>TCC 模式由 Try、Confirm、Cancel 三个接口，一个完整的 TCC应用由 <strong>主业务、若干个业务服务</strong> 组成和发起，并最后通过主业务完成整个活动。</p>
+<p>TCC 三个接口分别意思为：</p>
+<ol>
+<li>try：完成所有业务检查，预留必须存在的业务资源</li>
+<li>Confirm：执行业务，不做任何业务的检查和分析，只是用 try 阶段所预留的业务资源，Confirm 操作满足幂等性。</li>
+</ol>
+<blockquote>
+<p>幂等性，就是说一个系统，在同样情况下一次请求和 <strong>重复</strong> 多次请求对资源造成一致的就是幂等性。</p>
+</blockquote>
+<ol start="3">
+<li>Cancel 释放 try 阶段预留资源（满足幂等性？）</li>
+</ol>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210601041321.png"></p>
+<p>主业务服务调用所有的业务的 try 操作，之后在活动管理器中登记所有业务服务，当所有业务服务的 try 操作都调用成够后或从某个业务服务的 try 操作失败进入 confirm 阶段。</p>
+<p>活动管理器根据 try 执行结果来执行 confirm or cencel 操作，如果 try 操作所有都成功则从活动管理器中调用所有 confirm 操作，否则将调用 cancel 来释放 try 预留资源。</p>
+<h3 id="分布式同步调用"><a href="#分布式同步调用" class="headerlink" title="分布式同步调用"></a>分布式同步调用</h3><p>分布式的同步调用及主要是在不确定环境中无法保证所依赖服务，但可以保证自己可以正常提供服务的情况。</p>
+<h4 id="SEDA"><a href="#SEDA" class="headerlink" title="SEDA"></a>SEDA</h4><p>阶段式服务器模型（SEDA，Staged event-driven architencure）他是一个软件架构模型，可以将复杂的事件驱动的应用分解为一系列通过队列链接的阶段（Stage）。</p>
+<p>在上述中 “分布式的同步调用及主要是在不确定环境中无法保证所依赖服务，但可以保证自己可以正常提供服务的情况。”就可以通过使用 SEDA 进行解决。</p>
+<p>拥用一句话概括就是 <strong>将请求出来过程划分为多个阶段，不同资源消耗阶段，并使用不同数量的线程进行处理</strong>。</p>
+<h3 id="接口调整"><a href="#接口调整" class="headerlink" title="接口调整"></a>接口调整</h3><p>由于微服务数量可能会有很多，因此如果需要调整接口时则需要话费很大的时间。除了调整外还需要写其接口文档，来进行管理。</p>
+<p>而接口文档可以从中心点引入很多下游问题，如接口文档的管理和更新等。</p>
+<h1 id="Spring-cloud-微服务设计原则"><a href="#Spring-cloud-微服务设计原则" class="headerlink" title="Spring cloud 微服务设计原则"></a>Spring cloud 微服务设计原则</h1><h2 id="AKF-可扩展性原则"><a href="#AKF-可扩展性原则" class="headerlink" title="AKF 可扩展性原则"></a>AKF 可扩展性原则</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210601161731.png"><br>Spring cloud 的单一设计原则可以让微服务更加优雅。在这个原则之下所开发的微服务项目通常 <strong>只关注单一的功能，有限的业务逻辑</strong> 最终完成一个有限的业务逻辑。</p>
+<p>就比如 AKF 拆分原则即 <strong>扩展立方体（Scalability Cube）或 AKF Scale Cube</strong>，需要注意的是 AKF 并不是什么单词缩写，而是一个公司的名称。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210601161741.png"><br>我们可以直接概括下这三个轴的主要左右，其中Y轴是功能划分以及基于不同业务之间的划分。而 X轴则是水平扩展，北其名曰水平复制，来砸钱解决问题（加服务器）。最后就是Z轴，Z轴主要左右就是数据区分，来关注服务和数据的优先级进行划分。</p>
+<h3 id="Y-Axis"><a href="#Y-Axis" class="headerlink" title="Y Axis"></a>Y Axis</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210602025515.png"><br>Y 轴会会根据基于不同业务之间的整体应用拆分为多个服务，每个服务主要会实现一个单个功能。之后以 Eureka 服务治理为例，通过服务中心来进行治理，最终架构如上所示。</p>
+<h3 id="X-Axis"><a href="#X-Axis" class="headerlink" title="X Axis"></a>X Axis</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210602025526.png"><br>X 轴主要是水平扩展，通过复制服务与数据来解决可用性及微服务集群的问题，也就是说将微服务运行多个实例（集群），来通过集群负载均衡的模式来提升服务整体的可用性。</p>
+<h3 id="Z-Axis"><a href="#Z-Axis" class="headerlink" title="Z Axis"></a>Z Axis</h3><p>Z轴主要就是区分数据，通常Z轴扩展有两种方案分别为 <strong>单元化架构以及数据分区</strong> 两种，以大数据时代的今天可能两者都会被使用，</p>
+<p><strong>单元化架构</strong><br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210602025537.png"><br>单元化架构的选择主要根据服务的类型以及对象单元是否符合来进行区分，如客户端对服务端节点的选择都将是单元自成一体。</p>
+<p><strong>数据分区</strong><br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210602025543.png"><br>数据区分也叫分区（Shard），他其实就是区分数据的，比如说我们可以根据年龄、注册时间来区分数据。通常会包含一下几个数据划分的方式，这也是最为常见的：</p>
+<ol>
+<li>数据类型</li>
+<li>数据范围</li>
+<li>数据热度</li>
+<li>数据分区</li>
+</ol>
+<p>这四种最为常见的我们可以在很多大型应用中看到，如 bliblibli 弹幕网，因为咱们也没有看过他们的源代码，但是我们可以随便以肉眼可见的观察下，就会发现他们做了一个非常细致的数据区分。</p>
+<h2 id="服务自治"><a href="#服务自治" class="headerlink" title="服务自治"></a>服务自治</h2><p>说到 Spring cloud，我们从第三节到现在就一直说他多么多么服务自治，看上去非常高端且难懂。实际上服务自治简单来讲就是 <strong>每个微服务都具有独立性质，及运行、开发、测试、构建、部署</strong> 且包含数据库都可独立运行的服务。而过多或依赖其他微服务，并与其高度解耦，除此之外我们将此称之为 服务自治。</p>
+<p>服务自治也是名副其实的微服务设计原则，因为他可以打来很多的好处，如团队协作、技术栈、后续迭代、持续集成等多种优势。</p>
+<h2 id="轻量级通信"><a href="#轻量级通信" class="headerlink" title="轻量级通信"></a>轻量级通信</h2><p>轻量级接口通信主要对其要求就是体量较轻，可以跨语言和跨平台之间的通信，以及可以不受技术限制，实现不同通信协议之间的通信，如：REST、RPC、AMQP、STOMP、MQTT等。</p>
+<h2 id="接口明确原则"><a href="#接口明确原则" class="headerlink" title="接口明确原则"></a>接口明确原则</h2><p>而接口明确原则，则是为了确保之后微服务之间不断的完善，导致因为某个接口的变化而其他服务集群需要进行调整，为了避免此类令人烦恼的事情再次发生，则需要让这些接口在设计开发的时候更加的具有通用性。</p>
+<h2 id="容错性设计原则"><a href="#容错性设计原则" class="headerlink" title="容错性设计原则"></a>容错性设计原则</h2><p>容错性设计原则也被称之为弹性设计，即依赖服务宕机、网络或硬件出现问题时可以暂停使用服务，切换下一个资源，在后续我们将会以集群的方式解决这个问题。除此之外也有很多成熟可靠的方案进行选择，如 Hystrix 延迟和容错库。</p>
+<h2 id="自动化原则"><a href="#自动化原则" class="headerlink" title="自动化原则"></a>自动化原则</h2><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>自动化原则主要会分为自动化测试、自动化监控和自动化部署等三种非常主要的自动化方案。其中自动化测试可以减轻测试负担，可以保障微服务的模块在高流量的情况下可访问。</p>
+<h3 id="自动化监控"><a href="#自动化监控" class="headerlink" title="自动化监控"></a>自动化监控</h3><p>而自动化监控则是监控微服务状态，发现问题以及错误计数等来便于解决和发现问题，也可以根据监控状态来调整负载，来保证服务的稳定性和高可用等。在 Spring cloud 项目中，提供了一个为服务可用性监控 Spring Boot Admin 组件。</p>
+<h3 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h3><p>自动化部署指的是将代码自动部署到生产环境中，来减少项目发布的时间，目前可以通过 Jenkins + Fastlane 来搭配使用。</p>
+<h1 id="Spring-cloud-业务拆分与管理模式"><a href="#Spring-cloud-业务拆分与管理模式" class="headerlink" title="Spring cloud 业务拆分与管理模式"></a>Spring cloud 业务拆分与管理模式</h1><h2 id="Domain-Driver-Design（DDD）"><a href="#Domain-Driver-Design（DDD）" class="headerlink" title="Domain Driver Design（DDD）"></a>Domain Driver Design（DDD）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210603031247.png"><br>在微服务设计中，我们通常会存在一种不知道如何进行划分的问题，到底是根据功能、组织结构进行划分还是其他方式。</p>
+<p>而为了解决这种问题，领域驱动设计（Domain Driver Design）提供了一种划分方法论，说白了就是可以解决微服务划分时遇到的问题。</p>
+<p>首先，DDD 主要结构为四层，分别为 <strong>基础设施层 (Infrastructure)、领域层 (Domain)、应用层 (Application)、用户界面层 (Interfaces)（也被称为表示层、展现层、接口层）</strong></p>
+<h3 id="领域"><a href="#领域" class="headerlink" title="领域"></a>领域</h3><p>首先，我们需要通过 DDD 来指导我们的划分方法，而不是让他主导我们，从而让我们更加困惑。因此我们需要知道一件事情，就是 <strong>分清问题和方案</strong>，问题是需要解决的，而方案是用来解决问题的。</p>
+<p><strong>当谈论领域的时候（含子域、通用子域）实际上都是在讨论问题域</strong>，而问题域就是 <strong>我们需要解决什么问题</strong></p>
+<p>而到 <strong>限界上下文、聚合、实体、仓库</strong> 这些实际上是在 <strong>谈论解决方案</strong> 来解决领域时提出的问题。</p>
+<p>在搜索领域中，我们可以从其主页面中来看出遇到的一些非常典型的问题：</p>
+<ol>
+<li>如何保持知名度</li>
+<li>如何让搜素变得更精准</li>
+<li>如何找到一个合适的度进行营销</li>
+</ol>
+<p>而这些问题的解决问题的方案可以是：</p>
+<ol>
+<li>与浏览器之间进行绑定</li>
+<li>加大数据爬取和关键词的定位</li>
+<li>与搜索结果中布局一致</li>
+</ol>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>在设计中，主要解决的就是让领域专家和技术专家深入合作，并建立一个软件问题提模型，而这个模型主要可以解决：</p>
+<ol>
+<li>可以表达领域概念和业务流程</li>
+<li>每个领域都有自己的解决方案</li>
+</ol>
+<p>这就是设计在 DDD 主要的作用，DDD 是一种基于领域为中心来驱动的软件的开发思想，可以通过此来帮助我们解决复杂的业务问题，因此需要对每个 <strong>领域提出问题来对应一个领域模型，来解决问题</strong>。</p>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>在 DDD 中，主要将模型划分为四层，分别为基础层（Infrastructure）、领域层（Domain）、应用层（Application）、用户界面层（Interfaces），这些被简称为 IDAI。</p>
+<p>通俗来讲模型就是一个解决方案空间，是一个为了准确定义需要问题而构造的一个抽象模型。而模型主要可以解决类似与业务领域问题，以及分析满足系统的功能性要求即 IDAI。</p>
+<h3 id="专家"><a href="#专家" class="headerlink" title="专家"></a>专家</h3><p>通过领域提出的问题我们可以得知，这些问题的提出基本上不是开发人员非常擅长的，所以此时需要 <strong>领域专家</strong> 来提出问题，由 <strong>技术专家</strong> 解决问题，这也是 DDD 成功实施的主要条件。</p>
+<h2 id="事务管理模式"><a href="#事务管理模式" class="headerlink" title="事务管理模式"></a>事务管理模式</h2><p>事物管理模式（ACID，Atomicity Consistency Isolation Durability）要比 DDD 更好理解，他在上一章就以一小部分的形式出现了，当时我们所介绍的是原子性（Atomicity）。</p>
+<p>一个逻辑工作单元需要成为事物，需要满足 ACID属性，分别为：</p>
+<ol>
+<li>A：原子性（Atomicity），事物操作中，要么全做，要么都不做</li>
+<li>C：一致性（Consistency），事务执行完后，从同样状态，转向另一个同样的状态（可以理解为要么是全部执行中，要么是全部暂停中）</li>
+<li>I ：隔离性（Isolation），事务执行时不被打扰</li>
+<li>D：持久性（Durability），事务提交后，对数据的改变就是永久性的。</li>
+</ol>
+<h3 id="2-x2F-3PC"><a href="#2-x2F-3PC" class="headerlink" title="2&#x2F;3PC"></a>2&#x2F;3PC</h3><p>2&#x2F;3PC 算法模式（Two &#x2F; Three Phase Commit，二&#x2F;三阶段提交）主要是为了让分布式系统在事务处理时 <strong>可以实现 ACID属性</strong> 所设计的算法。</p>
+<h4 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h4><p>首先我们可以将他看成两个阶段，一个是 <strong>欲提交</strong>，而另一个则是 <strong>提交</strong> 阶段，其中：</p>
+<h5 id="欲提交阶段"><a href="#欲提交阶段" class="headerlink" title="欲提交阶段"></a>欲提交阶段</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210603031254.png"><br>欲提交阶段从名字就可以看出他并不是真正的提交阶段，而是处于向资源管理器询问是否可以提交，这其中主要分为三个阶段：</p>
+<ol>
+<li>向所有资源管理器发送询问</li>
+<li>资源管理器执行事物操作，如资源上锁等</li>
+<li>返回信息给事物管理器（成功情况下）</li>
+</ol>
+<h5 id="执行事务提交阶段"><a href="#执行事务提交阶段" class="headerlink" title="执行事务提交阶段"></a>执行事务提交阶段</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210603031315.png"><br>执行事务提交阶段可以理解为欲提交阶段后的一个过程，他的主要有四个流程，分别为：</p>
+<ol>
+<li>请求提交：事务管理器向资源管理器发出提交请求</li>
+<li>事务提交：资源管理器收到请求后，开始事务提交操作，完成后释放事务资源</li>
+<li>反馈结果：完成事务提交之后，向事务管理器发送 <strong>已提交（ACK）</strong> 消息</li>
+<li>完成事务：事务管理器收到了所有资源管理器反馈的 ACK 后即完成提交。</li>
+</ol>
+<p>假如其中某个资源管理器返回了未提交，或者说等待超时，那么将会中断事务，其流程如下：</p>
+<ol>
+<li>发送事务请求：事务管理器向资源管理器发送回滚请求</li>
+<li>事务回滚：资源管理器通过撤销信息来执行事务回滚，释放事务资源</li>
+<li>反馈事务回滚结果：完成事务回滚后发送 ACK （协调者发布）消息</li>
+<li>中断事务：当事务管理器收到了来自所有参与者反馈的 ACK 消息后中断服务。</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><h6 id="堵塞"><a href="#堵塞" class="headerlink" title="堵塞"></a>堵塞</h6><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210603031323.png"><br>尽管 2PC 看似非常的优秀，但是如果认真品一下就会发现，这么多资源管理器，如果只有中某个资源管理器在执行事物提交阶段的时候，返回了 <strong>未提交</strong>，之后的所有提交是不是都需要进行等待而无法继续完成操作？</p>
+<h6 id="单点"><a href="#单点" class="headerlink" title="单点"></a>单点</h6><p>单点即一旦事务管理器出现了问题，那么整个 2PC 的提交将无法运转。或者说一旦在提交的时候出现了问题，那么所有的资源管理器都会处于锁定状态，从而无法继续提供服务。</p>
+<h4 id="3PC"><a href="#3PC" class="headerlink" title="3PC"></a>3PC</h4><p>3PC 和 2PC 不同之处在于他有三个阶段，分别为 <strong>欲提交（PreCommit）、可以提交（CanCommit）、提交（doCommit）</strong>。在3PC 中三个阶段都有一个核心的理念，即 <strong>询问时不会锁定资源管理器，除非所有人 Ack 了才开始锁</strong>，因此他解决了 2PC 的堵塞问题。</p>
+<p>而单点问题 3PC 则通过假设资源管理器无法即时接收到来自事务管理器的信息，他们会默认执行 doCommit ，而不会一直卡在那里不动，最终导致无法提供服务。</p>
+<h3 id="TTY-Try-Confirm-Cancel"><a href="#TTY-Try-Confirm-Cancel" class="headerlink" title="TTY Try-Confirm-Cancel"></a>TTY Try-Confirm-Cancel</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210604031506.png"><br>TTY 主要有三个接口，分别为 尝试（Try）、确认（Confirm）、取消（Cancel）。会比 2&#x2F;3PC 更加好理解，因此他三个阶段功能如下：</p>
+<ol>
+<li>Try：检查所有业务的 <strong>一致性</strong>、并预留业务资源保证在事务执行时不会被其他事务打扰</li>
+<li>Confirm：使用 Try 阶段预留的业务资源来执行业务</li>
+<li>Cancel：取消执行业务，并释放 Try  阶段预留资源</li>
+</ol>
+<h3 id="消息中间件模式"><a href="#消息中间件模式" class="headerlink" title="消息中间件模式"></a>消息中间件模式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210604031513.png"><br>通过引入消息中间件，可以进行异步处理、系统解耦、事务管理。从而解决多个系统之间同步通信所造成的阻塞，并将这些耦合在一起。消息中间件模式与 TCC 同样是最终一致性来管理事务，而 2&#x2F;3PC 则是强一致。 </p>
+<p>在这个过程中，主要有三个要素，分别是将数据消息投递到中间件服务器中，通过消息确认机制保证成功投递。然后通过消费者可以正常使用消息，最后来保证第一个事务先执行。</p>
+<p>目前世面上主流的消息中间件有 Redis、ActiveMQ、RabbitMQ、RocketMQ、Kafka等。</p>
+<h3 id="Saga-模式"><a href="#Saga-模式" class="headerlink" title="Saga 模式"></a>Saga 模式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210604031520.png"><br>Saga是根据 Hector 和 Kenneth 与 1987 年所发表的论文 《sagas》作为理论基础而出现的补偿协议。</p>
+<p>Saga 模式其主要的就是 <strong>将长事务拆分为多个且可交错运行的子事务合集</strong> 而这些子事务都保持一定的一致性，都将由 saga 事务协调器来进行协调。</p>
+<p>如果每一个子事务都正常结束，则整个事务完成。假设有某个子事务失败，那么则整个事务失败，并根据相反顺序来执行补偿步骤。</p>
+<p>需要注意的是，Saga 由一系列的 T 事务组成，每个 T都对应一个补偿动作 C，用于撤销 T 所造成的结果。</p>
+<h4 id="恢复策略"><a href="#恢复策略" class="headerlink" title="恢复策略"></a>恢复策略</h4><h5 id="向后恢复"><a href="#向后恢复" class="headerlink" title="向后恢复"></a>向后恢复</h5><p>向后恢复（backward recovery），补偿所有已完成事务。如果某一个子任务失败，则之前所有成功的子事物即 <strong>整个saga执行结果撤销</strong>。</p>
+<h5 id="向前恢复"><a href="#向前恢复" class="headerlink" title="向前恢复"></a>向前恢复</h5><p>向前恢复（forward recovery），将失败的事务重试，假设所有失败的业务最终都会成功，在这种情况下就没有补偿事务什么事情了，常见与必须成功的场景。‘</p>
+<h3 id="Paxos-一致性算法"><a href="#Paxos-一致性算法" class="headerlink" title="Paxos 一致性算法"></a>Paxos 一致性算法</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210604031525.png"><br>Paxos 算法由 Lamport 所提出的一种基于消息传递的分布式一致性算法，也被认为是类似算法中最为有效的，因此使其获得了 2013年图灵奖，他的主要作用就是 <strong>在分布式系统中就某个值，来达成一致</strong>。</p>
+<h4 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h4><p>首先在 Paxos 算法中最终要的就是角色，非常重要，主要有三个，分别为：</p>
+<ol>
+<li>提议者（Proposer）</li>
+<li>决策者（Acceptor ）</li>
+<li>学习者（Learner）</li>
+</ol>
+<h4 id="决策"><a href="#决策" class="headerlink" title="决策"></a>决策</h4><p>首先，<strong>提议者（Proposer）</strong> 提出议案（Proposal），信息中包含了案件编号（Proposer id）以及提议的值（Value）</p>
+<p>之后 <strong>决策者（Acceptor）</strong> 参与决策，回应 <strong>提议者（Proposer）</strong> 提案，如果收到的提案（Proposal）获得多数 <strong>提议者（Acceptor）</strong> 的接受，则该提案被批准</p>
+<p>最后 <strong>学习者（Learner）</strong> 来学习从会议中获得到达成一致的提案（value）。</p>
+<blockquote>
+<p>2F+1 我们可以理解为，假设要是决策者 5个 同意 5个拒绝，那么就不会构成会议的决策。在这种情况下，如果有2倍的 决策者 人数并加一，就可以保证信息的正确，使得会议正常进行。</p>
+</blockquote>
+<p>Paxos 算法允许运行在宕机故障的异步系统内，也不要求可靠的消息传递，他使用了多数机制保证了 2F（faulty）+1 的容错，即 2F（faulty）+1 个节点最多允许 F 个节点出现问题。</p>
+<h1 id="Spring-cloud-跨服务查询与微服务部署概述"><a href="#Spring-cloud-跨服务查询与微服务部署概述" class="headerlink" title="Spring cloud 跨服务查询与微服务部署概述"></a>Spring cloud 跨服务查询与微服务部署概述</h1><h2 id="跨服务之间查询"><a href="#跨服务之间查询" class="headerlink" title="跨服务之间查询"></a>跨服务之间查询</h2><p>在微服务中，如果需要服务之间与服务之间进行数据的查询，可以被称之为 “跨服务”，而进行这个过程的有两种，分别为 API 和 CQRS模式两种。</p>
+<h3 id="API-组合器模式"><a href="#API-组合器模式" class="headerlink" title="API  组合器模式"></a>API  组合器模式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210605021404.png"><br>API 组合器模式由两个或多个服务提供者组成，服务提供者拥有数据服务（即数据库），API 组合器通过查询每个服务提供者的 API 结果并组合，来实现从多个服务检索数据库的查询。</p>
+<h3 id="CQRS"><a href="#CQRS" class="headerlink" title="CQRS"></a>CQRS</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210605021412.png"><br>命令查询职责分离（CQRS，Command Query Responsibility Segregation），是由 Eiffel 语言之父 Betrand Meyer 提出的概念，简单来讲就是将业务上分离了 <strong>读（query）和写（command）的行为</strong>，就比人的睡和醒是两种行为。</p>
+<ol>
+<li>命令（Command），不返回任何结果（void），但会改变对象状态，指增加、删除、修改</li>
+<li>查询（Query）用于返回结果（void），不会改变对象状态</li>
+</ol>
+<p>因此 CQRS 中主要强调 <strong>读（Query）和写（Command）的分离</strong> ，可能当查询数据会有一些问题，如时间过时的数据问题，可以通过使用事件（Event）机制来解决问题并修改查询数据源。</p>
+<h2 id="微服务部署"><a href="#微服务部署" class="headerlink" title="微服务部署"></a>微服务部署</h2><h3 id="部署模式"><a href="#部署模式" class="headerlink" title="部署模式"></a>部署模式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210606003230.png"><br>微服务的部署主要可以分为四种，这四周部署模式中主要通过下述方式进行：</p>
+<ol>
+<li>WAR、JAR 包运行</li>
+<li>服务部署虚拟机运行</li>
+<li>通过 Docker 或 Kubernetes 等容器化技术进行微服务部署</li>
+<li>Serverless 无服务器部署</li>
+</ol>
+<blockquote>
+<p>无服务器（Serverless）通过应用 <strong>使用第三方功能或服务</strong>，不需要管理服务器，但不代表他不需要服务器，主要包括了：</p>
+<p> <strong>功能即服务（Function as a Service，FaaS）</strong> 简单来讲就是功能运行在独立容器中，基于事件驱动，由第三方托管功能。</p>
+<p> <strong>后端即服务（Backend as a Service，Baas）</strong> 使用第三方服务来达到目的。</p>
+</blockquote>
+<h3 id="升级（维护）模式"><a href="#升级（维护）模式" class="headerlink" title="升级（维护）模式"></a>升级（维护）模式</h3><h4 id="蓝绿部署"><a href="#蓝绿部署" class="headerlink" title="蓝绿部署"></a>蓝绿部署</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210606003239.png"><br>蓝绿部署（Blue-green deployment），可以称之为 <strong>可不停机维护</strong>，主要分为蓝（Blue）和绿（Green）两个版本，其流程如下：</p>
+<ol>
+<li>当更新时，将所有访问流量分给绿色部分来提供服务，从而升级蓝色集群。</li>
+<li>当蓝色集群升级完后，来将绿色流量切换到蓝色集群，从而升级绿色集群</li>
+<li>升级完成后将访问流量分配到全部集群中</li>
+</ol>
+<h4 id="滚动部署"><a href="#滚动部署" class="headerlink" title="滚动部署"></a>滚动部署</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210606003246.png"><br>滚动部署（Rolling deployment），指每次只一个或多个服务暂停。进行更新，后将此服务继续投入使用，直到集群中所有服务都被更新或完成为止。</p>
+<h4 id="金丝雀发布（灰度发布）"><a href="#金丝雀发布（灰度发布）" class="headerlink" title="金丝雀发布（灰度发布）"></a>金丝雀发布（灰度发布）</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210606003252.png"></p>
+<blockquote>
+<p>为什么叫金丝雀发布？<br>在以前矿工开矿的时候，需要在下矿洞前需要检查下方是否有毒气，矿工会放一只金丝雀进去，来去探路是否有毒气。</p>
+</blockquote>
+<p>金丝雀发布也叫灰度发布（Canary release &#x2F; Grayscale release），其主要是一部分更新，一部分使用老版本，当新版本用户没什么建议的话，则全部将迁移到新版本中。</p>
+<h1 id="Spring-cloud-云原生概述"><a href="#Spring-cloud-云原生概述" class="headerlink" title="Spring cloud 云原生概述"></a>Spring cloud 云原生概述</h1><p>目前我们所谈论的云原生大多数分为两个，一个由 spring 开发公司 <strong>Pivotal</strong> 所定义的，另一个则是由谷歌所牵头成立的 <strong>云原生计算基金会</strong> （CNCF，Cloud Native Computing Foundation）。</p>
+<p>本文我们仅理解 Pivotal 公司和部分 CNCF 所定义的为服务，其主要概述主要分为四类，分别为：</p>
+<ol>
+<li>微服务</li>
+<li>DevOps<br><del>3. CI\CD（持续集成和持续交付</del>）</li>
+<li>容器化</li>
+</ol>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>读者可通过下一篇文章深度和实践中了解到微服务到底可以做什么，他的作用都会被理解，主要明确服务之间的解藕，多个服务集群。</p>
+<h2 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h2><p>DevOps（Development Opertainos）组合，即开发和运维组合，可以减少应用程序发布的风险。</p>
+<blockquote>
+<p>CI\CD（Continuous integration \ Continuous deployment），及持续集成和持续交付的所略词，其主要概念是通过应用程序的共建、测试和部署中实施自动化，在开发和运营团队架起桥梁，也是构成 DevOps 关键之一。</p>
+</blockquote>
+<h2 id="容器化"><a href="#容器化" class="headerlink" title="容器化"></a>容器化</h2><p>容器化即以容器为基础，在容器中运行的进程和应用，其 Docker 是应用最为广泛的容器引擎。通过容器封装让进程和应用成为一个独立的单元，并实现除了高水平的资源隔离，简化了维护。</p>
+<p>除此之外还有 kubernetes 容器编排系统，主要用于容器管理和容器之间的负载均衡，都是实现容器话的关键。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>本文使用 <strong>1.8.0_202</strong> 和 Maven <strong>3.6.0</strong> 进行演示和构建，读者可自行进行安装其环境。此时我们需要使用 <strong>Spring Assistant</strong>，有两种方式可以进行安装，分别是从 jetbrains 内的 插件社区中 <a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/10229-spring-assistant">https://plugins.jetbrains.com/plugin/10229-spring-assistant</a> 进行获取，也可从 <strong>Plugins</strong> 内直接进行安装，搜索 <strong>Spring Assistant</strong> 之后重启 IDEA 即可。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/2.Spring%20cloud%20%E6%A6%82%E8%BF%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

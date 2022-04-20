@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Hystrix 容错处理 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Hystrix 容错处理</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Hystrix 是由 Netflix 开源的一个延迟和容错库，旨在隔离对远程系统、服务和第三方库的访问点，他主要通过：“隔离、降级、融断、缓存”，等方式来避免或解决雪崩效应。处理和预防这类问题的项目也很多，通常主流的是 Sentinel、Hystrix、Resillience4j 三类解决方案。</p>
+<blockquote>
+<p>Sentinel</p>
+<blockquote>
+<p>阿里巴巴于 2012年 发布的面向分布式服务架构的轻量级流量控制组件。</p>
+</blockquote>
+<p>Resilience4j </p>
+<blockquote>
+<p>他是一个受 Netfilx Hystrix 启发的轻量级容错库，专门为函数式编程而设计</p>
+</blockquote>
+</blockquote>
+<h2 id="雪崩效应"><a href="#雪崩效应" class="headerlink" title="雪崩效应"></a>雪崩效应</h2><p>雪崩效应也被称之为 “服务雪崩”，而雪崩效应的造成就是 <strong>级联</strong> 的崩溃，假设服务A调用服务B，服务B调用服务C，服务C调用服务D，这其中任何一个节点无法使用，就会造成下面的服务无法使用，这就会产生级联故障。</p>
+<p>如果这种请求很多，那么将会导致不可用的服务越来越多，之后占用的计算机资源也越多，而这些请求则会消耗系统资源，导致其他请求也不可用，这种现象也被称之为：“服务雪崩”。</p>
+<blockquote>
+<p>也就是说当服务提供者导致了服务消费者不可使用，并将问题逐渐放大至微服务系统，进而造成系统崩溃。</p>
+</blockquote>
+<h3 id="造成雪崩原因"><a href="#造成雪崩原因" class="headerlink" title="造成雪崩原因"></a>造成雪崩原因</h3><p>雪崩效应的造成原因可以是流量激增、硬件故障、bug、缓存、资源耗尽、线程同步等待、配套资源不可用等：</p>
+<h4 id="流量激增"><a href="#流量激增" class="headerlink" title="流量激增"></a>流量激增</h4><p>在目前，造成流量激增的方式可以恶意攻击，或者说是爬虫造成的都有可能，这种主要体现在了京东 6·18 活动中。</p>
+<h4 id="硬件故障"><a href="#硬件故障" class="headerlink" title="硬件故障"></a>硬件故障</h4><p>假设一个集群中，有两个服务提供者，一个服务提供者的硬件损害。那么整个集群就成为了单点应用，导致服务的压力加大，从而出现了服务延迟，由于服务延迟的不断增加，最终导致了雪崩。</p>
+<h4 id="bug"><a href="#bug" class="headerlink" title="bug"></a>bug</h4><p>通常程序中出现 bug 都是正常的事情，在 spring cloud 中，假设有一个不应该被类使用的接口被调用，则会造成服务之间的互相调用导致的循环逻辑问题，则会可能导致服务雪崩。</p>
+<h4 id="缓存问题"><a href="#缓存问题" class="headerlink" title="缓存问题"></a>缓存问题</h4><p>缓存问题主要可以分为缓存穿透、缓存击穿、缓存雪崩等三个问题：</p>
+<h5 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h5><p>缓存穿透指的是用户不断请求数据库中没有的数据，这将会导致数据库的压力过大。至于这种问题的防范问题，可以通过下述方法解决：</p>
+<ol>
+<li>在路由中增加权限校验</li>
+<li>设置最大（max）与最小（min）的拦截请求（大于等于或小于等于）</li>
+</ol>
+<h5 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h5><p>缓存击穿是指 <strong>缓存没有数据，但数据库中有数据（通常是缓存时间到期了）</strong>，当用户在缓存中没有得到数据，就从数据库中获得数据，从而让数据库压力增大，就会造成缓存击穿。</p>
+<blockquote>
+<p>至于预防缓存击穿，那么就就是将 <strong>热点数据</strong> 设置为永不过期，来解决问题。</p>
+</blockquote>
+<h5 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h5><p>缓存雪崩说直白一点，就是缓存大量过期，而此时很多用户都是查询缓存中的数据，从而将流量转向数据库，进一步导致数据库宕机。预防这种问题需要通过将缓存数据的过期时间为 <strong>随机，以此来防止数据缓存同一时间大量过期。</strong> 如果将缓存击穿的问题解决了，那么缓存雪崩的问题也可以适当的预防。</p>
+<h4 id="资源耗尽"><a href="#资源耗尽" class="headerlink" title="资源耗尽"></a>资源耗尽</h4><p>资源耗尽主要由两种原因造成的原因可以是：“服务提供者不可用，导致服务消费者等待，进而造成资源消耗”，也可是用户的大量流量请求，以及重试流量加大导致的。</p>
+<h4 id="线程同步等待"><a href="#线程同步等待" class="headerlink" title="线程同步等待"></a>线程同步等待</h4><p>假设系统采用的是服务调用模式，<strong>核心服务和非核心服务共用一个线程池以及消息队列，假设一个核心的业务线程调用了一个非核心进程</strong>，那么这个非核心进程一旦出现问题，则导致核心线程出现问题。如果核心线程断了，那么将会导致后续的线程也一一崩溃，最终导致雪崩。</p>
+<h4 id="配套资源不可用"><a href="#配套资源不可用" class="headerlink" title="配套资源不可用"></a>配套资源不可用</h4><p>配套资源不可用可能是数据中心不可用或者电信基础网络服务出现问题，欣慰的是这类事故出现的概率极低。</p>
+<h3 id="Hystrix-的解决方式"><a href="#Hystrix-的解决方式" class="headerlink" title="Hystrix 的解决方式"></a>Hystrix 的解决方式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210704165337.png"></p>
+<h4 id="熔断机制"><a href="#熔断机制" class="headerlink" title="熔断机制"></a>熔断机制</h4><p>至于 Hystrix 熔断机制，他主要通过融断器来执行融断的工作，熔断器在现实生活中的运用主要是 “保险丝”。</p>
+<blockquote>
+<p>保险丝（fuse）的在电器的主要作用就是 <strong>当电器的电流异常升高到一定热度的时候，那么保险丝自身熔断来切断电流，以此来保护电路的安全运行</strong></p>
+</blockquote>
+<h5 id="快速失败及熔断机制"><a href="#快速失败及熔断机制" class="headerlink" title="快速失败及熔断机制"></a>快速失败及熔断机制</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210704165348.png"><br>Hystrix 的熔断器可以实现快速失败，所谓快速失败就是当一个问题达到了某个规则的阀值，则该请求以后调用任何接口都会失败，最后导致不会访问远程服务器，以此来防止应用程序和资源的消耗。</p>
+<p>熔断器能够诊断错误是否经过修正，如果已经修正那么熔断器则会关闭，让应用程序在此调用操作。熔断器能够记录最近调用所发生的错误次数，假设熔断器小于阀值，则可以关闭，否则继续开启。</p>
+<p>熔断在正常状态下，一般处于关闭状态，如果调用的服务出错值达到莫个阀值，则会让其快速失效，以此来避免大量的无效请求影响系统。</p>
+<p>一段时间过后熔断机制将会进入半尝试状态，允许少量请求进行尝试，如果成功则关闭熔断状态，否则将继续持续。</p>
+<h4 id="隔离机制"><a href="#隔离机制" class="headerlink" title="隔离机制"></a>隔离机制</h4><p>隔离机制主要分为线程池隔离以及信号量隔离模式，在病毒传播中为了防止病毒扩散，最好的方式就是隔离病毒携带者，从而来保护正常的个体。这种方式在分布式系统中也采用隔离的方式进行容错处理。</p>
+<h5 id="线程池隔离模式"><a href="#线程池隔离模式" class="headerlink" title="线程池隔离模式"></a>线程池隔离模式</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210704224421.png"><br>在 Hystrix 的线程池隔离模式下，会为每一个 <strong>依赖建立一个线程池，以此来存储当前的依赖请求，线程池对请求进行处理。</strong> 线程池的主要作用就是隔离线程的依赖，以此来限制线程的并发访问和阻塞扩张。</p>
+<p><strong>当流量达到峰值的时候</strong>，如果不能及时处理的请求将会被存储到线程池后进行处理。<strong>运营环境被隔离时</strong>，会根据依赖划分多个线程池，以此来进行资源隔离，就算调用的服务代码存在 bug，也不会对系统的其他服务造成影响。</p>
+<h5 id="信号量隔离模式"><a href="#信号量隔离模式" class="headerlink" title="信号量隔离模式"></a>信号量隔离模式</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210704224435.png"><br>信号量隔离模式主要用于记录当前请求的数量，他内在存在了一个类似 <strong>“规则”</strong> 的，当信号量小于等于规则内最大的数量时，将会丢弃请求，否则将会执行请求，且对当前的信号量加一。</p>
+<h4 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h4><p>服务降级的主要机制就是 <strong>如果一个资源快不够了，则需要将某些服务先关掉，之后等到资源足够时在进行开启</strong>，和熔断的目的相差无几，以此来保证上游服务的稳定性。根据业务的不同，降级也分为两种模式，分别为：</p>
+<h5 id="Fallback"><a href="#Fallback" class="headerlink" title="Fallback"></a>Fallback</h5><p>Fallback 一词也被称之为 “倒退” 的意思，及如果服务失败，那么则会通过 fallback 的方式进行降级。</p>
+<h5 id="服务级联模式"><a href="#服务级联模式" class="headerlink" title="服务级联模式"></a>服务级联模式</h5><p>服务级联模式则是如果服务失败，则需要调用备用服务，服务级联模式会尽可能的返回数据。</p>
+<blockquote>
+<p>这样的做法如果考虑不充分会造成级联的崩溃，假设在缓存失败后将全部流量导到数据库请求中，那么数据库可能会直接崩溃，因此级联模式也考验开发者的能力</p>
+</blockquote>
+<p>简单来讲服务降级的两种方式分别是分级，将故障的服务丢弃，而服务级联模式则是将请求转移在另一个集群上。</p>
+<h4 id="缓存机制"><a href="#缓存机制" class="headerlink" title="缓存机制"></a>缓存机制</h4><p>缓存机制就是将请求的所有结果进行缓存，如果有相同的请求发送过来，则直接从缓存中取出结果，以此来减少请求的开销。</p>
+<h3 id="Hystrix-Fallback-实现"><a href="#Hystrix-Fallback-实现" class="headerlink" title="Hystrix Fallback 实现"></a>Hystrix Fallback 实现</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210705222024.png"><br>通常回退方法的实现有两种，一种是通过 <code>feign</code> 来进行实现，另一种解决方案则是根据 <code>@HystrixCommand</code> 注解进行实现，在此之前我们需要添加依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后在启动类中添加注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.EnableFeignClients;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 启动类，分别开启 consul、feign 以及服务熔断</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span></span><br><span class="line"><span class="meta">@EnableCircuitBreaker</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>尽管 <code>@EnableCircuitBreaker</code> 在 <strong>3.0.1</strong> 开始 Hystrix 就不在 <code>Spring cloud Netfilx</code> 中了，但是他是唯一一个实现断路器的注解</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/CircuitBreaker.html">https://martinfowler.com/bliki/CircuitBreaker.html</a></p>
+</blockquote>
+</blockquote>
+<h4 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">Hystrix</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">9900</span></span><br><span class="line"><span class="attr">spring.cloud.consul.host</span>=<span class="string">localhost</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.service-name</span>=<span class="string">service-provider</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.register</span>=<span class="string">false</span></span><br><span class="line"><span class="attr">feign.hystrix.enabled</span>=<span class="string">true                                    # 开启 Hystrix</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="service"><a href="#service" class="headerlink" title="service"></a>service</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使 Feign 支持 Hystrix，即添加 fallback 处理类，在服务熔断时返回 fallback 类中内容</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@FeignClient(&quot;service-provider&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MyFeignFallbackClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加指定的 fallback 类，在服务熔断时返回 fallback 类内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hey&quot;)</span></span><br><span class="line">    String <span class="title function_">hey</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.service.MyFeignFallbackClient;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调用 FeiginFallback 客户端</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HeyController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MyFeignFallbackClient myFeignFallbackClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/hey&quot;)</span></span><br><span class="line">    <span class="meta">@HystrixCommand(fallbackMethod = &quot;defaultCities&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">index</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">fallback</span> <span class="operator">=</span> myFeignFallbackClient.hey();</span><br><span class="line">        <span class="keyword">return</span> fallback;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">defaultCities</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;No server!!!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hystrix-Dashboard-consul"><a href="#Hystrix-Dashboard-consul" class="headerlink" title="Hystrix Dashboard (consul)"></a>Hystrix Dashboard (consul)</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210706113456.png"><br>Hystrix Dashboard 即 “Hystrix 仪表盘”，也是除了容错之外还提供的实时监控功能，他会实时的累加记录所有关于 <strong>HystrixCommand</strong> 执行的信息，其中包含了每秒执行了多少请求，以及成功或失败等信息。</p>
+<blockquote>
+<p>Hystrix Dashboard 是一款针对 Hystrix 进行实时监控的工具，可以实现出实时监控数据，并直观的显示 Hystrix Command 的请求响应时间、请求成功率等</p>
+</blockquote>
+<p>因为 Hystrix Dashboard 仅仅实现了数据的监控，因此 <strong>我们需要在 Hystrix Fallback 的基础上进行扩展</strong>，其中启动类需要修改并添加依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix-dashboard --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix-dashboard&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.7.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.servlet.ServletRegistrationBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.EnableFeignClients;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 启用服务发现以及 feign、Hystrix Dashboard 和服务熔断等注解支持，并配置 Servlet</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/6</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span></span><br><span class="line"><span class="meta">@EnableHystrixDashboard</span></span><br><span class="line"><span class="meta">@EnableCircuitBreaker</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> ServletRegistrationBean <span class="title function_">servletRegistrantionBean</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">HystrixMetricsStreamServlet</span> <span class="variable">hystrixMetricsStreamServlet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HystrixMetricsStreamServlet</span>();</span><br><span class="line">        <span class="type">ServletRegistrationBean</span> <span class="variable">registrationBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServletRegistrationBean</span>(hystrixMetricsStreamServlet);</span><br><span class="line">        registrationBean.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        registrationBean.addUrlMappings(<span class="string">&quot;/actuator/hystrix.stream&quot;</span>);</span><br><span class="line">        registrationBean.setName(<span class="string">&quot;HystrixMetricsStreamServlet&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> registrationBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="application-properties-1"><a href="#application-properties-1" class="headerlink" title="application.properties"></a>application.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">HystrixDashboard</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">9502</span></span><br><span class="line"><span class="attr">spring.cloud.consul.host</span>=<span class="string">localhost</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.service-name</span>=<span class="string">service-provider</span></span><br><span class="line"><span class="attr">feign.hystrix.enabled</span>=<span class="string">true</span></span><br><span class="line"><span class="attr">hystrix.dashboard.proxy-stream-allow-list</span>=<span class="string">*        # 设置仪表板代理流允许列表为所有</span></span><br></pre></td></tr></table></figure>
+
+<p>当一切完成之后访问 <a target="_blank" rel="noopener" href="http://localhost:9502/hystrix">http://localhost:9502/hystrix</a> 并在输入框输入 <a target="_blank" rel="noopener" href="http://localhost:9502/actuator/hystrix.stream">http://localhost:9502/actuator/hystrix.stream</a> 即可。</p>
+<blockquote>
+<p>Hystrix Turbine 与 Hystrix Dashboard 的区别就是一个只能看到单个应用程序内的服务信息，而另一个则是多个实例集群的状态形式展现，因此 Hystrix Turbine 由此而生。</p>
+<blockquote>
+<p><strong>强烈建议使用 Eureka</strong></p>
+</blockquote>
+</blockquote>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/8.Spring%20cloud%20Hystrix%20%E5%AE%B9%E9%94%99%E5%A4%84%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

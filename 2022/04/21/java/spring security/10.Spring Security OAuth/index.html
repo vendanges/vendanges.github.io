@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring Security OAuth | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring Security OAuth</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-security/" rel="tag">spring security</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>开放授权（Open Authorization）是一种开放的协议，即地桑房可以使用第三方应用代表资源所有者获取有限的访问授权机制，在整个授权的过程中，第三方站点无需涉及用户的密码即可获取部分的资源。在很多的站点场景之中，都提供了第三方登入等相关信息，如QQ、微信扫码登录等机制，而这当我们点击第三方登录时会跳转到授权的登录页面，然后登入成功就会跳转到访问的目标站点之中，而这过程中该站点就不会获取到用户的密码等相关信息，主要流程如下：</p>
+<ol>
+<li>客户端要求用户提供授权许可</li>
+<li>用户同意向客户端提供授权许可</li>
+<li>客户端携带用户所提供的授权许可向授权服务器申请访问令牌</li>
+<li>授权服务器验证客户端是否携带授权许可，如有效则发放访问令牌</li>
+<li>客户端使用访问令牌申请服务器资源</li>
+<li>资源服务器验证访问令牌，确认正确后向客户端提供资源。</li>
+</ol>
+<h2 id="四种授权模式"><a href="#四种授权模式" class="headerlink" title="四种授权模式"></a>四种授权模式</h2><h3 id="授权码模式（Authorization-Code）"><a href="#授权码模式（Authorization-Code）" class="headerlink" title="授权码模式（Authorization Code）"></a>授权码模式（Authorization Code）</h3><p>授权码模式是功能较为完整，安全性和用户信息存在应用服务器宝楼风险小、服务器与服务器之间的访问难以被抓取等相关优点。</p>
+<ol>
+<li><p>重定向到认证服务器</p>
+</li>
+<li><p>认证服务器用户授权</p>
+</li>
+<li><p>认证服务器-&gt;应用服务器重定向应用服务器，带上授权码</p>
+</li>
+<li><p>应用服务器-&gt;认证服务器获取访问令牌（用授权码换得）</p>
+</li>
+<li><p>认证服务器-&gt;应用服务器认证服务器获取访问令牌</p>
+</li>
+<li><p>应用服务器-&gt;资源服务器访问资源服务器</p>
+</li>
+</ol>
+<h3 id="隐式授权（Implicit-Grant）"><a href="#隐式授权（Implicit-Grant）" class="headerlink" title="隐式授权（Implicit Grant）"></a>隐式授权（Implicit Grant）</h3><p>隐式授权模式是指访问令牌通过重定向的方式传递到用户浏览器之中，之后通过js获取访问令牌。通过使用隐士验证我们可以免于后台和存储，将信息存储与Token或Cookie之中，基本上通过认证后可直接进行访问。</p>
+<h3 id="密码授权模式（Password-Credentials）"><a href="#密码授权模式（Password-Credentials）" class="headerlink" title="密码授权模式（Password Credentials）"></a>密码授权模式（Password Credentials）</h3><p>密码授权模式即通过浏览器直接携带用户的密码向授权服务器申请令牌，这种授权模式不用通过跳转到授权服务器进行，而是通过资源服务器提供的页面进行。</p>
+<h3 id="客户端授权模式（Client-Credentials）"><a href="#客户端授权模式（Client-Credentials）" class="headerlink" title="客户端授权模式（Client Credentials）"></a>客户端授权模式（Client Credentials）</h3><p>与上面三种模式相比之下，客户端授权模式相对于较为简单，只需要客户端请应用公钥、密钥等洗脑洗想授权服务器申请访问令牌，从而货渠道服务器所提供的资源。</p>
+<h2 id="OAuth-2-0-github-and-login"><a href="#OAuth-2-0-github-and-login" class="headerlink" title="OAuth 2.0 github and login"></a>OAuth 2.0 github and login</h2><p>如果要接入github的授权，则需要访问<a target="_blank" rel="noopener" href="https://github.com/settings/applications/new%EF%BC%8C%E6%9D%A5%E7%94%B3%E8%AF%B7%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E5%B9%B6%E5%9C%A8%E6%AD%A4%E5%A1%AB%E5%86%99%E5%BA%94%E7%94%A8%E5%90%8D%E7%A7%B0%E3%80%81%E4%B8%BB%E9%A1%B5URL%E3%80%81%E5%BA%94%E7%94%A8%E8%AF%B4%E6%98%8E%E3%80%81%E8%AE%A4%E8%AF%81%E6%97%B6%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%8D%B3%E5%8F%AF%E3%80%82%EF%BC%88%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E4%B8%BB%E9%A1%B5URL%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E4%B8%BA%60%60%60http://localhost:8080%60%60%60%EF%BC%8C%E8%AE%A4%E8%AF%81%E9%87%8D%E5%AE%9A%E5%90%91%E5%9C%B0%E5%9D%80%E8%AE%BE%E7%BD%AE%E4%B8%BA%60%60%60http://localhost:8080/login/oauth2/code/github%60%60%60%EF%BC%89%E3%80%82">https://github.com/settings/applications/new，来申请一个应用并在此填写应用名称、主页URL、应用说明、认证时重定向的页面即可。（需要注意的是在本地开发的时候，主页URL需要设置为```http://localhost:8080```，认证重定向地址设置为```http://localhost:8080/login/oauth2/code/github```）。</a><br>点击确定后将会跳转至应用创建成功页面，并获得到客户端ID（Client ID）以及客户端密码（Client secrets）</p>
+<blockquote>
+<p>Client ID<br>****cd6dcb6f7289b5c56<br>****2a5b45fa0b528837b2181617e7</p>
+</blockquote>
+<p>Spring Security OAuth默认的重定向模板是<code>&#123;baseUrl&#125;/login/oauth2/code&#123;registrationId&#125;</code>registrationId是Client Registrationa的唯一ID，通常接入的OAuth服务提供商的简称来命名。</p>
+<h3 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h3><h4 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">security:</span></span><br><span class="line">    <span class="attr">oauth2:</span></span><br><span class="line">      <span class="attr">client:</span></span><br><span class="line">        <span class="attr">registration:</span></span><br><span class="line">          <span class="attr">github:</span></span><br><span class="line">            <span class="attr">clientId:</span> <span class="string">&lt;clientid&gt;</span></span><br><span class="line">            <span class="attr">clientSecret:</span> <span class="string">&lt;clientSecret&gt;</span></span><br><span class="line">            <span class="comment"># 需要获取的信息</span></span><br><span class="line">            <span class="attr">scope:</span> <span class="string">read:user,</span> <span class="string">user:email</span></span><br></pre></td></tr></table></figure>
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><h4 id="login-html"><a href="#login-html" class="headerlink" title="login.html"></a>login.html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Spring boot security and OAuth2.0 github login<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Login github&gt; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/oauth2/authorization/github&quot;</span>&gt;</span>Go<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><h4 id="IndexController-java"><a href="#IndexController-java" class="headerlink" title="IndexController.java"></a>IndexController.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.security.Principal;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">IndexController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OAuth2AuthorizedClientService auth2AuthorizedClientService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(value = &quot;/&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">index</span><span class="params">(Principal principal)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hey,&quot;</span> + principal.getName();        <span class="comment">// getName 为获取其github id</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><h4 id="WebSecurityConfiguration-java"><a href="#WebSecurityConfiguration-java" class="headerlink" title="WebSecurityConfiguration.java"></a>WebSecurityConfiguration.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.configuration;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.util.matcher.AntPathRequestMatcher;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebSecurityConfiguration</span>  <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurity httpSecurity)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        httpSecurity.authorizeRequests()</span><br><span class="line">                .anyRequest().authenticated()</span><br><span class="line">                .and()</span><br><span class="line">            .oauth2Login()</span><br><span class="line">                .loginPage(<span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">                .defaultSuccessUrl(<span class="string">&quot;/&quot;</span>).permitAll()</span><br><span class="line">                .and()</span><br><span class="line">            .logout()</span><br><span class="line">                .logoutRequestMatcher(<span class="keyword">new</span> <span class="title class_">AntPathRequestMatcher</span>(<span class="string">&quot;/logout&quot;</span>,<span class="string">&quot;GET&quot;</span>))</span><br><span class="line">                .deleteCookies(<span class="string">&quot;true&quot;</span>)</span><br><span class="line">                .logoutSuccessUrl(<span class="string">&quot;/login.html?logout&quot;</span>)</span><br><span class="line">                .permitAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20security/10.Spring%20Security%20OAuth/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

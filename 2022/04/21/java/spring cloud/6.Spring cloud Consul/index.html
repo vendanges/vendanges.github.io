@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Consul | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Consul</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Spring cloud Consul 是由 HashiCorp 公司使用 Go lang 所开发的一个 <strong>服务治理</strong> 项目，主要包含了 <strong>服务治理、健康检查、Key-value 存储、多数据中心</strong> 的功能。与 其他服务中心相比，Consul 支持多数据中心，内外网服务采用不同的端口号进行监听，除此之外还可以避免单数据中心故障所导致的问题。</p>
+<p>Consul 所使用的是 Raft（Reliable, Replicated, Redundant,d Fault An-Tolerant，可靠、可复制、可沉余、可容错） 算法来保证一致性，相比 Poxos，Raft 的目标则是提供更加清晰的逻辑分工使得算法本身可以被更好的理解。</p>
+<h2 id="原理流程"><a href="#原理流程" class="headerlink" title="原理流程"></a>原理流程</h2><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210616033154.png"></p>
+<p>服务提供者（Service Provider）在启动时向 Consul 发送一个POST 请求，<strong>来告诉自己的 IP和端口号等信息</strong>。Consul 收到了服务提供者的注册后，默认每隔10s想服务提供者发送一个健康请求，来验证该提供者是否可以正常提供服务。</p>
+<blockquote>
+<p>Consul 中的服务提供者临时表每隔 10s 更新一次，只包含了通过健康检查的服务提供提供者。</p>
+</blockquote>
+<p>之后服务消费者（Service Consumer）在调用服务提供者之前会从 Consul 获取存储的服务提供者 IP 和地址的临时地址表，之后发送请求给 服务提供者。</p>
+<h3 id="集群原理"><a href="#集群原理" class="headerlink" title="集群原理"></a>集群原理</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210616033200.png"></p>
+<blockquote>
+<p>Consul 的常见黑话有很多，如 Agent、Client、Server、DataCenter、Consensus、Gossip、LAN Gossip、WAN Gossip、RPC…… 他们的意思如下：</p>
+<blockquote>
+<p><strong>Agent</strong></p>
+<blockquote>
+<p>Consul 集群中每个成员都会运行 Agent，他是一个守护进程。主要分为 Server 与 Client 模式，能运行 DNS 或 HTTP 接口，<strong>负责在运行时检查和保持服务同步</strong>。</p>
+</blockquote>
+<p><strong>Client</strong></p>
+<blockquote>
+<p>Client 转发所有 RPC 到 Server 的代理，Client 想对于是无状态的，他唯一执行后台活动是加入 LAN Gossip 池。Client 只需要较低的资源开销，以及较少的网络流量带宽等。</p>
+<blockquote>
+<p><strong>RPC（Remote Procedure Call）远程过程调用</strong>，该协议允许一台计算机的程序调用另一台开放网络的计算机。在 Consul 集群中主要允许 Client 请求 Server 的请求&#x2F;响应机制</p>
+</blockquote>
+<blockquote>
+<p><strong>LAN gooip</strong> 包含了所有与位于同一个局域网或同一个数据中心的所有节点</p>
+<blockquote>
+<p><strong>Gossip</strong> 主要用于实现基于 UDP 的随机点到点通信</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>Server</strong></p>
+<blockquote>
+<p>具有扩展功能的代理，功能包括Raft选举、维护集群状态、响应 RPC差需、与其他数据中心交互 WAN gossip、转发查询给 Leader\远程数据中心。<br>他主要是在局域网内与本地客户端进行通信，通过广域网与其他数据中心进行通信，通常 Server保存集群中的配置信息（每个数据中心的 Server 数量建议为 3～5个）</p>
+<blockquote>
+<p><strong>Wan gooip</strong> 只包含分布在不同数据中心的所有节点，数据中心间通常采用互联网或广域网进行通信。</p>
+</blockquote>
+<p><strong>DataCenter</strong></p>
+<blockquote>
+<p>一个私有且低延迟和高宽带的网络环境</p>
+</blockquote>
+<p><strong>Consensus</strong></p>
+<blockquote>
+<p>Consensus 用于代表复制机的状态一致性，即用于表明 Server 与 领袖选举的事务顺序达成一致。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h4 id="Gossip-and-Wan-and-LAN"><a href="#Gossip-and-Wan-and-LAN" class="headerlink" title="Gossip and Wan and LAN"></a>Gossip and Wan and LAN</h4><p>在 Consul 数据中心中，官方给我们最好的建议数量是三台到五台之间。这是经过深思熟虑思考之后所得到的结果，当很多台数据中心加入后，则达成共识的过程很慢，但只有1～2台数据中心可用性又不高，因此所得出的权衡利弊的数量为 3~5台之间。</p>
+<h5 id="Gossip-（第六届ACM分布式计算原理年会论文集）"><a href="#Gossip-（第六届ACM分布式计算原理年会论文集）" class="headerlink" title="Gossip （第六届ACM分布式计算原理年会论文集）"></a>Gossip （第六届ACM分布式计算原理年会论文集）</h5><blockquote>
+<p>Demers, Alan; Greene, Dan; Hauser, Carl; Irish, Wes; Larson, John; Shenker, Scott; Sturgis, Howard; Swinehart, Dan; Terry, Doug (1987-01-01). Epidemic Algorithms for Replicated Database Maintenance. Proceedings of the Sixth Annual ACM Symposium on Principles of Distributed Computing. PODC ‘87. New York, NY, USA: ACM. pp. 1–12. doi:10.1145&#x2F;41840.41841. ISBN 978-0897912396. S2CID 1889203.</p>
+</blockquote>
+<p>Gossip protocol 又称 Epidemic Protocol（流行病协议），该协议早在1987年发表在 ACM 论文 《Epidemic Algorithms for Replicated Database Maintenance》中，主要用于在分布式数据库系统中各个副本节点间的同步数据。</p>
+<h6 id="八卦通信模型-Gossip-Protocol"><a href="#八卦通信模型-Gossip-Protocol" class="headerlink" title="八卦通信模型 (Gossip Protocol)"></a>八卦通信模型 (Gossip Protocol)</h6><p>无论喜欢与否，八卦在人类社会中扮演了重要的角色。Dunbar（一位人类学家）在具有争议的一本书中声称，语言的出现原因是允许闲聊，而闲聊的整个过程是不需要仔细思考和梳理的。</p>
+<p>因此无论什么情况，毫无疑问这些流言蜚语仍然是一种在社会活动中传播非常优秀的。特别是传播速度非常狂，而这个过程对组织信息传播的企图具有一些抵抗力。</p>
+<blockquote>
+<p>Kimmel 在书中给出了许多关于人类八卦的例子和细节</p>
+</blockquote>
+<p>虽然八卦通常会被认为是一种传播手段，但是实际上并不仅仅是机器上的传递，而个经过处理的。具体流程为一个人收集、处理信息并将处理后的信息传递给其他人。<br> 在这个过程中信息至少会根据其兴趣进行过滤，这样一来最有趣的新闻在传播到每个人之前就不会停止传播。</p>
+<p> 更复杂的化来讲，信息是逐渐改变的，这增加了过程的复杂性并可能导致突发行为，其中这个平台则充当了 “集体智能”的信息处理媒介。</p>
+<h6 id="流行病传播模型-Epidemics-Protocol"><a href="#流行病传播模型-Epidemics-Protocol" class="headerlink" title="流行病传播模型 (Epidemics Protocol)"></a>流行病传播模型 (Epidemics Protocol)</h6><p>实际上这些八卦非常类似于流行病，病毒扮演着信息的角色，而感染者则扮演者了解信息的角色。在过去的几年当中 “病毒式营销” 的概念非常火爆，通过视频分享平台以及社交网络，广告商可以有意识的利用日益高效的传播八卦广告。</p>
+<p> 而令人震惊或非常有趣的广告，特别是设计会有极大限度的提高机会，阅读者通常会通知他们的朋友等等。</p>
+<h6 id="分布式系统设计灵感"><a href="#分布式系统设计灵感" class="headerlink" title="分布式系统设计灵感"></a>分布式系统设计灵感</h6><p><strong>第一原因</strong><br>八卦对于大型分布式系统来说非常有意义，主要有两个原因。其中之一就是设计新协议的灵感来源： Gossip 有几个吸引人的特性，如简单、速度、健壮等，除此还包含了缺乏中央控制的瓶颈。</p>
+<p>这些特性对于大型分布式系统关键组成部分的 <strong>信息分发和集体信息处理（聚合）</strong> 非常重要。</p>
+<p><strong>第二原因</strong><br>随着当今互联网的稳步发展，病毒和蠕虫的传播策略越来越为之复杂。受感染的计算机通常会组成网络（被称为 “僵尸网络”），能够进行协作和执行攻击等手法。</p>
+<p> 这对互联网基础设施构成了非常重大的威胁，为应对这些网络的一个办法就是设防防止他们的传播，这需要对流行病有很好的了解才可预防。</p>
+<p>在本篇论文中，我们主要关注流行病以及八卦作为设计高可用组织系统和服务的灵感作为来源。</p>
+<h5 id="Gossip-in-Consul"><a href="#Gossip-in-Consul" class="headerlink" title="Gossip in Consul"></a>Gossip in Consul</h5><h6 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h6><p>Consul 使用 Gossip 协议来管理成员资格并向集群广播消息，通过 Serf 库所提供，所基于  “SWIM: Scalable Weakly-consistent Infection-style Process Group Membership Protocol” 论文并做了一些必要的修改。</p>
+<h6 id="WAN-and-Lan"><a href="#WAN-and-Lan" class="headerlink" title="WAN and Lan"></a>WAN and Lan</h6><p>Consul 使用了两个不同的八卦池，分别称之为 <strong>Lan 与 Wan</strong> 池，每个数据中心都有一个 Lan 池，其中包含数据中心的所有成员（包括客户端和服务器）</p>
+<p>Lan 池的主要作用是成员信息允许客户端自动发现服务器，以此来减少所需的配置量。在分布式故障检测中允许检测的工作由整个集群共享，而不是单个服务器进行， <strong>他包含了所有位于同一个局域网或者同一个数据中心的所有节点</strong></p>
+<p>而 Wan 池是全局唯一的，无论数据中心如何，所有服务器都应参与WAN池。WAN 池提供成员信息允许服务器执行夸数据中心的请求。</p>
+<p>故障检测允许 Consul 优雅的处理丢失连接的整个数据中心，或仅处理远程数据中心的单个服务器，<strong>他只包含了分布在不同数据中心的所有节点</strong></p>
+<h4 id="集群实现原理"><a href="#集群实现原理" class="headerlink" title="集群实现原理"></a>集群实现原理</h4><h5 id="Leader-and-Client-amp-Server"><a href="#Leader-and-Client-amp-Server" class="headerlink" title="Leader and Client&amp;Server"></a>Leader and Client&amp;Server</h5><p>从上图可以得知，每个数据中心的 Client 以及 Server 是混合的，一般官方建议数据中心 Server 通常为 3~5 台。</p>
+<blockquote>
+<p>这是经过深思熟虑之后所得出的结果，因为如果有太多的机器加入则达成共识会变慢。但只有 1～2台的数据中心可用性又不高，于是 3~5台是最好的选择</p>
+</blockquote>
+<p>数据中心的领袖（Leader）是有一个额外工作的 Server，他是由所有 Server 选出的（Raft 协议），主要用于处理所有的查询和事务。由于需要遵一致性协议的要求，所以事物也必须被复制到其他所有节点中（CAP 协议）。</p>
+<blockquote>
+<p>每个数据中心的 Server 都是 Raft 节点集合的一部分，在这期间内如果有一个非领袖服务器收到了RPC请求，将会将请求转发给集群中的领袖服务器中。</p>
+</blockquote>
+<h5 id="WAN-and-LAN"><a href="#WAN-and-LAN" class="headerlink" title="WAN and LAN"></a>WAN and LAN</h5><p>为了允许数据中心能够以 “低耦合（Low-touch）”的方式发现彼此。那么通过 WAN gossip Pool 来只包含服务节点的信息，用于优化网络延迟，那么一个新的数据中心就很容易加入到现存的 WAN gooip 池中。</p>
+<blockquote>
+<p>无论数据中心如何，所有服务器都应参与WAN池的原因，所以服务也支持跨数据中心请求</p>
+</blockquote>
+<p>这个时候一个服务在收到了来自另一个数据中心的请求后，会随即将该请求转发给正确的数据中心的服务中。之后该服务再将请求转发给本地的领袖服务（Leader），这使得服务之间有一个很低的耦合。</p>
+<p>由于 Consul 自身的一些优势，如提所提供的健康检查、链接缓存、以及复用等功能，使得跨数据中心请求都是相对快速且可靠的。</p>
+<h2 id="Consul-集群实现"><a href="#Consul-集群实现" class="headerlink" title="Consul 集群实现"></a>Consul 集群实现</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210619183625.png"></p>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -</span><br><span class="line">sudo apt-add-repository &quot;deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main&quot;</span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install consul</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至于第二条命令可能很多 debian er 无法使用，我们需要安装 sudo apt-get install <code>software-properties-common</code> 软件包来解决你 <code>add-repository</code> 无法使用的情况</p>
+<blockquote>
+<p>当你执行第三条命令的时候，也就是 <code>update</code> 对于一些非常纯净的发行版，你可能还需要安装 <code>sudo apt-get install apt-transport-https</code></p>
+</blockquote>
+</blockquote>
+<p>当安装完成后我们可以执行 <code>consul</code> 来验证是否安装成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">consul</span> </span><br><span class="line">Usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]</span><br><span class="line"></span><br><span class="line">Available commands are:</span><br><span class="line">    agent          Runs a Consul agent</span><br><span class="line">    catalog        Interact with the catalog</span><br><span class="line">    event          Fire a new event</span><br><span class="line">    exec           Executes a command on Consul nodes</span><br><span class="line">    force-leave    Forces a member of the cluster to enter the &quot;left&quot; state</span><br><span class="line">    info           Provides debugging information for operators.</span><br><span class="line">    join           Tell Consul agent to join cluster</span><br><span class="line">    keygen         Generates a new encryption key</span><br><span class="line">    keyring        Manages gossip layer encryption keys</span><br><span class="line">    kv             Interact with the key-value store</span><br><span class="line">    leave          Gracefully leaves the Consul cluster and shuts down</span><br><span class="line">    lock           Execute a command holding a lock</span><br><span class="line">    maint          Controls node or service maintenance mode</span><br><span class="line">    members        Lists the members of a Consul cluster</span><br><span class="line">    monitor        Stream logs from a Consul agent</span><br><span class="line">    operator       Provides cluster-level tools for Consul operators</span><br><span class="line">    reload         Triggers the agent to reload configuration files</span><br><span class="line">    rtt            Estimates network round trip time between nodes</span><br><span class="line">    snapshot       Saves, restores and inspects snapshots of Consul server state</span><br><span class="line">    validate       Validate config files/directories</span><br><span class="line">    version        Prints the Consul version</span><br><span class="line">    watch          Watch for changes in Consul</span><br></pre></td></tr></table></figure>
+
+<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><p>可以通过以开发者模式运行和服务器模式运行两种，可通过使用下述命令直接进行启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">consul agent -dev</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">consul agent -server</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>or -server``` 的区别主要是开发者模式和服务器模式两种运行模式，而 **agent** 则是用于注册服务、运行健康检查的一个功能。每个数据中心都要求至少有一台 Agent (Server 模式) ，推荐于 3~5 台。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">他主要有 Client 模式和  Server 两种模式，其中 Client 模式主要是用于运行写上述的服务（注册服务、健康检查……）而 Server 则是主要接收这些功能查询后的数据。</span><br><span class="line"></span><br><span class="line">&gt; 当运行之后我们可以通过访问 [http://127.0.0.1:8500/](http://127.0.0.1:8500/) 来进行查看和管理 Consul 集群状态</span><br><span class="line"></span><br><span class="line">**常用命令**</span><br><span class="line"></span><br><span class="line">| ID | DA | FA |</span><br><span class="line">| --- | --- | --- | </span><br><span class="line">| members | 列出 Consul 下集群成员 | |</span><br><span class="line">| | -datailed | 查看 Consul  集群成员详细信息 | |</span><br><span class="line">| monitor | 持续打印当前 Consul 代理流日志 | |</span><br><span class="line">| agent | 运行 Consul 代理 | |</span><br><span class="line">| | -dev | 开发者模式 |</span><br><span class="line">| | -server | 服务器模式 |</span><br><span class="line">| join | 加入某个集群 | |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### vagrant init</span><br><span class="line">Consul 集群的实现也非常简单，但多出了 ```join``` 参数，主要是加入集群。而在测试环境中，在正常且资金不允许的情况下我们是不会上服务器的，所以上也有很多文章出现了一些迷惑性文章。</span><br><span class="line"></span><br><span class="line">比如，运行 ```xxx``` 命令，之后执行 ```join```，这就很无语。首先，我们只要运行一个单个 consul 集群就会发现，他 **并不是交互式的**，你这个终端就挂着这个，之后你在开个新终端，来加入他，这也合理。</span><br><span class="line"></span><br><span class="line">&gt; 不要问为什么是 Vagrant 问就是 HashiCorp 项目下的（与 Consul 一个公司出的）</span><br><span class="line"></span><br><span class="line">但是最不合理的情况发现了，就是 ```-bind``` 参数下到底要填写什么。通常情况下我们会通过 vagrant 来部署测试环境进行实现。</span><br><span class="line"></span><br><span class="line">但幸运的是我们不需要单个手动配置 Vagrant 环境，只需要下载 Consul 所为我们提供的集群测试环境即可（实际上就是两个 debian 装个 Consul）：[https://github.com/hashicorp/consul/blob/master/demo/vagrant-cluster/Vagrantfile](https://github.com/hashicorp/consul/blob/master/demo/vagrant-cluster/Vagrantfile)</span><br><span class="line"></span><br><span class="line">我们可以选择手动安装或自动安装，即执行 ```vagrant up``` 根据 **Vagrantfile** 文件内配置执行一些命令。如 Consul 所提供的则是自动安装 Consul，则可能会造成卡住的问题，读者可自行进行解决。</span><br><span class="line"></span><br><span class="line">当配置好测试环境后，我们即拥有了三台测试环境，分别为 vagrant box#2 以及自己本机的环境，我们要保证这三台环境内可以正常启动 consul 以及其他等等，之后即可进入下一步。</span><br><span class="line"></span><br><span class="line">#### localhost</span><br><span class="line">我们首先需要将我们本机成为整个集群中的 **领导者（server/leader）**，之后剩下的 n1、n2 则扮演客户端的角色进行：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">consul agent -dev -node=consul-server -bind=172.20.20.1 -data-dir=data -client 0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>通过上述命令，我们主要开启了 <strong>测试</strong> 模式下的 consul ui ，可通过访问 <a target="_blank" rel="noopener" href="http://localhost:8500/ui">http://localhost:8500/ui</a> 来直接进行通过可视化的方式观察集群状态。</p>
+<blockquote>
+<figure class="highlight plaintext"><figcaption><span>参数为本机器的 IP 地址。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在实际的生产环境中，我们时候使用的则是 ```consul agent -server -bootstrap-expect=2 -node=consul-server -bind=172.20.20.1 -data-dir=data -client 0.0.0.0``` 来通过 ```bootstrap-expect``` 限制集群数量等。</span><br><span class="line"></span><br><span class="line">而生产环境是不需要可视化 ui的，因此我们可以通过下面几个 api 接口来进行查看：</span><br><span class="line"></span><br><span class="line">| ID | DA | </span><br><span class="line">| --- | --- |</span><br><span class="line">| ip:port/v1/status/leader | 显示当前集群的领袖服务器 |</span><br><span class="line">| ip:port/v1/agent/members | 显示集群中所有成员信息 |</span><br><span class="line">| ip:port/v1/status/peers | 显示当前集群中的 Server 成员 |</span><br><span class="line">| ip:port/v1/catalog/services | 显示所有服务 |</span><br><span class="line">| ip:port/v1/catalog/nodes | 显示集群节点的详细信息 |</span><br><span class="line"></span><br><span class="line">#### vagrant up</span><br><span class="line">![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210619183721.png)</span><br><span class="line">##### n1</span><br><span class="line">在 n1 中，我们可以通过使用 ```vagrant ssh n1``` 直接进入 n1 的 debian 环境，之后建立一个目录也可以之际运行：</span><br><span class="line"></span><br><span class="line">需要注意的是当 ```vagrant init``` 完事之后，才可以使用 ```vagrant up``` 来进行启动，最后通过 ```vagrant shell n1``` 来选择进入多个环境下进行工作。</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">consul agent -node=client-one -bind=172.20.20.10 -enable-script-checks=true -data-dir=data</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>通过使用 <code>enable-script-checks</code> 来开启 consul 的健康检查，我们也可以在开一个 n1 交互式 shell 进行加入服务集群：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul join 172.20.20.1</span><br></pre></td></tr></table></figure>
+
+<h5 id="n2"><a href="#n2" class="headerlink" title="n2"></a>n2</h5><p>n2 的流程和步骤也基本上和 n1 相差无几，我们也是通过 <code>vagrant ssh n2</code> 进入环境，之后根据自己喜好决定是否建立新的目录（主要存储文件）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul agent -node=client-two -bind=172.20.20.11 -enable-script-checks=true -data-dir=data</span><br></pre></td></tr></table></figure>
+
+<p>之后你可以在建立一个 shell n2 连接来加入 consul-server 集群中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul join 172.20.20.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务提供者以及服务消费者"><a href="#服务提供者以及服务消费者" class="headerlink" title="服务提供者以及服务消费者"></a>服务提供者以及服务消费者</h2><p>通过 Consul 实现服务提供者和服务消费者之前，我们首先需要在构建项目中选择 <code>Spring web、Spring Boot Actuator、Consul Discovery</code> 等项目的依赖，当然也可以在 pom.xml 文件下进行添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后我们的服务消费者不需要 <code>spring-boot-starter-actuator</code> 依赖。</p>
+<h3 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210620003322.png"><br>我们首先模仿下真实环境下的三台服务器，分别运行着功能服务，因此我们主要通过 <code>.properties</code> 进行实现和模拟这个环境。在此之前，我们首先需要对启动类中添加 Consul 的服务注册注解 <code>@EnableDiscoveryClient</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * DemoApplication.class</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> 2021/6/19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="properties"><a href="#properties" class="headerlink" title="properties"></a>properties</h4><h5 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">consul-provider</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8501</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.service-name</span>=<span class="string">service-provider</span></span><br><span class="line"><span class="attr">provider.name</span>=<span class="string">provider</span></span><br><span class="line"><span class="attr">logging.level.ROOT</span>=<span class="string">info</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是 <code>spring cloud consul discovery service-name</code> 是一个 spring cloud consul 发现服务时的名称，而 <code>logging.level.ROOT</code> 则是用于描述日志等级的。</p>
+<h5 id="application-consul-provider-one-properties"><a href="#application-consul-provider-one-properties" class="headerlink" title="application-consul-provider-one.properties"></a>application-consul-provider-one.properties</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">consul-provider-one</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8502    </span></span><br><span class="line"><span class="attr">spring.cloud.consul.host</span>=<span class="string">localhost</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.service-name</span>=<span class="string">service-provider</span></span><br><span class="line"><span class="attr">provider.name</span>=<span class="string">provider-one</span></span><br></pre></td></tr></table></figure>
+<h5 id="application-consul-provider-two-properties"><a href="#application-consul-provider-two-properties" class="headerlink" title="application-consul-provider-two.properties"></a>application-consul-provider-two.properties</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">consul-provider-two</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8503</span></span><br><span class="line"><span class="attr">spring.cloud.consul.host</span>=<span class="string">localhost</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.service-name</span>=<span class="string">service-provider</span></span><br><span class="line"><span class="attr">provider.name</span>=<span class="string">provider-two</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h4><h5 id="HeyController-java"><a href="#HeyController-java" class="headerlink" title="HeyController.java"></a>HeyController.java</h5><p>当配置完启动类和全局文件之后，我们首先需要实现服务提供的接口信息，所提供的也非常简单，就是 <code>.properties</code> 文件的内容获取：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HeyController.class</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/06/19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HeyController</span> &#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;provider.name&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;server.port&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/hey&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hey</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> <span class="string">&quot;提供者名称：&quot;</span> + name + <span class="string">&quot; 端口号为：&quot;</span> + port;</span><br><span class="line">        <span class="keyword">return</span> string;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="run-1"><a href="#run-1" class="headerlink" title="run"></a>run</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java -jar demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=consul-provider-one</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java -jar demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=consul-provider-two</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java -jar demo-0.0.1-SNAPSHOT.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>读者可能非常疑惑 <code>spring.profiles.active</code> 的作用是什么，实际上 <code>profiles</code> 是 <strong>pro(perties</strong> 的缩写，与 <strong>file</strong> 相加所等于的 profiles。可以理解为当多个 properties 文件时，运行那个配置文件，之后访问 ip:8501&#x2F;hey、8502&#x2F;hey、8503&#x2F;hey 都可以看到返回的信息。</p>
+<h3 id="服务消费者"><a href="#服务消费者" class="headerlink" title="服务消费者"></a>服务消费者</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="application-properties-1"><a href="#application-properties-1" class="headerlink" title="application.properties"></a>application.properties</h4><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">consul-consumer</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8504</span></span><br><span class="line"><span class="attr">spring.cloud.consul.host</span>=<span class="string">localhost</span></span><br><span class="line"><span class="attr">spring.cloud.consul.port</span>=<span class="string">8500</span></span><br><span class="line"><span class="attr">spring.cloud.consul.discovery.register</span>=<span class="string">false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>因为服务消费者并不需要提供服务，所以我们可以选择通过 <code>spring.cloud.consul.discovery.register=false</code>，让其不注册服务到 consul 集群中</p>
+<h4 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210620003305.gif"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HeyController.java</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/06/19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HeyController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired()</span></span><br><span class="line">    <span class="keyword">private</span> LoadBalancerClient loadBalancerClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hey&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hey</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ServiceInstance</span> <span class="variable">serviceInstance</span> <span class="operator">=</span> loadBalancerClient.choose(<span class="string">&quot;service-provider&quot;</span>);</span><br><span class="line">        <span class="type">URI</span> <span class="variable">uri</span> <span class="operator">=</span> serviceInstance.getUri();</span><br><span class="line">        <span class="type">String</span> <span class="variable">callService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>().getForObject(uri + <span class="string">&quot;/hey&quot;</span>, String.class);</span><br><span class="line">        <span class="keyword">return</span> callService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这其中起到主要作用的就是 <code>RestTemplate</code>，他起到了服务提供者负载均衡的功能。假设我们有三台服务提供者，那么我们每次刷新服务消费者时，会出现不同的服务名称及端口号等信息。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/6.Spring%20cloud%20Consul/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

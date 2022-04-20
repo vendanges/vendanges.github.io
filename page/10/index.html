@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/9">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/d3/10.D3 颜色序数比例尺/">D3 颜色序数比例尺</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616502566_20210323202212980_1871837357.png"></p>
+<p>作为较为常用且功能逊色的比例尺之一，D3还为其提供颜色序数比例尺，共有四类，<strong>10～20</strong>种颜色，其方法都以<code>d3.scale.category()</code>来进行定义，他的全部方法共有：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.scale.category10</td>
+<td>共有10种颜色</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616508673_20210323203725869_1227572584.png"></td>
+</tr>
+<tr>
+<td>d3.scale.category20</td>
+<td>共有20种颜色</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616508675_20210323203812332_355988057.png"></td>
+</tr>
+<tr>
+<td>d3.scale.category20b</td>
+<td>共有20种颜色的第二方案</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616508671_20210323203648729_2129488877.png"></td>
+</tr>
+<tr>
+<td>d3.scale.category20c</td>
+<td>第三种共有20种颜色搭配方案</td>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616508668_20210323203626028_499798037.png"></td>
+</tr>
+</tbody></table>
+<p>首先我们定义一个高和宽分别为<code>1600</code>的svg图像，之后分别指定圆的颜色为<code>category10</code>，并输出<code>10</code>个圆，圆的边距以及坐标可以通过使用return <code>padding.right + i * padding.left;</code>来计算出坐标以及间隔，并定义一个<code>y</code>轴坐标后输出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> databases = d3.<span class="title function_">range</span>(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category10</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">1600</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">1600</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">	<span class="attr">right</span>: <span class="number">130</span>,</span><br><span class="line">	<span class="attr">left</span>: <span class="number">100</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> circle = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">	.<span class="title function_">data</span>(databases)</span><br><span class="line">	.<span class="title function_">enter</span>()</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, <span class="keyword">function</span>(<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> padding.<span class="property">right</span> + i * padding.<span class="property">left</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>,<span class="number">100</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="number">40</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="title function_">color</span>(i)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	/—— font-size and text-anchor</span></span><br><span class="line"><span class="comment">	/———— 设置文字大小以及文字居中</span></span><br><span class="line"><span class="comment">	/—— return color(i)</span></span><br><span class="line"><span class="comment">	/———— 让其生成十个颜色并对应到 text 元素中</span></span><br><span class="line"><span class="comment">	/—— text color(d)</span></span><br><span class="line"><span class="comment">	/———— 将对应文字输出到 text 中。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> text = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">	.<span class="title function_">data</span>(databases)</span><br><span class="line">	.<span class="title function_">enter</span>()</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;font-size&quot;</span>,<span class="string">&quot;15px&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;text-anchor&quot;</span>,<span class="string">&quot;middle&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> padding.<span class="property">right</span> + i * padding.<span class="property">left</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">200</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="title function_">color</span>(i)</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">text</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="title function_">color</span>(d);</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/d3/1.D3 简介/">D3 简介</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>D3（Data-Driven Document）即<code>数据驱动文档</code>，是一个主要用于数据可视化所开发的<code>javascript</code>库，启动主要是<strong>数据决定绘图流程以及程序设计模型</strong>。或者另一个称呼为<strong>“事件驱动    ——由用户动作来决定程序流程的设计模型”</strong>。在版本控制中，D3主要使用了<strong>语义话版本控制</strong>，格式为<code>主板本号.次版本号.修订号</code> 即：</p>
+<ol>
+<li>主版本号：做了不兼容的API修改</li>
+<li>次版本号：当你做了向下兼容的功能增加</li>
+<li>修订号：当你做了向下兼容的问题修正。</li>
+</ol>
+<h2 id="数据与DOM的绑定"><a href="#数据与DOM的绑定" class="headerlink" title="数据与DOM的绑定"></a>数据与DOM的绑定</h2><p>同样的，在WEB中数据可视化中不仅仅只有D3，还有不少的类似与：Highcharts、Echarts、Chart。当然除此之外还有维度更高的，如<code>蚂蚁空间地理可视化框架</code>，D3 能够将数据与DOM对象进行绑定，使得数据与图形为一体，我们当修改DOM的时候，数据自然而然的会进行更新，这意味着我们配合各种各样的语言来呈现不同的数据展示。</p>
+<h2 id="计算和绘图的独立"><a href="#计算和绘图的独立" class="headerlink" title="计算和绘图的独立"></a>计算和绘图的独立</h2><p>在D3中数据变成一个数据图表将会被分为两个步骤为<code>计算</code>与<code>绘图</code>，在Highcharts等框架中，计算和绘图shingle整体，并输入数据。而D3中数据与绘图是进行分开的，而计算内所做的就是<code>计算所得到的节点或坐标</code>而<code>绘图</code>则是渲染图表。</p>
+<h2 id="支持-SVG-与-Canvas"><a href="#支持-SVG-与-Canvas" class="headerlink" title="支持 SVG 与 Canvas"></a>支持 SVG 与 Canvas</h2><p>在 D3 中，SVG与Canvas中通常会出现在不同的环境中，如地图中的<strong>飞线图</strong>，都可以使用SVG或Canvas路径以及SVG动画进行实现，在3.X之前的版本主要支持SVG，但从4.X开始也支持 Canvas。</p>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><p>数据可视化即<code>Data Visualization</code>，起源与18世纪，在19世纪中叶时期，数据可视化主要被运用与军事用途没来表示军队的死亡以及分布当中。而进入20世纪，由于大数据以及移动互联网的飞速发展，数据可视化也会运用在产品分析、行为分析以及数据统计等场景中。</p>
+<h2 id="图标的分类及用途"><a href="#图标的分类及用途" class="headerlink" title="图标的分类及用途"></a>图标的分类及用途</h2><h3 id="柱形图"><a href="#柱形图" class="headerlink" title="柱形图"></a>柱形图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365116_20210310153616458_780643451.png"><br>柱形图是最为常见的，也是最容易理解的一个图表，使用柱形图的长短可以表示数据的大小，或者需要表现随着时间变化，数据的大小等。如果将柱形图的<code>x或y轴</code>进行一环，的可以得到一个横向的柱状图，也被称之为<code>条形图</code>。</p>
+<h3 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365117_20210310153834291_544469312.png"><br>散点图使用三维数据集，将其中的二维数据分别对应到x和y轴，之后将第三维用点来作为表示。</p>
+<h3 id="折线图"><a href="#折线图" class="headerlink" title="折线图"></a>折线图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365119_20210310154234247_1173287566.png"><br>折线图的目的与柱状图类似，适合在二维的数据集中，某一维相对另一维度的变化趋势，不哦那个的是折线图适合连续的数据，柱状图适合较为离散的数据，折线图也适用一些数量较大的数据而住装图适合少量的数据。</p>
+<h3 id="饼状图"><a href="#饼状图" class="headerlink" title="饼状图"></a>饼状图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365121_20210310154516414_177876055.png"><br>饼状图可以用于表述数值的大小，缺点就是数值之间的差距不大，基本上通过饼状图的颜色以及注释来进行分辨，因此饼状图一般用于表示一个值站总体的百分比。</p>
+<h3 id="弦图"><a href="#弦图" class="headerlink" title="弦图"></a>弦图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365121_20210310154708336_615430199.png"><br>弦图用于表示点与点之间的联系，两点之间的连线来表示那个点具有联系以及线的粗细表示权重。</p>
+<h3 id="力导向图"><a href="#力导向图" class="headerlink" title="力导向图"></a>力导向图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365122_20210310154954245_1289846978.png"><br>力导向图适合描述打来那个节点之间的关系，各个节点之间具有相互的作用里来表示节点之间的用线相连，而相连的定点表示具有一定的关系，适合用于任务关系以及力导向图等。</p>
+<h3 id="树图"><a href="#树图" class="headerlink" title="树图"></a>树图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615365123_20210310155120859_210097567.png"><br>树图用于表示层级、上下级以及包含与被包含的关系，与之类似的还有集群图等。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/auto.js/1.Auto.js 入门/">Auto.js 入门</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/auto/" rel="tag">auto</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag">自动化测试</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Auto.js 是一个不需要 Root 权限的 JavaScript 自动化软件，发展至今已经从原来只针对自动化的 JavaScript 扩展语言演变为一个自动化软件，供两种方式给开发者进行使用，一种是提供了 GUI 页面，而另一种是简单的使用 javaScript 来完成一些相应的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Auto.js 开源版本已经不再维护，后续将只会维护 Auto.js Pro 专业版，其专业版内置了 Visual Studio 远程连接以及打包、制作等服务，除了自动化还可以开发 Android 软件并进行打包，同时内置了更加强大的加密方法。</span><br><span class="line"></span><br><span class="line">并此提供了自定义权限、启动图和优化还有签名等功能，来通过 Auto.js 实现真正的一个独立 Android 应用的开发。</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过-VS-Code-开发-Auto-js"><a href="#通过-VS-Code-开发-Auto-js" class="headerlink" title="通过 VS Code 开发 Auto.js"></a>通过 VS Code 开发 Auto.js</h2><p>Auto.js 的开发一般通过<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=hyb1996.auto-js-vscodeext&ssr=false#review-details">VS Code</a> 上的 Autojs 扩展或 <a target="_blank" rel="noopener" href="https://pro.autojs.org/">Android Auto.js</a> 直接进行下载，之后在 Android 或模拟器中打开 Auto.js Client 左侧导航中连接电脑，Auto.js 为我们提供了多种方式。</p>
+<h3 id="连接-VS-Code-VS-Code-连接-Auto-js"><a href="#连接-VS-Code-VS-Code-连接-Auto-js" class="headerlink" title="连接 VS Code \ VS Code 连接 Auto.js"></a>连接 VS Code \ VS Code 连接 Auto.js</h3><p>Auto.js 为我们所提供的方法较多，我们首先通过 VS Code 连接 Auto.js 但一般会遇到 <strong>connect error:Error:connect ETIMEDOUT xxxxx:9317</strong> 的错误，通常难以解决，目前解决此问题的方法是开放 9317 和 8327 端口以通过防火墙规则。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 VS Code 和 Android Auto.js 在一个网络的情况下，且 ADB 模式连接都已失败的情况下，可以采用另一种方法进行连接，VS Code 连接手机的前提下是 Android 已经安装好了 Auto.js</span><br></pre></td></tr></table></figure>
+
+<p>在正常情况下，我们只需要通过 <code>Ctrl+P</code> 的组合键，来调出命令执行页面，之后在表单中输入 <code>&gt;Auto.js Pro:连接新的设备</code> -&gt; adb 连接手机，即 USB 形式连接，如果出错，可以尝试下述方案，在 Auto.js 中的连接侧栏内，选择连接电脑，输入电脑 IP 即可，但需要主要的是该主机已经安装了VS Code 和相关 Auto.js 扩展，且在开启的情况下进行，即可连接。</p>
+<p>对于部分 PC 端 Android 模拟器的选择，建议蓝叠国际版、夜神\MUME\雷电 等，同时也推荐使用 Android Studio &amp; Genymotion 等作为开发主机，但非必要情况下还是建议通过手机投屏最为有效。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在上述的模拟器中，类似于 Android Studio&amp; Genymotion 等纯 Android 模拟，是基于 X86 架构的，因此对于应用的支持仅限 Google 生态，所以我们下载后 Android 对应 Version 后还需要通过相对应的 Android Version 对 x86 架构进行翻译为 ARM。</span><br><span class="line"></span><br><span class="line">由于更多的是针对 Android 对应的系统版本，对于 Android 8，可以通过 [Genymotion_ARM_Translation](https://github.com/m9rco/Genymotion_ARM_Translation/tree/master/package) 来进行添加。</span><br><span class="line"></span><br><span class="line">同样的你也可以选择 Genymotion 官方所提出的 Open GApps 服务来根据自己的模拟机版本来进行选择，之后重启即可，感谢 **haku** 为此注释所做出的贡献。</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动化模拟点击"><a href="#自动化模拟点击" class="headerlink" title="自动化模拟点击"></a>自动化模拟点击</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检测无障碍服务是否已经启用</span></span><br><span class="line">auto.<span class="title function_">waitFor</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示控制台</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">show</span>()</span><br><span class="line">  </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerQQ</span>(<span class="params">packageName</span>) &#123;</span><br><span class="line"> <span class="title function_">className</span>(<span class="string">&quot;android.widget.TextView&quot;</span>).<span class="title function_">text</span>(<span class="string">&quot;QQ&quot;</span>).<span class="title function_">findOne</span>().<span class="title function_">click</span>()</span><br><span class="line"> <span class="title function_">sleep</span>(<span class="number">300</span>)</span><br><span class="line"> <span class="title function_">click</span>(<span class="number">742.2</span>, <span class="number">1820.0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行注册</span></span><br><span class="line"><span class="title function_">registerQQ</span>(packageName)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的一段小 Demo 中，<code>auto.waitFor()</code> 以及 <code>console.show()</code> 主要用于检测无障碍服务和显示 Auto.js Code 执行过程中所输出的信息，同时在构造方法 <strong>registerQQ</strong> 内所包含的参数主要介绍如下：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>className()</td>
+<td>目标应用程序的类名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>text()</td>
+<td>目标应用程序</td>
+</tr>
+<tr>
+<td>3</td>
+<td>findOne()</td>
+<td>查找</td>
+</tr>
+<tr>
+<td>4</td>
+<td>click()</td>
+<td>点击</td>
+</tr>
+</tbody></table>
+<p>可以通过在 Android Auto.js 中的左侧导航内，通过开启 ：“无障碍服务、悬浮窗” 等较为主要的功能，来进行辅助编写。之后的 <code>sleep()</code> 主要设置延迟，到最后的 <code>click</code> 方法内的 <strong>x,y</strong> 同样通过 Auto.js 的悬浮窗来进行实现。</p>
+<h3 id="Layout-at-vertical"><a href="#Layout-at-vertical" class="headerlink" title="Layout at vertical"></a>Layout at vertical</h3><p>在提供基础的自动化服务之外，Auto.js 还提供了诸如类似页面空间类似语法，以此来构建自动化应用，以此来适配不同的场景，比如 <a target="_blank" rel="noopener" href="https://pro.autojs.org/docs/#/zh-cn/ui?id=%e5%9e%82%e7%9b%b4%e5%b8%83%e5%b1%80-vertical">Layout</a> 中所应用到的垂直布局(vertical):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ui.<span class="title function_">layout</span>(</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">vertical</span> <span class="attr">padding</span>=<span class="string">&quot;16&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">text</span>=<span class="string">&quot;user&quot;</span> <span class="attr">textColor</span>=<span class="string">&quot;black&quot;</span> <span class="attr">textSize</span>=<span class="string">&quot;16sp&quot;</span> <span class="attr">marginTop</span>=<span class="string">&quot;16&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">vertical</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>通过 Auto.js 所特有的语法来构建一个垂直布局的表单，并通过读个参数来进行选择，在 Auto.js 中作者还提供了一系列的文本控件，如上述的 <code>textColor</code> 可以来设置字体的颜色，支持标准的 RGB 格式和颜色名称，都是可选的。</p>
+<p>同时，还支持设置字体的大小，如 <code>textSize=&quot;16sp&quot;</code> 即按照 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B4%A8%E6%84%9F%E8%AE%BE%E8%AE%A1">Meterial Design</a> 的规范，同时可以使用例如上述我们所添加的上边距 <code>marginTop</code> ，来进行实现基础表单的构造。</p>
+<p>我们可以结合上述的 Auto.js 和 Layout at vertical 来进行构建和向下继续扩展，根据 <a target="_blank" rel="noopener" href="https://pro.autojs.org/docs/#/zh-cn/">首页 (autojs.org)</a> 的官方文档从而构建一个自动化的工作流。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/asynchronous/3.JavaScript 异步函数的编写/">JavaScript 异步函数编写</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/" rel="tag">异步加载</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Java中，每个异步函数都构建在其他某个异步函数之上，只要是异步函数，那么该函数从上倒下都是异步函数。</p>
+<h2 id="什么是堵塞"><a href="#什么是堵塞" class="headerlink" title="什么是堵塞"></a>什么是堵塞</h2><p>堵塞是异步函数中的一个术语，主要强调了异步函数的高速度。假如异步MySQL数据库驱动程序做一个查询可能会上一个小时，但是负责发送查询请求的那个函数却可以能微秒级速度返回。</p>
+<h2 id="什么是同步函数和异步函数"><a href="#什么是同步函数和异步函数" class="headerlink" title="什么是同步函数和异步函数"></a>什么是同步函数和异步函数</h2><p>同步和异步可以从字面上进行理解，当然也有第二个答案是同步是阻塞模式、而异步是非堵塞模式：</p>
+<h3 id="1-同步"><a href="#1-同步" class="headerlink" title="1. 同步"></a>1. 同步</h3><pre><code>1. 同步则发送出数据后，等待接收方回复响应则发送下一个数据
+</code></pre>
+<h3 id="2-异步"><a href="#2-异步" class="headerlink" title="2. 异步"></a>2. 异步</h3><pre><code>1. 异步可以理解为，不等接受方回复响应则发送队列中的下一个数据
+</code></pre>
+<h2 id="有时异步函数"><a href="#有时异步函数" class="headerlink" title="有时异步函数"></a>有时异步函数</h2><p>有些函数有时候是异步的，但是在其他的时候又不是异步的，就比如JQuery同名函数，可用于延迟函数，直到DOM已经完全加载，就不会有延迟，但是他的回调将会立刻触发</p>
+<h3 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Data<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/one.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/two.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>浏览器如果从缓存中访问当前页面，使得DOM（文档对象模型，Document Object Model）提前准备。正常情况下这段代码是可以正常执行的。</p>
+<h4 id="one-js"><a href="#one-js" class="headerlink" title="one.js"></a>one.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	utils.<span class="title function_">log</span>(<span class="string">&#x27;Ready&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="two-js"><a href="#two-js" class="headerlink" title="two.js"></a>two.js</h4><pre><code class="javascript">window.utils = &#123;
+    log: function() &#123;
+        if (window.console) console.log.apply(console, arguments);
+    &#125;
+&#125;;
+
+</code></pre>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/asynchronous/2.JavaScript 异步函数类型/">JavaScript 异步函数类型</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/" rel="tag">异步加载</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>JavaScript环境主要有<code>setTimeout</code>和<code>setInterval</code>异步函数集，而JavaScript主要分为两种类型，分别为：“<code>I/O函数”</code>和<code>“计时函数”</code>两大类</p>
+<h2 id="I-x2F-O-函数"><a href="#I-x2F-O-函数" class="headerlink" title="I&#x2F;O 函数"></a>I&#x2F;O 函数</h2><p>JavaScript脚本语言主要采用了非阻塞式的I&#x2F;O，相比其他开发语言很容易造成阻塞，相比之下可以明显的看到JavaScript只需要加入一个<code>返回事件队列（回调）</code>即可解决阻塞的问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ajaxRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>;</span><br><span class="line">ajaxRequest.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url);</span><br><span class="line">ajaxRequest.<span class="title function_">send</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">while</span> (ajaxRequest.<span class="property">readyState</span> === <span class="title class_">XMLHttpRequest</span>.<span class="property">UNSENT</span>) &#123;</span><br><span class="line">        <span class="comment">// code </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在以上code之中，这种堵塞会将永远的循环运行下去，不可能会停止。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ajaxRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>;</span><br><span class="line">ajaxRequest.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>,url);</span><br><span class="line">ajaxRequest.<span class="title function_">send</span>(<span class="literal">null</span>);</span><br><span class="line">ajaxRequest.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>此时只需要在加上一个事件处理器，即可返回事件队列从而不会造成上述堵塞问题。</p>
+<h2 id="计时函数"><a href="#计时函数" class="headerlink" title="计时函数"></a>计时函数</h2><p>著名的时间事件主要涉及了两个函数，分别为<code>setTimeout</code>与<code>setInterval</code>两个函数，但是这两个函数都有自己的权限，比如上一章讲的“无法准时显示，但会维持在那个数值范围之内而不超过”。</p>
+<h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h3><p>setTimeout()函数是在JavaScript异步加载中常见的异步加载函数，例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> one = <span class="number">1</span>; one &lt;= <span class="number">3</span>; one++) &#123;</span><br><span class="line">		<span class="built_in">setTimeout</span> (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">			<span class="variable language_">document</span>.<span class="title function_">write</span>(one,<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">			&#125;,<span class="number">3000</span>);        <span class="comment">/*三秒后输出语句*/</span></span><br><span class="line">		&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>只所以最后输出结果为“4.4.4”是因为这里的延时为3秒，定义的函数都会抢着要第一个触发</p>
+<h3 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><h4 id="英特尔-i7处理器"><a href="#英特尔-i7处理器" class="headerlink" title="英特尔 i7处理器"></a>英特尔 i7处理器</h4><p>国外开发人员发现当使用<code>setInterval</code>函数调度事件的时候，且延迟设置为0毫秒，则会尽可能的循环此事件。当使用英特尔i7处理器的计算机中，使用谷歌、火狐等浏览器，大约为200次&#x2F;秒。但是在node环境下，此事件触发频率大约可达到<code>1000次.秒</code>。<br>而将<code>setInterval</code>函数替换成while循环语句，则在谷歌、火狐等浏览器事件的触发频率高达400万次&#x2F;秒，在Node环境之中则会达到500万次&#x2F;秒。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>最后的出结论，<code>setTimeout</code>与<code>setInterval</code>设计时就是想成为慢慢吞吞的，这是一个HTML规范，所有的主要浏览器都要遵守的规范，在推行的延时、时隔的最小值就是4毫秒。</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/asynchronous/1.JavaScript 简单的理解异步/">JavaScript 简单的理解异步</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/" rel="tag">异步加载</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>异步加载是JavaScript开发中最关键的技术之一，主要可利用异步构建快速、高效的JavaScript应用。在众多WEB页面中为了避免服务器请求过多导致服务器崩溃，则可使用JavaScript异步技术。</p>
+<h3 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h3><h4 id="未使用异步"><a href="#未使用异步" class="headerlink" title="未使用异步"></a>未使用异步</h4><p>在未使用JavaScript异步加载之前，用户访问服务器是一下子访问然后在加载各种图片和文字的，则会造成服务器的资源消耗。</p>
+<h4 id="使用异步"><a href="#使用异步" class="headerlink" title="使用异步"></a>使用异步</h4><p>使用异步之后，当用户访问服务器的时候，页面是根据用户的移动而随着加载的，是断断续续的，而不是一下子造成大量的服务器请求。</p>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><h3 id="什么是队列"><a href="#什么是队列" class="headerlink" title="什么是队列"></a>什么是队列</h3><p>当调用某个函数的时候，会有一个异步延时事件加入队列，然后接着执行下一行代码直到最后没有任何代码进行执行<code>（此时JavaScript会问队列里是否还有数据）</code>。</p>
+<h3 id="队列实例"><a href="#队列实例" class="headerlink" title="队列实例"></a>队列实例</h3><p>当点击按钮之后，则按钮中的数据会将数据添加到队列之中，输入和点击队列。</p>
+<h2 id="异步加载函数"><a href="#异步加载函数" class="headerlink" title="异步加载函数"></a>异步加载函数</h2><h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h3><p>setTimeout()函数是在JavaScript异步加载中常见的异步加载函数，例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> one = <span class="number">1</span>; one &lt;= <span class="number">3</span>; one++) &#123;</span><br><span class="line">		<span class="built_in">setTimeout</span> (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">			<span class="variable language_">document</span>.<span class="title function_">write</span>(one,<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">			&#125;,<span class="number">3000</span>);        <span class="comment">/*三秒后输出语句*/</span></span><br><span class="line">		&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>只所以最后输出结果为“4.4.4”是因为这里的延时为3秒，定义的函数都会抢着要第一个触发</p>
+<h4 id="线程的堵塞"><a href="#线程的堵塞" class="headerlink" title="线程的堵塞"></a>线程的堵塞</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> end = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;经过时间：&quot;</span>,end - start,<span class="string">&#x27;ms&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">new</span> <span class="title class_">Date</span> - start &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">	<span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码根据实际理念应该是等待3秒后执行，而实际运行当中则打印时间为3001。这时主要问题出现在<code>setTimeout</code>函数之中，因为<code>setTimeout</code>和<code>setIn-terval</code>一样，计时精度要比预期望差很多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> end = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;经过时间：&quot;</span>,end - start,<span class="string">&#x27;ms&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">new</span> <span class="title class_">Date</span> - start &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">	<span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而输出的数据至少是<code>1000</code>，因为setTimeout回调<code>while</code>循环结束运行之前不可能被触发。</p>
+<h3 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/algolia/1.algolia 入门/">algoliasearch-helper</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/algolia/" rel="tag">algolia</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" rel="tag">搜索引擎</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>algolia 是一个通过 Saas 模式提供网络搜索的产品，在 2012 年创办，主要是在手机上进行离线搜索，并在此之后使用外部托的方式为客户的网站提供了网络搜索服务，以及 REST API 的提供，涵盖了大量主流语言。与同类型的 Elasticsearch 相比起来 Algolia 更加的轻量级，并且与站点达成了高度耦合，不太依赖数据库，而是更加更可自定义的 RESTAPI 的方式进行提供。</p>
+<p>且 algolia 高度活跃在诸如开源社区中获得了一大批开发者的青睐，而本文主要通过 algolia 在原生的 JavaScript 环境下的使用，通常此类都是面向大前端时代下的产物，但通过 algoliasearch-helper.js 可以解决这种尴尬问题。</p>
+<p>在此之前我们需要了解 algoliasearch-helper.js 主要作用，首先需要认识到 helper 主要用于创建基于搜索的应用程序，以此来帮助开发者构建属于自己的应用程序的搜索结构，同时还提供了更加高级的 API 来方便访问高级搜索过滤器。</p>
+<p>通过 algoliasearch-helper 我们可以实现在站点中加入 helper，以及在没有 js 框架的情况下根据 algolia 来来建立根据用户所需的界面。</p>
+<h2 id="获取-API"><a href="#获取-API" class="headerlink" title="获取 API"></a>获取 API</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/javascript/algolia/1.algolia%20%E5%85%A5%E9%97%A8.md/13955620226448.png"><br>首先我们需要在 <a target="_blank" rel="noopener" href="https://www.algolia.com/account/api-keys/">algolia</a> 页面中找到 appliacation 以及 apikey 和 IndexNeame，以保障你在使用前已经构建了索引，即 <a target="_blank" rel="noopener" href="https://www.algolia.com/apps/A2U1XZQM0V/explorer/browse/">IndexName</a>，之后的 algolia 会使用该索引的 json 数据来进行查询。</p>
+<blockquote>
+<p>添加时格式为 json，届时 algolia 会各种提示你进行添加或上传数据</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;针对本年度中旬纽约时报针对中国的境外社交平台舆论攻击分析&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span><span class="string">&quot;LAB&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span><span class="string">&quot;2022/01/11&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;class&quot;</span><span class="punctuation">:</span><span class="string">&quot;会议沙龙&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span><span class="string">&quot;http://src.chnhonker.com/index.php?m=&amp;c=blog&amp;a=view&amp;id=2&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;关于 3.99MB 恶意程序进一步扩展与深入分析&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span><span class="string">&quot;LAB&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span><span class="string">&quot;2022/01/12&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;class&quot;</span><span class="punctuation">:</span><span class="string">&quot;会议沙龙&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span><span class="string">&quot;http://src.chnhonker.com/index.php?m=&amp;c=blog&amp;a=view&amp;id=3&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>为了方便演示我们通过上述两条数据来进行插入，同时使用 Algolia 还需要在项目中使用 algolia-client 来引用 algolia.js 库，需要在页面中引入两行 js 库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>与 Elasticsearch 和 Kibana 类似，Elasticsearch 用于存储搜索和分析，同时 Kibana 用于可视化数据的操作，来作为 Es 学习的第一步，同样的我们需要在 algolia 中 create index，并 add data，通过下述 code 进行输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pre</span> <span class="attr">id</span>=<span class="string">&quot;jsonecho&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> applicationID = <span class="string">&quot;you_appID&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> apiKey = <span class="string">&quot;you_apiKey&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> index = <span class="string">&quot;you_Index&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> client = <span class="title function_">algoliasearch</span>(applicationID, apiKey);</span><br><span class="line"><span class="keyword">var</span> helper = <span class="title function_">algoliasearchHelper</span>(client, index);</span><br><span class="line"></span><br><span class="line">helper.<span class="title function_">on</span>(<span class="string">&#x27;result&#x27;</span>, <span class="keyword">function</span>(<span class="params">content</span>) &#123;</span><br><span class="line">    <span class="title function_">renderHits</span>(content);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">renderHits</span>(<span class="params">content</span>) &#123;</span><br><span class="line">    $(<span class="string">&#x27;#jsonecho&#x27;</span>).<span class="title function_">html</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(content, <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">helper.<span class="title function_">search</span>();</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>helper.on(&quot;result&quot;)</code> 来输出来自 Algolia 的 Json 数据并使用 <code>helper.search()</code> 来执行一个空搜索。</p>
+<h2 id="解析-API"><a href="#解析-API" class="headerlink" title="解析 API"></a>解析 API</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/javascript/algolia/1.algolia%20%E5%85%A5%E9%97%A8.md/60972916220156.png"><br>根据 algoliasearch-helper.js 官方文档中的例子，我们通过<a target="_blank" rel="noopener" href="https://www.algolia.com/apps/A2U1XZQM0V/explorer/configuration/">Searchable attributes</a> 中设置的 “_highlightResult” 来进行获取数据并解析。</p>
+<p>如果要达到一个搜索的目的，我们需要根据 API 内容中 hits 进行返回数据，以此来获取下文，即构造代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function renderHits(content) &#123;</span><br><span class="line">    $(&#x27;#container&#x27;).html(function() &#123;</span><br><span class="line">        return $.map(content.hits, function(hit) &#123;</span><br><span class="line">            return &#x27;&lt;li&gt;&lt;a href=&#x27; + hit._highlightResult.url.value + &#x27;&gt;&#x27; +hit._highlightResult.name.value + &#x27;&lt;/a&gt;&lt;/li&gt;&#x27;;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(&#x27;#search-box&#x27;).on(&#x27;keyup&#x27;, function() &#123;</span><br><span class="line">    helper.setQuery($(this).val())</span><br><span class="line">        .search();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>并将前端 code 进行绑定，方便解析搜索和显示数据：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> <span class="attr">id</span>=<span class="string">&quot;search-box&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">container</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 search-box 来监听输入更改以达到查询并触发更新的效果，在调用 setQuery 时通过 helper 手动触发搜索，同时也可以为其写入样式，如关键词高亮同样可以为其加上样式。这主要是通过 algolia 所提供的分词效果，与 Elasticsearch 中提供的分词方法类似，都是通过 <code>&lt;em&gt;</code> 元素来进行分词的。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#container</span> <span class="selector-tag">em</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/9.JavaScript 类型与转换/">JavaScript 类型(typeof)与转换</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="数据类型（typeof）"><a href="#数据类型（typeof）" class="headerlink" title="数据类型（typeof）"></a>数据类型（typeof）</h3><p>数据类型共包括字符串、数字、布尔以及对对象等多种类型，通常在JavaScript中可以使用typeof方法进行查看该值的类型，需要注意的时数组与对象的类型是一样的，都是“object”；</p>
+<h4 id="字符串-string"><a href="#字符串-string" class="headerlink" title="字符串 (string)"></a>字符串 (string)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> <span class="string">&quot;Hello,world&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="数字-number"><a href="#数字-number" class="headerlink" title="数字 (number)"></a>数字 (number)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> <span class="number">3.14</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="布尔-boolean"><a href="#布尔-boolean" class="headerlink" title="布尔 (boolean)"></a>布尔 (boolean)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="数组-object"><a href="#数组-object" class="headerlink" title="数组 (object)"></a>数组 (object)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> [<span class="string">&quot;one&quot;</span>,<span class="string">&quot;two&quot;</span>,<span class="string">&quot;three&quot;</span>];</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="对象-object"><a href="#对象-object" class="headerlink" title="对象 (object)"></a>对象 (object)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> &#123;<span class="attr">one</span>:<span class="string">&quot;one&quot;</span>,<span class="attr">two</span>:<span class="string">&quot;two&quot;</span>,<span class="attr">three</span>:<span class="string">&quot;three&quot;</span>&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="对象-object-1"><a href="#对象-object-1" class="headerlink" title="对象(object)"></a>对象(object)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="功能-function"><a href="#功能-function" class="headerlink" title="功能 (function)"></a>功能 (function)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> <span class="keyword">function</span> (<span class="params">data</span>)&#123;&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="未知-unknown"><a href="#未知-unknown" class="headerlink" title="未知 (unknown)"></a>未知 (unknown)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">typeof</span> unknown;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="构造器函数（constructor）"><a href="#构造器函数（constructor）" class="headerlink" title="构造器函数（constructor）"></a>构造器函数（constructor）</h3><p>构造器函数（constructor）与数据类型（typeof）的区别就是构造器函数可以检测该类型是否是数组还是对象。这在typeof之中是不可行的，因为在typeof之中数组与对象的类型都为“object”</p>
+<h4 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串 (String)"></a>字符串 (String)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hello,world&quot;</span>.<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="数字-Nbmber"><a href="#数字-Nbmber" class="headerlink" title="数字 (Nbmber)"></a>数字 (Nbmber)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="number">3.14</span>.<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="布尔-Boolean"><a href="#布尔-Boolean" class="headerlink" title="布尔 (Boolean)"></a>布尔 (Boolean)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="literal">true</span>.<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="数组-Array"><a href="#数组-Array" class="headerlink" title="数组 (Array)"></a>数组 (Array)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = [<span class="string">&quot;one&quot;</span>,<span class="string">&quot;twu&quot;</span>,<span class="string">&quot;three&quot;</span>].<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象 (Object)"></a>对象 (Object)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = &#123;<span class="attr">one</span>:<span class="string">&quot;one&quot;</span>,<span class="attr">two</span>:<span class="string">&quot;twu&quot;</span>,<span class="attr">three</span>:<span class="string">&quot;three&quot;</span>&#125;.<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="自建对象-（Date"><a href="#自建对象-（Date" class="headerlink" title="自建对象 （Date)"></a>自建对象 （Date)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="功能-Function"><a href="#功能-Function" class="headerlink" title="功能 (Function)"></a>功能 (Function)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="keyword">function</span> (<span class="params"><span class="built_in">Date</span></span>)&#123;&#125;.<span class="property">constructor</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="判断是否为数值-Constructor）"><a href="#判断是否为数值-Constructor）" class="headerlink" title="判断是否为数值 (Constructor）"></a>判断是否为数值 (Constructor）</h3><h4 id="第一种写法"><a href="#第一种写法" class="headerlink" title="第一种写法"></a>第一种写法</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> array = [<span class="string">&quot;one&quot;</span>,<span class="string">&quot;two&quot;</span>,<span class="string">&quot;three&quot;</span>];</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="title function_">isArray</span>(array);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">isArray</span>(<span class="params">myArray</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> myArray.<span class="property">constructor</span>.<span class="title function_">toString</span>().<span class="title function_">indexOf</span>(<span class="string">&quot;Array&quot;</span>) &gt; -<span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 当&quot;array&quot;为数值（Array）的时候返回true，否则返回false，如返回true则表示array是一个数值</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>或</strong></p>
+<h4 id="第二种写法"><a href="#第二种写法" class="headerlink" title="第二种写法"></a>第二种写法</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> array = [<span class="string">&quot;one&quot;</span>,<span class="string">&quot;two&quot;</span>,<span class="string">&quot;three&quot;</span>];</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="title function_">isArray</span>(array);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">isArray</span>(<span class="params">myArray</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> myArray.<span class="property">constructor</span> == <span class="title class_">Array</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 当&quot;array&quot;为数值（Array）的时候返回true，否则返回false，如返回true则表示array是一个数值</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><h5 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h5><h6 id="数值转字符串-String"><a href="#数值转字符串-String" class="headerlink" title="数值转字符串 String()"></a>数值转字符串 String()</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> x = <span class="number">123</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="title class_">String</span>(x);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="数值转字符串方法（toString）"><a href="#数值转字符串方法（toString）" class="headerlink" title="数值转字符串方法（toString）"></a>数值转字符串方法（toString）</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> a = <span class="number">123</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = a.<span class="title function_">toString</span>();</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h5><h6 id="布尔转字符串-String"><a href="#布尔转字符串-String" class="headerlink" title="布尔转字符串 String()"></a>布尔转字符串 String()</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> x = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="title class_">String</span>(x);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="布尔转字符串-（toString"><a href="#布尔转字符串-（toString" class="headerlink" title="布尔转字符串 （toString)"></a>布尔转字符串 （toString)</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> a = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = a.<span class="title function_">toString</span>();</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="数值-1"><a href="#数值-1" class="headerlink" title="数值"></a>数值</h5><h6 id="字符串转数值-Number"><a href="#字符串转数值-Number" class="headerlink" title="字符串转数值 Number"></a>字符串转数值 Number</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> x = <span class="string">&quot;1&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="title class_">Number</span>(x);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="布尔转数值-Number"><a href="#布尔转数值-Number" class="headerlink" title="布尔转数值 Number"></a>布尔转数值 Number</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> x = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="title class_">Number</span>(x);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>typeof</td>
+<td>查看数据类型</td>
+<td>数据类型</td>
+</tr>
+<tr>
+<td>constructor</td>
+<td>查看构造器函数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>String()</td>
+<td>转换为字符串</td>
+<td>数据转换</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>转换为字符串</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Number</td>
+<td>转换为数值</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/8.JavaScript 数据类型/">JavaScript 数据类型</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在JavaScript之中，主要分为四种数据类型，分别为<strong>数值(Numerical)、字符串(String)、数组(array)、对象(Object)</strong></p>
+<h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> legin = <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = legin;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">var</span> leigin = <span class="string">&quot;Hello&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = leigin;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> one = <span class="number">10</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> two = <span class="number">20</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> three = <span class="number">30</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = one + <span class="string">&quot;&lt;br&gt;&quot;</span> + two + <span class="string">&quot;&lt;br&gt;&quot;</span> + three;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> legin = &#123;<span class="attr">name</span>: <span class="string">&quot;flyday&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                 <span class="attr">age</span>: <span class="number">21</span>,</span></span><br><span class="line"><span class="language-javascript">                 <span class="attr">id</span>: <span class="string">&quot;Clockshan-Ot&quot;</span>&#125;;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">write</span>(legin.<span class="property">name</span> + <span class="string">&quot;&lt;br&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">write</span>(legin[<span class="string">&quot;age&quot;</span>] + <span class="string">&quot;&lt;br&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>数组</td>
+</tr>
+<tr>
+<td>‘Hello’</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>one &#x3D; 10</td>
+<td>数组</td>
+</tr>
+<tr>
+<td>{name: “flydat”}</td>
+<td>对象</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2022/04/21/javascript/7.JavaScript 运算符/">JavaScript 运算符方法</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h4 id="简单的输出"><a href="#简单的输出" class="headerlink" title="简单的输出"></a>简单的输出</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hello,world&quot;</span> + <span class="string">&quot;!&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;/body</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="comment">&lt;!-- 输出结果为 Hello,world! --&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="简单的算数题"><a href="#简单的算数题" class="headerlink" title="简单的算数题"></a>简单的算数题</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> a, b, c;</span></span><br><span class="line"><span class="language-javascript">	a = <span class="number">1</span>; b = <span class="number">2</span>;</span></span><br><span class="line"><span class="language-javascript">    c = a + b;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;data&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;1＋2= &quot;</span> + c;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 输出结果为 1 + 2 + 3 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="类以代数"><a href="#类以代数" class="headerlink" title="类以代数"></a>类以代数</h4><p>在开发之中，类以代数通常使用变量来存放值，比如我们要表达的 data &#x3D; name &#x3D; user</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> one = <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> two = <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> three = <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> dataone = one + two + three;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;综合:&quot;</span> + dataone; </span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 输出：综合:3--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="一条多量"><a href="#一条多量" class="headerlink" title="一条多量"></a>一条多量</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> one = <span class="string">&quot;1one&quot;</span>, two = <span class="string">&quot;2two&quot;</span>, three = <span class="number">11111</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = one;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="引号之别"><a href="#引号之别" class="headerlink" title="引号之别"></a>引号之别</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span>&quot;1&quot; + 1 + 2：<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	a = <span class="string">&quot;1&quot;</span> + <span class="number">1</span> + <span class="number">2</span>;</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;data&#x27;</span>).<span class="property">innerHTML</span> = a;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 输出结果为 112--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>元素</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>innerHTML</td>
+<td>输出</td>
+<td>ducument.getElementByID</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>var</td>
+<td>声明变量</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>a &#x3D; 1</td>
+<td>赋值</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>c &#x3D; a + b</td>
+<td>计算值</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>计算</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+</tr>
+<tr>
+<td>%</td>
+<td>系数</td>
+</tr>
+<tr>
+<td>++</td>
+<td>递增</td>
+</tr>
+<tr>
+<td>–</td>
+<td>递减</td>
+</tr>
+<tr>
+<td>**</td>
+<td>幂</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/11">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

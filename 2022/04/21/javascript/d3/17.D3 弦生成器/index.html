@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 弦生成器 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 弦生成器</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210402091624.png"><br>弦生成器（<code>Chord Generator</code>），主要用于将两个<code>弧</code>进行连接，可通过使用<code>d3.svg.chord()</code>进行声明，分别有五个访问器：“<code>source（起始弧）、target（终止弧）、radius（半径）、startAngle（起始角度）、endAngle（终止角度）</code>”，弦生成器是生成弦图的重要组成部分之一。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* svg 基本结构 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>, padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 弦数据 */</span></span><br><span class="line"><span class="keyword">var</span> databases = &#123;</span><br><span class="line">    <span class="attr">source</span>: &#123;</span><br><span class="line">        <span class="attr">startAngle</span>: <span class="number">0.2</span>,</span><br><span class="line">        <span class="attr">endAngle</span>: <span class="title class_">Math</span>.<span class="property">PI</span> * <span class="number">0.3</span>,</span><br><span class="line">        <span class="attr">radius</span>: <span class="number">100</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">target</span>: &#123;</span><br><span class="line">        <span class="attr">startAngle</span>: <span class="title class_">Math</span>.<span class="property">PI</span> * <span class="number">1.0</span>,</span><br><span class="line">        <span class="attr">endAngle</span>: <span class="title class_">Math</span>.<span class="property">PI</span> * <span class="number">1.6</span>,</span><br><span class="line">        <span class="attr">radius</span>: <span class="number">100</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 声明弦 */</span></span><br><span class="line"><span class="keyword">var</span> chord = d3.<span class="property">svg</span>.<span class="title function_">chord</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 弦绘制 */</span></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,<span class="title function_">chord</span>(databases))</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;transform&quot;</span>,<span class="string">&quot;translate(200,200)&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;none&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke&quot;</span>,<span class="string">&quot;#51d576&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;stroke-width&quot;</span>,<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/17.D3%20%E5%BC%A6%E7%94%9F%E6%88%90%E5%99%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

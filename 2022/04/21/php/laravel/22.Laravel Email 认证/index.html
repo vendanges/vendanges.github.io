@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel Email 认证 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel Email 认证</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Laravel 为开发者提供了一种非常简便的方法来实现出 Email 认证，很遗憾的是官方文档所提供的信息并不完整。</p>
+<h2 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h2><h3 id="MustVerifyEmail"><a href="#MustVerifyEmail" class="headerlink" title="MustVerifyEmail"></a>MustVerifyEmail</h3><p>首先，我们直接在 <code>app/User.php</code> 加上 <code>MustVerifyEmail</code> 接口使让其成为 <code>User.php</code> 的接口即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">MustVerifyEmail</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">User</span> <span class="keyword">as</span> <span class="title">Authenticatable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Notifications</span>\<span class="title">Notifiable</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span> <span class="keyword">implements</span> <span class="title">MustVerifyEmail</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    ……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="env"><a href="#env" class="headerlink" title=".env"></a>.env</h3><p>当配置接口类之后，我们还需要配置 <code>.env</code> 文件，并在此修改其邮箱的服务器以用于发送邮件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MAIL_DRIVER=<span class="literal">null</span></span><br><span class="line">MAIL_HOST=<span class="literal">null</span></span><br><span class="line">MAIL_PORT=<span class="literal">null</span></span><br><span class="line">MAIL_USERNAME=<span class="literal">null</span></span><br><span class="line">MAIL_PASSWORD=<span class="literal">null</span></span><br><span class="line">MAIL_ENCRYPTION=<span class="literal">null</span></span><br><span class="line">MAIL_FROM_ADDRESS=<span class="literal">null</span></span><br><span class="line">MAIL_FROM_NAME=<span class="string">&quot;$&#123;APP_NAME&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="保护路由"><a href="#保护路由" class="headerlink" title="保护路由"></a>保护路由</h3><p>Laravel 的 <code>Auth\VerificationConteroller</code> 类包含了发送验证链接和看验证 Email 的必要逻辑。这都将通过 <code>verify</code> 选项传递给 <code>Auth::routes</code>方法中，因此我们需要在 <code>web.php</code> 中增加：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Auth</span>::<span class="title function_ invoke__">routes</span>([<span class="string">&#x27;verify&#x27;</span>=&gt;<span class="literal">true</span>]);</span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">group</span>([],function () &#123;</span><br><span class="line">    <span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/home&#x27;</span>, <span class="string">&#x27;HomeController@space&#x27;</span>)-&gt;<span class="title function_ invoke__">name</span>(<span class="string">&#x27;home&#x27;</span>)-&gt;<span class="title function_ invoke__">middleware</span>(<span class="string">&#x27;verified&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>当我们在 get 路由后加入 <code>middleware(&#39;verified&#39;)</code> 方法后，将会自动验证当前用户使用邮箱是否经过验证，通过验证的用户将会在 <code>users</code> 数据库表中 <code>email_verified_at</code>字段中添加其验证时间。</p>
+<h3 id="验证重定向"><a href="#验证重定向" class="headerlink" title="验证重定向"></a>验证重定向</h3><p>如果要设置验证完成后主要通过 <code>app/Http/Controllers/Auth/VerificationController.php</code> 类中的 <code>$redirectTo</code> 属性来进行设置，默认的是跳转至用户的个人空间：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>\<span class="title class_">Auth</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">Controller</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Providers</span>\<span class="title">RouteServiceProvider</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">VerifiesEmails</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VerificationController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    |--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">    | Email Verification Controller</span></span><br><span class="line"><span class="comment">    |--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">    |</span></span><br><span class="line"><span class="comment">    | This controller is responsible for handling email verification for any</span></span><br><span class="line"><span class="comment">    | user that recently registered with the application. Emails may also</span></span><br><span class="line"><span class="comment">    | be re-sent if the user didn&#x27;t receive the original email message.</span></span><br><span class="line"><span class="comment">    |</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">use</span> <span class="title">VerifiesEmails</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Where to redirect users after verification.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$redirectTo</span> = <span class="title class_">RouteServiceProvider</span>::<span class="variable constant_">HOME</span>;</span><br><span class="line"></span><br><span class="line">    ……</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果在登录后验证邮箱时出错，可通过下述两条 <code>artisan</code> 命令来清理下 Laravel 缓存：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php artisan config:cache</span><br><span class="line">php artisan cache:clear</span><br></pre></td></tr></table></figure>
+
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><h3 id="邮箱验证"><a href="#邮箱验证" class="headerlink" title="邮箱验证"></a>邮箱验证</h3><h4 id="Notifications"><a href="#Notifications" class="headerlink" title="Notifications"></a>Notifications</h4><p>在 Laravel 中，我们可以通过使用 <code>php artisan make:notification VerifyEmail</code> 来新建一个 VerifyEmail 邮件通知，正常情况下他默认存储在了 <code>vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php</code> 下。</p>
+<p>此  时在 <strong>toMail</strong> 方法下，来自定义邮件中的用语：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (<span class="keyword">new</span> <span class="title class_">MailMessage</span>)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">greeting</span>(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">line</span>(<span class="string">&#x27;One of your invoices has been paid!&#x27;</span>)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">action</span>(<span class="string">&#x27;View Invoice&#x27;</span>, <span class="variable">$url</span>)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">line</span>(<span class="string">&#x27;Thank you for using our application!&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="sendEmailVerificationNotification"><a href="#sendEmailVerificationNotification" class="headerlink" title="sendEmailVerificationNotification"></a>sendEmailVerificationNotification</h4><p>当你通过使用 <code>artisan</code> 命令创建一个邮件通知后，并不代表已经完成了，还需要在 <code>app/User.php</code> 中添加一个 <code>sendEmailVerificationNotification</code> 即“发送电子邮件验证通知”方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Notifications</span>\<span class="title">VerifyEmail</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">MustVerifyEmail</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">User</span> <span class="keyword">as</span> <span class="title">Authenticatable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Notifications</span>\<span class="title">Notifiable</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span> <span class="keyword">implements</span> <span class="title">MustVerifyEmail</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    ……</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sendEmailVerificationNotification</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">notify</span>(<span class="keyword">new</span> <span class="title class_">VerifyEmail</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="notifications"><a href="#notifications" class="headerlink" title="notifications"></a>notifications</h4><p>既然当 Notifications 以及 sendEmailVerificationNotification 都配置完成了，我们还需要来自定义邮件的模板：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --tag=laravel-notifications</span><br></pre></td></tr></table></figure>
+
+<p>此时会将 <code>/vendor/laravel/framework/src/Illuminate/Notifications/resources/views</code> 内容复制到 <code>/resources/views/vendor/notifications</code> 下。</p>
+<p>当然你如果需要将所有 <del>Markdown</del> 通知组件导出自己的项目中进行自定义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --tag=laravel-mail</span><br></pre></td></tr></table></figure>
+
+<p>Laravel 会将<code>/vendor/laravel/framework/src/Illuminate/Mail/resources/views</code>目录内容复制到<code>/resources/views/vendor/mail</code>下。</p>
+<p>需要注意的是，该目录会包含除组件之外的 <code>resources/views/vendor/mail/html/themes</code>目录，该目录下存储着默认的主题文件，您可以自行定义并分享。</p>
+<h3 id="重置密码"><a href="#重置密码" class="headerlink" title="重置密码"></a>重置密码</h3><h4 id="ResetPassword"><a href="#ResetPassword" class="headerlink" title="ResetPassword"></a>ResetPassword</h4><p>在进行下一步之后，我们需要来对重置密码的文本模板进行更改，和 <strong>邮箱验证</strong> 相差无几，需要通过使用 <code>artisan</code> 命令：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:notification ResetPassword</span><br></pre></td></tr></table></figure>
+
+<p>之后将从 <code>vendor/laravel/framework/src/Illuminate/Auth/Notifications/ResetPassword.php</code> 文件复制到 <code>app/Notifications/ResetPassword.php</code>中，因此我们可以参考 <code>vendor</code> 内的文件结构写入<code>app/Notifications</code>目录下。</p>
+<h4 id="sendPasswordResetNotification"><a href="#sendPasswordResetNotification" class="headerlink" title="sendPasswordResetNotification"></a>sendPasswordResetNotification</h4><p>当 <strong>ResetPassword</strong> 准备完成之后，我们需要通过在<code>app/User.php</code>文件中添加一个<code>sendPasswordResetNotification</code>方法，来使得 <strong>ResetPassword</strong> 通知被正常使用：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Notifications</span>\<span class="title">VerifyEmail</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Notifications</span>\<span class="title">ResetPassword</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">MustVerifyEmail</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">User</span> <span class="keyword">as</span> <span class="title">Authenticatable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Notifications</span>\<span class="title">Notifiable</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span> <span class="keyword">implements</span> <span class="title">MustVerifyEmail</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    ……</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sendPasswordResetNotification</span>(<span class="params"><span class="variable">$token</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">notify</span>(<span class="keyword">new</span> <span class="title class_">ResetPassword</span>(<span class="variable">$token</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/22.Laravel%20Email%20%E8%AE%A4%E8%AF%81/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

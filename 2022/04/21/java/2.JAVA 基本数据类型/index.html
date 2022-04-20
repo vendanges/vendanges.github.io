@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JAVA 基本数据类型 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JAVA 基本数据类型</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><strong>变量</strong> 就是申请  <strong>内存</strong> 来的存储值,当创建变量的时候,<strong>需要在内存中申请空间</strong>,而内存管理系统还会根据变量的<strong>类型</strong>分配<strong>存储空间</strong>而分配的空间只能用于存储<strong>该类型数据</strong> &gt; 也就是说这个就和身份证一样,你的身份证只能用于证明自己身份,但不能用于付钱.</p>
+<h5 id="一-八种基本类型"><a href="#一-八种基本类型" class="headerlink" title="一 八种基本类型"></a>一 八种基本类型</h5><h6 id="1-byte"><a href="#1-byte" class="headerlink" title="1.byte"></a>1.byte</h6><p>数据类型<strong>8</strong>位且有<strong>符号</strong>以<strong>二进制补码</strong>表示<strong>整数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">byte</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="type">byte</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>最大值</th>
+<th>最小值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>127</td>
+<td>128</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Byte&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;byte 01:&quot;</span> + Byte.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;byte MAX:&quot;</span> + Byte.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Byte MIN:&quot;</span> + Byte.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="2-short"><a href="#2-short" class="headerlink" title="2.short"></a>2.short</h6><p>数据类型为<strong>16</strong>位,有<strong>符号</strong>的<strong>二进制补码</strong>表示<strong>整数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">short</span> <span class="variable">s</span> <span class="operator">=</span> <span class="number">1000</span></span><br><span class="line"><span class="type">short</span> <span class="variable">r</span>  <span class="operator">=</span> <span class="number">20000</span> </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>最大值</th>
+<th>最小值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32767</td>
+<td>-32768</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Short&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Short 01&quot;</span> + Short.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Short MAX&quot;</span> + Short.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Short MIN&quot;</span> + Short.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="3-integer-int"><a href="#3-integer-int" class="headerlink" title="3.integer (int)"></a>3.integer (int)</h6><p>int数据类型为<strong>32</strong>位有<strong>符号</strong>的以表示<strong>二进制补码整数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">100000</span></span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">200000</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>最大值</th>
+<th>最小值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2,147,483,647</td>
+<td>-2,147,483,647</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Integer&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Integer 01&quot;</span> + Integer.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Integer MAX&quot;</span> + Integer.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Integer MIN&quot;</span> + Integer.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="4-long"><a href="#4-long" class="headerlink" title="4.long"></a>4.long</h6><p>整数类型64位有<strong>符号</strong>的以表示<strong>二进制补码整数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">100000L</span></span><br><span class="line"><span class="type">long</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">200000L</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>“L”是不区分大小写的,为了避免与”1”混淆,本文使用大写”L”</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>最大值</th>
+<th>最小值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9,223,372,036,854,775,807</td>
+<td>-9,223,372,036,854,775,807</td>
+<td>0L</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Long&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Long 01&quot;</span> + Long.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Long MAX&quot;</span> + Long.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Long MIN&quot;</span> + Long.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="5-float"><a href="#5-float" class="headerlink" title="5.float"></a>5.float</h6><p>单精度数据类型,<strong>32</strong>位,符合IEEE <strong>754</strong> 浮点数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> <span class="variable">f1</span> <span class="operator">=</span> <span class="number">234.5f</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Float&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Float 01&quot;</span> + Float.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Float MAX&quot;</span> + Float.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Float MIN&quot;</span> + Float.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>优点:</strong> 在存储大型浮点数组时候可以节省内存空间</p>
+<p>**缺点:**浮点数不能用于表示精确的值,比如$</p>
+<p>**默认值:**0.0f</p>
+<h6 id="6-double"><a href="#6-double" class="headerlink" title="6.double"></a>6.double</h6><p>是双精度类型,<strong>64</strong>位,符合IEEE 745 的<strong>浮点数</strong>,<strong>浮点数默认类型都将为double类型</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="variable">d1</span> <span class="operator">=</span> <span class="number">123.4</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Double&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Double 01&quot;</span> + Double.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Double MAX&quot;</span> + Double.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Double MIN&quot;</span> + Double.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点:</strong> 不能表示精确的值,如$</p>
+<p>**默认值:**0.0d</p>
+<h6 id="7-boolean"><a href="#7-boolean" class="headerlink" title="7.boolean"></a>7.boolean</h6><p>数据类型表示<strong>一位</strong>的信息,通常只有两个取值”<strong>true or flase</strong>“</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">beelean</span> <span class="variable">one</span> <span class="operator">=</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>**默认值:**flase</p>
+<p>**用途:**主要用于标记 true and flase 情况;</p>
+<h6 id="8-character-char"><a href="#8-character-char" class="headerlink" title="8.character (char)"></a>8.character (char)</h6><p>类型是一个<strong>单一</strong>的<strong>Unicode</strong>字符 [^16位]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> <span class="variable">letter</span> <span class="operator">=</span> <span class="string">&#x27;A&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>**特点:**可用于存储任何一个字符(如ABCDEFD)</p>
+<table>
+<thead>
+<tr>
+<th>最大值</th>
+<th>最小值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\uffff</td>
+<td>\u0000</td>
+<td>\u0000</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;java.lang.Character&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Character 01&quot;</span> + Character.SIZE);</span><br><span class="line">System.out.println(<span class="string">&quot;Character MAX&quot;</span> + (<span class="type">int</span>) Character.MAX_VALUE);</span><br><span class="line">System.out.println(<span class="string">&quot;Character MIN&quot;</span> + (<span class="type">int</span>) Character.MIN_VALUE);</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="二-常量"><a href="#二-常量" class="headerlink" title="二 常量"></a>二 常量</h5><p>常量在计算机中欧就那个运行时<strong>不能被修改</strong>的,主要使用 <strong>final</strong>作为关键字来修饰常量;</p>
+<h6 id="1-double"><a href="#1-double" class="headerlink" title="1.double"></a>1.double</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="keyword">final</span> <span class="type">double</span> <span class="variable">d1</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line">			System.out.println(d1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	其输出结果为: <strong>3.0</strong></p>
+<h6 id="2-byte"><a href="#2-byte" class="headerlink" title="2.byte"></a>2.byte</h6><p>数据类型<strong>8</strong>位且有<strong>符号</strong>以<strong>二进制补码</strong>表示<strong>整数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">byte</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">11</span>;</span><br><span class="line">			System.out.println(b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其输出结果为: <strong>11</strong></p>
+<h6 id="3-char-Character"><a href="#3-char-Character" class="headerlink" title="3.char (Character)"></a>3.char (Character)</h6><p>类型是一个<strong>单一</strong>的<strong>Unicode</strong>字符 [^16位]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">			System.out.println(c);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其输出结果为:<strong>A</strong></p>
+<h5 id="三-字符串与常量"><a href="#三-字符串与常量" class="headerlink" title="三 字符串与常量"></a>三 字符串与常量</h5><p>字符串和常量都长都可以包含任何Unicode字符</p>
+<h6 id="1-字符串"><a href="#1-字符串" class="headerlink" title="1.字符串"></a>1.字符串</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;\u0001&quot;</span>;</span><br><span class="line">			System.out.println(s);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="2-常量"><a href="#2-常量" class="headerlink" title="2.常量"></a>2.常量</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">char</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">&#x27;\u0001&#x27;</span>;</span><br><span class="line">			System.out.println(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="四-自动类型转换与强制类型转换"><a href="#四-自动类型转换与强制类型转换" class="headerlink" title="四 自动类型转换与强制类型转换"></a>四 自动类型转换与强制类型转换</h5><p>自动类型转换需要满足从<strong>低</strong> 到 <strong>高</strong>的等级转换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;- 低 高-&gt;</span><br><span class="line"></span><br><span class="line">byte -&gt; short -&gt; char -&gt; int -&gt; long -&gt; float -&gt; double</span><br></pre></td></tr></table></figure>
+
+<p>还必须满足以下条件</p>
+<p><strong>1.不能对boolean进行转换</strong></p>
+<p>2.不能将对象类型转换成不相关类的对象</p>
+<p><strong>3.在容量大的类型转换为容量小的时候</strong>必须使用<strong>强制类型转换</strong></p>
+<h6 id="1-自动类型转换"><a href="#1-自动类型转换" class="headerlink" title="1.自动类型转换"></a>1.自动类型转换</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="comment">// 定义Char类型</span></span><br><span class="line">		<span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Char 转换为 Int 类型</span></span><br><span class="line">		<span class="type">int</span> <span class="variable">i1</span> <span class="operator">=</span> c;</span><br><span class="line">		System.out.println(<span class="string">&quot;Char类型值= &quot;</span> + c);</span><br><span class="line">		System.out.println(<span class="string">&quot;Char自动转换类型为Int后= &quot;</span> + i1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ASCII</strong> &#x3D; <strong>a</strong> ,查 ASCII 码表对应的 int 类型值为 97</p>
+<h6 id="2-强制类型转换"><a href="#2-强制类型转换" class="headerlink" title="2.强制类型转换"></a>2.强制类型转换</h6><p>在容量大的类型转换为容量小的时候<strong>必须使用</strong>强制类型转换**</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">12311111</span>;</span><br><span class="line">		<span class="type">byte</span> <span class="variable">b</span> <span class="operator">=</span> (<span class="type">byte</span>)i;</span><br><span class="line">		System.out.println(<span class="string">&quot;Int转换为byte后值为= &quot;</span> + b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>int 强制转换因为需要遵守<strong>强制转换原则</strong>,所以输出结果为**”Int转换为byte后值为&#x3D; 71”**</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/2.JAVA%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

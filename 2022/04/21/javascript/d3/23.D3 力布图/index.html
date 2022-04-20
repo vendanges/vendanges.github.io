@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 力布图 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 力布图</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>力布图，也被称之为力导向图（<code>Force</code>），通过使用布局可以<code>物理模拟</code>的方式将力导向图更加灵活的实现位置的简单控制与计算。而力导向图本身是一种<code>绘图算法</code>，即在二位或三维空间中配置一个节点，节点之间通过直线连接，这种方式被称之为<strong>连线</strong>，每次连线的长度基本长度<strong>相等</strong>，需要注意的是这种线会显得<strong>尽量不可相交</strong>。</p>
+<p>节点和连线都被施加了力的作用，根据力的作用，来计算出节点和连线的运动轨迹，最终使得让他们呈现一种<strong>静止的</strong>画面。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.layout.force</td>
+<td>创建一个力布图，即<code>力导向图布局</code></td>
+<td></td>
+</tr>
+<tr>
+<td>force.size([size])</td>
+<td>设置胡获取力布图的作用范围，size 主要影响里到力布图的重力中心和初始的随机位置，默认为<code>1x1</code></td>
+<td></td>
+</tr>
+<tr>
+<td>force.nodes([node])</td>
+<td>设置或获取力导向图的布局节点数组，默认为返回当前节点数组</td>
+<td></td>
+</tr>
+<tr>
+<td>force.charge([charge])</td>
+<td>指定电荷强度，主要用于决定是<strong>排斥</strong>还是<strong>吸引</strong>，如果输入的值是<code>正</code>的则导致节点互相<strong>吸引</strong>，输入<code>负值</code>则会导致节点<code>互相排斥</code>。（需要足以的是，电荷是通过使用<code>Barnes-Hut</code>算法进行实现的）</td>
+<td></td>
+</tr>
+<tr>
+<td>force.links([links])</td>
+<td>设置或获取力布图的连接数组，默认为返回当前的连接数组</td>
+<td></td>
+</tr>
+<tr>
+<td>force.linkDistance([distance])</td>
+<td>设置链接点间目标距离的连线长度，默认为<code>20</code></td>
+<td></td>
+</tr>
+<tr>
+<td>force.start()</td>
+<td>启动模拟，<code>首次创建</code>力布图时必须被调用，然后分配节点和链接，当节点发生变化的时候将会再次被调用，通过此函数可以及那指定从何时开始计算。</td>
+<td></td>
+</tr>
+<tr>
+<td>force.tick()</td>
+<td>进入力布图的仿真步骤，主要通过配合<code>start and stop</code>来计算出静态布局</td>
+<td></td>
+</tr>
+<tr>
+<td>force.on(type,listener)</td>
+<td><code>type</code>是一个事件类型，主要有：<code>start、tick、end</code>三种，而<code>listener</code>则是监听器，主要用于更新节点和链接的显示位置</td>
+<td></td>
+</tr>
+<tr>
+<td>force.drag()</td>
+<td>绑定一个行为允许的交互式托转节点，<code>drag</code>函数主要用于实现拖拽操作</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="布局运算"><a href="#布局运算" class="headerlink" title="布局运算"></a>布局运算</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210407234657.png"><br>当通过下述 code 运行之后，那么数据将会通过<code>start()</code>进行转换，转换后的数据将会发生变化，原有的节点将会得出<code>index、x、y、px、py、fixed、weight</code>等额外属性，这些属性分别意思为<code>索引、x坐标、y坐标、上一时刻的x坐标、上一时刻的y坐标、节点是否固定、节点有多少连线并与之相连</code>。</p>
+<p>而链接数组将会返回出的数据我们可以的出两个非常重要的点即<code>source</code>和<code>targe</code>，分别代表来来源与<code>目标</code>，就如<code>source: 0, target: 2</code>，那么就表述数组<code>one</code>链接<code>2</code>，在这里我们需要注意的是，<strong>D3 是从0开始计算的</strong>，或者说<strong>我不能链接我自己，source: 0, targe: 0</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 规格 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    定义节点数组以及连线数组</span></span><br><span class="line"><span class="comment">    nodes and edges</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> nodes = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;one&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;two&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;three&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;3&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;4&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;5&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;6&quot;</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> edges = [</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">1</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">2</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">3</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">4</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">5</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">6</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    | 设置节点数据</span></span><br><span class="line"><span class="comment">    |_ nodes 设置节点数组</span></span><br><span class="line"><span class="comment">    |_ links 设置连线数组</span></span><br><span class="line"><span class="comment">    |_ size 设置大小</span></span><br><span class="line"><span class="comment">    |_ linkDistance 设置连线距离</span></span><br><span class="line"><span class="comment">    |_ charge 设置电荷数</span></span><br><span class="line"><span class="comment">    | 开始计算</span></span><br><span class="line"><span class="comment">    |_ start 开始布局计算</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> force = d3.<span class="property">layout</span>.<span class="title function_">force</span>()</span><br><span class="line">    .<span class="title function_">nodes</span>(nodes)</span><br><span class="line">    .<span class="title function_">links</span>(edges)</span><br><span class="line">    .<span class="title function_">size</span>([padding.<span class="property">width</span>,padding.<span class="property">height</span>])</span><br><span class="line">    .<span class="title function_">linkDistance</span>(<span class="number">90</span>)</span><br><span class="line">    .<span class="title function_">charge</span>(-<span class="number">400</span>)</span><br><span class="line"></span><br><span class="line">force.<span class="title function_">start</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(nodes)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(edges)</span><br></pre></td></tr></table></figure>
+
+<h2 id="力布图"><a href="#力布图" class="headerlink" title="力布图"></a>力布图</h2><h3 id="绘制力布图"><a href="#绘制力布图" class="headerlink" title="绘制力布图"></a>绘制力布图</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210407234704.png"></p>
+<p>在下述的 code 中我们主要绘制了<code>连接线</code>及其样式、还有<code>圆</code>的绘制与样式，在这其中，主要通过使用<code>drag</code>来赋予圆可以被<code>拖拽</code>，之后通过使用<code>.on</code>来重新计算出链接点的坐标以及文字的坐标。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 规格 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    定义节点数组以及连线数组</span></span><br><span class="line"><span class="comment">    nodes and edges</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> nodes = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;one&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;two&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;three&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;3&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;4&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;5&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;6&quot;</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> edges = [</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">1</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">2</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">0</span>, <span class="attr">target</span>: <span class="number">3</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">4</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">5</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">source</span>: <span class="number">1</span>, <span class="attr">target</span>: <span class="number">6</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    | 设置节点数据</span></span><br><span class="line"><span class="comment">    |_ nodes 设置节点数组</span></span><br><span class="line"><span class="comment">    |_ links 设置连线数组</span></span><br><span class="line"><span class="comment">    |_ size 设置大小</span></span><br><span class="line"><span class="comment">    |_ linkDistance 设置连线距离</span></span><br><span class="line"><span class="comment">    |_ charge 设置电荷数</span></span><br><span class="line"><span class="comment">    | 开始计算</span></span><br><span class="line"><span class="comment">    |_ start 开始布局计算</span></span><br><span class="line"><span class="comment">    |_ category20c 由D3 所提供的 20种颜色（第三方案）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> force = d3.<span class="property">layout</span>.<span class="title function_">force</span>()</span><br><span class="line">    .<span class="title function_">nodes</span>(nodes)</span><br><span class="line">    .<span class="title function_">links</span>(edges)</span><br><span class="line">    .<span class="title function_">size</span>([padding.<span class="property">width</span>,padding.<span class="property">height</span>])</span><br><span class="line">    .<span class="title function_">linkDistance</span>(<span class="number">190</span>)</span><br><span class="line">    .<span class="title function_">charge</span>(-<span class="number">900</span>)</span><br><span class="line"></span><br><span class="line">force.<span class="title function_">start</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20c</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 绘制连线 */</span></span><br><span class="line"><span class="keyword">var</span> lines = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;.forceLine&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(edges)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;line&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;forceLine&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    |_ 绘制节点圆圈</span></span><br><span class="line"><span class="comment">    |———— 添加 circle</span></span><br><span class="line"><span class="comment">    |———— 设置样式为 forceCircle</span></span><br><span class="line"><span class="comment">    |———— 设置圆半径为 40r</span></span><br><span class="line"><span class="comment">    |———— 允许被拖动</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> circles = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;.forceCircle&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(nodes)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="number">40</span>)</span><br><span class="line">    .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>, <span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">color</span>(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">call</span>(force.<span class="property">drag</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 绘制文字 */</span></span><br><span class="line"><span class="keyword">var</span> texts = svg.<span class="title function_">selectAll</span>(<span class="string">&quot;.forceText&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(nodes)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;forceText&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">x</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">y</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;dy&quot;</span>,<span class="string">&quot;.3em&quot;</span>)</span><br><span class="line">    .<span class="title function_">text</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">name</span>;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 鼠标事件监听器 */</span></span><br><span class="line">force.<span class="title function_">on</span>(<span class="string">&quot;tick&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">/* 更新连线端点坐标 */</span></span><br><span class="line">    lines.<span class="title function_">attr</span>(<span class="string">&quot;x1&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">source</span>.<span class="property">x</span></span><br><span class="line">    &#125;)</span><br><span class="line">    lines.<span class="title function_">attr</span>(<span class="string">&quot;y1&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">source</span>.<span class="property">y</span></span><br><span class="line">    &#125;)</span><br><span class="line">    lines.<span class="title function_">attr</span>(<span class="string">&quot;x2&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">target</span>.<span class="property">x</span></span><br><span class="line">    &#125;)</span><br><span class="line">    lines.<span class="title function_">attr</span>(<span class="string">&quot;y2&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">target</span>.<span class="property">y</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 更新节点坐标 */</span></span><br><span class="line">    circles.<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">x</span></span><br><span class="line">    &#125;)</span><br><span class="line">    circles.<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">y</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 更新节点的文字坐标 */</span></span><br><span class="line">    texts.<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">x</span></span><br><span class="line">    &#125;)</span><br><span class="line">    texts.<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">y</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.forceLine</span> &#123;</span><br><span class="line">  fill: none;</span><br><span class="line">  stroke: <span class="number">#d0d0d0</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.forceText</span> &#123;</span><br><span class="line">  text-anchor: middle;</span><br><span class="line">  fill: white;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="on"><a href="#on" class="headerlink" title="on"></a>on</h3><p>如一开始介绍的函数方法一样,<code>force.on(type.listener)</code>是一个监听器可通过使用<code>on</code>进行更新节点以及链接的显示位置，当然也可以设置拖拽后固定对象的位置，可添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> drag = force.<span class="title function_">drag</span>()</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;dragstart&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        d.<span class="property">fixed</span> = <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/23.D3%20%E5%8A%9B%E5%B8%83%E5%9B%BE/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

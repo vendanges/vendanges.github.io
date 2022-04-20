@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Sleuth and Zipkin | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Sleuth and Zipkin</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Sleuth 主要用于日志采样，而 Zipkin 用于实现服务链路追踪，他们分别是微服务中最为常用的项目之一，其中 Zipkin 可以实现数据存储（支持 ES、MySQL、cASSANDRA）以及简单部署和文档完善等优势深受开发者喜爱。</p>
+<blockquote>
+<p>Sleuth 由 Spring cloud 团队借助 Google Dapper、Twitter Zipkin、Apache Htrace 进行设计。而 Zipkin 还有一个 OpenZipkin 项目，是 Zipkin 的完全开源版本，项目由 2021年起源与 Twitter，同样基于 Google Dapper 论文进行实现。</p>
+<blockquote>
+<p>Dapper，一种大规模分布式系统跟踪基础设施<br>  <a target="_blank" rel="noopener" href="https://research.google/pubs/pub36356/">https://research.google/pubs/pub36356/</a></p>
+</blockquote>
+</blockquote>
+<p>首先，我们需要来介绍下服务链路追踪的作用，现在很多文章一开始就跟你巴拉巴拉 Zipkin、HTrace 原理什么的，他们的基本概念就是监控微服务状态，及时发现并定位问题的点，并快速解决问题。</p>
+<p>对于服务链路追踪，蛀牙的就是实现监控为服务系统，来提供及时且准确的性能报告，并统计请求所耗费的时间以及具体网络延迟情况并辅助开发&#x2F;运维人员分析并解决系统所存在的问题。</p>
+<p>其实最为主要的还是通过他来快速定位故障，这也是解决问题最主要的原因    ——发现问题，通过服务链路追踪可以定位问题的故障点，并采取措施来解决问题，并提供快速检测或预警，隔离和修复问题等方式。</p>
+<h2 id="Google-Dapper"><a href="#Google-Dapper" class="headerlink" title="Google Dapper"></a>Google Dapper</h2><p>Google Dapper 是一个在 2010 年 5 月由 Benjaim H. Sigelman, Luiz Andr’e Burrows， Pat Stephenson, Manoj Plakal, Donald Beaver, Saul jasper, Chandan shanbhag 发布于谷歌技术报告中的一篇关于大规模分布式系统跟踪的一篇论文。</p>
+<p>他奠定了之后的 Sleuth 以及 Zipkin 的开发与实施，都提供了前期的架构和一种概念，起初 Dapper 是一个自包含的跟踪工具，后来发展为一个监控平台。</p>
+<h3 id="跨度-Span"><a href="#跨度-Span" class="headerlink" title="跨度 (Span)"></a>跨度 (Span)</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210724215839.png"></p>
+<p>跨度（Span）这是一个在 Dapper 中的一个基本工作单位，发送一个 RPC 请求，就是一个新的 Span，其中还包含了其他数据，例如描述、时间戳时间、注释这些。</p>
+<p>从上图中，客户端（前端请求）所调用的服务单元，这个过程就是一次 Span ，发起请求的客户端或前端请求的 <code>Span id:1</code> ，而下一个请求的 <code>Span id:2</code> ……</p>
+<p>他们都是一个父集关系因此  Span 还有一个 <code>parent id</code> 也就是父集 ID，父集的 ID 为 <code>no parent id</code> 也被称之为 <code>root parent</code>，那么 <code>Span id:2</code> 的服务自然为<code>parent id:1</code> </p>
+<h3 id="跟踪-Trace"><a href="#跟踪-Trace" class="headerlink" title="跟踪 (Trace)"></a>跟踪 (Trace)</h3><p>之后为了将 Span 记录的更加完整，也就是最终形成一个完整的树状结构，那么也会有一个 <code>trace id</code>，他的主要作用就是将 <code>Span</code> 标注为一个组中，在可视化界面中更加的好理解。</p>
+<h3 id="标注-Annotation"><a href="#标注-Annotation" class="headerlink" title="标注 (Annotation)"></a>标注 (Annotation)</h3><p>用于记录事件的存在，可以定义请求的开始和停止等信息，例如客户端发送了一个请求，Annotation 会描述的开始、服务器端获得、准本开始处理：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>cs, Client Sent</td>
+<td>客户端发送，客户端发送了请求</td>
+</tr>
+<tr>
+<td>2</td>
+<td>sr，Server Received</td>
+<td>服务端收到了请求并开始处理（根据时间戳可以从 cs ～ sr 这段时间减时间戳获取网络延迟）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ss，Server Sent</td>
+<td>服务器发送，在请求处理完成时进行标注（Annotation），这个时间戳减去 <code>sr</code> 的时间戳，就可以得到服务器端处理所需要的时间</td>
+</tr>
+<tr>
+<td>4</td>
+<td>cr，Client Received</td>
+<td>客户端收到，表示 Span 结束，客户端已经成够收到了服务器端发送的相应（因此时间戳减去 <code>cs</code> 就是客户端从服务器接受响应所需的全部时间）</td>
+</tr>
+</tbody></table>
+<h3 id="Sleuth-日志采样"><a href="#Sleuth-日志采样" class="headerlink" title="Sleuth 日志采样"></a>Sleuth 日志采样</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210724215851.png"></p>
+<p>Sleuth 与 Spring Cloud 高度契合，兼容了 Zipkin、HTrace、Log-based 追踪为服务调用链路，而我们用 Sleuth 主实现的就是返回 Span\Trace id，主要使用到 <code>spring-cloud-starter-sleuth</code> 依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-sleuth&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外还有 Spring cloud 全局配置，<del>添加 <code>sleuth</code> 的配置项（在最新版本中无需添加）</del>，以及项目的 <code>application.name</code> 等：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">SleuthService</span></span><br><span class="line">  <span class="attr">sleuth:</span></span><br><span class="line">    <span class="attr">sampler:</span></span><br><span class="line">      <span class="attr">probability:</span> <span class="number">0.3</span>      <span class="comment"># 设置抽样采集率为 30%，默认为 0.1 即 10%</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Application-java"><a href="#Application-java" class="headerlink" title="Application.java"></a>Application.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实现日志采样（msg echo log？）</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/24</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">LOG</span> <span class="operator">=</span> Logger.getLogger(DemoApplication.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hey&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hey</span><span class="params">()</span> &#123;</span><br><span class="line">        LOG.info(<span class="string">&quot;return /hey view&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>Logger</code> 主要的作用就是将信息输出到控制台上，也就是通过 <code>@GetMapping</code> 进行请求所返回的相关信息，当然你也可以配合服务集群来实现服务消费者的作用。当访问 <a target="_blank" rel="noopener" href="http://localhost:8210/hey">http://localhost:8210/hey</a> 接口后，控制台输出格式为 <code>[应用名称，Trace id，Span id]</code> 直观点的就是 <code>SleuthService,9d1a88683cbacd11,9d1a88683cbacd11</code></p>
+<p>如果启动后没有关于 Sleuth 相关的信息，那么可以通过 <code>application.yml</code> 全局配置文件中添加日志输出为 <code>DEBUG</code> 类型看看：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">ROOT:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Zipkin"><a href="#Zipkin" class="headerlink" title="Zipkin"></a>Zipkin</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210724215859.png"></p>
+<p>Zipkin 同样是基于 Google Dapper 由 Twitter 所开发的且已经被 Spring cloud 良好的集成，你可以理解为他是 Sleuth 的数据可视化版本，并且通过 <code>Annotation</code> 来展示服务的相关信息，但首先你需要下载 Zipkin 的控制台并运行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https:<span class="comment">//zipkin.io/quickstart.sh | bash -s</span></span><br><span class="line">java -jar zipkin.jar</span><br></pre></td></tr></table></figure>
+
+<p>同时它还支持 Docker、从源代码运行等方式来启动，对于我来说通过 Jar 方式来执行已经非常便捷了，最坏的结果就是你需要先 <code>clone</code> 一下，然后在编译一下，之后在设置为 <code>bin</code> 一下，然后出错了又找一下，简单多了。</p>
+<p>启动完后最为主要的是 <a target="_blank" rel="noopener" href="http://127.0.0.1:9411/">http://127.0.0.1:9411/</a> 这也是 Zipkin 的默认端口和地址，记录下来之后在项目中进行绑定并添加依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zipkin --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-zipkin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.8.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>实际上主要是 <code>spring-cloud-starter-zipkin</code> ，至于其他的只是我测试环境需要用到的，当然 <code>spring-boot-starter-web</code> 是可以不用加的，如果加了的话需要在配置文件中声明 <code>main-web-application-type=reactive</code> 来保证服务的正常启动<del>（Gateway 已经存在了 web）</del></p>
+<h4 id="Application-yml"><a href="#Application-yml" class="headerlink" title="Application.yml"></a>Application.yml</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Zipkin</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">hey</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://service-provider/hey</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/hey</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="comment"># 允许服务发现</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">service-provider</span></span><br><span class="line">  <span class="attr">zipkin:</span></span><br><span class="line">    <span class="attr">base-url:</span> <span class="string">http://localhost:9411</span></span><br><span class="line">    <span class="attr">sender:</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">main:</span></span><br><span class="line">    <span class="attr">web-application-type:</span> <span class="string">reactive</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br></pre></td></tr></table></figure>
+
+<p>之后请求相应的接口并重新在 Zipkin 控制台上点击 <code>RUN QUERY</code> 刷新下请求列表即可获取当前服务的响应以及依赖关系等更加详细的视图，读者可根据自身需要来进行查阅，但唯一不好的就是 Zipkin 不是异步刷新，需要手动点……，以及在查看详细请求数据的时候界面没有返回按钮（也许设计起初是为了靠浏览器自带的 &lt;- -&gt; 来实现窗口的返回）。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/10.Spring%20cloud%20Sleuth%20and%20Zipkin/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js 工作原理 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js 工作原理</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="运行时（Rutime-System）与-node-vm"><a href="#运行时（Rutime-System）与-node-vm" class="headerlink" title="运行时（Rutime System）与 node vm"></a>运行时（Rutime System）与 node vm</h2><h3 id="Runtime-system"><a href="#Runtime-system" class="headerlink" title="Runtime system"></a>Runtime system</h3><p>运行时系统（Runtime system），又称之为 “运行环境”，指将半编译的代码运行的环境。在 node 核心概念中指的是 <strong>数据类型的确定</strong> 由编译时推迟到了运行时，因此就出现了运行时系统（Rutime System）来处理编译后的代码。</p>
+<p>因此这个概念和流程就是 JavaScript 引擎负责解析和即时编译（JIT），结合 Rutime 因此可以实现了 Window 、DOM API，存在与浏览器的 Runtime 中。</p>
+<p>所以 Node.js 中的 Runtime 也包含了不同的库，例如 Cluster、FileSystem API，这里面的 Runtime 都包含了内置的数据类型和常用的工具，因此 Chrome 和 Node.js 同样使用 V8 引擎但不会使用同一个 Runtime。</p>
+<blockquote>
+<p>Cluster （集群）在 node v0.8 开始集成的内置模块，为解决单线程设计的瓶颈而生。</p>
+<blockquote>
+<p>System Runtime ：<a target="_blank" rel="noopener" href="https://designfirst.io/systemruntime/">https://designfirst.io/systemruntime/</a>，常见的运行时系统需要通过 C 或汇编而成，通过此项目可以简单构建</p>
+</blockquote>
+</blockquote>
+<h3 id="VM"><a href="#VM" class="headerlink" title="VM"></a>VM</h3><p>VM 是 Node 核心模块之一，通过使用 V8 的 Virtual Machine Contexts 动态编译和执行代码，但代码的运行在上下文中是与当前隔离的，但他不是安全的，因此不要使用他来运行不受信任的代码。</p>
+<p>不同与浏览器的沙箱环境， vm 提供了一系列的 API 用于在 V8 虚拟机中编译和运行代码，可以让 JavaScript 的代码被编译且立即运行或编译后保存运行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义常量</span></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个新的 vm.Script 对象，将会编译 code 但不会运行，之后可以多次运行。</span></span><br><span class="line"><span class="keyword">const</span> script = <span class="keyword">new</span> vm.<span class="title class_">Script</span>(<span class="string">&#x27;globalVar += 1; anotherGlobalVar = 1;&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建沙盒并绑定上下文</span></span><br><span class="line"><span class="keyword">const</span> sandbox = &#123;<span class="attr">globalVar</span>: <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建上下文并将沙盒(sandbox)绑定至到环境中</span></span><br><span class="line"><span class="keyword">const</span> contextifiedSandbox = vm.<span class="title function_">createContext</span>(sandbox);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 运行 vm.script 内包含的上下文对象，并返回结果</span></span><br><span class="line"><span class="keyword">const</span> result = script.<span class="title function_">runInContext</span>(contextifiedSandbox);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 是否沙盒绝对等于上下文沙盒 （true）</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`sandbox === contextifiedSandbox ? <span class="subst">$&#123;sandbox === contextifiedSandbox&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// sandbox: &#123; globalVar: 2, anotherGlobalVar: 1 &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`sandbox: <span class="subst">$&#123;util.inspect(sandbox)&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// result: 1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`result: <span class="subst">$&#123;util.inspect(result)&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>vm.Script</code> 是新增于 node.js v0.3.1 类，用于绑定任何全局对象，之后可以多次运行，也就是说我们将 <code>sandbox</code> 对象创建了环境的上下文，将对象绑定到环境中，因此最后输出 <code> globalVar: 2, anotherGlobalVar: 1</code></p>
+<p>这也就表明了 <code>script.runInContext</code> 在 <code>contextifiedSandbox</code> 上下文中运行，从而当 <code>console.log</code> 时，他的值已经改变了。</p>
+<blockquote>
+<p><code>util.inspect</code> 用于检查常量，除了 <code>script.runInContext</code> 以外，在 node.js v6.3.0 中也完全支持了更为简单的方法 <code>vm.runlnContext</code></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置上下文全局变量为 1</span></span><br><span class="line"><span class="keyword">const</span> context = &#123;<span class="attr">globalVar</span>: <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建上下文方法准备该对象，以便可以调用上下文</span></span><br><span class="line">vm.<span class="title function_">createContext</span>(context);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 vm 方法编译 code，并运行上下文并返回结果</span></span><br><span class="line">vm.<span class="title function_">runInContext</span>(<span class="string">&#x27;globalVar += 1;&#x27;</span>, context)</span><br><span class="line"></span><br><span class="line"><span class="comment">// globalVar：2</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;globalVar：&#x27;</span> + context.<span class="property">globalVar</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="回调-同步-异步-阻塞-非阻塞"><a href="#回调-同步-异步-阻塞-非阻塞" class="headerlink" title="回调\同步\异步\阻塞\非阻塞"></a>回调\同步\异步\阻塞\非阻塞</h2><h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><p>在计算机的设计之初，基本上都是通过异步来进行的，在此之前我们需要知道异步的相关类别</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同步</td>
+<td>按照需求内的一步一步进行执行</td>
+</tr>
+<tr>
+<td>异步</td>
+<td>可以同时执行多种事情</td>
+</tr>
+<tr>
+<td>堵塞</td>
+<td>按照需求内一步一步进行，当一个程序没有执行，下面所排队等待的程序都处于排队状态</td>
+</tr>
+<tr>
+<td>非堵塞</td>
+<td>当一个程序没有执行完毕，后面所排队的程序都会进行插队</td>
+</tr>
+</tbody></table>
+<p>node.js 异步内的直接体现就在于回调，而回调就是，当你不知道用户何时会点击按钮，因此你为事件所定义了一个事件的处理程序，该事件会在处理时被触发调用即“回调”，我们以文件读取为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步读取文件内容，通过 readFile() 缓冲整个文件</span></span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&#x27;package.json&#x27;</span>, <span class="keyword">function</span> (<span class="params">err,data</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">stack</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>() + <span class="string">&#x27;\n File echo success!&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上的 js 脚本中那个，主要通过 <code>fs.readFile</code> 函数来异步读取文件，如果文件不存在则直接通过 <code>err</code> 输出错误信息，如没有发生错误则会忽略 <code>err</code>对象进行输出，因此文件的内容就通过了回调函数输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ node vm.js </span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;demo&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;node demo&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;repository&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;git&quot;,</span><br><span class="line">    &quot;url&quot;: &quot;https://gitee.com/sif_one/node-demo&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;keywords&quot;: [</span><br><span class="line">    &quot;null&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;author&quot;: &quot;sun likun&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> File echo success!</span><br></pre></td></tr></table></figure>
+
+<p>假设 <code>package.json</code> 文件并不存在，那么在经过 <code>s.readFile()</code> 方法时，<code>err</code> 对象就会输出错误信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node vm.js </span><br><span class="line">Error: ENOENT: no such file or directory, open &#x27;pac1kage.json&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h3><p>同步可以说是一个进程在执行某一个请求的时候，另一个进程则需要等待，等上一个请求完后，这个进程才可以执行。而异步则是另一个进程无需等待，无论其他进程状态是否，直接进程执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">__test</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1000</span>);</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">15</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">await</span> <span class="title function_">__test</span>();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a&#x27;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">test</span>();</span><br></pre></td></tr></table></figure>
+
+<p>首先我们需要注意的是，为了防止异步的出错，需要将 <code>await</code> 放到 <code>try……catch</code> 中，这就让 <code>__test</code> 与 <code>test</code> 两个函数同步起来，这样就会让输出的结果是<code>__test</code> 运行完了，<code>test</code> 还在等待的效果，正因这样，一个正常的运行结果才不会混乱。</p>
+<h3 id="堵塞"><a href="#堵塞" class="headerlink" title="堵塞"></a>堵塞</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614962830_20210306004705386_912103280.png" alt="堵塞与非堵塞"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;)</span><br><span class="line"></span><br><span class="line">var data = fs.readFileSync(&#x27;hello.text&#x27;)</span><br><span class="line">fs.readFile(&#x27;hello.text&#x27;, (err,data)=&gt; &#123;</span><br><span class="line">    if (err != null) &#123;</span><br><span class="line">        console.log(&#x27;没有此文件&#x27;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">console.log(data.toString())</span><br><span class="line">console.log(&quot;程序执行结束!&quot;)</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hello</span><br><span class="line">程序执行结束!</span><br></pre></td></tr></table></figure>
+<p>在以上的code中，首先并不存在 hesllo.text 文件，处理回调错误的同时，在node中，<strong>任何回调函数中的地一个参数都为错误对象</strong>在Node官方文档中被标注为<code>错误优先与回调</code>的说法。</p>
+<h3 id="非堵塞"><a href="#非堵塞" class="headerlink" title="非堵塞"></a>非堵塞</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;)</span><br><span class="line"></span><br><span class="line">fs.readFile(&quot;hello.text&quot;, function(err,data) &#123;</span><br><span class="line">    if (err !== null) &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(data.toString())</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&#x27;程序执行完成&#x27;)</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">程序执行完成</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<p>本文通过堵塞与非堵塞来进行演示，通常情况下堵塞代码是<code>按照需求一步一步的执行，当一个步骤或没有完成时等待的程序处于排队状态</code>，而非堵塞则是<code>不当一步骤没有执行完毕后面所排队的程序都会依次进行插队</code>即处理更加的效率</p>
+<h2 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h2><p>Node.js 基本上所以的事件机制都使用类似与设计模式中的观察者模式实现，而观察者模式又是一种行为设计模式，允许你定义一种订阅机制，可在对象事件发生时通知多个观察者的对象或其他对象。</p>
+<p>观察者模式会在他本身的状态改变时发出通知，而这种呼叫各类观察者所提供的方式来实现，因此这种模式也被称之为事件处理系统。</p>
+<p>在 node.js 中，所提供了 <code>events</code> 库，而他最主要的部分就是创建对象、事件处理、绑定事件以及最后的触发事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建事件</span></span><br><span class="line"><span class="keyword">var</span> eventEmitter = <span class="keyword">new</span> events.<span class="title class_">EventEmitter</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建事件处理</span></span><br><span class="line"><span class="keyword">var</span> connectHandler = <span class="keyword">function</span> <span class="title function_">connected</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;1.连接成功&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 触发 data_received 事件</span></span><br><span class="line">    eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;data_received&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 connectHandler 绑定 connection</span></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;connection&#x27;</span>, connectHandler);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定 &#x27;data_receiver&#x27;  事件</span></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;data_received&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;2.接受触发成功\n3.流程执行完毕&quot;</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;connection&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.连接成功</span><br><span class="line">2.接受触发成功</span><br><span class="line">3.流程执行完毕</span><br></pre></td></tr></table></figure>
+
+<p>上述 code 中 <code>eventEmitter.emit()</code> 用于触发事件，同时他也允许将任意一组参数传递给监听器函数，之后通过<code>eventEmitter.on()</code> 函数来注册监听器 <strong>connection</strong> ，最后通过 <code>data_received</code> 的事件绑定被监听器发现，从而输出整套流程。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/2.Node.js%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

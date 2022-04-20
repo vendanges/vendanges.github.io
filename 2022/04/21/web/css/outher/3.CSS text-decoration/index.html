@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>CSS text-decoration | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>CSS text-decoration</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/css/" rel="tag">css</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>文字装饰，(<code>text-decoration</code>)，通常在<code>&lt;a&gt;</code>标签中会经常遇到，即他的下划线他，通常我们会直接使用<code>text-decoration: none</code> 直接去掉下划线，而在新的 CSS 规范中“<code>CSS Text Decoration Module L3</code>”对<code>text-decoration</code>有较好的样式，同时支持了：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text-decoration-line</td>
+<td>文本的装饰线（<code>可以多个搭配</code>）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>none</td>
+<td>不产生文本装饰线，即下划线</td>
+</tr>
+<tr>
+<td></td>
+<td>underline</td>
+<td>每行都有下划线</td>
+</tr>
+<tr>
+<td></td>
+<td>overline</td>
+<td>每一行的文本上面都有一行下划线（可与<code>underline</code>配合使用）</td>
+</tr>
+<tr>
+<td></td>
+<td>line-through</td>
+<td>每行的中间都有一行下划线</td>
+</tr>
+<tr>
+<td>text-decoration-style</td>
+<td>下划线样式</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>solid</td>
+<td>实心</td>
+</tr>
+<tr>
+<td></td>
+<td>double</td>
+<td>双下划线</td>
+</tr>
+<tr>
+<td></td>
+<td>dotted</td>
+<td>虚线（<code>更细</code>）</td>
+</tr>
+<tr>
+<td></td>
+<td>dashed</td>
+<td>粗一点的虚线</td>
+</tr>
+<tr>
+<td></td>
+<td>wavy</td>
+<td>波浪线</td>
+</tr>
+<tr>
+<td>text-decoration-color</td>
+<td>下划线颜色</td>
+<td></td>
+</tr>
+<tr>
+<td>text-decoration</td>
+<td>文本装饰属性（通常用于写<code>text-decoration: none</code>，他也是<code>text-decoration-line	</code>的简写）</td>
+<td></td>
+</tr>
+<tr>
+<td>text-underline-position</td>
+<td>下划线位置</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210411005749.png"></td>
+<td>auto</td>
+<td>基于字母的基线处或下方</td>
+</tr>
+<tr>
+<td><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210411005801.png"></td>
+<td>under</td>
+<td>下划线位置基于元素文本内容下方</td>
+</tr>
+<tr>
+<td></td>
+<td>left</td>
+<td>在垂直文字下，下划线与下方对齐，与文本的左边缘对齐</td>
+</tr>
+<tr>
+<td></td>
+<td>right</td>
+<td>在垂直文字下，下划线与下方对齐，与文本的右边缘对齐</td>
+</tr>
+</tbody></table>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210411005813.png"><br>值得注意的是，我们通过配合<code>text-underline-offset</code>属性可以实现他的动画效果，当然，他本身<strong>并不支持变换</strong>，因此需要通过使用<code>@property</code>来实现过度，<strong>但是@property</strong>是一项实验性技术，目前的兼容，还是很差。。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210411005819.gif"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> --offset &#123;</span><br><span class="line">  syntax: <span class="string">&quot;&lt;length&gt;&quot;</span>;</span><br><span class="line">  inherits: false;</span><br><span class="line">  initial-value: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xu-t1 &#123;</span><br><span class="line">  text-underline-offset: <span class="built_in">var</span>(--offset, <span class="number">10px</span>);</span><br><span class="line">  <span class="attribute">text-decoration</span>: underline;</span><br><span class="line">  <span class="attribute">text-decoration</span>-thickness: <span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">text-decoration-color</span>: @color-blue;</span><br><span class="line">  <span class="attribute">transition</span>: --offset <span class="number">400ms</span>, text-decoration-color <span class="number">400ms</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xu-t1<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attr">--offset</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: underline;</span><br><span class="line">  <span class="attribute">text-decoration</span>-thickness: <span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">text-decoration-color</span>: @color-blue;</span><br><span class="line">  <span class="attribute">transition</span>: --offset <span class="number">400ms</span>, text-decoration-color <span class="number">400ms</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/css/outher/3.CSS%20text-decoration/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

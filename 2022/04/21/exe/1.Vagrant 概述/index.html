@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vagrant | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vagrant</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a> <a class="article__tag-none-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Vagrant 最早通过 Mitchell Hashimoto 因业余兴趣而发布使用 Ruby lang 所实现的一种基于构建及配置虚拟开发环境工具，主要依赖 VirtualBox、 VMware、Libvirt 等虚拟化系统来实现快速部署开发环境的构建。</p>
+<p>通过由 Oracle 所开源的 VirtualBox 虚拟化系统，受其开源所带来的好处可配合 Vagrant 来快速构建虚拟环境，这让 Vagrant + VirtualBox 这种组合更加的流行且成为了生产力工具之一。</p>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><p>安装 Vagrant 本身不怎么麻烦，但是对于没有 Ruby 环境的读者以及虚拟依赖可能非常困惑，特别是 VirtualBox 依赖的问题。</p>
+<p>如果通过 dpkg 进行安装很可能安装不到 VirtualBox 的依赖，因此我们需要手动进行安装依赖（VirtualBox &gt;&#x3D; 6.0）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essentials</span><br><span class="line">sudo apt-get install virtualbox-ose</span><br><span class="line">sudo /sbin/vboxconfig</span><br><span class="line">sudo apt-get install dkms build-essential linux-headers-`uname -r`</span><br></pre></td></tr></table></figure>
+
+<h2 id="Box"><a href="#Box" class="headerlink" title="Box"></a>Box</h2><p>vagrant box 主要的作用最多的就是管理当前的 box，包括安装、移除等。等 vagrant 安装完成之后就开始到了我们的使用环节，通常我们最常用的就是添加一个 Vagrant box：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant init [name[,url]</span><br></pre></td></tr></table></figure>
+
+<p>当执行完 <code>init</code> 后，则当前目录已经初始化为 Vagrant 环境，就比如我们可以使用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant init kalilinux/rolling</span><br></pre></td></tr></table></figure>
+
+<p>如果要删除框，首先需要查询框，通过 <code>vagrant box list</code> 来查询目前所拥有的框，我们可以通过使用下述命令删除：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant box remove kalilinux/rolling</span></span><br><span class="line">Removing box &#x27;kalilinux/rolling&#x27; (v2021.2.0) with provider &#x27;virtualbox&#x27;...</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>kalilinux/rolling</code> 则是通过使用 <code>vagrant box list </code> 所得出的信息。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/exe/1.Vagrant%20%E6%A6%82%E8%BF%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

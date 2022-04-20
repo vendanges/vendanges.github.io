@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 模板语法 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 模板语法</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Vue.js主要使用了基于<code>HTML</code>的模板语法，允许开发者声明式的将DOM绑定至底层的Vue实例数据，由于Vue.js基于HTML模板语法，所以所编写的自然而然能被浏览器所解析（除了远古浏览器）。</p>
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><p>插值主要包含了<code>文本、原始HTML、属性、原始表达式</code>等四类，其中我们会在本章一一进行介绍：</p>
+<h3 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h3><h4 id="Mustache"><a href="#Mustache" class="headerlink" title="Mustache"></a>Mustache</h4><p>在Vue.js中，常见的数据绑定形式就使用<code>Mustache</code>语法来进行插值，即<code>&lt;p&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;</code>，这里的Mustache是一款经典的前端模板引擎，而Mustache的价值在其稳定以及经典，其中在Vui内的<code>&#123;&#123;……&#125;&#125;</code>写法就类似与Mustache模板引擎的语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-once"><a href="#v-once" class="headerlink" title="v-once"></a>v-once</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219479_20210308193210725_1767353958.gif" alt="效果"><br>Vue.js为我们提供了一个类似与<code>Object.freeze()</code>阻止修改的方法，而vue又为我们提供了另一种方法即<code>v-once</code>指令，通过<code>v-once</code>指令我们可以进行一次性插值，<strong>当数据改变的时候，内容将不会被更新</strong>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;span v-once&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;Hello,world&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="原始-HTML"><a href="#原始-HTML" class="headerlink" title="原始 HTML"></a>原始 HTML</h3><p>通常在为我们提供指令的时候一般都会提供一个输出原始<code>HTML</code>的指令。Vue并不例外，Vue所提供的指令是<code>v-html</code>，即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=&quot;html&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h4><p>v-html指令预期是<code>字符串类型</code>，内容按照<code>HTML</code>进行插入，不会被当作<code>vue</code>模板进行编译。使用<code>v-html</code>指令可能会出现一些安全问题，所以我们尽量在一些不容易发生问题的地方使用。</p>
+<h3 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h3><h4 id="v-bind-id"><a href="#v-bind-id" class="headerlink" title="v-bind:id"></a>v-bind:id</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219480_20210308200956304_1007545896.png"><br>在默认的情况下Mustache语法<code>并不能</code>使用在HTML 属性中（在vue编译的范围内），当遇到这种情况的时候我们可以使用<code>v-bind</code>指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:id=&quot;app&quot;&gt;&#123;&#123;Hello&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;Hello,world&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你还不能理解上面的Code以及<code>v-bind</code>指令，我们可以通过下方code来进行理解：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:id=&quot;app&quot;&gt;&#123;&#123;Hello&#125;&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;hello&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;Hello,world&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在上述的code中，使用<code>v-bind</code>指令的html属性将会在vue编译的范围内进行输出，而未使用<code>b-bind</code>指令的html属性将不会进行输出。</p>
+<h4 id="v-bind-src"><a href="#v-bind-src" class="headerlink" title="v-bind:src"></a>v-bind:src</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219480_20210308202648163_1185792207.png"><br>通过使用<code>v-bind:src</code>指令，我们可以绑定一个src属性的比如<code>img</code>元素:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;img v-bind:src=&quot;img&quot; alt=&quot;&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            img: &#x27;https://img-home.csdnimg.cn/images/20201124032511.png&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当然<code>v-bind</code>指令还可以支持缩写为<code>:</code>，及上述<code>img</code>元素重构为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img :src=&quot;img&quot; alt=&quot;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-pind-class"><a href="#v-pind-class" class="headerlink" title="v-pind:class"></a>v-pind:class</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219481_20210308222525128_1753194425.png"><br>除了<code>id～src</code>之外，还支持<code>class</code>等方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .red &#123;</span><br><span class="line">        color: red;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;p v-bind:class=&quot;colorRed&quot;&gt;Hello,world&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var vm = new Vue(&#123;</span><br><span class="line">            el: &quot;#app&quot;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                colorRed: &#x27;red&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">        &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">            &lt;p v-bind:class=&quot;[one, two]&quot;&gt;Hello,world&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>Vue 通过<code>class red</code>添加到vue的渲染队列中，最后使用<code>v-pind:class</code>来引入<code>colorRed</code>。</p>
+<h4 id="v-pind-style"><a href="#v-pind-style" class="headerlink" title="v-pind:style"></a>v-pind:style</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219481_20210308222952763_412528199.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .red &#123;</span><br><span class="line">        color: red;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;p v-bind:style=&quot;colorRed&quot;&gt;Hello,world&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var vm = new Vue(&#123;</span><br><span class="line">            el: &quot;#app&quot;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                colorRed: &#123;</span><br><span class="line">                    color: &#x27;red&#x27;,</span><br><span class="line">                    fontSize: &quot;20px&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">        &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">            &lt;p v-bind:style=&quot;[one, two]&quot;&gt;Hello,world&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-pind-href"><a href="#v-pind-href" class="headerlink" title="v-pind:href"></a>v-pind:href</h4><p>除了以上的几种<code>v-pind</code>参数之外，自然还支持了<code>href</code>参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;a v-bind:href=&quot;url&quot;&gt;Go blog&lt;/a&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                url: &#x27;http://sif_one.gitee.io/&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JavaScript-表达式"><a href="#JavaScript-表达式" class="headerlink" title="JavaScript 表达式"></a>JavaScript 表达式</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219482_20210308224335379_1680318945.png"><br>vue对javascript表达式有良好的支持，且并不限于表达式，甚至包括语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123;message + &#x27;,vue!&#x27;&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var app =new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            message: &#x27;hello&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;) </span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">	&#123;&#123; ok ? &#x27;YES!&#x27; : &#x27;NO!&#x27; &#125;&#125;&lt;br&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                ok: false,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">```  </span><br><span class="line">## 指令</span><br><span class="line">![](https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219482_20210308231156016_218446905.gif)</span><br><span class="line">指令即（Directives）则在vue中则是代表有```v-```前缀的特殊属性，当表达式改变的时候也会将行为应用到DOM内：</span><br><span class="line">```vue</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">	&lt;p v-if=&quot;seen&quot;&gt;Hello,world!&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                seen: true,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>由于将属性加入到了DOM对象内，所以我们可以通过控制台来进行操作对象，就如本文中我们将此来实现显示以及隐藏等。</p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219483_20210308231940377_505844485.png"><br>当介绍完指令之后，自然而然的就是轮到了参数，就以上述的code为例子，<code>v-if</code>为属性，而<code>seen</code>为参数，如果要写我们可以这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;a v-bind:href=&quot;url&quot;&gt;Go blog&lt;/a&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var app =  new Vue(&#123;</span><br><span class="line">            el: &#x27;#app&#x27;,</span><br><span class="line">            data: &#123;</span><br><span class="line">                url: &#x27;http://sif_one.gitee.io/&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><h3 id="v-on"><a href="#v-on" class="headerlink" title="v-on"></a>v-on</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615219483_20210308235838938_657258918.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">```vue</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;</span><br><span class="line">        &lt;a v-bind:href=&quot;url&quot;&gt;Go blog&lt;/a&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var app =  new Vue(&#123;</span><br><span class="line">                el: &#x27;#app&#x27;,</span><br><span class="line">                data: &#123;</span><br><span class="line">                    url: &#x27;http://sif_one.gitee.io/&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>那么其最后在 <code>v-on</code>指令的笼罩下范围内的<code>&lt;a&gt;</code>标签将会失去原本的作用：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.stop</td>
+<td>调用 event.stopPropagation()</td>
+<td>停止传播</td>
+</tr>
+<tr>
+<td>.prevent</td>
+<td>调用 event.preventDefault()</td>
+<td>防止默认</td>
+</tr>
+<tr>
+<td>.capture</td>
+<td>添加事件侦听器时使用capture(捕获) 模式</td>
+<td></td>
+</tr>
+<tr>
+<td>.self</td>
+<td>只当事件从侦听器绑定元素本身触发时才进行回调</td>
+<td></td>
+</tr>
+<tr>
+<td>&#96;&#96;&#96;.{keyCode</td>
+<td>keyAlias} &#96;&#96;&#96;</td>
+<td>只当事件从特定键触发时才进行回调</td>
+</tr>
+<tr>
+<td>.native</td>
+<td>监听组件根本元素的原生事件</td>
+<td></td>
+</tr>
+<tr>
+<td>.once</td>
+<td>只触发一次回调</td>
+<td></td>
+</tr>
+<tr>
+<td>.left</td>
+<td>只当点击鼠标左键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.right</td>
+<td>只当鼠标点击右键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.middle</td>
+<td>当鼠标中键时触发</td>
+<td></td>
+</tr>
+<tr>
+<td>.passive</td>
+<td>以 { passive: true } 模式添加侦听器</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h2><p>虽然已经在上述说明中标注了其指令的缩写，但为了视觉效果和让读者感觉非常重要，还是要单独列一个标题来<strong>着重标注</strong>。</p>
+<p>Vue.js最为不同且便捷的方式就是，基本上每个指令都会有一个缩写，其中<code>v-</code>前缀作为一种视觉提示，可用来辨别vue特定的属性，就如本文我们所出现的 <code>v-bind</code>、<code>v-on</code>缩写分别为<code>:</code>以及<code>@</code>。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/3.Vue%20%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

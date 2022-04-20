@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue.js MVVM at ViewModel | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue.js MVVM at ViewModel</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue3-0/" rel="tag">vue3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Vue(&#x2F;vju:&#x2F;，类似与 <code>view</code>)，是由<code>尤雨溪</code>所开发的一种前端<code>js</code>框架，以vue为中心的vue 库最为出名，其中知名的有<code>vue-data、vue-table……</code>分别运用在<code>数据大屏</code>以及<code>表格处理</code>方面，其中vue主要用于<strong>构建用户界面</strong>的渐进式框架，核心库只支持前端显示。</p>
+<p>而渐进式框架主要是：“一开始不需要完全掌握全部功能，到后面会慢慢的提升”，就以<code>vue-data</code>为例，即使光通过官方文档也可以快速上手，这与vue.js的成功密切相关。</p>
+<p>Vue 的部分设计理念遵守了 <strong>MVVM（Model-view-viewmodel）</strong> 软件架构模式，用于构建用户界面的渐进式框架，是被一个设计自低向上逐层应用。</p>
+<blockquote>
+<p>通过 MVVM 有助于将图形用户界面的开发和业务逻辑的开发分离开来，因此 Vue 也是一个用于构建用户界面的渐进式框架</p>
+</blockquote>
+<p>虽然并没有完全遵守 MVVM 模型，但 Vue 在设计上收到了启发，因此对于 <code>vm,ViewModel</code> 通常用于表示组件的实例。</p>
+<p>vue.js 的官方文档是写的最为详细的框架文档之一，这与其vue.js发展之出的Laravel 社区文档出现了对比，如果按照通俗的话来讲就是“<strong>教你造车但不教你开车</strong>”，这也是vue.js如此成功的关键因素之一，其二就是由于vue.js是由国人所开发的，这也增加了vue.js在国内的受欢迎程度不同类框架第一影响更好。</p>
+<blockquote>
+<p>对于学习我们可以直接使用最新的 Vue CDN 进行引入：<code>&lt;script src=&quot;https://unpkg.com/vue@next&quot;&gt;&lt;/script&gt;</code></p>
+</blockquote>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/vue/vue%203.0/1.vue.js%20%E8%AF%AD%E6%B3%95.md/20142129188.png"></p>
+<p>MVVM（Model-view-viewmodel）即表示 **view(视图)\viewModel(视图模型)\Model(模型)**，是一种软件的架构模式，其中 View 的主要作用就是向用户显示数据上下文中可用的数据，并与用户进行数据交互。</p>
+<p>而之后的 ViewModel 是用于作为视图(VIew)和模型(Model)之间的桥梁，在 MVC 的软家架构模式中可以表示为 <code>Controller</code> 控制器，，MVVM 模式试图通过 MVC 所提供的数据绑定的优势通过框架尽可能的接近于应用程序模型，他使用绑定器以及视图模型。</p>
+<blockquote>
+<p>MVVM 不同于 MVC，在MVVM 模式中将 <code>ViewModel</code> 层绑定到 View 曾后基本上不会使用点击事件，而是使用命令（Command）来控制，并通过 Binding 来绑定相关数据。</p>
+</blockquote>
+<p>对于 Model 是指所需数据的对象建模，这通常用于数据库建模并直接进行映射到数据中，类似与 Laravel 以及 Sequelize 中的 Model</p>
+<h2 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h2><p><img src="https://gitee.com/sif_one/drawing-bed/raw/8ac6cc34e9fbe5f644b158efaa79548a94925cbe/javascript/vue/vue%203.0/1.vue.js%20%E8%AF%AD%E6%B3%95.md/1341359189188.png"></p>
+<p>ViewModel 是 Vue 的核心框架也是一个 Vue 实例，作用与某一个 HTML 元素之上，通常为指定的 ID 元素。当创建了一个 ViewModel 后，最为核心的就是双向绑定，主要以 DOM Listeners(DOM 侦听器)和 Data Bindings(数据绑定) 为主。DOM Listeners 会检测 View 上的元素变化，如有变化则会更改 Model 中的数据;  当更改 Model 数据时， DataBingdings 则会更新页面中的 DOM 元素。因此最后的 <code>app</code> 元素下所绑定的 <code>&#123;&#123;message&#125;&#125;</code> 则会返回 <code>hey,world</code> 来将此渲染进 DOM 系统。	</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>index<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/vue@next&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;&#123;message&#125;&#125;</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> <span class="title class_">App</span> = &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">message</span>: <span class="string">&#x27;hey,world!&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">Vue</span>.<span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">mount</span>(<span class="string">&quot;#app&quot;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>在 Vue3.0 版本中，Vue 应用都是通过 <code>createApp</code> 函数创建一个新的应用实例，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">App</span> = &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">message</span>: <span class="string">&#x27;hey,world!&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">mount</span>(<span class="string">&quot;#app&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>但上述这种只是一种非常简单的写法，还有另一种写法是类似与更加符合 MVVM 模型的，Vue 的设计收到此启发但在文档中也会使用 <code>vm(ViewModel)</code> 进行缩写。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">RootComponent</span> = &#123; </span><br><span class="line">  <span class="comment">/* 选项 */</span> </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> app = <span class="title class_">Vue</span>.<span class="title function_">createApp</span>(<span class="title class_">RootComponent</span>)</span><br><span class="line"><span class="keyword">const</span> vm = app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/3.0/1.Vue.js%20MVVM%20at%20ViewModel/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

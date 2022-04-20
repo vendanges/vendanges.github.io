@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 布局 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 布局</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>布局(<code>layout</code>)是 D3 中最为重要的概念之一，其中他的作用就是进行一个<code>数据的转换</code>，以及进行分别进行<code>计算图形的位置和形状</code>的关系，他总共提供了<code>饼布局、力布局、弦布局、树布局、捆布局、直方布局、矩阵树布局</code>等<strong>七种常用布局</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>饼布图(Pie)</td>
+<td>饼布图主要用于方便<code>计算</code>出饼图或圈内的<code>弧线</code>开始和结束的角度，如果没有 Layout，那通过 <code>弧生成器</code>也可以实现，但通过饼布图会更加的方便且更加<strong>智能</strong></td>
+</tr>
+<tr>
+<td>力布图 (Force)</td>
+<td>通过<code>物理模拟</code>的方式将力导向图更加灵活的实现位置的简单控制</td>
+</tr>
+<tr>
+<td>弦布图（Chord）</td>
+<td>弦图所示的内容为一组<code>实体或数据</code>之间的关系，并通过使用不同的弧线之间画出<code>二次被塞尔曲线</code>，将关系表述在一张弦图中</td>
+</tr>
+<tr>
+<td>树布图（Tree）</td>
+<td>树布图主要通过使用<code>莱因戈尔德-蒂尔福德</code>算法来产生一个简洁的<code>树状节点</code>，来展示层级结构</td>
+</tr>
+<tr>
+<td>捆布图（Bundle）</td>
+<td>通过使用<code>丹尼-霍尔登</code>分层捆图的实现，将每个输入的连接来计算出一条路径，然后路径分别被不同的路径穿过，也就是说捆布图的主要作用就是<strong>计算链接路径</strong></td>
+</tr>
+<tr>
+<td>直方布局（Histogram）</td>
+<td>直方布图主要用于展示数据分布</td>
+</tr>
+<tr>
+<td>矩形树布局（Treemap）</td>
+<td>矩形树布局由<code>Ben Shneiderman</code>在1991年提出，将一块矩形区域进行切割多次，来达到层级的效果</td>
+</tr>
+</tbody></table>
+<p>还有一种在 D3 极为不同的布局就是 <code>层次布局</code>，层次布局也被称之为<code>分层布局</code>，他是一种抽象的布局，不可以直接进行使用，<strong>但是他允许在不同的分层布局中共享节点</strong>，以他为中心分出了：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cluster</td>
+<td>簇实体构成的树状图</td>
+</tr>
+<tr>
+<td>Pack</td>
+<td>使用递归圆填充法来创建一个分层布局</td>
+</tr>
+<tr>
+<td>Partition</td>
+<td>将节点树递归划分成分辐射状或环状</td>
+</tr>
+<tr>
+<td>Tree</td>
+<td>将节点树整体放置</td>
+</tr>
+<tr>
+<td>Treemap</td>
+<td>使用递归空间划分显示节点树（虽然他不是分层布局，但捆绑布局可以同分层布局<strong>共同使用</strong>）</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/21.D3%20%E5%B8%83%E5%B1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

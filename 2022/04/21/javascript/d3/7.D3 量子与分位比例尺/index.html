@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 量子比例尺 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 量子比例尺</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="量子比例尺"><a href="#量子比例尺" class="headerlink" title="量子比例尺"></a>量子比例尺</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616388450_20210322083533569_843212254.png"><br>量子比例尺（<code>Quantize Scale</code>）中所定义的定义域是<strong>连续</strong>的，而值域却是一个离散的，根据<code>输入</code>的不同，对应相应的<code>值域</code>。当使用量子比例尺后，定义域将会被换分为<code>5</code>段，每一段对应值域的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quantize = d3.<span class="property">scale</span>.<span class="title function_">quantize</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">10</span>])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="string">&quot;blue&quot;</span>,<span class="string">&quot;red&quot;</span>,<span class="string">&quot;green&quot;</span>,<span class="string">&quot;yellow&quot;</span>,<span class="string">&quot;black&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">5.2222</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616388451_20210322124722029_276539610.png"></p>
+<p>在上述的 code中，<code>5.2222</code>对应了值域中的<code>green</code>，默认的情况下，当输入的数值<strong>大于</strong>定义域，将会默认对应<strong>数值</strong>中最后一个值。假设我们输出一个<code>15.2222</code>，那么经过量子比例尺的计算，虽然超过<code>定义域</code>的大小，但最终所对应的数值为最后一个，即<code>black</code>，这也符合了量子的定义，即：“一个物理量如果存在<code>一个最小的不可分割的基本单位</code>中的不可分割”：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quantize = d3.<span class="property">scale</span>.<span class="title function_">quantize</span>()</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		/—— .d3.scale.quantize()</span></span><br><span class="line"><span class="comment">		/———— 在此定义定量比例尺以及对应的值域颜色</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">100</span>])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="string">&quot;#0000CC&quot;</span>,<span class="string">&quot;#0033CC&quot;</span>,<span class="string">&quot;#0066CC&quot;</span>,<span class="string">&quot;#0099CC&quot;</span>,<span class="string">&quot;#00CCCC&quot;</span>,<span class="string">&quot;#00FFCC&quot;</span>,<span class="string">&quot;#3300CC&quot;</span>,<span class="string">&quot;#3333CC&quot;</span>,<span class="string">&quot;#3366CC&quot;</span>,<span class="string">&quot;#3399CC&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r = [<span class="number">100</span>,<span class="number">90</span>,<span class="number">80</span>,<span class="number">70</span>,<span class="number">60</span>,<span class="number">50</span>,<span class="number">40</span>,<span class="number">30</span>,<span class="number">20</span>,<span class="number">10</span>] <span class="comment">/* 圆的半径 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		/—— d3.select(&quot;body&quot;).append(&quot;svg&quot;)，</span></span><br><span class="line"><span class="comment">		/———— 在 body 元素中的下面插入一个 svg 元素。高为 1400，宽为 1400</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">200</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">selectAll</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		/—— data()</span></span><br><span class="line"><span class="comment">		/———— 绑定 circle 为 r 的半径</span></span><br><span class="line"><span class="comment">		/—— enter()</span></span><br><span class="line"><span class="comment">		/———— 补足足够数量的 circle 元素</span></span><br><span class="line"><span class="comment">		/—— append()</span></span><br><span class="line"><span class="comment">		/———— 在srg 元素后插入一个 circle 元素</span></span><br><span class="line"><span class="comment">		/—— cx and cy</span></span><br><span class="line"><span class="comment">		/————  设置 x 坐标位置以及间隔大小</span></span><br><span class="line"><span class="comment">		/————— 高度位置设置为 190</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	.<span class="title function_">data</span>(r)</span><br><span class="line">	.<span class="title function_">enter</span>()</span><br><span class="line">	.<span class="title function_">append</span>(<span class="string">&#x27;circle&#x27;</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>,<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">100</span> + i * <span class="number">10</span></span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>,<span class="number">190</span>)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> d</span><br><span class="line">	&#125;)</span><br><span class="line">	.<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="title function_">quantize</span>(d);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="分位比例尺"><a href="#分位比例尺" class="headerlink" title="分位比例尺"></a>分位比例尺</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1616415149_20210322200905528_633306176.png"></p>
+<p>通常的情况下，量子比例尺和分位比例尺（<code>Quantile Scale</code>）是一起来介绍的，因为他们基本相同但不完全相同。首先，量子比例尺的分段为<code>5</code>，而分段比例尺的分段为<code>3</code>，所以造成同样是十个数据，一个数据一一对应而另一个数据却参差不齐的发生：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quantize = d3.<span class="property">scale</span>.<span class="title function_">quantize</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">10</span>])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="string">&quot;blue&quot;</span>,<span class="string">&quot;red&quot;</span>,<span class="string">&quot;green&quot;</span>,<span class="string">&quot;yellow&quot;</span>,<span class="string">&quot;black&quot;</span>])</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">0</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">1</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">2</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">3</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">4</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">5</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">6</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">7</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">8</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">9</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantize</span>(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-----------&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> quantile = d3.<span class="property">scale</span>.<span class="title function_">quantile</span>()</span><br><span class="line">	.<span class="title function_">domain</span>([<span class="number">0</span>,<span class="number">13</span>])</span><br><span class="line">	.<span class="title function_">range</span>([<span class="string">&quot;blue&quot;</span>,<span class="string">&quot;red&quot;</span>,<span class="string">&quot;green&quot;</span>,<span class="string">&quot;yellow&quot;</span>,<span class="string">&quot;black&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">0</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">1</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">2</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">3</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">4</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">5</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">6</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">7</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">8</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">9</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">quantile</span>(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/7.D3%20%E9%87%8F%E5%AD%90%E4%B8%8E%E5%88%86%E4%BD%8D%E6%AF%94%E4%BE%8B%E5%B0%BA/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

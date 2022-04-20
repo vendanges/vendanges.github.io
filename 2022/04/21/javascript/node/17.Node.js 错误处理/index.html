@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js error | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js error</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>对于错误的处理主要分为代码的错误和系统本身的问题其中包含内存不足或者打开文件过多、系统配置以及网络和远程服务问题，错误的处理需要加入到没有任何错误处理的程序中。</p>
+<p>需要考虑到任何会导致失败所可能产生的结果，错误是一种 <code>Error</code> 的实例，从而抛出一个异常，或者通过 <code>callback</code> 进行无抛异常进而通过异常。</p>
+<h2 id="Error-function"><a href="#Error-function" class="headerlink" title="Error function"></a>Error function</h2><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>throw</td>
+<td>以同步的方式传递异常，如果调用者通过 <code>try/catch</code> 异常就会被捕获，如果异常未被捕获则会被 <code>domains</code> 或者进程级的 <code>uncaughtExceptin</code> 捕获</td>
+</tr>
+<tr>
+<td>2</td>
+<td>callback</td>
+<td>是基础的异步传递方式，用户传进来一个函数(callback) 之后当某个异步操作完成后调用 <code>callback</code> ，在正常情况下 <code>callback(err,result)</code> 的形式被调用，这两个参数自然有一个是非空的，这取决与成功还是失败</td>
+</tr>
+<tr>
+<td>3</td>
+<td>EventEmitter</td>
+<td>最为主要的是 EventEmitter 是没有 <code>callback</code> 而是返回 <code>EventEmitter</code> 对象。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>error</code> 当做一个可能会产生多个错误或多个结果的复杂操作时所返回的错误</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>row</code> callback 所返回的 <code>EventEmitter</code> 的结果将会触发一个 <code>row</code> 事件</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>end</code> 当 <code>row</code> 事件被触发的时候将会触发或返回一个 <code>end</code> 事件</td>
+</tr>
+</tbody></table>
+<p>通常 <code>callback</code> 和 <code>EventEmitter</code> 将会归到同一个异步的错误传递，使用 <code>rhrow</code>和<code>callback</code> 以及 <code>EventEmitter</code> 取决与 <strong>该一场是操作失败还是系统所造成的 BUG</strong> 以及 <strong>该函数是同步和异步的</strong>。</p>
+<p>其中即可以同步传递错误并抛出，又可以传递错误（通过传给一个回调函数或者触发 <code>EventEmitter</code> 的 <code>error</code> 事件）。或者选择回调函数 <code>try.catch</code> 两种具体取决与异常的传递。</p>
+<h3 id="同步的异常捕获-try-x2F-catch"><a href="#同步的异常捕获-try-x2F-catch" class="headerlink" title="同步的异常捕获 (try&#x2F;catch)"></a>同步的异常捕获 (try&#x2F;catch)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    捕获异常</span></span><br><span class="line"><span class="comment">    Error: error!!</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;error!!&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;捕获异常&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="process-uncaughtException"><a href="#process-uncaughtException" class="headerlink" title="process uncaughtException"></a>process uncaughtException</h4><p>假设 <code>try/catch</code> 未被捕获，则可以通过 process 所提供的 <code>uncaughtException</code> 事件来监听未捕获的异常：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Error info&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error is:&#x27;</span>, e.<span class="property">message</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&#x27;uncaughtException&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;process error is:&#x27;</span>, e.<span class="property">message</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="events"><a href="#events" class="headerlink" title="events"></a>events</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    error is code</span></span><br><span class="line"><span class="comment">    Error: Code is error</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> events.<span class="title class_">EventEmitter</span>()</span><br><span class="line"></span><br><span class="line">emitter.<span class="title function_">addListener</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;error is code&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">emitter.<span class="title function_">emit</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">new</span> <span class="title class_">Error</span>((<span class="string">&#x27;Code is error&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>events</code> 库所提供的监听器来监听 <code>error</code> 的事件以及使用 <code>emitter.emit</code> 来发送错误并回调错误信息。</p>
+<h4 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Error this process</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">fs.<span class="title function_">mkdir</span>(<span class="string">&#x27;/dir&#x27;</span>,<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Error this process&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;create dir&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h4><p>promise 的操作返回 promise 其主要是在异步中操作完成后或失败所最终完成的结果值，他提供了两个值 <code>resolve</code> 以及 <code>reject</code>，<code>reject</code> 方法返回一个带有拒绝原因的 Promise 对象，而 <code>resolve</code> 则是返回一个指定值解析后的 promise 对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    This is error</span></span><br><span class="line"><span class="comment">    Error: error</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;error&#x27;</span>)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 逻辑处理</span></span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This is error&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Async-x2F-Await"><a href="#Async-x2F-Await" class="headerlink" title="Async&#x2F;Await"></a>Async&#x2F;Await</h4><p>Async&#x2F;Await 是基于 Promise 的更简洁的风格所编写，其中 <code>async</code> 韩式使用 async 关键字声明函数，从而避免了显式配置承诺链的作用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> func = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;error&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    This is error</span></span><br><span class="line"><span class="comment">    Error: error</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">funAsync</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="title function_">func</span>()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This is error&#x27;</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">funAsync</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="domain"><a href="#domain" class="headerlink" title="domain"></a>domain</h3><p>domain 模块可以处理多个不同 IO 的操作作为一个组，并注册到事件和回调到 domain，当发生一个错误事件或错误时，<code>domain</code> 对象将会被通知，从而不会丢失上下文环境，也不会导致程序立即退出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> doman = <span class="built_in">require</span>(<span class="string">&#x27;domain&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> d = doman.<span class="title function_">create</span>()</span><br><span class="line"></span><br><span class="line">d.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;err&#x27;</span>,err.<span class="property">message</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(needSend.<span class="property">message</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> needSend = &#123;<span class="attr">message</span>: <span class="string">&#x27;To error data&#x27;</span>&#125;</span><br><span class="line">d.<span class="title function_">add</span>(needSend)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">excute</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Error info&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;error is&#x27;</span>, e.<span class="property">message</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">d.<span class="title function_">run</span>(excute)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/17.Node.js%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring boot Security | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring boot Security</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a> <a class="article__tag-none-link" href="/tags/spring-boot/" rel="tag">spring boot</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Spring boot Security即Spring推出的一个专门针对于Spring应用系统的安全框架，充分利用了spinrg框架的整体功能为Spinrg应用提供了安全访问控制的解决方案。在Spring boot Security之中或是网络安全中有两个非常重要的概念分别为**授权(Authorization)<strong>和</strong>认证(Authentication)**两个，授权即确定用户在当前应用系统下所有的功能和权限，而认证即确认是否有级别，或是条件来进入当前系统身份。</p>
+<h2 id="Spring-Security-请求授权"><a href="#Spring-Security-请求授权" class="headerlink" title="Spring Security 请求授权"></a>Spring Security 请求授权</h2><p>在Spring Security之中的适配器类里，通过重写configure(HTTOSecurity http)方法完成用户授权，在configure(HttpSecurity http)方法中，在匹配请求路径后，可以针对当前用户对请求进行安全的处理，Spring boot提供的安全方法如：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>anyRequest</td>
+<td>匹配所有请求路径</td>
+<td></td>
+</tr>
+<tr>
+<td>access(String attribute)</td>
+<td>Spring EL表达式结果为true时可以访问</td>
+<td></td>
+</tr>
+<tr>
+<td>anonymous()</td>
+<td>匿名可以访问</td>
+<td></td>
+</tr>
+<tr>
+<td>authenticated()</td>
+<td>用户登入后可以访问</td>
+<td></td>
+</tr>
+<tr>
+<td>denyAll()</td>
+<td>用户不能访问</td>
+<td></td>
+</tr>
+<tr>
+<td>fullyAuthenticated()</td>
+<td>用户完全认证可以访问</td>
+<td></td>
+</tr>
+<tr>
+<td>permitAll()</td>
+<td>任何用户都可以访问</td>
+<td></td>
+</tr>
+<tr>
+<td>remernberMe()</td>
+<td>允许通过remember-me登入的用户访问</td>
+<td></td>
+</tr>
+<tr>
+<td>hasAnyAuthority(String)</td>
+<td>参数表示权限</td>
+<td>用户与群线任一权限相同即可访问</td>
+</tr>
+<tr>
+<td>hasAnyRole(String)</td>
+<td>参数表示角色</td>
+<td>用户角色与其中任一角色相爱嗯痛即可访问</td>
+</tr>
+<tr>
+<td>hasAuthority(String authority)</td>
+<td>参数表示权限</td>
+<td>用户权限与参数相同即可访问</td>
+</tr>
+<tr>
+<td>hasIpAddress(String ipaddressExpression)</td>
+<td>参数表示IP地址</td>
+<td>用户IP和参数匹配即可访问</td>
+</tr>
+<tr>
+<td>hasRole(String role)</td>
+<td>参数表示角色</td>
+<td>用户角色与参数相同即可访问</td>
+</tr>
+</tbody></table>
+<h2 id="Spring-boot-Security-核心类"><a href="#Spring-boot-Security-核心类" class="headerlink" title="Spring boot Security 核心类"></a>Spring boot Security 核心类</h2><p>Spring boot Security 核心类共包括<code>Authentication、SecurityContextHolder、UserDetails、UserDetailsService、GrentedAuthority、DaoAuthenticatioProvider、PasswordEncoder</code>等核心类分别主要用于：</p>
+<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p>authentication用于封装用户认证的信息接口，在用户登入之前spring Security将相关信息会分装成一个Authentication具体的实现类对象，登入后将会生成一个更加全面和包含用户权限的Authentication对象，之后将对象保存在SecurityContextHolder所持有的SecurityContext中。</p>
+<h3 id="SecurityContextHolder"><a href="#SecurityContextHolder" class="headerlink" title="SecurityContextHolder"></a>SecurityContextHolder</h3><p>SecurityContextHolder及是SecurityContext的所有类，SecurityContext中将会包含当前认证用户的详细信息。Spring Security使用一个Authentication对象描述当前认证用户的相关信息。</p>
+<h3 id="UserDetails"><a href="#UserDetails" class="headerlink" title="UserDetails"></a>UserDetails</h3><p>UserDetails是spring Security的一个核心接口，该接口定义了一些可以用户获取用户名、密码、权限等与认证信息相关的方法。</p>
+<h3 id="UserDatailsService"><a href="#UserDatailsService" class="headerlink" title="UserDatailsService"></a>UserDatailsService</h3><p>UserDatails是通过UserDatailsService的loadUserByUsername(String username)方法加载的，而UserDatailsService也是一个接口，也需要实现自己的价值来加载自定义UserDatails。所以在等于认证的时候Spring Security将会通过UserDatailsService的loadUserByUsername方法来获取对应的UserDatails进行验证。<br>而验证后将会通过该UserDetails赋予认证通过的Auhentication的principal，之后Auhentication保存在SecurityContetHelder之中，在开发的过程中，如果需要使用用户信息，可以通过SecurityContetHelder获取存放在SecurityContext中存放于UserDetails实力里的Authentication、principal方法。</p>
+<h3 id="GrantedAuthority"><a href="#GrantedAuthority" class="headerlink" title="GrantedAuthority"></a>GrantedAuthority</h3><p>GrantedAuthority是一个接口，通常是通过UserDetailsService进行加载，然后赋值给UserDetails。在Authentication的getAuthorities()方法可以返回当前Authentication对象拥有的权限，即返回一个GrantedAuthority类型的数组。</p>
+<h3 id="DaoAuthenticationProvider"><a href="#DaoAuthenticationProvider" class="headerlink" title="DaoAuthenticationProvider"></a>DaoAuthenticationProvider</h3><p>在Spring Security的安全框架中，默认使用DaoAuthenticationProvider来实现AuthenticationProvider接口进行用户的认证处理。DaoAuthenticationProvider进行认证的时候需要一个UserDrtailsService来获取用户信息的UserDetails。</p>
+<h3 id="PasswordEncoder"><a href="#PasswordEncoder" class="headerlink" title="PasswordEncoder"></a>PasswordEncoder</h3><p>在Spring Security安全框架中，通过PasswordEncoder接口完成对密码的加密，PasswordEncoder有多种实现，其中包含<code>MD55、SHA-256</code>的加密等，开发时可直接使用即可。在Spring boot之中，使用BCryptPasswordEncoder加密是比较不错的选择，BCryptPasswordEncoder使用BCrypt的强散列哈兮加密进行实现，并可由客户端指定加密的强度，从字面意思上来理解就是说强度越高、安全性就越高。</p>
+<p>本书作为Spring boot 和Thymeleaf基础入门指导书，暂不对Spring Security有过多描述，作者也曾尝试着实现Spring Security，但实在太多，已经超出了本书的字数和章节范围，有兴趣的读者可自行阅读，下一次将会另出一本专门针对Spring Security的书籍。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20boot/12.Spring%20boot%20Security/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>vue and axios | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>vue and axios</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/axios/" rel="tag">axios</a> <a class="article__tag-none-link" href="/tags/vue/" rel="tag">vue</a> <a class="article__tag-none-link" href="/tags/vue3-0/" rel="tag">vue3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="Get-or-Post"><a href="#Get-or-Post" class="headerlink" title="Get or Post"></a>Get or Post</h2><p>在上一个章节中我们了解到 Axios 是一个基于 Promise 的网络请求库，通常运用在 node.js 中，使得可以完成在原来之前传统开发环境下的 ajax，在此之前，我们还需要通过下述命令完成安装和添加的操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+
+<p>在安装完成后，我们需要在自己的 Vue 项目中添加 axios 来作为库并进行使用，可以通过 <code>vue add axiso</code> 在 <code>export default</code> 中定义如下方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue add axios</span><br></pre></td></tr></table></figure>
+
+<p>然后在 .vue 文件下 <code>script</code> 元素中的 <code>export default</code> 方法中增加 <code>created()</code> 方法中，以此来调入接口，之后通过：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">	axios.<span class="title function_">get</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(resp)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/55943ee864d74ab6ef1bacc7b969ab3.png"></p>
+<p>通过上述的 code 来请求 api，并输出全部响应到的数据后，我们就可以通过在之前请求相应的数据中进行单个解析:</p>
+<p><a href="!%5B%5D(https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220323033500.png)"></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/bdadd47535e66dc829bb166e207a851.png"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> _this = <span class="variable language_">this</span></span><br><span class="line">	axios.<span class="title function_">get</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">		_this.<span class="property">tableData</span> = res.<span class="property">data</span>.<span class="property">content</span></span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了上述方法外，我们还可以使用下述方法来进行实现其同样的效果，但主要的区别就是在于代码的可视性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">	<span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">	<span class="attr">uri</span>: <span class="string">&#x27;API&#x27;</span></span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>假设你如果要发送 POST 请求，那么我们可以将上述的 Code 改为下述示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">	<span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">	<span class="attr">uri</span>: <span class="string">&#x27;uri&#x27;</span>,</span><br><span class="line">	<span class="attr">name</span>: <span class="string">&#x27;administrator&#x27;</span>,</span><br><span class="line">	<span class="attr">pass</span>: <span class="string">&#x27;123456789&#x27;</span></span><br><span class="line">&#125;).<span class="title function_">them</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在上述 POST 请求中，<code>user</code> 和 <code>pass</code> 是 API 中需要我们所传入的信息，当然，这些可以根据实际情况自行进行调整。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 ```created``` 方法中写入 Axios 是为了在加载时第一时间获取到数据，如果是需要触发才会发生的事件，那么建议你在 ```methods``` 方法中定义一个方法事件。</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，我们首先通过 <code>_this</code> 来解决作用域的问题，并通过 <code>axios</code> 的解析目标 API 所相应的数据(data) 下的 <code>content</code> Key，然之后就需要在数据表格中写入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		<span class="attr">tableData</span>: <span class="literal">null</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于我们拿到的是数组数据，我们可以通过在其组件外在套一件 <code>template</code> 并通过 <code>v-for</code> 指令来进行循环输出，在此之后，我们就可以通过翻阅 Axios 的<a target="_blank" rel="noopener" href="https://axios-http.com/zh/">官方文档</a>，来满足我们大部分的需求。</p>
+<h2 id="Backage"><a href="#Backage" class="headerlink" title="Backage"></a>Backage</h2><p>在正常的开发环境中，一般情况下我们很少会直接去使用 Axios 来直接去写入到方法中，更多的情况是定义一个<a target="_blank" rel="noopener" href="https://axios-http.com/zh/docs/instance">实例</a> 来满足请求(request)\响应(response)拦截器(interceptors) ，这通常被称之为《封装》</p>
+<p>在此之前，我们需要在当前的 Vue 项目中率先构建出一个封装目录，可以在 <code>src/request</code> 目录也可以直接在根目录中新建一个 <code>utils</code> 目录进行封装。</p>
+<h3 id="实例-Create"><a href="#实例-Create" class="headerlink" title="实例 (Create)"></a>实例 (Create)</h3><p>之后还需要在此目录中创建两个 <code>.js</code> 文件，分别为 <code>request.js</code> 和 <code>api.js</code> 两个，并在 <code>request.js</code> 中定义一个实列：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">	<span class="attr">baseURL</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">	<span class="attr">timeout</span>: <span class="number">10000</span></span><br><span class="line">	<span class="attr">headers</span>: &#123;<span class="string">&#x27;X-Custom-Header&#x27;</span>: <span class="string">&#x27;foobar&#x27;</span>&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上一段 Code 中， <code>baseURL</code> 是我们 API 的基础 URI，举个例子，假设我的 API 是 <code>https://axios-http.com/zh/docs/instance</code> ，那么 <code>baseURL</code> 就是 <code>https://axios-http.com</code>。</p>
+<p>而之后的两个参数就是 <code>timeout</code> 超时时间的设置以及 <code>headers</code> 请求头的加入。</p>
+<h4 id="拦截器-Interceptors"><a href="#拦截器-Interceptors" class="headerlink" title="拦截器 (Interceptors)"></a>拦截器 (Interceptors)</h4><p>拦截器的定义主要分为 request &amp; response 即请求和相应的拦截，因为 Axios 是基于 <a target="_blank" rel="noopener" href="https://javascript.info/promise-basics">promise</a> 上构建的，Code 如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">instance.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(callback, callback)</span><br><span class="line">instance.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">use</span>(callback, callback)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的拦截器中，所返回的 <code>callback</code> 中，第一个代表成功，而第二个表示错误的拦截，是不是很像 Promise，现在，我们在此基础上再次进行编写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">instance.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;, er r=&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(err)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">instance.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">use</span>(res = &gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上述 Code 中，在请求中，如果有特定需要你可以在 <code>config</code> 中来进行添加你的 Code，这会在请求的同时发送出去，而之后的响应在没有特定需要的情况下，可以直接返回响应即可。</p>
+<p>同样的你也可以在这里编写一个处理响应的 Code 在返回，这都根据你的项目需要来进行编写。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> instance;</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们需要通过 Node 所提供的 Model 概念来将我们的实例导出，然后在 <code>api.js</code> 中进行使用</p>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>之后在 <code>api.js</code> 文件中，需要引入我们刚刚全部导出的封装，来将他整体引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/request/request.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于我们已经引入了之前的 <code>request.js</code> 实例，之后我们需要在当前文件中写入需要的 API 进行请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">GetUser</span> = (<span class="params"></span>) =&gt; request.<span class="title function_">get</span>(<span class="string">&#x27;uri&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>而之后的使用我们可以在之前的 <code>.vue</code> 文件中，在 <code>created</code> 或 <code>methods</code> 方法，定义一个参数，但在此之前我们还需要引入之前封装的 <code>api.js</code> 文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">GetUser</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@/request/api.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">	<span class="title class_">UserLogin</span>() &#123;</span><br><span class="line">		<span class="title class_">GetUser</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">			<span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通常 ，在少部分的情况下的功能需求会让我们在请求时加入一些参数，而封装之后的参数部分定义主要可以体现在 Post 请求的发送过程上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">PostUser</span> = (<span class="params">params</span>) =&gt; request.<span class="title function_">post</span>(<span class="string">&#x27;uri&#x27;</span>, params);</span><br></pre></td></tr></table></figure>
+
+<p>假设如果是 POST 方法的请求，那么我们可以在 <code>.Vue</code> 文件的 <code>created</code> 或 <code>methods</code> 方法下同样和 Get 一样定义个参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">GetUser</span>, <span class="title class_">PostUser</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@/request/api.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">	<span class="title class_">UserLogin</span>() &#123;</span><br><span class="line">		<span class="title class_">GetUser</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">			<span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="title class_">PostRegister</span>() &#123;</span><br><span class="line">		<span class="title class_">PostUser</span>(&#123;</span><br><span class="line">			<span class="attr">user</span>: <span class="string">&#x27;administrator&#x27;</span>,</span><br><span class="line">			<span class="attr">pass</span>: <span class="string">&#x27;123456789&#x27;</span></span><br><span class="line">		&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过对 axios 的实例封装使得我们可以通过上述 Code 非常简单的来实现对 API 的操作，通过 <code>params</code> 增加了 Code 的可读性和后期维护的成本。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/axios/2.axios%20base%20and%20package/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

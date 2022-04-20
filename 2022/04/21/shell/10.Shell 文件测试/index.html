@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Shell 文件测试 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Shell 文件测试</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>通常，在实际工作需求之中可能会对正在运行的文件系统进行一些文件的特使，在这种情况下，Shell将会提供常用命令进行实现。</p>
+<h2 id="测试文件是否存在-e"><a href="#测试文件是否存在-e" class="headerlink" title="测试文件是否存在 (-e)"></a>测试文件是否存在 (-e)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">file=&quot;home.jsp&quot;</span><br><span class="line">        if [ -e &quot;$file&quot; ]; then</span><br><span class="line">                echo &quot;文件存在&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;文件不存在&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h2 id="测试目录是否存在（-d）"><a href="#测试目录是否存在（-d）" class="headerlink" title="测试目录是否存在（-d）"></a>测试目录是否存在（-d）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">dir=&quot;Public&quot;</span><br><span class="line">        if [ -d &quot;$dir&quot; ]; then</span><br><span class="line">                echo &quot;文件存在&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;文件不存在&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h3 id="测试当前文件是否对运行的脚本具有读取权限（-r）"><a href="#测试当前文件是否对运行的脚本具有读取权限（-r）" class="headerlink" title="测试当前文件是否对运行的脚本具有读取权限（-r）"></a>测试当前文件是否对运行的脚本具有读取权限（-r）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">public=&quot;test.sh&quot;</span><br><span class="line">        if [ -r &quot;$file&quot; ]; then</span><br><span class="line">                echo &quot;具有写入权限&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;不具有写入权限&quot;</span><br><span class="line">        fi</span><br></pre></td></tr></table></figure>
+<h3 id="引入文件-file-r"><a href="#引入文件-file-r" class="headerlink" title="引入文件(. .\file)r"></a>引入文件(. .\file)r</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">one.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">echo &quot;Hello,one.sh&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">two.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line">. ./one.sh</span><br><span class="line">echo &quot;Hello,two.sh&quot;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>测试文件是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>-d</td>
+<td>测试目录是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>-r</td>
+<td>测试当前文件读取权限</td>
+<td></td>
+</tr>
+<tr>
+<td>. .&#x2F;</td>
+<td>引入文件</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/shell/10.Shell%20%E6%96%87%E4%BB%B6%E6%B5%8B%E8%AF%95/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

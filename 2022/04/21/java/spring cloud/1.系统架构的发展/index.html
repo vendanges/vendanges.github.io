@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>系统架构发展 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>系统架构发展</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="单体应用"><a href="#单体应用" class="headerlink" title="单体应用"></a>单体应用</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210524202755.png"><br>在互联网的发展初期，用户数量少而造成的一般站点流量也非常的少，但服务器等硬件产品的价格较高。因此一般的开发者会选择将 <strong>站点的所有功能</strong> 集成在一起，来进行开发，这就是 <strong>单体应用</strong>。随着单体应用的发展，也出现了 MVC、MVP、MVVM等开发单体应用的程序依然可以满足业务的需求。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>而单体应用的有优点有</strong></p>
+<ol>
+<li>易于开发、测试、管理、部署</li>
+<li>想对于微服务中可以避免开发</li>
+</ol>
+<p><strong>应用缺点</strong>：</p>
+<ol>
+<li>团队合作困难</li>
+<li>代码的维护的较为无语</li>
+<li>项目的重构很复杂</li>
+<li>对项目的可扩展读有很大的阻碍</li>
+<li>随着项目的资源越来越大，code 越来越多，会造成编译时的速率。</li>
+</ol>
+<p>为了解决这个问题，随着访问量的不断增大，数据访问框架 ORM的工作量过载导致数据库崩溃。单体应用可以根据集群来进行应对，由于他的缺点需要对之前的单体应用进行一定的拆分，因此 <strong>垂直应用</strong> 就出现了人们的视野中。</p>
+<h2 id="垂直应用"><a href="#垂直应用" class="headerlink" title="垂直应用"></a>垂直应用</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210524202817.png"><br>为了解决上述单体应用随着访问量的不断增大，因此单体应用只能通过集群来进行解决和应对，而在此过程中衍生了垂直应用。垂直应用可以根据业务的需求来解决单体应用的缺点。</p>
+<p>垂直应用即 <strong>使用分层设计的开发应用</strong>，也随着系统复杂度的增加，系统架构的变化和侧重点均不一样。之前介绍的单体应用 <strong>当网站流量小的时候，只需要一个应用将所有功能部署一起，来减少部署的节点和成本</strong>，而此时的 <strong>数据访问框架（ORM）</strong> 的工作量多少，成为了服务器是否崩溃的关键。</p>
+<p>垂直应用为了解决这个问题，将单一用用拆分成互不干扰的多个应用，来提升效率，此时用于加速前端开发的 MVC 框架成为关键。我们将一个单体应用拆分成了三个单体应用，这样可以 <strong>解决高并发，资源分配的问题，并提高项目的扩展、容错性以及资源分配等</strong>。</p>
+<h3 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h3><p>垂直应用的拆分可以分为 <strong>水平拆分</strong> 以及 <strong>垂直拆分</strong>，其中说平拆分主要是指根据 <strong>所属业务</strong>也进行划分。但是水平拆分会造成存在 <strong>重复造轮子</strong> 的问题，且难于维护，而优点是业务拆分后的互相影响较小。</p>
+<h3 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h3><p>所谓垂直拆分，即根据按照 <strong>系统</strong> 来进行拆分，因此 <strong>Auth</strong> 可以被拆分为 <strong>登录和注册</strong>。垂直拆分的有点是可以按照分配资源和流量，以及垂直调用之间不会进行影响，但缺点是完全存在 <strong>重复造轮子</strong> 的问题。</p>
+<h2 id="分布式应用应用系统"><a href="#分布式应用应用系统" class="headerlink" title="分布式应用应用系统"></a>分布式应用应用系统</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525030136.png"><br>分布式应用系统是由 <strong>若干个独立的计算机集合</strong> ，而成的分布式应用系统。简单概述下就是可以将此堪称两个服务分别运行在两台主机中，他们的相互协作来最终完成一个功能或服务，从理论中来讲这将会被称之为 <strong>分布式系统</strong>。</p>
+<p>当然，在上述中我们讲到了垂直应用，如果是相同的程序，将会被称之为 <strong>集群</strong>，通过不断的 <strong>横向扩展</strong> 来提升服务能力。</p>
+<h3 id="关于横向和纵向扩展"><a href="#关于横向和纵向扩展" class="headerlink" title="关于横向和纵向扩展"></a>关于横向和纵向扩展</h3><p>横向和纵向扩展，也有人称之为水平扩展和垂直扩展，我们可以假设下当有一台服务器，每天经历了几千次请求天天崩，因此你需要提升服务器性能。此时 <strong>横向扩展</strong>就是多增加几台服务器一起进行服务，而 <strong>纵向扩展</strong> 则是将该服务器换成性能更好的服务器。</p>
+<h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a>服务治理</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525030144.png"><br>随着服务数量的不断增加，服务中的资源浪费和调度等问题也会随之而来，此时服务治理（Service-Oriented Architecture (SOA) governance）的作用就起到了一个可以基于访问压力来实时管理集群的容量，从而提高集群的利用率。</p>
+<p><strong>为什么要使用 SOA？</strong></p>
+<ol>
+<li>SOA 在市场中得到了广泛的使用，可以快速的响应并根据情况作出有效的更改</li>
+<li>SOA 解决了 <strong>服务间的通信问题</strong> ，通过引入 ESB、技术规范、服务管理规范来解决不同服务之间的通信问题</li>
+<li>SOA 解决了 <strong>基础服务的梳理</strong> 问题，以 SEB 为中心树立和规整了分布式服务</li>
+<li>SOA 解决了 <strong>业务服务化的问题</strong>，将业务为驱动，将业务封装到服务中。</li>
+<li>SOA 解决了 <strong>服务可复用</strong> 的问题，将业务功能设置为通用的业务服务，来实现业务的逻辑复用。</li>
+</ol>
+<h3 id="ESB"><a href="#ESB" class="headerlink" title="ESB"></a>ESB</h3><p>企业服务总线（ESB，The Enterpries Service Bus）可以将类似总线的基础设施将所有服务连接在一起。并作为服务治理中的通信中心，允许连接多个系统、应用和数据，并无终端地址连接多个系统。</p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525030152.png"><br>需要庆幸的是，微服务（Microservices）采用的是服务治理中心，而不是在 SOA 架构中的中心话 ESB，因此服务的调度不需要知道 <strong>服务提供者的IP地址、端口号等</strong>，住需要知道在服务中心 <strong>注册了的服务名即可</strong>。</p>
+<p>微服务指的是将 <strong>系统业务功能划分为极小的独立微服务，每个微服务只关注于某个完成的一个小任务</strong>。因此系统中的单个微服务可以被独立部署和扩展，在上图中，Provider 1 和 Provider2 在 <strong>服务中心（Eureka Server）</strong> 注册微服务来让 <strong>服务消费者（Service Consumer）进行调用服务（Remote Call）</strong></p>
+<h2 id="服务网格"><a href="#服务网格" class="headerlink" title="服务网格"></a>服务网格</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210525030157.png"><br>服务网格（Service Mesh）独立与服务之外运行，是服务间通信的基础设施层，可以将它比作是应用程序或微服务之间的 <strong>TCP&#x2F;IP</strong>，负责服务之间的网格调用、限流、融断以及监控等。服务网格由 <strong>数据平台(Data Plane)和 控制平台(Control Plane)</strong> 组成，服务与服务之间通过 <strong>边车（Sidecar）</strong> 来进行通信，所有边车和网络链接就形成了 <strong>服务网格（Service Mesh）</strong>，其中 <strong>Sidecar 主要负责服务发现和容错处理</strong>。</p>
+<h3 id="数据平台与控制平台"><a href="#数据平台与控制平台" class="headerlink" title="数据平台与控制平台"></a>数据平台与控制平台</h3><p>数据平台主要用于 <strong>处理服务之间的通信，并实现服务的发现，复杂均衡、流量管理、健康检查等</strong>。而控制平台主要用于 <strong>管理并配置边车（Sidecar）来执行策略和搜集数据</strong>。</p>
+<blockquote>
+<p>在正常的情况下应用程序的开发人员并不会关系 TCP&#x2F;IP层，这在服务网格时也依然适用，开发人员也不需要关心服务的融断、断流、限流、监控等，因为这些都将由服务网格处理</p>
+</blockquote>
+<h3 id="特点与区别"><a href="#特点与区别" class="headerlink" title="特点与区别"></a>特点与区别</h3><p>一是服务网格的 <strong>侧重点</strong> 不同，为服务架构更关注服务之间的 <strong>生态（如服务治理 SOA）</strong> ，而服务网格则更关注服务之间的 <strong>通信</strong>。<br>二是 <strong>侵入性不同</strong>，微服务架构实现了架构间分离出来解决问题（解藕），而服务网格则实现了服务框架与服务之间分离出来解决问题。需要值得注意的是服务网格是服务之外独立运行的模块，他提供了微服务框架功能，但不需要在代码和配置中添加相应的依赖库和依赖配置项。</p>
+<p>服务网格的特点有：</p>
+<ol>
+<li>对服务没有侵入性</li>
+<li>是一个应用程序之间的中间层</li>
+<li>一个轻量级的网络代理</li>
+<li>应用程序对服务网格无感知</li>
+<li>能够分离出来解决用用程序的重试、监控、追踪和服务发现等问题。</li>
+</ol>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/1.%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E7%9A%84%E5%8F%91%E5%B1%95/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

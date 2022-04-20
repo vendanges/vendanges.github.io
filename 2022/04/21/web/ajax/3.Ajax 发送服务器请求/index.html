@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Ajax 发送服务器请求 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Ajax 发送服务器请求</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/ajax/" rel="tag">ajax</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在Ajax中，使用了XMLHttpRequest对象的<code>open()、send()</code>两个对象方法来事项将请求发送服务器，分别为<code>GET方式和POST方式来提交请求</code>，而两个请求的同一功能就是，都是提交数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest.open(&quot;GET&quot;,&quot;Ajax_info.txt&quot;,ture);</span><br><span class="line">xmlhttprequest.send();</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>open(类型,url,异步)</td>
+<td>类型：请求类型（GET或POST）; url：文件在服务器上的位置;异步：true(异步)或false(同步)</td>
+<td>open</td>
+</tr>
+<tr>
+<td>send(String)</td>
+<td>string:仅用于POST请求</td>
+<td>send</td>
+</tr>
+</tbody></table>
+<h2 id="GET-x2F-POST"><a href="#GET-x2F-POST" class="headerlink" title="GET &#x2F; POST"></a>GET &#x2F; POST</h2><h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>在GET方法之中，数据将会加载在URL中进行发送：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.jiangxue.org.cn/login?one=test</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>想对于GET方法来说，POST更加的安全和可靠，如通过Wireshark进行抓包可发现，<code>GET只有一个数据传输，而POST方法会有两个数据传输，分别为Ajax发送和Server回应</code>，相比之下他比GET更加安全，在URL内无法看见。</p>
+<h2 id="GET-1"><a href="#GET-1" class="headerlink" title="GET"></a>GET</h2><h3 id="xmlhttprequest-open-“GET”-”Ajax-info”-ture"><a href="#xmlhttprequest-open-“GET”-”Ajax-info”-ture" class="headerlink" title="xmlhttprequest.open(“GET”,”Ajax_info”,ture);"></a>xmlhttprequest.open(“GET”,”Ajax_info”,ture);</h3><p>在GET方法之中，数据将会加载在URL中进行发送，DANG：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest.open(&quot;GET&quot;,&quot;Ajax_info.txt&quot;,ture);</span><br><span class="line">xmlhttprequest.send();</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Ajax&lt;/title&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	function test() &#123;</span><br><span class="line">		var xmlhttprequest_;</span><br><span class="line">		if (window.XMLHttpRequest) &#123;</span><br><span class="line">			xmlhttprequest_ = new XMLHttpRequest();</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			xmlhttprequest_ = new ActoveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		xmlhttprequest_.onreadystatechange = function() &#123;</span><br><span class="line">			if (xmlhttprequest_.readyState == 4 &amp;&amp; xmlhttprequest_.status == 200) &#123;</span><br><span class="line">				document.getElementById(&quot;title&quot;).innerHTML=xmlhttprequest_.responseText;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		xmlhttprequest_.open(&quot;GET&quot;,&quot;Hello.txt&quot;,true);</span><br><span class="line">		xmlhttprequest_.send();</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;title&quot;&gt;&lt;p&gt;Hello,world!&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">&lt;button type=&quot;button&quot; onclick=&quot;test()&quot;&gt;up&lt;/button&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="xmlhttprequest-open-“GET”-”Ajax-info-usernae-x3D-Sun-amp-li”-true"><a href="#xmlhttprequest-open-“GET”-”Ajax-info-usernae-x3D-Sun-amp-li”-true" class="headerlink" title="xmlhttprequest.open(“GET”,”Ajax_info?usernae&#x3D;Sun&amp;li”,true);"></a>xmlhttprequest.open(“GET”,”Ajax_info?usernae&#x3D;Sun&amp;li”,true);</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest.open(&quot;GET&quot;,&quot;Ajax_info?usernae=Sun&amp;li&quot;,true);</span><br><span class="line">xmlhttprequest.send();</span><br></pre></td></tr></table></figure>
+
+<h2 id="POST-1"><a href="#POST-1" class="headerlink" title="POST"></a>POST</h2><h3 id="xmlhttprequest-open-“POST”-”Ajax-info”-ture"><a href="#xmlhttprequest-open-“POST”-”Ajax-info”-ture" class="headerlink" title="xmlhttprequest.open(“POST”,”Ajax_info”,ture);"></a>xmlhttprequest.open(“POST”,”Ajax_info”,ture);</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest.open(&quot;POST&quot;,&quot;Ajax_info.txt&quot;,ture);</span><br><span class="line">xmlhttprequest.send();</span><br></pre></td></tr></table></figure>
+
+<h3 id="xmlhttprequest-open-“POST”-”ActoveXObject”-true"><a href="#xmlhttprequest-open-“POST”-”ActoveXObject”-true" class="headerlink" title="xmlhttprequest.open(“POST”,”ActoveXObject”,true);"></a>xmlhttprequest.open(“POST”,”ActoveXObject”,true);</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest.open(&quot;POST&quot;,&quot;ActoveXObject&quot;,true);</span><br><span class="line">xmlhttprequest.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urkebcided&quot;);</span><br><span class="line">xmlhttprequest.send(&quot;uname=chenheng&amp;upwd=1213124&quot;);</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/ajax/3.Ajax%20%E5%8F%91%E9%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

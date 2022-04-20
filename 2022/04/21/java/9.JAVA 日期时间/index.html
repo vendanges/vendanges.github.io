@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JAVA 日期时间 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JAVA 日期时间</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-%E5%9F%BA%E7%A1%80/" rel="tag">java 基础</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="java-util-Date"><a href="#java-util-Date" class="headerlink" title="java.util.Date"></a>java.util.Date</h2><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toString</td>
+<td>Sun Aug 02 15:57:31 CST 2020</td>
+</tr>
+<tr>
+<td>%t<strong>c</strong>%n</td>
+<td>周日 8月 02 16:11:04 CST 2020</td>
+</tr>
+<tr>
+<td>%t<strong>F</strong>%n</td>
+<td>2020-08-02</td>
+</tr>
+<tr>
+<td>%t<strong>D</strong>%n</td>
+<td>08&#x2F;02&#x2F;20</td>
+</tr>
+<tr>
+<td>%t<strong>r</strong>%n</td>
+<td>04:14:24 下午</td>
+</tr>
+<tr>
+<td>%t<strong>T</strong>%n</td>
+<td>16:14:24</td>
+</tr>
+<tr>
+<td>%t<strong>R</strong>%n</td>
+<td>16:14</td>
+</tr>
+</tbody></table>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">Date</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> (Date &lt; <span class="number">1</span>)&#123;</span><br><span class="line">			Date++;</span><br><span class="line">			System.out.println(<span class="string">&quot;&quot;</span> + date.toString());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="tN-n"><a href="#tN-n" class="headerlink" title="%tN%n"></a>%tN%n</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String args[])</span> &#123;</span><br><span class="line">		<span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 周日 8月 02 16:14:24 CST 2020</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tc%n&quot;</span>,date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 2020-08-02</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tF%n&quot;</span>,date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 08/02/20</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tD%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 04:14:24 下午</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tr%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 16:14:24</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tT%n&quot;</span>, date);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 16:14</span></span><br><span class="line">		System.out.printf(<span class="string">&quot;%tR%n&quot;</span>, date);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/9.JAVA%20%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

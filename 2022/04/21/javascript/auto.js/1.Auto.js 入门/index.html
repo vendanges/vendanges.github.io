@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Auto.js 入门 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Auto.js 入门</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/auto/" rel="tag">auto</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag">自动化测试</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Auto.js 是一个不需要 Root 权限的 JavaScript 自动化软件，发展至今已经从原来只针对自动化的 JavaScript 扩展语言演变为一个自动化软件，供两种方式给开发者进行使用，一种是提供了 GUI 页面，而另一种是简单的使用 javaScript 来完成一些相应的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Auto.js 开源版本已经不再维护，后续将只会维护 Auto.js Pro 专业版，其专业版内置了 Visual Studio 远程连接以及打包、制作等服务，除了自动化还可以开发 Android 软件并进行打包，同时内置了更加强大的加密方法。</span><br><span class="line"></span><br><span class="line">并此提供了自定义权限、启动图和优化还有签名等功能，来通过 Auto.js 实现真正的一个独立 Android 应用的开发。</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过-VS-Code-开发-Auto-js"><a href="#通过-VS-Code-开发-Auto-js" class="headerlink" title="通过 VS Code 开发 Auto.js"></a>通过 VS Code 开发 Auto.js</h2><p>Auto.js 的开发一般通过<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=hyb1996.auto-js-vscodeext&ssr=false#review-details">VS Code</a> 上的 Autojs 扩展或 <a target="_blank" rel="noopener" href="https://pro.autojs.org/">Android Auto.js</a> 直接进行下载，之后在 Android 或模拟器中打开 Auto.js Client 左侧导航中连接电脑，Auto.js 为我们提供了多种方式。</p>
+<h3 id="连接-VS-Code-VS-Code-连接-Auto-js"><a href="#连接-VS-Code-VS-Code-连接-Auto-js" class="headerlink" title="连接 VS Code \ VS Code 连接 Auto.js"></a>连接 VS Code \ VS Code 连接 Auto.js</h3><p>Auto.js 为我们所提供的方法较多，我们首先通过 VS Code 连接 Auto.js 但一般会遇到 <strong>connect error:Error:connect ETIMEDOUT xxxxx:9317</strong> 的错误，通常难以解决，目前解决此问题的方法是开放 9317 和 8327 端口以通过防火墙规则。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 VS Code 和 Android Auto.js 在一个网络的情况下，且 ADB 模式连接都已失败的情况下，可以采用另一种方法进行连接，VS Code 连接手机的前提下是 Android 已经安装好了 Auto.js</span><br></pre></td></tr></table></figure>
+
+<p>在正常情况下，我们只需要通过 <code>Ctrl+P</code> 的组合键，来调出命令执行页面，之后在表单中输入 <code>&gt;Auto.js Pro:连接新的设备</code> -&gt; adb 连接手机，即 USB 形式连接，如果出错，可以尝试下述方案，在 Auto.js 中的连接侧栏内，选择连接电脑，输入电脑 IP 即可，但需要主要的是该主机已经安装了VS Code 和相关 Auto.js 扩展，且在开启的情况下进行，即可连接。</p>
+<p>对于部分 PC 端 Android 模拟器的选择，建议蓝叠国际版、夜神\MUME\雷电 等，同时也推荐使用 Android Studio &amp; Genymotion 等作为开发主机，但非必要情况下还是建议通过手机投屏最为有效。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在上述的模拟器中，类似于 Android Studio&amp; Genymotion 等纯 Android 模拟，是基于 X86 架构的，因此对于应用的支持仅限 Google 生态，所以我们下载后 Android 对应 Version 后还需要通过相对应的 Android Version 对 x86 架构进行翻译为 ARM。</span><br><span class="line"></span><br><span class="line">由于更多的是针对 Android 对应的系统版本，对于 Android 8，可以通过 [Genymotion_ARM_Translation](https://github.com/m9rco/Genymotion_ARM_Translation/tree/master/package) 来进行添加。</span><br><span class="line"></span><br><span class="line">同样的你也可以选择 Genymotion 官方所提出的 Open GApps 服务来根据自己的模拟机版本来进行选择，之后重启即可，感谢 **haku** 为此注释所做出的贡献。</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动化模拟点击"><a href="#自动化模拟点击" class="headerlink" title="自动化模拟点击"></a>自动化模拟点击</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检测无障碍服务是否已经启用</span></span><br><span class="line">auto.<span class="title function_">waitFor</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示控制台</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">show</span>()</span><br><span class="line">  </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">registerQQ</span>(<span class="params">packageName</span>) &#123;</span><br><span class="line"> <span class="title function_">className</span>(<span class="string">&quot;android.widget.TextView&quot;</span>).<span class="title function_">text</span>(<span class="string">&quot;QQ&quot;</span>).<span class="title function_">findOne</span>().<span class="title function_">click</span>()</span><br><span class="line"> <span class="title function_">sleep</span>(<span class="number">300</span>)</span><br><span class="line"> <span class="title function_">click</span>(<span class="number">742.2</span>, <span class="number">1820.0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行注册</span></span><br><span class="line"><span class="title function_">registerQQ</span>(packageName)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的一段小 Demo 中，<code>auto.waitFor()</code> 以及 <code>console.show()</code> 主要用于检测无障碍服务和显示 Auto.js Code 执行过程中所输出的信息，同时在构造方法 <strong>registerQQ</strong> 内所包含的参数主要介绍如下：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>className()</td>
+<td>目标应用程序的类名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>text()</td>
+<td>目标应用程序</td>
+</tr>
+<tr>
+<td>3</td>
+<td>findOne()</td>
+<td>查找</td>
+</tr>
+<tr>
+<td>4</td>
+<td>click()</td>
+<td>点击</td>
+</tr>
+</tbody></table>
+<p>可以通过在 Android Auto.js 中的左侧导航内，通过开启 ：“无障碍服务、悬浮窗” 等较为主要的功能，来进行辅助编写。之后的 <code>sleep()</code> 主要设置延迟，到最后的 <code>click</code> 方法内的 <strong>x,y</strong> 同样通过 Auto.js 的悬浮窗来进行实现。</p>
+<h3 id="Layout-at-vertical"><a href="#Layout-at-vertical" class="headerlink" title="Layout at vertical"></a>Layout at vertical</h3><p>在提供基础的自动化服务之外，Auto.js 还提供了诸如类似页面空间类似语法，以此来构建自动化应用，以此来适配不同的场景，比如 <a target="_blank" rel="noopener" href="https://pro.autojs.org/docs/#/zh-cn/ui?id=%e5%9e%82%e7%9b%b4%e5%b8%83%e5%b1%80-vertical">Layout</a> 中所应用到的垂直布局(vertical):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ui.<span class="title function_">layout</span>(</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">vertical</span> <span class="attr">padding</span>=<span class="string">&quot;16&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">text</span>=<span class="string">&quot;user&quot;</span> <span class="attr">textColor</span>=<span class="string">&quot;black&quot;</span> <span class="attr">textSize</span>=<span class="string">&quot;16sp&quot;</span> <span class="attr">marginTop</span>=<span class="string">&quot;16&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">vertical</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>通过 Auto.js 所特有的语法来构建一个垂直布局的表单，并通过读个参数来进行选择，在 Auto.js 中作者还提供了一系列的文本控件，如上述的 <code>textColor</code> 可以来设置字体的颜色，支持标准的 RGB 格式和颜色名称，都是可选的。</p>
+<p>同时，还支持设置字体的大小，如 <code>textSize=&quot;16sp&quot;</code> 即按照 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B4%A8%E6%84%9F%E8%AE%BE%E8%AE%A1">Meterial Design</a> 的规范，同时可以使用例如上述我们所添加的上边距 <code>marginTop</code> ，来进行实现基础表单的构造。</p>
+<p>我们可以结合上述的 Auto.js 和 Layout at vertical 来进行构建和向下继续扩展，根据 <a target="_blank" rel="noopener" href="https://pro.autojs.org/docs/#/zh-cn/">首页 (autojs.org)</a> 的官方文档从而构建一个自动化的工作流。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/auto.js/1.Auto.js%20%E5%85%A5%E9%97%A8/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

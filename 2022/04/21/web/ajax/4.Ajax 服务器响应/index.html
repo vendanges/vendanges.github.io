@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Ajax Server Response | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Ajax Server Response</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/ajax/" rel="tag">ajax</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="Ajax-Response-简介"><a href="#Ajax-Response-简介" class="headerlink" title="Ajax Response 简介"></a>Ajax Response 简介</h3><p>Ajax向服务器发送请求后，如需要获得服务器的响应，可以使用<code>XMLHttpRequest</code>对象的<code>responseText</code>或<code>reponseXML</code>两个属性：</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xmlhttprequest_.onreadystatechange = function() &#123;</span><br><span class="line">    if (xmlhttpquest_.readyState == 4 &amp;&amp; xmlhttprequest.status == 200 &#123;</span><br><span class="line">        document.getElementById(&quot;myResponse&quot;).innerHTML = xmlhttprequest_.responseText;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法对象"><a href="#方法对象" class="headerlink" title="方法对象"></a>方法对象</h4><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>responseText</td>
+<td>获取字符串形式的响应数据</td>
+<td>String</td>
+</tr>
+<tr>
+<td>responseXML</td>
+<td>获得XML形式的相应数据</td>
+<td>XML</td>
+</tr>
+</tbody></table>
+<h3 id="实现-Ajax-Response"><a href="#实现-Ajax-Response" class="headerlink" title="实现 Ajax Response"></a>实现 Ajax Response</h3><h4 id="Ajax-Response-Text"><a href="#Ajax-Response-Text" class="headerlink" title="Ajax Response Text"></a>Ajax Response Text</h4><h5 id="NewFile-html"><a href="#NewFile-html" class="headerlink" title="NewFile.html"></a>NewFile.html</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	function test() &#123;</span><br><span class="line">		var xmlhttprequest;</span><br><span class="line">		if (window.XMLHttpRequest) &#123;</span><br><span class="line">			// 现代浏览器内核</span><br><span class="line">			xmlhttprequest = new XMLHttpRequest();</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			// 旧的浏览器内核</span><br><span class="line">			xmlhttprequest = new ActoveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		xmlhttprequest.onreadystatechange = function() &#123;</span><br><span class="line">			if (xmlhttprequest.readyState == 4 &amp;&amp; xmlhttprequest.status == 200) &#123;</span><br><span class="line">				document.getElementById(&quot;data&quot;).innerHTML = xmlhttprequest.responseText;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		xmlhttprequest.open(&quot;GET&quot;,&quot;hello.txt&quot;,true);</span><br><span class="line">		xmlhttprequest.send();</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;data&quot;&gt;&lt;h2&gt;Ajax response&lt;/h2&gt;&lt;/div&gt;</span><br><span class="line">&lt;a href=&quot;javascript:test()&quot;&gt;XMLHttpResponse&lt;/a&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="hello-txt"><a href="#hello-txt" class="headerlink" title="hello.txt"></a>hello.txt</h5><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OK,Hello!</span><br></pre></td></tr></table></figure>
+<h4 id="Ajax-Response-XML"><a href="#Ajax-Response-XML" class="headerlink" title="Ajax Response XML"></a>Ajax Response XML</h4><h5 id="NewFile-jsp"><a href="#NewFile-jsp" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	function test() &#123;</span><br><span class="line">		var xmlhttprequest;</span><br><span class="line">		var t,x,i;</span><br><span class="line">		if (window.XMLHttpRequest) &#123;</span><br><span class="line">			xmlhttprequest = new XMLHttpRequest();</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				xmlhttprequest = new ActiveXObject(&quot;Microsoft.Xmlhttprequest&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		xmlhttprequest.onreadystatechange = function() &#123;</span><br><span class="line">			if (xmlhttprequest.readyState == 4 &amp;&amp; xmlhttprequest.status == 200) &#123;</span><br><span class="line">				xmlDoc = xmlhttprequest.responseXML;</span><br><span class="line">				t=&quot;&quot;;</span><br><span class="line">				x=xmlDoc.getElementsByTagName(&quot;title&quot;);</span><br><span class="line">				for (i=0;i&lt;x.length;i++) &#123;</span><br><span class="line">					t=t + x[i].childNodes[0].nodeValue + &quot;&lt;br/&gt;&quot;;</span><br><span class="line">				&#125;</span><br><span class="line">				document.getElementById(&quot;data&quot;).innerHTML = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		xmlhttprequest.open(&quot;GET&quot;,&quot;hello.xml&quot;,true);</span><br><span class="line">		xmlhttprequest.send();</span><br><span class="line">		&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;data&quot;&gt;&lt;h2&gt;Ajax response XML&lt;/h2&gt;&lt;/div&gt;</span><br><span class="line">&lt;a href=&quot;javascript:test()&quot;&gt;XMLHttpResponse&lt;/a&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">````</span><br><span class="line">#### hello.xml</span><br><span class="line">```xml</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;bookstore&gt;</span><br><span class="line">&lt;book category=&quot;children&quot;&gt;</span><br><span class="line">&lt;title lang=&quot;cn&quot;&gt;你好世界&lt;/title&gt;</span><br><span class="line">&lt;/book&gt;</span><br><span class="line">&lt;book category=&quot;children&quot;&gt;</span><br><span class="line">&lt;title lang=&quot;cn&quot;&gt;你好Ajax&lt;/title&gt;</span><br><span class="line">&lt;/book&gt;</span><br><span class="line">&lt;/bookstore&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Onreadystatechange"><a href="#Onreadystatechange" class="headerlink" title="Onreadystatechange"></a>Onreadystatechange</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>onreadystatechange事件中，可以规定服务器响应已做好处理准备阶段时所执行的任务，而一般主要状态可通过<code>readyState、status</code>来分别设置就绪状态、状态：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>readyState</td>
+<td>就绪状态</td>
+<td>onreadystatechange</td>
+</tr>
+<tr>
+<td>status</td>
+<td>状态</td>
+<td>onreadystatechange</td>
+</tr>
+</tbody></table>
+<p>当就绪状态（readyState等于4），状态（状态status等于200）时，则表示响应已经就绪：</p>
+<h3 id="onreadystatechange-实现"><a href="#onreadystatechange-实现" class="headerlink" title="onreadystatechange 实现"></a>onreadystatechange 实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	xmlhttprequest.onreadystatechange = function() &#123;</span><br><span class="line">		if (xmlhttp.readyState == 4 &amp;&amp; xmlhttprequest.status == 200) &#123;</span><br><span class="line">			document.getElementById(&#x27;response&#x27;).immerHTML = xmlhttprequest.responseText;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/ajax/4.Ajax%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

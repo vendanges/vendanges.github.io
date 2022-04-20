@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 Geo | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 Geo</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210416021548.png"><br>在D3中除了常用的学术图表之外，还支持地图的数据展示，主要分为<code>地理路径、地理投影</code>，D3支持少数的组件来显示和操作数据。一般地图数据会保存为<code>JSON</code>格式，而D3常用的有<code>GeoJson and TopoJSON</code>，其中<code>GeoJson</code>主要描述地理信息的一种基本格式。而<code>TopoJSON</code>则是由D3作者<strong>Mike Bostock</strong>制定的格式，他们都符合了JSON的规范。</p>
+<p>D3支持少数的组建来显示和操作数据，这些组件会使用<code>GeoJSON</code>格式，<strong>他也是JavaScript中标准的地理特征表示方法</strong>。而由<strong>Mike Bostock</strong>所制定的格式<code>TopoJSON</code>主要是<code>GeoJSON</code>的扩展格式，前者表示的更加紧密。</p>
+<p>如果要将文件转换为<code>GeoJSON</code>格式，需要通过使用<code>GDAL``包中的 ogr2ogr</code>来进行转换，当让也有从 <code>ogr2ogr</code> 衍生出的 <code>ogr2gui</code> 但本文主要通过使用 <code>ogr2ogr</code>来进行转换，通常 D3 Geo 常用 API 如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.geo.mercator()</td>
+<td>莫卡托投影，是正轴与圆柱投影，由荷兰地图学家莫卡托（mercator）与1569年创立</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>center(one[,two])</td>
+<td>地图中心位置，通常<code>one是经度、two是维度</code></td>
+</tr>
+<tr>
+<td>d3.geo.path()</td>
+<td>创建一个新的地理路径生成器</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>projection</td>
+<td>应用投影</td>
+</tr>
+<tr>
+<td>d3.set()</td>
+<td>创建集合</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>.has()</td>
+<td>用于检测数据是否在集合中</td>
+</tr>
+</tbody></table>
+<h2 id="数据的来源"><a href="#数据的来源" class="headerlink" title="数据的来源"></a>数据的来源</h2><h3 id="DataV"><a href="#DataV" class="headerlink" title="DataV"></a>DataV</h3><p>DataV是阿里巴巴数据可视化团队，旨在让更多人看到数据可视化的魅力，本文主要使用 DATAV所提供的地理地图集（<code>DATAV.GeoAtlas</code>），通过使用DATAV我们可以直接得到相应地图的 JSON数据，从而避免 使用 <code>ogr2ogr</code> 进行二次转换。</p>
+<p>数据可以直接通过访问<code>http://datav.aliyun.com/tools/atlas/#&amp;lat=30.316551722910077&amp;lng=102.21432656555675&amp;zoom=3.5</code>得到，除此之外，我们也可以根据 DATAV 所提供的 API 直接进行绘制：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://geo.datav.aliyun.com/areas_v2/bound/100000.json">https://geo.datav.aliyun.com/areas_v2/bound/100000.json</a></td>
+<td>JSON API</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://geo.datav.aliyun.com/areas/bound/geojson?code=100000">https://geo.datav.aliyun.com/areas/bound/geojson?code=100000</a></td>
+<td>GeoJSON API</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://geo.datav.aliyun.com/areas_v2/bound/100000_full.json">https://geo.datav.aliyun.com/areas_v2/bound/100000_full.json</a></td>
+<td>JSON API (包含子域)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://geo.datav.aliyun.com/areas/bound/geojson?code=100000_full">https://geo.datav.aliyun.com/areas/bound/geojson?code=100000_full</a></td>
+<td>GeoJSON API （包含子域）</td>
+</tr>
+</tbody></table>
+<h3 id="Natural-Earth"><a href="#Natural-Earth" class="headerlink" title="Natural Earth"></a>Natural Earth</h3><p><code>Natural Earth 提供的部分 GeoJSON 存在中国地图部分不完整或存在缺陷等问题而 Github 上部分的 china.json / china.geojson 等数据可能存在通过使用 -where &quot;ADM0_A3 (&#39;CHN&#39;,&#39;TWN&#39;)&quot; 进行拼合而成，因此，也可能存在中国地图中的钓鱼岛、赤尾屿、台湾岛、南海诸岛、藏南地区国界线、阿克赛钦地区国界线等错误。</code></p>
+<p><code>因此我们强烈建议使用阿里巴巴DataV与高德开放平台所提供的在线数据提供平台： http://datav.aliyun.com/tools/atlas/#&amp;lat=30.332329214580188&amp;lng=106.72278672066881&amp;zoom=3.5 内进行下载geojson或svg数据。本文虽然不采用 Natural Earth 数据，但提供使用以通过 ogr2ogr 转换的步骤和数据的简化操作。</code></p>
+<p>如果我们不使用中国地图的话，可以通过<code>Natural Earth</code>这个带有<strong>美国特色双标组织渠道</strong>来下载所有地理数据，他主要提供了三种尺寸供我们进行下载：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>FA</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大规模数据</td>
+<td>1:10m，1:10,000,000，1英寸&#x3D; 158英里，1厘米&#x3D; 100公里</td>
+<td>最详细且使用与制作国家和地区的放大地图</td>
+</tr>
+<tr>
+<td>中等规模数据</td>
+<td>1:50m，1:50,000,000，1英寸&#x3D; 790英里，1厘米&#x3D; 500公里</td>
+<td>适用于制作国家和地区的缩小地图</td>
+</tr>
+<tr>
+<td>小规模数据</td>
+<td>1:110m，1:110,000,000，1’’&#x3D; 1,736英里，1厘米&#x3D; 1,100公里</td>
+<td>小型的示意图或小型的定位器的地球仪</td>
+</tr>
+</tbody></table>
+<p>当下载的时候，他主要会分为<code>Cultural、Physical、Raster</code>三个选项：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cultural</td>
+<td>包含具有<code>文化性</code>的地理信息</td>
+<td>具有国家和地区的边界划分地图、按照行政省划分地图、包含有飞机场、港口和地图等</td>
+</tr>
+<tr>
+<td>Physical</td>
+<td>包含具有<code>物理性</code>的地理信息</td>
+<td>含有该国家的海岸线、陆地、海洋、河流、港口等</td>
+</tr>
+<tr>
+<td>Raster</td>
+<td>包含栅格地图</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="GeoJSON-转换"><a href="#GeoJSON-转换" class="headerlink" title="GeoJSON 转换"></a>GeoJSON 转换</h4><p>我们通过在 <code>Natural Earth</code> 下载的 <code>Admin 0 – Countries</code>1:110m 的地图数据，在此之前，我们需要安装<code>GDAL</code>包下的<code>ogr2ogr</code>程序，如果你是 Linux debian 系用户可以通过使用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gdal-bin</span><br></pre></td></tr></table></figure>
+
+<p>当安装成功之后，使用<code>ogr2ogr -version</code>来进行查询是否安装成功，当正确输出版本信息后。我们可以将刚刚下载到的<code>ne_110m_admin_0_countries.zip</code>进行解压，解压后进入该目录执行:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ogr2ogr -f &quot;GeoJSON&quot; china.geojson ne_110m_admin_0_countries.shp -overwrite -where &quot;ADM0_A3 IN (&#x27;CHN&#x27;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>也可使用 <code>-where &quot;ADM0_A3 IN (&#39;CHN&#39;,&#39;USER&#39;)&quot;</code> 来提取多个国家数据，<strong>ISO 3166-1 alpha-3</strong>即“ADM0_A3”标准来通过三个<strong>拉丁字母</strong>表示国家名称，通常这三个字母就是该国家的代码，如<code>CHN</code>就是<code>中华人民共和国</code>的国家代码。</p>
+<h4 id="TopoJSON-转换"><a href="#TopoJSON-转换" class="headerlink" title="TopoJSON 转换"></a>TopoJSON 转换</h4><p>TopoJSON 是由 Mike Bostock 提供的一种 GeoJSON 扩展，通过拓扑后的扩展形式，主要使用<code>点、弧</code>来表示图形。一般情况<code>点、线地理实体分别通过坐标和弧索引表示</code>而多边形也通过弧索引来实现。</p>
+<p>使用 TopoJSON 的特点在于其大小是 GeoJSON 大小的 <code>80%</code>，原因在于<code>边界线只记录一次(边界线接壤、共用)，而地理坐标都使用整数</code>即 **共享边(ARCS)**。</p>
+<p>因此 TopoJSON 通过明显的优点深受喜爱，除此之外，还可以通过使用 TopoJSON 内  <strong>共享边(ARCS)</strong> 的特性来完成一些较为舒服<code>用户交互或特殊标注</code>。</p>
+<p>TopoJSON 提供了解析 TopoJSON 格式的方法，为了保证 TopoJSON 的拓扑保留简化和过滤以及更小的文件、更快的渲染，因此 TopoJSON 还特地除了个<code>简化步骤</code>。除此还分为<code>客户端和服务器</code>，两者分别是将 <code>GeoJSON 转换为 TopoJSON，以及将 TopoJSON 转换为 GeoJSON </code>:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+<th>TO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务器</td>
+<td>TopoJSON.Topology</td>
+<td>支持将 GeoJSON 转换为 TopoJSON</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-server/blob/master/README.md#topology">https://github.com/topojson/topojson-server/blob/master/README.md#topology</a></td>
+</tr>
+<tr>
+<td></td>
+<td>Geo2topo</td>
+<td>将 GeoJSON 转换为 TopoJSON</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-server/blob/master/README.md#geo2topo">https://github.com/topojson/topojson-server/blob/master/README.md#geo2topo</a></td>
+</tr>
+<tr>
+<td>简化</td>
+<td>TopoJSON.presimplify</td>
+<td>准备用于简化的 TopoJSON</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-simplify/blob/master/README.md#presimplify">https://github.com/topojson/topojson-simplify/blob/master/README.md#presimplify</a></td>
+</tr>
+<tr>
+<td></td>
+<td>TopoJSON.simplify</td>
+<td>删除坐标来简化</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-simplify/blob/master/README.md#simplify">https://github.com/topojson/topojson-simplify/blob/master/README.md#simplify</a></td>
+</tr>
+<tr>
+<td></td>
+<td>TopoJSON.quantile</td>
+<td>计算简化的阀值</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-simplify/blob/master/README.md#quantile">https://github.com/topojson/topojson-simplify/blob/master/README.md#quantile</a></td>
+</tr>
+<tr>
+<td></td>
+<td>TopoSimplify</td>
+<td>简化 TopoJSON 删除坐标</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-simplify/blob/master/README.md#toposimplify">https://github.com/topojson/topojson-simplify/blob/master/README.md#toposimplify</a></td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>topoJSON.feature</td>
+<td>将 TopoJSON 转换为 GeoJSON</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson-client/blob/master/README.md#feature">https://github.com/topojson/topojson-client/blob/master/README.md#feature</a></td>
+</tr>
+<tr>
+<td>……</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topojson/topojson">https://github.com/topojson/topojson</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="GeoJSON-gt-topoJSON"><a href="#GeoJSON-gt-topoJSON" class="headerlink" title="GeoJSON &gt; topoJSON"></a>GeoJSON &gt; topoJSON</h5><p>通过使用 TopoJSON Server 所提供的 topojson.topology 可以通过将<code>GeoJSON</code>转换为<code>TopoJSON</code>文件，可以使用<code>sudo npm install -g topojson-server</code>进行安装， tpology 自带了<code>geo2topo</code>。</p>
+<p>我们可以通过执行 <code>geo2topo china.json -o china_topo.json </code>将 geoJSON 文件转换为 TopoJSON 格式文件 <code>china_topo.json</code></p>
+<p>当然你也可以通过使用其官方所提供的 <code>&lt;script src=&quot;https://unpkg.com/topojson-server@3&quot;&gt;&lt;/script&gt;</code> 在浏览器中进行引入，这是由官方所提供的<code>3.0.1</code>版本</p>
+<h5 id="TopoJSON-gt-GeoJSON"><a href="#TopoJSON-gt-GeoJSON" class="headerlink" title="TopoJSON &gt; GeoJSON"></a>TopoJSON &gt; GeoJSON</h5><p>可以使用 <code>topoJSON.feature</code>来进行转换，feature 主要分为客户端和浏览器引入两种方法。通过使用<code>cnmp install -g topojson-client</code>来进行全局安装，当然如果没有<code>cnmp</code>也可以通过<code>nmp install -g topojson-client</code>进行安装，但速度会比较慢。</p>
+<p>如果通过浏览器引入我们可以通过使用 <code>&lt;script src=&quot;https://unpkg.com/topojson-client@3&quot;&gt;&lt;/script&gt;</code> 来进行引入，这是由官方所提供的<code>3.0.2</code>版本。</p>
+<h2 id="简单绘制"><a href="#简单绘制" class="headerlink" title="简单绘制"></a>简单绘制</h2><h3 id="GeoJSON"><a href="#GeoJSON" class="headerlink" title="GeoJSON"></a>GeoJSON</h3><p>GeoJSON 是一个用于描述<code>地理空间信息</code>的数据格式，因此他的语法是<strong>符合JSON</strong>规范，只是和JSON不同之处在于<code>对名称进行了规范</code>，名称须为字符串，而值可以是<code>字符串、数字、布尔、对象、数组、NULL</code>等，通常他的外部对象格式是：</p>
+<blockquote>
+<p>2015年，互联网工程任务组（IETF）与最初的的规范作者共同组成了<code>GeoJSON WG</code>，以标准化GeoJSON。RFC 7946 于2016年8月发布，他是GeoJSON格式的新规范，取代了2008年的GeoJSON 规范：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;type&quot;: &quot;Feature&quot;,</span><br><span class="line">  &quot;geometry&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;Point&quot;,</span><br><span class="line">    &quot;coordinates&quot;: [125.6, 10.1]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;properties&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;Dinagat Islands&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210420103511.png"><br>通常上述 code 主要分为<code>Fature（特征）</code>以及<code>geometry（几何体）</code>来表示出最外层的单独对象，在特征集合（<code>FeatureCollection</code>）中，最外层的<code>GenJSON</code>会包含很多的子对象，对于每一个<code>GeoJSON</code>的每个<code>type</code>属性值必须是下面之一：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Point</td>
+<td>点</td>
+</tr>
+<tr>
+<td>MultiPoint</td>
+<td>多点</td>
+</tr>
+<tr>
+<td>LineString</td>
+<td>线</td>
+</tr>
+<tr>
+<td>MultiLineString</td>
+<td>多线</td>
+</tr>
+<tr>
+<td>Polygon</td>
+<td>面</td>
+</tr>
+<tr>
+<td>MultiPolygon</td>
+<td>多面</td>
+</tr>
+<tr>
+<td>GeometryCollection</td>
+<td>几何体集合</td>
+</tr>
+<tr>
+<td>Feature</td>
+<td>特征</td>
+</tr>
+<tr>
+<td>FeatureCollection</td>
+<td>特征集合</td>
+</tr>
+</tbody></table>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;FeatureCollection&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;features&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Feature&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;geometry&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Point&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;coordinates&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="number">114.345703125</span><span class="punctuation">,</span></span><br><span class="line">          <span class="number">23.96617587126503</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h4><p>由于我们使用的是<code>DATAV</code>所提供的数据，因此我们你可以通过使用<code>d3,geo.mercator()</code>进行投影，然后使用<code>center()</code>来设置出地图的中心位置。<code>select ad translate</code>分别设置缩放量和平移量，当定义好投影之后，通过使用<code>d3.geo.path()</code>来进行使用投影进行绘制地图路径。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">var padding = <span class="punctuation">&#123;</span></span><br><span class="line">    width<span class="punctuation">:</span> <span class="number">1000</span><span class="punctuation">,</span></span><br><span class="line">    height<span class="punctuation">:</span> <span class="number">1000</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">var svg = d3.select(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .append(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;width&quot;</span><span class="punctuation">,</span>padding.width)</span><br><span class="line">    .attr(<span class="string">&quot;height&quot;</span><span class="punctuation">,</span> padding.height)</span><br><span class="line"></span><br><span class="line">var projection = d3.geo.mercator()</span><br><span class="line">    .center(<span class="punctuation">[</span><span class="number">107</span><span class="punctuation">,</span><span class="number">31</span><span class="punctuation">]</span>)</span><br><span class="line">    .scale(<span class="number">600</span>)</span><br><span class="line">    .translate(<span class="punctuation">[</span>padding.width/<span class="number">2</span><span class="punctuation">,</span>padding.height/<span class="number">2</span><span class="punctuation">]</span>)</span><br><span class="line"></span><br><span class="line">var color = d3.scale.category20b()</span><br><span class="line"></span><br><span class="line">var path = d3.geo.path()</span><br><span class="line">    .projection(projection)</span><br><span class="line"></span><br><span class="line">d3.json(<span class="string">&quot;https://geo.datav.aliyun.com/areas/bound/geojson?code=100000_full&quot;</span><span class="punctuation">,</span> function (error<span class="punctuation">,</span> root) <span class="punctuation">&#123;</span></span><br><span class="line">    if (error)</span><br><span class="line">            return console.error(error)</span><br><span class="line">    console.log(root)</span><br><span class="line"></span><br><span class="line">    var groups = svg.append(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"></span><br><span class="line">    groups.selectAll(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .data(root.features)</span><br><span class="line">        .enter()</span><br><span class="line">        .append(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .attr(<span class="string">&quot;class&quot;</span><span class="punctuation">,</span><span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .style(<span class="string">&quot;fill&quot;</span><span class="punctuation">,</span> function (d<span class="punctuation">,</span>i) <span class="punctuation">&#123;</span></span><br><span class="line">            return color<span class="punctuation">[</span>i<span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span>)</span><br><span class="line">        .attr(<span class="string">&quot;d&quot;</span><span class="punctuation">,</span>path)</span><br><span class="line"><span class="punctuation">&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CSS</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.province</span> &#123;</span><br><span class="line">  fill: white;</span><br><span class="line">  stroke: <span class="number">#25595a</span>;</span><br><span class="line">  stroke-<span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="TopoJSON"><a href="#TopoJSON" class="headerlink" title="TopoJSON"></a>TopoJSON</h3><p>TopoJSON 是由 Mike Bostock 提供的一种 GeoJSON 扩展，通过拓扑后的扩展形式，主要使用<code>点、弧</code>来表示图形。一般情况<code>点、线地理实体分别通过坐标和弧索引表示</code>而多边形也通过弧索引来实现。</p>
+<p>使用 TopoJSON 的特点在于其大小是 GeoJSON 大小的 <code>80%</code>，原因在于<code>边界线只记录一次(边界线接壤、共用)，而地理坐标都使用整数</code>即<strong>共享边（ARCS）</strong>。</p>
+<p>因此 TopoJSON 通过明显的优点深受喜爱，除此之外，还可以通过使用 TopoJSON 内 <strong>共享边（ARCS）</strong> 的特性来完成一些较为舒服<code>用户交互或特殊标注</code>。</p>
+<p>TopoJSON 提供了解析 TopoJSON 格式的方法，为了保证 TopoJSON 的拓扑保留简化和过滤以及更小的文件、更快的渲染，因此 TopoJSON 还特地除了个<code>简化步骤</code>。除此还分为<code>客户端和服务器</code>，两者分别是将 <code>GeoJSON 转换为 TopoJSON，以及将 TopoJSON 转换为 GeoJSON </code>:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>topojson.feature</td>
+<td>将 TopoJSON 转换为 GeoJSON，为返回指定的对象 GeoJSON</td>
+<td></td>
+</tr>
+<tr>
+<td>topojson.merge</td>
+<td>合并 Topojson 集合，并分配个目标对象</td>
+<td></td>
+</tr>
+<tr>
+<td>topojson.mesh</td>
+<td>与 topojson.mesh 等效，但返回的是 TopoJSON，可以用于共享坐标</td>
+<td></td>
+</tr>
+<tr>
+<td>topojson.neighbors</td>
+<td>计算出相邻数据</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="绘制-1"><a href="#绘制-1" class="headerlink" title="绘制"></a>绘制</h4><p>在下述的 code 中主要通过使用 geojson 格式转换为 topojson 格式，之后在通过使用<code>topojson.feature</code>将此再次使用<code>&lt;script src=&quot;https://unpkg.com/topojson@3.0.2/dist/topojson.js&quot;&gt;&lt;/script&gt;</code> API 转换为 geojson 格式文件。因源文件是 topojson 所以转换后的数据自然是 geojson 文件的 80% 大小，这也是使用 topojson 的好处之一。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">31</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20b</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>, <span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> color[i]</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="set-and-merge"><a href="#set-and-merge" class="headerlink" title="set and merge"></a>set and merge</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210420102458.png"><br>通过 d3.set 创建集合，southeast 包含了各省名称之后通过使用 southeast.has() 来检查传入字符串是否在集合中，合并后保存并输出。 我们将 southeast 内设置为黑色，之后使用 datum()来绑定数据通过 svg.path 进行绘制。</p>
+<p>使用 topojson.merge() 来进行合并，每一项保存一个省的几何信息，之后通过对象的 filter() 函数，只有在集合中的省份保存至 mergedPolygon 中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">19</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20b</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1) 创建集合</span></span><br><span class="line"><span class="comment">        *   通过 d3.set 创建集合，southeast 包含了各省名称之后通过使用 southeast.has() 来检查传入字符串是否在集合中，合并后保存并输出。</span></span><br><span class="line"><span class="comment">        * (2) 数据绘制</span></span><br><span class="line"><span class="comment">        *   将 southeast 内设置为黑色，之后使用 datum()来绑定数据通过 svg.path 进行绘制。</span></span><br><span class="line"><span class="comment">        * (3) 数据合并</span></span><br><span class="line"><span class="comment">        *   之后通过使用 topojson.merge() 来进行合并，每一项保存一个省的几何信息，之后通过对象的 filter() 函数</span></span><br><span class="line"><span class="comment">        *   只有在集合中的省份保存至 mergedPolygon 中。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> southeast = d3.<span class="title function_">set</span>([</span><br><span class="line">        <span class="string">&quot;广东省&quot;</span>,<span class="string">&quot;海南省&quot;</span>,<span class="string">&quot;台湾省&quot;</span>,<span class="string">&quot;北京市&quot;</span>,<span class="string">&quot;吉林省&quot;</span>,<span class="string">&quot;黑龙江省&quot;</span></span><br><span class="line">    ])</span><br><span class="line">    <span class="keyword">var</span> mergedPolygon = topojson.<span class="title function_">merge</span>(toporoot,</span><br><span class="line">        toporoot.<span class="property">objects</span>.<span class="property">china</span>.<span class="property">geometries</span>.<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> southeast.<span class="title function_">has</span>(d.<span class="property">properties</span>.<span class="property">name</span>)</span><br><span class="line">        &#125;))</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(mergedPolygon)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"></span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>.<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> !southeast.<span class="title function_">has</span>(d.<span class="property">properties</span>.<span class="property">name</span>)</span><br><span class="line">        &#125;))</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line"></span><br><span class="line">    svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">datum</span>(mergedPolygon)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;#c6c6c6&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="mesh"><a href="#mesh" class="headerlink" title="mesh"></a>mesh</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210420102433.png"><br>topojson.mesh 主要提供了 网格花 TopoJSON 几何形状以形成多边形， 分别提取了内蒙古、黑龙江省的边界线，边界线最终存储在 boundary 中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">19</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20b</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (mesh)</span></span><br><span class="line"><span class="comment">        *   topojson.mesh 主要提供了 网格花 TopoJSON 几何形状以形成多边形。</span></span><br><span class="line"><span class="comment">        *   分别提取了内蒙古、黑龙江省的边界线，边界线最终存储在 boundary 中。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> boundary = topojson.<span class="title function_">mesh</span>(toporoot ,toporoot.<span class="property">objects</span>.<span class="property">china</span>, <span class="keyword">function</span> (<span class="params">a,b</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> a.<span class="property">properties</span>.<span class="property">name</span> === <span class="string">&quot;内蒙古自治区&quot;</span> &amp;&amp; b.<span class="property">properties</span>.<span class="property">name</span> === <span class="string">&quot;黑龙江省&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(boundary)</span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"></span><br><span class="line">    groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line"></span><br><span class="line">    svg.<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">datum</span>(boundary)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;boundary&quot;</span>)</span><br><span class="line">        .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;none&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="neighbors"><a href="#neighbors" class="headerlink" title="neighbors"></a>neighbors</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210420102520.png"><br>通过使用 neighbors 来计算出相邻数据,并通过为没一个元素添加相邻省份的选择集,为每个选择时添加 behavior 事件，持续时间分别为 2000ms。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>, padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> projection = d3.<span class="property">geo</span>.<span class="title function_">mercator</span>()</span><br><span class="line">    .<span class="title function_">center</span>([<span class="number">107</span>,<span class="number">19</span>])</span><br><span class="line">    .<span class="title function_">scale</span>(<span class="number">600</span>)</span><br><span class="line">    .<span class="title function_">translate</span>([padding.<span class="property">width</span>/<span class="number">2</span>,padding.<span class="property">height</span>/<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.<span class="property">scale</span>.<span class="title function_">category20b</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> path = d3.<span class="property">geo</span>.<span class="title function_">path</span>()</span><br><span class="line">    .<span class="title function_">projection</span>(projection)</span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">json</span>(<span class="string">&quot;./china_topo.json&quot;</span>, <span class="keyword">function</span> (<span class="params">error, toporoot</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(toporoot)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * (1)</span></span><br><span class="line"><span class="comment">        *   将 TopoJSON 转换为 GeoJSON 并保存在 Georoot 中。</span></span><br><span class="line"><span class="comment">        *   Feature 主要用于返回 GeoJSON 的特征（Feature）或特征集合（FeatureCollection）</span></span><br><span class="line"><span class="comment">        *   feature(topology, object) 第一额参数表示 TopJSON 文件对象，第二个参数来表示出几何体的对象。</span></span><br><span class="line"><span class="comment">        * (2) feature</span></span><br><span class="line"><span class="comment">        *   console 分别会输出 topjson 以及 geojson 的结果。</span></span><br><span class="line"><span class="comment">        *   所以在定义 feature() 参数是会考虑到：</span></span><br><span class="line"><span class="comment">        *   TopoJSON 对象中，有数组 arcs（共享边）、objects（存储几何对象）、 之后对象中有一个 china 对象，所以保存中国地图的几何体，因此：</span></span><br><span class="line"><span class="comment">        *       topojson.feature(toporoot,toporoot.objects.china)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> georoot = topojson.<span class="title function_">feature</span>(toporoot,toporoot.<span class="property">objects</span>.<span class="property">china</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(georoot)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> neighbors = topojson.<span class="title function_">neighbors</span>(toporoot.<span class="property">objects</span>.<span class="property">china</span>.<span class="property">geometries</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(neighbors)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> groups = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> paths = groups.<span class="title function_">selectAll</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">data</span>(georoot.<span class="property">features</span>)</span><br><span class="line">        .<span class="title function_">enter</span>()</span><br><span class="line">        .<span class="title function_">append</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;province&quot;</span>)</span><br><span class="line">        .<span class="title function_">attr</span>(<span class="string">&quot;d&quot;</span>,path)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 通过使用 neighbors 来计算出相邻数据</span></span><br><span class="line"><span class="comment">        * 并通过为没一个元素添加相邻省份的选择集</span></span><br><span class="line"><span class="comment">        * 为每个选择时添加 behavior 事件，持续时间分别为 2000ms</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    paths.<span class="title function_">each</span>(<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">        d.<span class="property">neighbors</span> = d3.<span class="title function_">selectAll</span>(</span><br><span class="line">            neighbors[i].<span class="title function_">map</span>(<span class="keyword">function</span> (<span class="params">j</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> paths[<span class="number">0</span>][j]</span><br><span class="line">            &#125;)</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&quot;mouseover&quot;</span>, <span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">            d3.<span class="title function_">select</span>(<span class="variable language_">this</span>)</span><br><span class="line">                .<span class="title function_">transition</span>()</span><br><span class="line">                .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">                .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;#9f9d9d&quot;</span>)</span><br><span class="line">            d.<span class="property">neighbors</span></span><br><span class="line">                .<span class="title function_">transition</span>()</span><br><span class="line">                .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">                .<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;#d8d8d8&quot;</span>)</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&quot;mouseout&quot;</span>,<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">                d.<span class="property">neighbors</span>.<span class="title function_">style</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;white&quot;</span>)</span><br><span class="line">                    .<span class="title function_">transition</span>()</span><br><span class="line">                    .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/30.D3%20Geo/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

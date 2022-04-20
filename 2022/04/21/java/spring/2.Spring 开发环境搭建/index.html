@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring 开发环境搭建 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring 开发环境搭建</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring/" rel="tag">spring</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="Spinrg-jar"><a href="#Spinrg-jar" class="headerlink" title="Spinrg jar"></a>Spinrg jar</h2><p>Spring官网中主要建议开发者下载Maven和Gradle两种方式进行下载，如果不使用两者方式的开发者，可通过<code>https://repo.spring.io/libs-release-local/org/springframework/spring/5.1.4.RELEASE/spring-framework-5.1.4.RELEASE-dist.zip</code>直接下载Spring 5.1.4版本的Spring jar。<br>而在Spring jar文件解压后各个文件的说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docs</td>
+<td>用于存储包含Spring的API文档以及开发规范</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td>libs</td>
+<td>包含开发Spring应用所需要的JAR包以及源代码</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td></td>
+<td>RELEASE.jar 是Spring 开发所需要的jar 包</td>
+<td>&#x2F;libs</td>
+</tr>
+<tr>
+<td></td>
+<td>RELEASE-caradoc.jar Spring框架API文档压缩包</td>
+<td>&#x2F;libs</td>
+</tr>
+<tr>
+<td></td>
+<td>RELEASE-sources.jar 结尾的我文件是Spring框架源文件的压缩包</td>
+<td>&#x2F;libs</td>
+</tr>
+<tr>
+<td></td>
+<td>spring-core-5.1.4.RELEASE.jar、spring-beans-5.1.4.RELEASE.jar、spring-context-5.1.4.RELEASE-javadoc.jar 结尾的是Spring 核心容器的四个模块（Beans、Core、Context、SpEL）</td>
+<td>&#x2F;libs</td>
+</tr>
+<tr>
+<td>schema</td>
+<td>包含Spring 应用开发所需要的schema文件，主要定义了Spring的配置文件的约束</td>
+<td>&#x2F;</td>
+</tr>
+</tbody></table>
+<h2 id="Commons-logging"><a href="#Commons-logging" class="headerlink" title="Commons-logging"></a>Commons-logging</h2><p>Spring主要依赖<code>Apache Commons Logging</code>组件，可通过<code>https://downloads.apache.org//commons/logging/binaries/commons-logging-1.2-bin.zip</code>下载，经解压后，主要使用<code>commons-logging-1.2</code>文件。</p>
+<h2 id="Spring-基本环境"><a href="#Spring-基本环境" class="headerlink" title="Spring 基本环境"></a>Spring 基本环境</h2><h3 id="导入-JRE-文件"><a href="#导入-JRE-文件" class="headerlink" title="导入 JRE 文件"></a>导入 JRE 文件</h3><p>在开发Spring应用的时候，需要引入四个基本核心类和一个<code>Apache Commons Logging</code>组件引入到<code>WebContent\WEB-INF\lib\</code> 即可完成引入。</p>
+<h4 id="Spring-Ioc-基本框架与流程"><a href="#Spring-Ioc-基本框架与流程" class="headerlink" title="Spring Ioc 基本框架与流程"></a>Spring Ioc 基本框架与流程</h4><h5 id="接口-TestDao-java"><a href="#接口-TestDao-java" class="headerlink" title="接口 TestDao.java"></a>接口 TestDao.java</h5><p>Spring是解决业务逻辑层和其让他各层的耦合问题，因此他将面向接口的编程思想贯穿于整个系统之中应用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Dao;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TestOne</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayHello</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="接口实现类-TestDaoImpl-java"><a href="#接口实现类-TestDaoImpl-java" class="headerlink" title="接口实现类 TestDaoImpl.java"></a>接口实现类 TestDaoImpl.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Dao;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">TestDao</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		System.out.println(<span class="string">&quot;Hello,world!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="spring-配置文件-applicationContext-xml"><a href="#spring-配置文件-applicationContext-xml" class="headerlink" title="spring 配置文件 applicationContext.xml"></a>spring 配置文件 applicationContext.xml</h5><p>一般情况下，Spring不需要开发者手敲，可通过<code>/docs/spring-framework-reference/core.html</code>下API说明文档中的<code>1.2.1. Configuration Metadata</code>处直接复制即可:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;test&quot;</span> <span class="attr">class</span>=<span class="string">&quot;dao.TestDaoImpl&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="测试类-Test-java"><a href="#测试类-Test-java" class="headerlink" title="测试类 Test.java"></a>测试类 Test.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"><span class="keyword">import</span> One.TestOne;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span> <span class="params">(String[] args)</span> &#123;</span><br><span class="line">	    <span class="comment">// 初始化Spring容器 ApplicationContext 来加载配置文件</span></span><br><span class="line">	    <span class="comment">// @SuppressWarnings 来抑制警告的关键字，有泛型未指定类型</span></span><br><span class="line">		<span class="meta">@SuppressWarnings(&quot;resource&quot;)</span></span><br><span class="line">		<span class="type">ApplicationContext</span> <span class="variable">appCon</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">		<span class="comment">/* </span></span><br><span class="line"><span class="comment">		    通过容器获取到 test的</span></span><br><span class="line"><span class="comment">		    test 是配置文件中的id &quot;&lt;bean id=&quot;test&quot; class=&quot;dao.TestOneImpl&quot;/&gt;&quot;</span></span><br><span class="line"><span class="comment">		*/</span></span><br><span class="line">		<span class="type">TestDao</span> <span class="variable">testdao</span> <span class="operator">=</span> (TestDao)appCon.getBean(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		testdao.sayHello();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在执行测试类后，IDE控制台中将会输出<code>接口实现类 TestOneImpl.java</code>内中的”public void sayHello() {“下构造变量;。而整个输出的过程中，并没有使用<code>new</code>运算符来创建TestOneImpl类的对象，而是通过Spring容器来实现，而这个实现的过程就是 Spring IOC的工作机制，而这个工作机制也可以理解为工厂模式。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring/2.Spring%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

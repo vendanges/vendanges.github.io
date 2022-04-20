@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JavaScript 简单的理解异步 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JavaScript 简单的理解异步</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD/" rel="tag">异步加载</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>异步加载是JavaScript开发中最关键的技术之一，主要可利用异步构建快速、高效的JavaScript应用。在众多WEB页面中为了避免服务器请求过多导致服务器崩溃，则可使用JavaScript异步技术。</p>
+<h3 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h3><h4 id="未使用异步"><a href="#未使用异步" class="headerlink" title="未使用异步"></a>未使用异步</h4><p>在未使用JavaScript异步加载之前，用户访问服务器是一下子访问然后在加载各种图片和文字的，则会造成服务器的资源消耗。</p>
+<h4 id="使用异步"><a href="#使用异步" class="headerlink" title="使用异步"></a>使用异步</h4><p>使用异步之后，当用户访问服务器的时候，页面是根据用户的移动而随着加载的，是断断续续的，而不是一下子造成大量的服务器请求。</p>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><h3 id="什么是队列"><a href="#什么是队列" class="headerlink" title="什么是队列"></a>什么是队列</h3><p>当调用某个函数的时候，会有一个异步延时事件加入队列，然后接着执行下一行代码直到最后没有任何代码进行执行<code>（此时JavaScript会问队列里是否还有数据）</code>。</p>
+<h3 id="队列实例"><a href="#队列实例" class="headerlink" title="队列实例"></a>队列实例</h3><p>当点击按钮之后，则按钮中的数据会将数据添加到队列之中，输入和点击队列。</p>
+<h2 id="异步加载函数"><a href="#异步加载函数" class="headerlink" title="异步加载函数"></a>异步加载函数</h2><h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h3><p>setTimeout()函数是在JavaScript异步加载中常见的异步加载函数，例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> one = <span class="number">1</span>; one &lt;= <span class="number">3</span>; one++) &#123;</span><br><span class="line">		<span class="built_in">setTimeout</span> (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">			<span class="variable language_">document</span>.<span class="title function_">write</span>(one,<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">			&#125;,<span class="number">3000</span>);        <span class="comment">/*三秒后输出语句*/</span></span><br><span class="line">		&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;data()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>只所以最后输出结果为“4.4.4”是因为这里的延时为3秒，定义的函数都会抢着要第一个触发</p>
+<h4 id="线程的堵塞"><a href="#线程的堵塞" class="headerlink" title="线程的堵塞"></a>线程的堵塞</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> end = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;经过时间：&quot;</span>,end - start,<span class="string">&#x27;ms&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">new</span> <span class="title class_">Date</span> - start &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">	<span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码根据实际理念应该是等待3秒后执行，而实际运行当中则打印时间为3001。这时主要问题出现在<code>setTimeout</code>函数之中，因为<code>setTimeout</code>和<code>setIn-terval</code>一样，计时精度要比预期望差很多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> end = <span class="keyword">new</span> <span class="title class_">Date</span>;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;经过时间：&quot;</span>,end - start,<span class="string">&#x27;ms&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">new</span> <span class="title class_">Date</span> - start &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">	<span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而输出的数据至少是<code>1000</code>，因为setTimeout回调<code>while</code>循环结束运行之前不可能被触发。</p>
+<h3 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/asynchronous/1.JavaScript%20%E7%AE%80%E5%8D%95%E7%9A%84%E7%90%86%E8%A7%A3%E5%BC%82%E6%AD%A5/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

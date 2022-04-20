@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 表单验证 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 表单验证</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>在Laravel之中提供了很多种不同的方法来验证表单所传入的数据，在默认的情况下Laravel会使用基本的控制器类<code>validatesRequest</code>所定义的，该类提供了各种强大的验证规则来验证所传入的HTTP请求：</p>
+<h2 id="表单传输方式"><a href="#表单传输方式" class="headerlink" title="表单传输方式"></a>表单传输方式</h2><p>通常我们会验证表单的传输方式分别为POST或是GET，对此Laravel为我们提供了一个<code>isMethod</code>方法来进行验证，我们可以在路由中进行也可在控制器中进行，本文为了简约流程所以使用路由进行：</p>
+<h3 id="web-php"><a href="#web-php" class="headerlink" title="web.php"></a>web.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/input&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>((<span class="string">&#x27;input&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">post</span>(<span class="string">&#x27;/input/test&#x27;</span>, function (Request <span class="variable">$request</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">isMethod</span>(<span class="string">&#x27;post&#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;yes&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;no&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="input-blode-php"><a href="#input-blode-php" class="headerlink" title="input.blode.php"></a>input.blode.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;This is be Input up&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;/input/test&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;_token&quot;</span> value=<span class="string">&quot;&lt;?php echo csrf_token()?&gt;&quot;</span>&gt;</span><br><span class="line">    Username:&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span> /&gt;&amp;nbsp;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;up&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证规则"><a href="#验证规则" class="headerlink" title="验证规则"></a>验证规则</h2><h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><p>通常在原生态的PHP语言之中，验证规则通常会使用正则表达式等方式，但是由于正则表达式不宜于阅读，所以Laravel为我们提供了一种更好的<code>validate</code>方法，主要分为制定规则、错误回显、表单命名等。如果传入的请求参数未通过指定的验证规则，Laravel 则会将用户重定向到之前的位置中，并且将错误信息存储至 <code>session</code>中。</p>
+<figure class="highlight plaintext"><figcaption><span>变量由 ```Iliumineat\View\middleware\ShareErrorsFormSession```中间件绑定至视图当中，当这个中间件被使用会就可一在视图获取到 ```$error```变量（在理论上来将 $error 可以被安全的使用）</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```php</span><br><span class="line">// input.blode.php</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;This is be Input up&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;!-- </span><br><span class="line">    这里主要用于返回错误信息</span><br><span class="line">--&gt;</span><br><span class="line">@if($errors-&gt;any())</span><br><span class="line">    &lt;div class=&quot;alert alert-danger&quot;&gt;</span><br><span class="line">        @foreach($errors-&gt;all() as $error)</span><br><span class="line">            &lt;p&gt;&#123;&#123;$error&#125;&#125;&lt;/p&gt;</span><br><span class="line">        @endforeach</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">@endif</span><br><span class="line"></span><br><span class="line">&lt;form action=&quot;/input/test&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    @csrf</span><br><span class="line">    &lt;input type=&quot;hidden&quot; name=&quot;_token&quot; value=&quot;&lt;?php echo csrf_token()?&gt;&quot;&gt;</span><br><span class="line">    Username:&lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;&amp;nbsp;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;up&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TestController</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">store</span>(<span class="params">Request <span class="variable">$request</span></span>) </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">print_r</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">all</span>());</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">validate</span>(<span class="variable">$request</span>, [</span><br><span class="line">             <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 用于定义规则</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">           <span class="string">&#x27;username&#x27;</span>=&gt;<span class="string">&#x27;required|max:1|alpha&#x27;</span>,</span><br><span class="line">        ], [</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * |- 大类</span></span><br><span class="line"><span class="comment">             * |    |- required 必填</span></span><br><span class="line"><span class="comment">             * |    |- max 最大</span></span><br><span class="line"><span class="comment">             * |    |- min 最小</span></span><br><span class="line"><span class="comment">             * |    |- integer 数值</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="string">&#x27;required&#x27;</span> =&gt; <span class="string">&#x27;:attribute 必填&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;max&#x27;</span> =&gt; <span class="string">&#x27;:attribute 长度不能大于一个字符&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;alpha&#x27;</span> =&gt; <span class="string">&#x27;:attribute 只能包含字母&#x27;</span>,</span><br><span class="line">        ], [</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * |- 用于给input表单进行命名，时候后会输出</span></span><br><span class="line"><span class="comment">             * |    |-&quot;账号名称 必填&quot;</span></span><br><span class="line"><span class="comment">             * |- 如果不使用则会输出</span></span><br><span class="line"><span class="comment">             * |    |- username 账号名称</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">           <span class="string">&#x27;username&#x27;</span> =&gt; <span class="string">&#x27;账号名称&#x27;</span>,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> web.php</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>(<span class="string">&#x27;welcome&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;/input&#x27;</span>, function () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">view</span>((<span class="string">&#x27;input&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">post</span>(<span class="string">&#x27;/input/test&#x27;</span>, <span class="string">&#x27;TestController@store&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="返回错误信息"><a href="#返回错误信息" class="headerlink" title="返回错误信息"></a>返回错误信息</h4><h5 id="返回全部错误信息"><a href="#返回全部错误信息" class="headerlink" title="返回全部错误信息"></a>返回全部错误信息</h5><p>如果传入的请求参数未通过指定的验证规则，Laravel 则会将用户重定向到之前的位置中，并且将错误信息存储至 <code>session</code>中。</p>
+<blockquote>
+<p>$error 变量由 <code>Iliumineat\View\middleware\ShareErrorsFormSession</code>中间件绑定至视图当中，当这个中间件被使用会就可一在视图获取到 <code>$error</code>变量（在理论上来将 $error 可以被安全的使用）</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">if</span>(<span class="variable">$errors</span>-&gt;<span class="title function_ invoke__">any</span>())</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">alert</span> <span class="title">alert</span>-<span class="title">danger</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        @<span class="title">foreach</span>($<span class="title">errors</span>-&gt;<span class="title">all</span>() <span class="title">as</span> $<span class="title">error</span>)</span></span><br><span class="line"><span class="class">            &lt;<span class="title">p</span>&gt;</span>&#123;&#123;<span class="variable">$error</span>&#125;&#125;&lt;/p&gt;</span><br><span class="line">        @<span class="keyword">endforeach</span></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">@<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+<p>在上述的 code 中，主要可以返回全部的错误信息，假设<code>表单1、表单2</code>为通过验证规则，则会将这两个表单的错误信息显示在一个标签之中。</p>
+<h5 id="返回单个错误信息"><a href="#返回单个错误信息" class="headerlink" title="返回单个错误信息"></a>返回单个错误信息</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title function_ invoke__">error</span>(<span class="string">&#x27;titles&#x27;</span>)</span><br><span class="line">    &lt;p&gt;&#123;&#123;<span class="variable">$message</span>&#125;&#125;&lt;/p&gt;</span><br><span class="line">@enderror</span><br><span class="line">&lt;textarea <span class="class"><span class="keyword">class</span>=&quot;<span class="title">issue</span>-<span class="title">textarea</span> @<span class="title">error</span>(&quot;<span class="title">titles</span>&quot;) <span class="title">is</span> <span class="title">issue</span>-<span class="title">orss</span> @<span class="title">enderror</span>&quot; <span class="title">rows</span>=&quot;1&quot; <span class="title">name</span>=&quot;<span class="title">titles</span>&quot;&gt;&lt;/<span class="title">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>返回单个信息有好处也有缺点，好处就是我们可以通过返回的单个信息来设置显示 <strong>如果该表单为通过验证时的样式</strong>，而缺点则是 <strong>需要一个一个的写</strong>。</p>
+<h3 id="验证表单请求"><a href="#验证表单请求" class="headerlink" title="验证表单请求"></a>验证表单请求</h3><h4 id="创建一个请求类"><a href="#创建一个请求类" class="headerlink" title="创建一个请求类"></a>创建一个请求类</h4><p>面对更繁杂的表单验证，可以通过创建一个 <strong>表单请求</strong> 来处理表单验证的逻辑，该请求类是包含验证是的验证逻辑，通常可以通过下述 <code>Artisan</code> 命令进行创建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:request StoreTestPost</span><br></pre></td></tr></table></figure>
+
+<p>创建之后该请求类将会存放在 <code>app/Http/Requests/</code> 目录下，我们分别可以通过 <strong>authorize、rules、messages、attributes</strong> 来对请求类进行一系列的设置和操作：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Requests</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Http</span>\<span class="title">FormRequest</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StoreTestPost</span> <span class="keyword">extends</span> <span class="title">FormRequest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 确定用户是否有权提出此请求。</span></span><br><span class="line"><span class="comment">     * Determine if the user is authorized to make this request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">authorize</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取应用于请求的验证规则。</span></span><br><span class="line"><span class="comment">     * Get the validation rules that apply to the request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">rules</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">            <span class="string">&#x27;test&#x27;</span> =&gt; <span class="string">&#x27;required&#x27;</span>,</span><br><span class="line">        ];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 为规则写入提示信息</span></span><br><span class="line"><span class="comment">     * Write prompt information for rules</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">messages</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">            <span class="string">&#x27;required&#x27;</span> =&gt; <span class="string">&#x27;:attribute必填&#x27;</span>,</span><br><span class="line">        ];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 为表单设置名称</span></span><br><span class="line"><span class="comment">     * Set a name for the form</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attributes</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">          <span class="string">&#x27;test&#x27;</span> =&gt; <span class="string">&quot;测试&quot;</span>,</span><br><span class="line">        ];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是我们还需要修改当前的控制器，将请求改为表单请求：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Store a newly created resource in storage.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  StoreTestPost  $request</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Http\Response</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">store</span>(<span class="params">StoreTestPost <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//web.php</span></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">post</span>(<span class="string">&#x27;/upload&#x27;</span>,<span class="string">&quot;PostController@store&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">if</span>(<span class="variable">$errors</span>-&gt;<span class="title function_ invoke__">any</span>())</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        @<span class="keyword">foreach</span>(<span class="variable">$errors</span>-&gt;<span class="title function_ invoke__">all</span>() <span class="keyword">as</span> <span class="variable">$error</span>)</span><br><span class="line">            &lt;p&gt;&#123;&#123;<span class="variable">$error</span>&#125;&#125;&lt;/p&gt;</span><br><span class="line">        @<span class="keyword">endforeach</span></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">@<span class="keyword">endif</span></span><br><span class="line">&#123;&#123;--inbar.blade.php--&#125;&#125;</span><br><span class="line">&lt;form action=<span class="string">&quot;/upload&quot;</span> method=<span class="string">&quot;post&quot;</span> enctype=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span><br><span class="line">    @csrf</span><br><span class="line">    &lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;_token&quot;</span> value=<span class="string">&quot;&lt;?php echo csrf_token()?&gt;&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;test&quot;</span>&gt;</span><br><span class="line">    &lt;button type=<span class="string">&quot;submit&quot;</span>&gt;Up File&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="当前语言下的错误提示信息"><a href="#当前语言下的错误提示信息" class="headerlink" title="当前语言下的错误提示信息"></a>当前语言下的错误提示信息</h4><p>如果你的需求只是简单的想将 <strong>表单所提示的错误信息</strong> 改成你想要的，那么通过编辑 <code>resources/lang/en/validation.php</code> 文件也是一个非常好的选择，除此之外它还可以通过<code>attributes</code>支持自定义的表单名称。</p>
+<h2 id="Laravel-目前支持的验证规则"><a href="#Laravel-目前支持的验证规则" class="headerlink" title="Laravel 目前支持的验证规则"></a>Laravel 目前支持的验证规则</h2><table>
+<thead>
+<tr>
+<th>DA</th>
+<th>FA</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>accepted</td>
+<td>验证必须是<strong>yes\on\1\true</strong></td>
+<td>可以运用在服务条款</td>
+</tr>
+<tr>
+<td>active_url</td>
+<td>验证字段是有效的A或aa记录</td>
+<td></td>
+</tr>
+<tr>
+<td>after:date</td>
+<td>必须是指定日期之后的值</td>
+<td></td>
+</tr>
+<tr>
+<td>after_or_equal:date</td>
+<td>验证字段是指定日期之后与此日期相同的值</td>
+<td></td>
+</tr>
+<tr>
+<td>alpha</td>
+<td>验证必须是由字母组成的数据</td>
+<td></td>
+</tr>
+<tr>
+<td>alpha_dash</td>
+<td>允许包含字母、数字以及破折号和下划线的数据</td>
+<td></td>
+</tr>
+<tr>
+<td>alpha_num</td>
+<td>必须完全是字母或数字的数据</td>
+<td></td>
+</tr>
+<tr>
+<td>array</td>
+<td>验证数据是一个php数组</td>
+<td></td>
+</tr>
+<tr>
+<td>bail</td>
+<td>在第一次验证失败后停止验证规则</td>
+<td></td>
+</tr>
+<tr>
+<td>before:date</td>
+<td>这个验证的数据必须是指定的日期值</td>
+<td></td>
+</tr>
+<tr>
+<td>before_or_equal:date</td>
+<td>验证数据必须是在指定日期之前或相同的日期</td>
+<td></td>
+</tr>
+<tr>
+<td>between:min,max</td>
+<td>安正数据的大小必须在min和max之间</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>验证数据必须可以转换为boolean类型</td>
+<td>接受true、false、1、0</td>
+</tr>
+<tr>
+<td>confirmed</td>
+<td>验证数据必须具有匹配字段</td>
+<td>验证字段为password，输入必须存在匹配的password字段</td>
+</tr>
+<tr>
+<td>date</td>
+<td>根据php函数，验证必须是有效的日期</td>
+<td></td>
+</tr>
+<tr>
+<td>date_equals:date</td>
+<td>验证数据必须等于指定日期</td>
+<td></td>
+</tr>
+<tr>
+<td>date_format:format</td>
+<td>验证数据必须匹配指定的日期格式</td>
+<td></td>
+</tr>
+<tr>
+<td>different:field</td>
+<td>验证的数据必须与field值不同</td>
+<td></td>
+</tr>
+<tr>
+<td>digits:value</td>
+<td>验证数据必须为numeric</td>
+<td>且必须具有准确长度的value</td>
+</tr>
+<tr>
+<td>dimensions</td>
+<td>u验证文件必须是图片且比例符合规则</td>
+<td>min_width:x,min_height&#x3D;n</td>
+</tr>
+<tr>
+<td>ditinct</td>
+<td>验证数组时数据不允许有任何重复</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>验证数据符合e-mail地址格式</td>
+<td></td>
+</tr>
+<tr>
+<td>ends_with:foo,bar</td>
+<td>验证数据必须是指定值内的结尾</td>
+<td></td>
+</tr>
+<tr>
+<td>exists:table,column</td>
+<td>验证数据必须存在指定的数据库表中</td>
+<td></td>
+</tr>
+<tr>
+<td>file</td>
+<td>验证数据必须是成功上传的文件</td>
+<td></td>
+</tr>
+<tr>
+<td>filled</td>
+<td>验证数据的存在时不可为空</td>
+<td></td>
+</tr>
+<tr>
+<td>ge:field</td>
+<td>验证数据必须大于指定的field</td>
+<td>两个数据必须是相同的类型</td>
+</tr>
+<tr>
+<td>gte:field</td>
+<td>验证数据必须大于或等于指定的fileld</td>
+<td></td>
+</tr>
+<tr>
+<td>image</td>
+<td>验证数据必须为图片</td>
+<td></td>
+</tr>
+<tr>
+<td>in:foo,bar</td>
+<td>雅正数据必须包含在指定的值列表中</td>
+<td></td>
+</tr>
+<tr>
+<td>in_array:anotherfield.*</td>
+<td>验证数据必须存在与另一个字段antherfield值中</td>
+<td></td>
+</tr>
+<tr>
+<td>integer</td>
+<td>验证数据必须时整数</td>
+<td></td>
+</tr>
+<tr>
+<td>ip</td>
+<td>验证数据必须是ip地址</td>
+<td>ip</td>
+</tr>
+<tr>
+<td>ipv4</td>
+<td>验证数据必须是ipv4地址</td>
+<td>ip</td>
+</tr>
+<tr>
+<td>ipv6</td>
+<td>验证数据必须是ipv6地址</td>
+<td>ip</td>
+</tr>
+<tr>
+<td>json</td>
+<td>验证数据必须是有效的json字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>lt:field</td>
+<td>验证数据必须是指定的field</td>
+<td></td>
+</tr>
+<tr>
+<td>lte_field</td>
+<td>验证数据必须小于或等于指定的数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>max:value</td>
+<td>验证数据必须小于或等于给定的值</td>
+</tr>
+<tr>
+<td>mimetypes:text&#x2F;plain</td>
+<td>验证文件必须具备列出的其中一个扩展匹配的MIME类型</td>
+<td></td>
+</tr>
+<tr>
+<td>mimes:foo,bar</td>
+<td>验证文件必须是具有列出其中一个扩展名对应的mime类型</td>
+<td>mimes:jpeg,png</td>
+</tr>
+<tr>
+<td>min:value</td>
+<td>验证数据必须具有最小值</td>
+<td></td>
+</tr>
+<tr>
+<td>not_in:foo,bar</td>
+<td>验证数据不能包含在指定的值列表中</td>
+<td></td>
+</tr>
+<tr>
+<td>not_regex:pattern</td>
+<td>验证数据必须与值idngd正则表达式不匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>nullable</td>
+<td>验证数据可以为<code>null</code></td>
+<td></td>
+</tr>
+<tr>
+<td>memeric</td>
+<td>验证数据必须为数值</td>
+<td></td>
+</tr>
+<tr>
+<td>password</td>
+<td>验证中的数据必须与经过身分验证的用户密码进行匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>present</td>
+<td>验证数据必须存在输入的数据中</td>
+<td>可以为空？</td>
+</tr>
+<tr>
+<td>regex:pattern</td>
+<td>验证数据必须与指定的正则表达式进行匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>required</td>
+<td>验证的字段必须存在于输入的数据中，而不是为空</td>
+<td>值为null、值为空字符串、无路径的上传文件</td>
+</tr>
+<tr>
+<td>required_if:anotherfield,value_one,value_two</td>
+<td>如果其他数据为任意一值，此验证数据必须存在且不为空</td>
+<td></td>
+</tr>
+<tr>
+<td>required_unless:anotherfield,value</td>
+<td>如果数据不等于任意值，此验证数据必须存在且不可为空</td>
+<td></td>
+</tr>
+<tr>
+<td>required_with:foo,bar</td>
+<td>在其他任意指定数据出现时，验证的数据必须存在且不可为空</td>
+<td></td>
+</tr>
+<tr>
+<td>required_with_all:foo,bar</td>
+<td>只有在任意一段数据全部出现时，验证数据才必须存在且不为空</td>
+<td></td>
+</tr>
+<tr>
+<td>reqrequired_without:foo,bar</td>
+<td>在其他数据不出现时，验证数据才存在且不可为空</td>
+<td></td>
+</tr>
+<tr>
+<td>required_without_all:foo,bar</td>
+<td>只有在其他指定数据字段全部不出现时，验证数据才可存在且不可为空</td>
+<td></td>
+</tr>
+<tr>
+<td>same:field</td>
+<td>验证数据必须与指定数据相匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>size:value</td>
+<td>验证数据必须指定值大小一致</td>
+<td></td>
+</tr>
+<tr>
+<td>starts_with:foo,bar</td>
+<td>验证数据必须以指定值之一开头</td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>验证数据必须是一个字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>验证数据必须符合php函数所定义的有效时区标识</td>
+<td>timezoune_identifiers_list</td>
+</tr>
+<tr>
+<td>unique:table,column,except,idColumn</td>
+<td>验证数据在指定数据库表中是唯一的</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/13.Laravel%20%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

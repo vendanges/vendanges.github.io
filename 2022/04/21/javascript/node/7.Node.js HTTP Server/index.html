@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js HTTP Server | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js HTTP Server</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>HTTP（Hyper Text Transfer Protocol）即浏览器和服务器之间的传输协议，用于浏览器和服务器之间的通信问题，从握手开始处理 TCP 链接，为实现解析 HTTP 的问题，Node 可以通过其内置的 <code>http</code> 模块来解决此问题。</p>
+<p>应用程序并不可以直接和 HTTP 进行一些操作，因此可以通过其 <code>http</code> 模块中所提供的 <code>require（请求）</code> 以及 <code>response（响应）</code> 来将 HTTP 响应返回服务器。</p>
+<blockquote>
+<p>因为 <code>require</code> 封装了 HTTP 请求，因此可以通过使用 <code>require</code> 对象属性方法获取所有的 HTTP 请求信息</p>
+<p>同样的因为 <code>response</code> 对象封装了 HTTP 响应，也可以通过此对象方法将 HTTP 响应返回给浏览器</p>
+</blockquote>
+<p>因此 http 模块也可以有两种方式进行使用，服务端创建 HTTP 服务器以此来监听客户端的请求并返回响应，而作为客户端，将发起一个 HTTP 请求（客户端）来获取服务端的响应。</p>
+<h2 id="Request-at-Response"><a href="#Request-at-Response" class="headerlink" title="Request at Response"></a>Request at Response</h2><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建本地服务器来从其接收数据</span></span><br><span class="line"><span class="keyword">var</span> server = http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    <span class="comment">// 获得 HTTP 请求的 method + url</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">method</span> + <span class="string">&#x27;:&#x27;</span> + req.<span class="property">url</span>)</span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">chunk</span>) &#123;</span><br><span class="line">        body.<span class="title function_">push</span>(chunk)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向请求发送响应头</span></span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;<span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;text/html&#x27;</span>&#125;);</span><br><span class="line">    <span class="comment">// 完成并发送请求</span></span><br><span class="line">    res.<span class="title function_">end</span>(<span class="string">&#x27;&lt;h1&gt;Hello,world!&lt;/h1&gt;&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8081</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Server is running at http://localhost:8081/&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>HTTP 请求的本质上就是 Headers 以及 body 两者组成，因此我们首先通过了 <code>http.createServer</code> 来创建一个服务器，然后通过 <code>server.listen()</code> 的方法监听端口，当客户端发出请求时，服务器就会的回调函数就会i被调用，因此输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Server is running at http://localhost:8081/</span><br><span class="line">GET:/</span><br><span class="line">GET:/favicon.ico</span><br><span class="line">GET:/</span><br><span class="line">GET:/favicon.ico</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>HTTP 请求在发送服务器时，是一个字节一个字节的以数据流方式发送，HTTP 模块创建的 HTTP 服务器接受到完整的请求头后会调用函数，因此除了可以使用 request 对象访问请求头数据以外，还可以将此当作一个只读数据流来访问请求数据提</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line">http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req,res</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> body = []</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">method</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">headers</span>)</span><br><span class="line"></span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">chunk</span>) &#123;</span><br><span class="line">        body.<span class="title function_">push</span>(chunk)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        body = <span class="title class_">Buffer</span>.<span class="title function_">concat</span>(body)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(body.<span class="title function_">toString</span>())</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).<span class="title function_">listen</span>(<span class="number">8081</span>)</span><br></pre></td></tr></table></figure>
+
+<p>因此输出的是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GET</span><br><span class="line"><span class="punctuation">&#123;</span> host<span class="punctuation">:</span> &#x27;localhost<span class="punctuation">:</span><span class="number">8081</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">  connection<span class="punctuation">:</span> &#x27;keep-alive&#x27;<span class="punctuation">,</span></span><br><span class="line">  &#x27;sec-ch-ua&#x27;<span class="punctuation">:</span></span><br><span class="line">   &#x27;<span class="string">&quot;Google Chrome&quot;</span>;v=<span class="string">&quot;89&quot;</span><span class="punctuation">,</span> <span class="string">&quot;Chromium&quot;</span>;v=<span class="string">&quot;89&quot;</span><span class="punctuation">,</span> <span class="string">&quot;;Not A Brand&quot;</span>;v=<span class="string">&quot;99&quot;</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">  &#x27;cache-control&#x27;<span class="punctuation">:</span> &#x27;no-cache&#x27;<span class="punctuation">,</span></span><br><span class="line">  &#x27;sec-ch-ua-mobile&#x27;<span class="punctuation">:</span> &#x27;?<span class="number">0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">  &#x27;user-agent&#x27;<span class="punctuation">:</span></span><br><span class="line">   &#x27;Mozilla/<span class="number">5.0</span> (X11; Linux x86_64) AppleWebKit/<span class="number">537.36</span> (KHTML<span class="punctuation">,</span> like Gecko) Chrome/<span class="number">89.0</span><span class="number">.4389</span><span class="number">.90</span> Safari/<span class="number">537.36</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">  &#x27;postman-token&#x27;<span class="punctuation">:</span> &#x27;<span class="number">9</span>c86d3ea<span class="number">-3</span>df2<span class="number">-9485</span><span class="number">-75e6</span>-f8d2af8c0b03&#x27;<span class="punctuation">,</span></span><br><span class="line">  accept<span class="punctuation">:</span> &#x27;*<span class="comment">/*&#x27;,</span></span><br><span class="line"><span class="comment">  &#x27;sec-fetch-site&#x27;: &#x27;none&#x27;,</span></span><br><span class="line"><span class="comment">  &#x27;sec-fetch-mode&#x27;: &#x27;cors&#x27;,</span></span><br><span class="line"><span class="comment">  &#x27;sec-fetch-dest&#x27;: &#x27;empty&#x27;,</span></span><br><span class="line"><span class="comment">  &#x27;accept-encoding&#x27;: &#x27;gzip, deflate, br&#x27;,</span></span><br><span class="line"><span class="comment">  &#x27;accept-language&#x27;: &#x27;zh-CN,zh-TW;q=0.9,zh;q=0.8,en-US;q=0.7,en;q=0.6&#x27; &#125;</span></span><br><span class="line"><span class="comment"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>客户端发送请求并接受到完整的服务端响应头时，就会调用回调函数，在回调函数中，可以通过 <code>response</code> 对象访问响应头外，还可以将 Response 当作一个只读数据流，其中最为主要的是 <code>http.ServerResponse</code> 所提供的类方法：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>response.statusCode</td>
+<td>HTTP 响应状态码</td>
+</tr>
+<tr>
+<td>2</td>
+<td>response.headers</td>
+<td>HTTP 响应头</td>
+</tr>
+<tr>
+<td>3</td>
+<td>response.statusMessage</td>
+<td>当前消息状态</td>
+</tr>
+<tr>
+<td>4</td>
+<td>response.complete</td>
+<td>是否已经接收到了完整的 HTTP 请求头信息</td>
+</tr>
+<tr>
+<td>5</td>
+<td>response.httpVersion</td>
+<td>链接到服务器的HTTP 版本</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    HTTP 状态码:  200</span></span><br><span class="line"><span class="comment">    &lt;h1&gt;Hello,world!&lt;/h1&gt;</span></span><br><span class="line"><span class="comment">    请求头: true</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">http.<span class="title function_">get</span>(<span class="string">&#x27;http://localhost:8081/&#x27;</span>, <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> body = []</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;HTTP 状态码: &quot;</span>,response.<span class="property">statusCode</span>)</span><br><span class="line"></span><br><span class="line">    response.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">chunk</span>) &#123;</span><br><span class="line">        body.<span class="title function_">push</span>(chunk)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    response.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        body = <span class="title class_">Buffer</span>.<span class="title function_">concat</span>(body)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(body.<span class="title function_">toString</span>())</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;是否已经接收完整的 HTTP 信息:&quot;</span> ,response.<span class="property">complete</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP-x2F-2"><a href="#HTTP-x2F-2" class="headerlink" title="HTTP&#x2F;2"></a>HTTP&#x2F;2</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/javascript/node.js/7.node.js%20http%20server.md/2546941209175.png"><br>HTTP&#x2F;2 是于 19999 年的 HTTP 1.1 的改进版（RFC 2616）后在 2014 年 12 月由 互联网工程任务组（IETF）内的 <strong>HTTPBIS（Hypertext Transfer Protocol Bis）</strong> 小组进行开发，并由 IETF 递交给 IESG 进行讨论，在 2015 年 5 月 正式批准（RFC 7540）</p>
+<p>于 HTTP 1.1 相比支持了多路复用（Multiplexing）、首部压缩（Headers）、服务推送（Server Push） 等特点，有效减少了大量的开销。</p>
+<blockquote>
+<p>服务器推送即允许服务器在客户端缓存中填充数据，通过服务器推送的机制来提前进行请求，但需要安装 http 2 模块</p>
+<blockquote>
+<p>由于 http2 是一个内置模块，与 npm 上的 http2 无关</p>
+</blockquote>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">node/</span><br><span class="line">├── package.json</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── public</span><br><span class="line">├── src</span><br><span class="line">│   └── server.js</span><br><span class="line">└── ssl</span><br><span class="line">    ├── localhost-cert.pem</span><br><span class="line">    └── localhost-privkey.pem</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http2 = <span class="built_in">require</span>(<span class="string">&#x27;http2&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http2.<span class="title function_">createSecureServer</span>(&#123;</span><br><span class="line">    <span class="attr">key</span>: fs.<span class="title function_">readFileSync</span>(<span class="string">&#x27;./ssl/localhost-privkey.pem&#x27;</span>),</span><br><span class="line">    <span class="attr">cert</span>: fs.<span class="title function_">readFileSync</span>(<span class="string">&#x27;./ssl/localhost-cert.pem&#x27;</span>)</span><br><span class="line">&#125;);</span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err));</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&#x27;stream&#x27;</span>, <span class="function">(<span class="params">stream, headers</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// stream is a Duplex</span></span><br><span class="line">    stream.<span class="title function_">respond</span>(&#123;</span><br><span class="line">        <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;text/html; charset=utf-8&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;:status&#x27;</span>: <span class="number">200</span></span><br><span class="line">    &#125;);</span><br><span class="line">    stream.<span class="title function_">write</span>(<span class="string">&quot;&lt;h1&gt;Hello,world!&lt;/h1&gt;&quot;</span>)</span><br><span class="line">    stream.<span class="title function_">end</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8443</span>);</span><br></pre></td></tr></table></figure>
+
+<p>之后即可通过 <a target="_blank" rel="noopener" href="https://localhost:8443/">https://localhost:8443/</a> 直接进行访问，当然由于使用了 ssl 的原因 node 关闭了 <code>http</code> 的访问，因此只可以通过 <code>https</code> 进行，如果是自己生成的证书可能会报错，点击继续访问即可。</p>
+<blockquote>
+<p>可直接通过 openssl 生成自己的本地证书</p>
+<p>openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj ‘&#x2F;CN&#x3D;localhost’ <br>  -keyout localhost-privkey.pem -out localhost-cert.pem
+ </p>
+</blockquote>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/7.Node.js%20HTTP%20Server/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

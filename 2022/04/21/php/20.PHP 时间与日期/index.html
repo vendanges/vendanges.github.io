@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 时间与日期 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 时间与日期</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在PHP开发语言之众，PHP为用户提供了大量的日期和时间的相关函数，利用这些函数可以方便的获得当前的日期和时间，也可以生成一个指定的时间戳等方式输出。</p>
+<h4 id="时间戳是什么"><a href="#时间戳是什么" class="headerlink" title="时间戳是什么"></a>时间戳是什么</h4><p><strong>时间戳即UNIX时间戳</strong>，在大多数UNIX系统中，<strong>保存当前的前日期和时间的方法是格林尼治时间</strong>[^格林尼治标准时间]，而格林尼治时间是从<strong>1970年1月1日零点起到当前此刻的秒数</strong>，以32为整列表示。<strong>1970年1月1日零时起也即称之为UNIX纪元</strong>，在Windows系统中也可以使用UNIX时间戳，<strong>如果时间是在1970年以前或2039年以后，处理的事件将会发生错误。</strong></p>
+<h4 id="时间转换为时间戳"><a href="#时间转换为时间戳" class="headerlink" title="时间转换为时间戳"></a>时间转换为时间戳</h4><h5 id="strtotime"><a href="#strtotime" class="headerlink" title="strtotime()"></a>strtotime()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/20.php%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F.md/20201105201359309_1641428182.png"></h5><p>如果用字符串表达的日期和事件转化为时间戳形式，即可使用**strtotime()**函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo strtotime(&#x27;2020-10-27&#x27;),&quot;&lt;br&gt;&quot;;</span><br><span class="line">		echo strtotime(&#x27;2020-10-27 9:16:51&#x27;),&quot;&lt;br&gt;&quot;; </span><br><span class="line">		echo strtotime(&#x27;October 27, 2020&#x27;);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="mktime"><a href="#mktime" class="headerlink" title="mktime()"></a>mktime()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/20.php%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F.md/20201105201348422_1737204178.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$time = mktime(9,26,55,10,27,2020);		// 9时25分55秒，2020年10月27日</span><br><span class="line">			print_r($time);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="获取当前时间"><a href="#获取当前时间" class="headerlink" title="获取当前时间"></a>获取当前时间</h4><p>在PHP开发语言之中，最常用的则是日期和时间函数即date()函数，可该函数的作用是我将时间戳按照只当的字符来显示具体的时间信息：</p>
+<h5 id="time"><a href="#time" class="headerlink" title="time()"></a>time()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/20.php%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F.md/20201105201332927_1184931256.png"></h5><p>time函数和data()函数有一定的区别，time()函数主要的作用就是和将时间戳转化为具体的日期和时间字符串如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo time();		// 输出当前时间戳</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="date"><a href="#date" class="headerlink" title="date()"></a>date()</h5><h6 id="date-函数表"><a href="#date-函数表" class="headerlink" title="date()函数表"></a>date()函数表</h6><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d</td>
+<td>当前月份的第几天</td>
+<td>月份</td>
+</tr>
+<tr>
+<td>j</td>
+<td>月份中的第几天（没有前导零）</td>
+<td></td>
+</tr>
+<tr>
+<td>S</td>
+<td>每月天数后面的英文后缀，两个字符标识[^如：st、nd、rd、th]</td>
+<td></td>
+</tr>
+<tr>
+<td>F</td>
+<td>月份[^完整的文本格式（January）]</td>
+<td></td>
+</tr>
+<tr>
+<td>m</td>
+<td>数字表示月份[^01~012]</td>
+<td></td>
+</tr>
+<tr>
+<td>M</td>
+<td>三个字母缩写表示月份[^Jan]</td>
+<td></td>
+</tr>
+<tr>
+<td>n</td>
+<td>数字表示月份，没有前导0[^1~12]</td>
+<td></td>
+</tr>
+<tr>
+<td>t</td>
+<td>给定月份所应有的天数[^28~31]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>D</td>
+<td>星期中的第几天（用字母标识）</td>
+<td>星期</td>
+</tr>
+<tr>
+<td>l [^小写L]</td>
+<td>星期几</td>
+<td></td>
+</tr>
+<tr>
+<td>w</td>
+<td>星期中的第几天，数字显示[^0&#x3D;星期天，6星期六]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>z</td>
+<td>年份中的第几天</td>
+<td>年份</td>
+</tr>
+<tr>
+<td>L</td>
+<td>是否时闰年[^如果是闰年为1，则返回为0]</td>
+<td></td>
+</tr>
+<tr>
+<td>Y</td>
+<td>数为数字表示完整年份[^如2020、2021]</td>
+<td></td>
+</tr>
+<tr>
+<td>y</td>
+<td>二位数年份表示[^20]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>a</td>
+<td>小写的上午和下午值[^am、pm]</td>
+<td>上午and下午</td>
+</tr>
+<tr>
+<td>A</td>
+<td>大写的上午和下午值[^AM、PM]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>g</td>
+<td>小时，12小时格式没有先导0[^1~12]</td>
+<td>小时</td>
+</tr>
+<tr>
+<td>G</td>
+<td>小时，24小时格式，没有前导零[^0~24]</td>
+<td></td>
+</tr>
+<tr>
+<td>h</td>
+<td>小时，12小时格式，有前导零[^01~12]</td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td>小时，24小时格式，有前导零[^00~23]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>i</td>
+<td>有前导零的分钟数[^00~59]</td>
+<td>分钟</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>s</td>
+<td>秒数，有前导零[^00~59]</td>
+<td>秒</td>
+</tr>
+<tr>
+<td>U</td>
+<td>从UNIX纪元至今的秒数[^即time秒数]</td>
+<td></td>
+</tr>
+</tbody></table>
+<h6 id="date-输出当前时间"><a href="#date-输出当前时间" class="headerlink" title="date() 输出当前时间"></a>date() 输出当前时间<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/20.php%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F.md/20201105201321462_566446660.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo date(&#x27;Y 年 n 月 j 日 g 时 i 分 s 秒 A&#x27;);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="date-设置时区"><a href="#date-设置时区" class="headerlink" title="date() 设置时区"></a>date() 设置时区<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/20.php%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F.md/20201105201310744_1743321262.png"></h6><p>data()系统默认的时<strong>格林尼治标准时间</strong>，所以显示的时间也许会和当前的时间有一定的差别，可通过<strong>date_default_timezone_set</strong>函数进行设置时区。<strong>Asia&#x2F;Chongqing（重庆时间）</strong>，<strong>Asia&#x2F;Shanghai （上海时间），Aisa&#x2F;Urumqi（乌鲁木齐），其北京时间可直接使用“PRC”</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		date_default_timezone_set(&#x27;PRC&#x27;);</span><br><span class="line">			echo &quot;北京时间&quot;,&quot;&lt;br&gt;&quot;;</span><br><span class="line">			echo date(&#x27;Y 年 n 月 j 日 g 时 i 分 s 秒 A&#x27;);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>strtotime()</td>
+<td>字符串表达的日期和事件转化为时间戳</td>
+<td>时间转换为时间戳</td>
+</tr>
+<tr>
+<td>mktime()</td>
+<td>字符串表达的日期和事件转化为时间戳</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>time()</td>
+<td>时间戳转化为具体的日期和时间字符串</td>
+<td>获取当前时间</td>
+</tr>
+<tr>
+<td>date()</td>
+<td>输出当前时间</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>设置时区</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Asia&#x2F;Chongqing</td>
+<td>重庆时间</td>
+<td>date_default_timezone_set</td>
+</tr>
+<tr>
+<td>Asia&#x2F;Shanghai</td>
+<td>上海时间</td>
+<td></td>
+</tr>
+<tr>
+<td>Aisa&#x2F;Urumqi</td>
+<td>乌鲁木齐</td>
+<td></td>
+</tr>
+<tr>
+<td>PRC</td>
+<td>北京时间</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/20.PHP%20%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

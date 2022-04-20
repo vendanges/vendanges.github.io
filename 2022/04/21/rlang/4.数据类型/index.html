@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>R 数据类型与数据结构 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>R 数据类型与数据结构</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/r-lang/" rel="tag">r lang</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="数据类型和其他函数"><a href="#数据类型和其他函数" class="headerlink" title="数据类型和其他函数"></a>数据类型和其他函数</h2><p>在R语言之中，与其他的语言进行相比，其中主要分为了<strong>数值（numeric）、字符（character）、日期（date）、布尔（logical）</strong>四种等数据类型，我们可以通过不同的函数对直进行判断等。</p>
+<h3 id="is-type-values"><a href="#is-type-values" class="headerlink" title="is.type(values)"></a>is.type(values)</h3><h4 id="is-numeric-（数字型）"><a href="#is-numeric-（数字型）" class="headerlink" title="is.numeric （数字型）"></a>is.numeric （数字型）</h4><p>is.numeric通常的使用语法为<code>is.numeric(values)</code>，即翻译做(values)是不是为<code>numeric</code>即数值型，通常会返回布尔型的数据分别为 true and false，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> one <span class="operator">&lt;-</span> 10</span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.numeric</span><span class="punctuation">(</span>one<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> two <span class="operator">&lt;-</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.numeric</span><span class="punctuation">(</span>two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">FALSE</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="is-character-字符串"><a href="#is-character-字符串" class="headerlink" title="is.character (字符串)"></a>is.character (字符串)</h4><p>在这里我们需要注意的是，在赋值给two的字符串数据是需要使用<code>&quot;&quot;</code>的，因为他是字符串类型的数据，而不是数值型。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">is.character</span><span class="punctuation">(</span>two<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="is-logical-布尔型"><a href="#is-logical-布尔型" class="headerlink" title="is.logical (布尔型)"></a>is.logical (布尔型)</h4><p>由于R语言是严格区分大小写的，如你赋值给t是true，则r会报错，因为他判定这是一个字符串类型，但是你如果是大些的TRUE，他则会判断这是一个布尔型数据如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> t <span class="operator">&lt;-</span> true</span><br><span class="line">Error<span class="operator">:</span> object <span class="string">&#x27;true&#x27;</span> not found</span><br><span class="line"><span class="operator">&gt;</span> t <span class="operator">&lt;-</span> <span class="literal">TRUE</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">is.logical</span><span class="punctuation">(</span>t<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="literal">TRUE</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="class-values"><a href="#class-values" class="headerlink" title="class(values)"></a>class(values)</h3><p>class(values)与is.type(values)的不同之处在于，class(values)则是告诉你该直的数据的类型信息，通过使用class可以查看特定直的数据类型，如：</p>
+<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">class</span><span class="punctuation">(</span>date<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;Date&quot;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%H</td>
+<td>小时</td>
+<td>基础格式</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟</td>
+<td></td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒时</td>
+<td></td>
+</tr>
+<tr>
+<td>%B</td>
+<td>月份</td>
+<td></td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期</td>
+<td></td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>年份</td>
+<td></td>
+</tr>
+<tr>
+<td>%p</td>
+<td>上午和下午</td>
+<td></td>
+</tr>
+<tr>
+<td>%x</td>
+<td>直接显示日期</td>
+<td>完整格式</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>直接显示日期与时间</td>
+<td></td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>完整年份</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="as-integer"><a href="#as-integer" class="headerlink" title="as.integer()"></a>as.integer()</h5><h4 id="character"><a href="#character" class="headerlink" title="character"></a>character</h4><p>在r语言中，时间类型是一个极为特别的，我们可以通过class告诉我们某个直的数据类型，但是如果要输出，我们可以使用r语言中的<code>as.integer</code>函数进行输出，其中的基本格式为</p>
+<blockquote>
+<p>as.integer(strftime(values,’date参数’)</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> date <span class="operator">&lt;-</span> as.Date<span class="punctuation">(</span><span class="string">&quot;2021-1-28&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">as.integer</span><span class="punctuation">(</span>strftime<span class="punctuation">(</span>date<span class="punctuation">,</span><span class="string">&#x27;%Y&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">2021</span></span><br></pre></td></tr></table></figure>
+<p>我们可以根据对照上访的date数据表中的各个参数进行输出，但需要注意的是本书所提供的并不是date的全部参数，而是较为主要和常用的几个参数，读者可自行前往了解即可。</p>
+<h3 id="mode-values"><a href="#mode-values" class="headerlink" title="mode(values)"></a>mode(values)</h3><p>mode与class类似，也是直接告诉我们当前values的类型，通过使用mode\class我们都可以直接查询该values的数据类型，如本次我们以创建的向量为例：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> mode<span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;numeric&quot;</span></span><br></pre></td></tr></table></figure>
+<p>而向量内的数据为<code>1 2 3</code>，所以被输出为数字型。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>在目前流行的语言之中，日R语言的殊绝结构可以说是相当的丰富且不同，主要分为<strong>向量（vector）、列表（list）、因子（factor）、矩阵（matrix）、数组（array）、数据框（data.frame）</strong>等六种类型。</p>
+<h3 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h3><p>向量主要用于存储数值，字符型或逻辑数据的一维数组，执行组合功能的函数<code>c()</code>可以用于创建向量，单个向量中的数据类型是固定的，比如数值型向量中的元素就必须为向量。向量是组成R语言的一种最为常见的数据结构，分为三种类型分别为<code>数值型、字符型、逻辑型</code>等。<br>在R语言之中，创建向量的方式有很多函数都可以进行创建，分别为<code>c()、seq()、rep()</code>等函数可用于进行创建，本次我们将会使用<code>c()</code>进行演示创建向量。</p>
+<h4 id="c"><a href="#c" class="headerlink" title="c()"></a>c()</h4><p>在R语言之中，我们可以使用<code>c()</code>创建一个向量</p>
+<h5 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h5><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span></span><br><span class="line">```  </span><br><span class="line">这个时候我们会发现，所输出的向量也仅仅是输出，那么怎么让他们存储成一个直，我们可以使用赋值（=）即可：</span><br><span class="line">##### 创建并存储</span><br><span class="line">```r</span><br><span class="line"><span class="operator">&gt;</span> a <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<h5 id="输出存储于直中的向量"><a href="#输出存储于直中的向量" class="headerlink" title="输出存储于直中的向量"></a>输出存储于直中的向量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; a[a&gt;0]</span><br><span class="line">[1] 1 2 3</span><br></pre></td></tr></table></figure>
+<h5 id="索引向量"><a href="#索引向量" class="headerlink" title="索引向量"></a>索引向量</h5><p>在R语言之中，我们可以索引向量，这比较类似于Python之中的字典，但又与python中的字典不同：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span>one<span class="operator">=</span><span class="number">1.2</span><span class="punctuation">,</span>two<span class="operator">=</span><span class="number">2.1</span><span class="punctuation">,</span>three<span class="operator">=</span><span class="number">10</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">c</span><span class="punctuation">[</span><span class="string">&quot;one&quot;</span><span class="punctuation">]</span></span><br><span class="line">one </span><br><span class="line"><span class="number">1.2</span> </span><br></pre></td></tr></table></figure>
+<h5 id="向量的长度-length"><a href="#向量的长度-length" class="headerlink" title="向量的长度 (length)"></a>向量的长度 (length)</h5><p>在r语言之中，为向量提供了一个长度查询与输出的一个函数，为<code>length()</code>，这个函数是单独为向量所提供长度查询的，结果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span><span class="built_in">c</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h5 id="向量的运算符"><a href="#向量的运算符" class="headerlink" title="向量的运算符"></a>向量的运算符</h5><p>通常，在基本上所有的语言之中，运算符都会被通用，就是说基本上都适用，所以我们也可以进行向量和向量之间运算，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> a <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> b <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> a<span class="operator">+</span>b</span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">2</span> <span class="number">6</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/rlang/4.%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

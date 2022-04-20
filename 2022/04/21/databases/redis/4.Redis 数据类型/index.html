@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Redis 数据类型 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Redis 数据类型</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/redis/" rel="tag">redis</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Redis 中的数据类型主要分为 <strong>字符串、哈希、列表、集合、有序集合、HyperLogLog、地理信息、Stream</strong> 等类型，字符串类型在上一章我们就已经介绍过，他通过 <code>SET</code> 就可以直接进行创建，而其他的数据类型则是需要通过其他的命令以及其下属配合的命令来完成操作。</p>
+<h2 id="哈希（Hash）"><a href="#哈希（Hash）" class="headerlink" title="哈希（Hash）"></a>哈希（Hash）</h2><p>哈希是一个 string 类型的 字段（field） 以及值（value）映射表，可适用与存储对象，单个哈希键值可存储多大40亿字段值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; HMSET hash_value name &quot;kun&quot; info &quot;hello,world&quot; url &quot;http://jiangxue.org.cn&quot; and &quot;one&quot; or &quot;two&quot; age &quot;17&quot; redis &quot;redislabs.com&quot;</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; HGETALL hash_value</span><br><span class="line"> 1) &quot;name&quot;</span><br><span class="line"> 2) &quot;kun&quot;</span><br><span class="line"> 3) &quot;info&quot;</span><br><span class="line"> 4) &quot;hello,world&quot;</span><br><span class="line"> 5) &quot;url&quot;</span><br><span class="line"> 6) &quot;http://jiangxue.org.cn&quot;</span><br><span class="line"> 7) &quot;and&quot;</span><br><span class="line"> 8) &quot;one&quot;</span><br><span class="line"> 9) &quot;or&quot;</span><br><span class="line"> 10) &quot;two&quot;</span><br><span class="line"> 11) &quot;age&quot;</span><br><span class="line"> 12) &quot;17&quot;</span><br><span class="line"> 13) &quot;redis&quot;</span><br><span class="line"> 14) &quot;redislabs.com&quot;</span><br></pre></td></tr></table></figure>
+
+
+<p>需要注意的是 Hashes 类型的字段依然是通过键值来进行存储的，如 <code>name=kun、info=hello,world</code> </p>
+<p>可以通过使用 <code>HMSET</code> 来创建 hash 类型的键值对，也可以使用 <code>HGETALL</code> 来获取所有的字段值，当然也可以指定键名的方式来进行获取 <code>HGETALL hash_value &quot;name&quot;</code>。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>HMSET</td>
+<td>创建 hash 类型的键值段</td>
+<td><code>HMSET hash_value name &quot;kun&quot; info &quot;hello,world&quot; url &quot;http://jiangxue.org.cn&quot;</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>HMGET</td>
+<td>获取指定字段的值</td>
+<td><code>HMGET hash_value name</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGET</td>
+<td>获取存储在哈希表中指定的字段值</td>
+<td><code>HGET hash_value &quot;name&quot;</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>HSET</td>
+<td>自 redis 4.0 起可以一次性设置多个字段对，<code>HMSET</code> 区别是可以覆盖字段值</td>
+<td><code>HSET hash_value age &quot;10&quot;</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>HSETNX</td>
+<td>为哈希表中不存在的字段赋值（如存在返回 0）</td>
+<td><code>HSETNX hash_value about &quot;jiangxue&quot;</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGETALL</td>
+<td>获取全部或单个的 hash 类型键值段</td>
+<td><code>HGETALL hash_value</code> or <code>HGET hash_value &quot;name&quot;</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>HEXISTS</td>
+<td>查看哈希表中的 key 是否存在（存在返回 1，否则返回0）</td>
+<td><code>HEXISTS hash_value &quot;name&quot;</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>HKEYS</td>
+<td>获取当前所有哈希表中的字段</td>
+<td><code>HKEYS hash_value</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>HVALS</td>
+<td>获取当前所有哈希表中的字段值</td>
+<td><code>HVALS hash_value</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>HLEN</td>
+<td>获取哈希表中字段的数量（从1开始）</td>
+<td><code>HLEN hash_value</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>HDEL</td>
+<td>删除一个多多个哈希表中的键值对</td>
+<td><code>HDEL hash_value &quot;and&quot; &quot;or&quot;</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>HINCRBY</td>
+<td>为指定的哈希表中的 key 增加或减少数值（整数）</td>
+<td><code>HINCRBY hash_value age 1</code> （原本 17将会被增加1，得出 18）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>HINCRBYFLOAT</td>
+<td>与 <code> HINCRBY</code> 的区别是支持非整数计算以及科学计数法</td>
+<td><code> HINCRBYFLOAT hash_value age -1.5</code> （18-1.5 得出 16.5）</td>
+</tr>
+<tr>
+<td>13</td>
+<td>HSCAN</td>
+<td>模糊搜索哈希表中的字段，并返回键值段</td>
+<td><code>HSCAN hash_value 0 match &quot;na*&quot;</code> (返回 name 字段即值)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>HSTRLEN</td>
+<td>返回字段值的长度</td>
+<td><code>HSTRLEN hash_value &quot;name&quot;</code></td>
+</tr>
+</tbody></table>
+<h2 id="列表（List）"><a href="#列表（List）" class="headerlink" title="列表（List）"></a>列表（List）</h2><p>列表在 Redis 中表示可以将数据按顺序排序插入的字符串列表，通常可以包含超过40亿个元素，这启动主要通过 <code>LPUSH</code> 来插入一个或多个到列表头部，以及通过 <code>LRANGE</code> 来获取列表范围</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; LPUSH list_key redis</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; LPUSH list_key mysql</span><br><span class="line">(integer) 2</span><br><span class="line">    127.0.0.1:6379&gt; LPUSH list_key sql</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; LPUSH list_key mongoDB</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; LPUSH list_key one two</span><br><span class="line">(integer) 6</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 10</span><br><span class="line">1) &quot;two&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;mongoDB&quot;</span><br><span class="line">4) &quot;sql&quot;</span><br><span class="line">5) &quot;mysql&quot;</span><br><span class="line">6) &quot;redis&quot;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>LPUSH</td>
+<td>将一个或多个值插入到列表头部 (如果 key 不存在则会创建一个)</td>
+<td><code>LPUSH list_key mongoDB</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>RPUSH</td>
+<td>将一个或多个值插入到表尾部（如果 key 不存在则会创建一个）</td>
+<td><code>RPUSH list_key &quot;nice!&quot;</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>LPUSHX</td>
+<td>key 不存在时不进行任何操作并返回 0，存在的话则将值插入到列表头部</td>
+<td><code> LPUSHX list_key &quot;hello&quot;</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>RPUSHX</td>
+<td>key 不存在时不进行任何操作并返回 0，存在的话则将值插入到列表尾部</td>
+<td><code>RPUSHX list_keys &quot;world&quot;</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>LINSERT</td>
+<td>在指定元素前插入列表数据</td>
+<td><code>LINSERT list_key BEFORE &quot;redis&quot; &quot;redislab.com&quot;</code> （在 redis 前插入 redislab.com）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>LSET</td>
+<td>通过索引替换列表元素（以0开始）</td>
+<td><code>LSET list_key 0 &quot;start&quot;</code>（将 索引为0的元素替换为 “start”）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>LRANGE</td>
+<td>在一定范围内获取列表内元素</td>
+<td><code>LRANGE list_key 0 100</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>LINDEX</td>
+<td>返回指定索引对应的表内元素（超出范围返回 nill）</td>
+<td><code>LINDEX list_key 0</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>BRPOPLPUSH</td>
+<td>将指定列表内最后一个元素插入到另外一个列表的头部（如果列表没有元素会阻塞到超时为止，或者发现可以移出的元素为止，单位是秒，需要注意的是如果超时参数是 0 ，那么将会表示阻塞的时间可以无限期延长）</td>
+<td><code>BRPOPLPUSH list_key key_name 500</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>LLEN</td>
+<td>获取列表的元素数量</td>
+<td><code>LLEN list_key</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>LTRIM</td>
+<td>用于修建已经存在列表内的元素（要么从前删除要么从后删除，不可跨越索引）</td>
+<td><code>LTRIM list_key -1 -1</code> （从倒数地一个开始，然后直到倒数第一个，也就是说之保留倒数地一个）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>BLPOP</td>
+<td>移出第一个列表元素，并返回所移出的列表名称和元素</td>
+<td><code>BLPOP list_key 0</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>BRPOP</td>
+<td>移出列表最后一个元素，同样返回岁移出的列表名和元素</td>
+<td><code>LRANGE list_key 0 -1</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>LPOP</td>
+<td>移出列表中地一个元素（与 BLPOP 的区别是不用设置阻塞时间）</td>
+<td><code>LPOP list_key  1</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>LREM</td>
+<td>指定一个或多个列表中相同元素进行删除</td>
+<td><code>LREM list_key 1 &quot;sql&quot;</code></td>
+</tr>
+</tbody></table>
+<h3 id="LTRIM"><a href="#LTRIM" class="headerlink" title="LTRIM"></a>LTRIM</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210720175635.png"><br>在 Redis 中 LTRIM 主要用于修剪（删除）已经存在的列表内的元素，其中分为 <code>start</code> 以及 <code>stop</code> 以 0 为开始，-1 可以表示列表里面的最后一个元素，-2 表倒数第二个 ……（这适用绝大多数依赖索引所完成的命令，如 <code>RANGE</code>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 1000</span><br><span class="line">1) &quot;start&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;mongoDB&quot;</span><br><span class="line">5) &quot;sql&quot;</span><br><span class="line">6) &quot;mysql&quot;</span><br><span class="line">7) &quot;redislab.com&quot;</span><br><span class="line">8) &quot;redis&quot;</span><br><span class="line">9) &quot;world&quot;</span><br><span class="line">127.0.0.1:6379&gt; clear</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; LTRIM list_key -1 -1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 100</span><br><span class="line">1) &quot;world&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>要么从前删除要么从后删除，不可跨越索引</p>
+</blockquote>
+<p>我们所构造的 <code>-1~-1</code> 翻译到人可以理解的那就是，从倒数地一个开始，然后直到倒数第一个，也就是说之保留倒数地一个，当然你也可以通过 <code>LTRIM list_key -6 -1</code> 从倒数第六到最后一个来进行保留，删除其余外的元素：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; LTRIM list_key -6 -1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 -1</span><br><span class="line">1) &quot;mongoDB&quot;</span><br><span class="line">2) &quot;sql&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;redislab.com&quot;</span><br><span class="line">5) &quot;redis&quot;</span><br><span class="line">6) &quot;world&quot;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="BLPOP"><a href="#BLPOP" class="headerlink" title="BLPOP"></a>BLPOP</h3><p>主要的作用就是移出指定列表中的第一个元素，并返回所移出的元素名称，如果列表没有元素或没有该列表，则会等待超时时间过后即可关闭阻塞，或者得到发现可以移出的元素为止。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 -1</span><br><span class="line">1) &quot;world&quot;</span><br><span class="line">2) &quot;redis&quot;</span><br><span class="line">3) &quot;redislab.com&quot;</span><br><span class="line">4) &quot;mysql&quot;</span><br><span class="line">5) &quot;sql&quot;</span><br><span class="line">6) &quot;mongoDB&quot;</span><br><span class="line">7) &quot;one&quot;</span><br><span class="line">8) &quot;two&quot;</span><br><span class="line">9) &quot;start&quot;</span><br><span class="line">127.0.0.1:6379&gt; BLPOP list_key 0</span><br><span class="line">1) &quot;list_key&quot;</span><br><span class="line">2) &quot;world&quot;</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 -1</span><br><span class="line">1) &quot;redis&quot;</span><br><span class="line">2) &quot;redislab.com&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;sql&quot;</span><br><span class="line">5) &quot;mongoDB&quot;</span><br><span class="line">6) &quot;one&quot;</span><br><span class="line">7) &quot;two&quot;</span><br><span class="line">8) &quot;start&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LTRIM-1"><a href="#LTRIM-1" class="headerlink" title="LTRIM"></a>LTRIM</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210720175619.png"><br>LTRIM 与列表中所有的移出命令不同的是，他可以指定一个或多个在列表中相同的元素进行删除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; LPUSH list_key &quot;sql&quot; sql sql</span><br><span class="line">(integer) 6</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 -1</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;sql&quot;</span><br><span class="line">3) &quot;sql&quot;</span><br><span class="line">4) &quot;redislab.com&quot;</span><br><span class="line">5) &quot;mysql&quot;</span><br><span class="line">6) &quot;mongoDB&quot;</span><br><span class="line">127.0.0.1:6379&gt; LREM list_key 1 &quot;sql&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; LRANGE list_key 0 -1</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;sql&quot;</span><br><span class="line">3) &quot;redislab.com&quot;</span><br><span class="line">4) &quot;mysql&quot;</span><br><span class="line">5) &quot;mongoDB&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="集合（Set）"><a href="#集合（Set）" class="headerlink" title="集合（Set）"></a>集合（Set）</h2><p>集合（set）是一个字符串类型的无序集合，<strong>集合成员是唯一的</strong>，因此这意味着在集合中不可以有重复的成员数据，每个集合中最大可以存储40多亿个成员数据。通常可以通过 <code>SADD</code> 创建一个集合并向其添加成员（一个或多个），之后 <code>SMEMBERS</code>  来返回集合中的所有成员。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD set_key sql mysql redis mongoDB </span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS set_key</span><br><span class="line">1) &quot;mongoDB&quot;</span><br><span class="line">2) &quot;redis&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;sql&quot;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>SADD</td>
+<td>创建集合并向其中添加一个或多个成员</td>
+<td><code>SADD set_key sql mysql redis mongoDB</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>SINTERSTORE</td>
+<td>将两个集合中相同的成员保存在另一个集合中</td>
+<td><code>SINTERSTORE set_key set_one set_two</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>SDIFFSTORE</td>
+<td>将两个集合中不相同的成员数据保存到另一个集合中</td>
+<td><code>SDIFFSTORE set_key set_one set_two</code> （将 set_one 和 set_two 两个集合之间不相同的成员保存到 set_key 集合中）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SUNIONSTORE</td>
+<td>将两个或多个集合之间的成员进行合并到另一个集合中</td>
+<td><code>SUNIONSTORE key_set set_one set_two</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>SMOVE</td>
+<td>将一个集合中的成员移动到另一个集合中</td>
+<td><code>SMOVE set_one set_two &quot;sql&quot;</code> （将 set_one 集合中的成员“sql” 移动到 set_two 中）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SDIFF</td>
+<td>返回指定集合中的不同成员</td>
+<td><code>SDIFF set_two set_one</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>SINTER</td>
+<td>返回指定集合中相同的成员</td>
+<td><code>SINTER set_one set_two</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>SUNION</td>
+<td>返回将指定集合合并后的并集</td>
+<td><code>SUNION set_one set_two</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>SMEMBERS</td>
+<td>返回指定集合中所有的成员</td>
+<td><code>SMEMBERS set_key</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>SISMEMBER</td>
+<td>判断集合中成员是否存在（存在返回1,不存在返回0）</td>
+<td><code>SISMEMBER set_one &quot;mysql&quot;</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>SSCAN</td>
+<td>遍历指定集合中所存在的键元素</td>
+<td><code>SSCAN set_two 0 MATCH s*</code> （匹配该集合中所有以 “s” 开头的成员 ）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>SRANDMEMBER</td>
+<td>随机返回指定集合中的成员数（如果数大于成员数那么将返回所有成员）</td>
+<td><code>SRANDMEMBER set_two  10</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>SPOP</td>
+<td>根据指定数值随机删除集合成员，并返回所删除的成员数据</td>
+<td><code>SPOP set_two 3</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>SREM</td>
+<td>删除一个或多个集合中的成员</td>
+<td><code>SREM set_two &quot;mysql&quot;</code></td>
+</tr>
+</tbody></table>
+<h3 id="SINTERSTORE"><a href="#SINTERSTORE" class="headerlink" title="SINTERSTORE"></a>SINTERSTORE</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210721155306.png"><br>SINTERSTORE 命令在 Redis 中的主要作用就是将两个集合中相同的成员数据添加到另一个集合中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SMEMBERS set_one</span><br><span class="line">1) &quot;redis&quot;</span><br><span class="line">2) &quot;mysql&quot;</span><br><span class="line">3) &quot;sql&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS set_two</span><br><span class="line">1) &quot;mongoDB&quot;</span><br><span class="line">2) &quot;mysql&quot;</span><br><span class="line">3) &quot;redislab.com&quot;</span><br><span class="line">127.0.0.1:6379&gt; SINTERSTORE set_key set_one set_two</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS set_key</span><br><span class="line">1) &quot;mysql&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SDIFF"><a href="#SDIFF" class="headerlink" title="SDIFF"></a>SDIFF</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210721155321.png"><br>返回两个集合中不相同的成员数据，相同的数据将不会被输出，按照官方的意思说这个命令主要返回地一个集合与其他集合之间的差异（说人话就是将其他集合不相同的数据进行输出）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SDIFF set_two set_one</span><br><span class="line">1) &quot;mongoDB&quot;</span><br><span class="line">2) &quot;redislab.com&quot;</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; SDIFF set_one set_two</span><br><span class="line">1) &quot;redis&quot;</span><br><span class="line">2) &quot;sql&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在集合中有两个非常重要的名词，分别是交集和差集，交集就是相同的意思，而差集就不相同的意思。</p>
+</blockquote>
+<h4 id="SDIFFSTORE"><a href="#SDIFFSTORE" class="headerlink" title="SDIFFSTORE"></a>SDIFFSTORE</h4><p>SDIFFSTORE 与 SDIFF 类似，但他主要的作用就是将两个集合之间的不相同数据（也就是差值）保存到另一个集合之中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SDIFFSTORE set_key set_one set_two</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS set_key</span><br><span class="line">1) &quot;redis&quot;</span><br><span class="line">2) &quot;sql&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SINTER"><a href="#SINTER" class="headerlink" title="SINTER"></a>SINTER</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210721155335.png"><br>SINTER 与 SDIFF 不同之处在于，SINTER 用于返回所有集合中的交集，也就是相同的成员集合。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SINTER set_one set_two</span><br><span class="line">1) &quot;mysql&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="SINTERSTORE-1"><a href="#SINTERSTORE-1" class="headerlink" title="SINTERSTORE"></a>SINTERSTORE</h4><p>Redis 是一个考虑很全面的 key-value 数据库，因此他的命令也非常的具有针对性，该命令与 SDIFF 中的 SDIFFSTORE 非常相似，但该命令是将两个集合中的交集存储到另一个集合中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SINTERSTORE set_key set_one set_two</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS set_key</span><br><span class="line">1) &quot;mysql&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SUNION"><a href="#SUNION" class="headerlink" title="SUNION"></a>SUNION</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210721155353.png"><br>SUNION 简单来说就是将两个集合并集，也就是将两个集合合并，将相同的数据所剔除，与 SDIFF 和 SINTER 一样，分为输出和存储两个非常具有针对性的命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SUNION set_one set_two</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;redis&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;mongoDB&quot;</span><br><span class="line">5) &quot;redislab.com&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>所谓“并集” 也就是将两个或多个集合成员进行合并，如果不同集合之间的成员数据相同将会被剔除。</p>
+</blockquote>
+<h4 id="SUNIONSTORE"><a href="#SUNIONSTORE" class="headerlink" title="SUNIONSTORE"></a>SUNIONSTORE</h4><p>SUNIONSTORE 同样集成了 SUNION 命令逻辑，只不过是将输出改为了存储，将两个或多个集合之间的成员进行并集</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SUNIONSTORE key_set set_one set_two</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS key_set</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;redis&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;mongoDB&quot;</span><br><span class="line">5) &quot;redislab.com&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="有序集合（Zset）"><a href="#有序集合（Zset）" class="headerlink" title="有序集合（Zset）"></a>有序集合（Zset）</h2><p>有序集合（zset）和集合同样都是一个字符串类型的集合元素，他们都不允许同样重复的成员。不同的是他拥有一个双精度浮点数来达到从达到小排序的效果，与集合一样可以存储越 40亿个成员。</p>
+<p>作为 Redis 几个最为主要的数据类型，他同样拥有针对性的命令，分别为 <code>ZADD</code> 即添加有序集合，他可以添加多个或单个（取决与你的习惯），当然也有 <code>ZRANGE</code> 来进行输出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZADD key_zset 1 sql 2 mysql 3 mongoDB 4 redis</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;1&quot;</span><br><span class="line">3) &quot;mysql&quot;</span><br><span class="line">4) &quot;2&quot;</span><br><span class="line">5) &quot;mongoDB&quot;</span><br><span class="line">6) &quot;3&quot;</span><br><span class="line">7) &quot;redis&quot;</span><br><span class="line">8) &quot;4&quot;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="ZRANGE（从小到大）"><a href="#ZRANGE（从小到大）" class="headerlink" title="ZRANGE（从小到大）"></a>ZRANGE（从小到大）</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210721201140.png"><br>ZRANGE 命令会按照数值从小到大来进行排序（具有相同数值的成员将会被按照字典序列来进行排序）</p>
+<blockquote>
+<p>字典序列也就是根据 A、B、C、D 这个序列来进行从小到大来进行划分，也就是根据首字母开头进行排序。</p>
+</blockquote>
+<p>在通过 ZRANGE 命令进行查询的时候，如果不加上 <code>WITHSCORES</code> 返回的是一个元素列表，加上的话返回的则是一个数组列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1</span><br><span class="line">1) &quot;sql&quot;</span><br><span class="line">2) &quot;mysql&quot;</span><br><span class="line">3) &quot;mongoDB&quot;</span><br><span class="line">4) &quot;redis&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZRANGEBYLEX"><a href="#ZRANGEBYLEX" class="headerlink" title="ZRANGEBYLEX"></a>ZRANGEBYLEX</h4><p>当集合中的元素都以相同的方式进行插入时，那么将会强制按照字典顺序来进行排列（在 Redis 中默认为英文字典 ABC以此类推进行排序）。</p>
+<p>在这个命令中他支持有效的 start 以及 stop 修饰符，分别为 <code>[</code> 以及  <code>）</code> 和 <code>-</code> \ <code>+</code> 等。其中 <code>-/+</code> 分别表示最小和最大字符串，也就是开始和结尾，而 <code>[/(</code> 的区别是输出时是否包含元素 <code>[</code> 是包含 <code>(</code> 即不包含。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGEBYLEX key_zset - +</span><br><span class="line">1) &quot;a&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">3) &quot;c&quot;</span><br><span class="line">4) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYLEX key_zset - (b</span><br><span class="line">1) &quot;a&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYLEX key_zset - [b</span><br><span class="line">1) &quot;a&quot;</span><br><span class="line">2) &quot;b&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZRANGEBYSCORE"><a href="#ZRANGEBYSCORE" class="headerlink" title="ZRANGEBYSCORE"></a>ZRANGEBYSCORE</h4><p>ZRANGEBYSCORE 与 ZRANGEBYLEX 相似，但以我个人感觉更喜欢后者，前者的 <code>-inf</code> 和 <code>+inf</code> 与后者的 <code>-/+</code> 功能基本一样，区别是多了个 ”inf“，而之后的 <code>[</code> 和 <code>(</code> 功能也很一样，但将需要通过元素来作为参数改为了数值（在ZRANGEBYSCORE 中 <code>[</code> 并不支持）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE key_zset 1 2</span><br><span class="line">1) &quot;one&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE key_zset -inf 2</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE key_zset -inf (2</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE key_zset -inf +inf</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZSCORE"><a href="#ZSCORE" class="headerlink" title="ZSCORE"></a>ZSCORE</h4><p>ZSCORE 命令是上述几个查询命令中最为朴素的命令之一，他主要根据成员名称来返回在其集合中的索引号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE zset_one 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;1&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;2&quot;</span><br><span class="line">7) &quot;three&quot;</span><br><span class="line">8) &quot;3&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZSCORE zset_one &quot;day&quot;</span><br><span class="line">&quot;0&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZCOUNT"><a href="#ZCOUNT" class="headerlink" title="ZCOUNT"></a>ZCOUNT</h4><p>ZCOUNT 同样支持 <code>(</code> 以及 <code>-inf\+inf</code>这类的表达式，他主要的作用就是计算出集合中的成员数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE zset_two 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br><span class="line">5) &quot;four&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZCOUNT zset_two -inf +inf</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; ZCOUNT zset_two -inf 3</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; ZCOUNT zset_two -inf (3</span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZREVRANK（从大到小）"><a href="#ZREVRANK（从大到小）" class="headerlink" title="ZREVRANK（从大到小）"></a>ZREVRANK（从大到小）</h3><p>ZREVRANK 同样是从大到小根据 0 为起始点进行排序，与 <code>ZREVEANGE</code> 类似，但该命令主要通过成员来返回在其集合中的索引。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE zset_one 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANK zset_one &quot;day&quot;</span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZREVRANGEBYSCORE"><a href="#ZREVRANGEBYSCORE" class="headerlink" title="ZREVRANGEBYSCORE"></a>ZREVRANGEBYSCORE</h4><p>ZREVRANGEBYSCORE 可以理解为是 <code>ZREVRANK</code> 的延续之作，他除了索引之外还支持 <code>ZRANGEBYLEX</code> 其中的表达式，除此之外还整合了 <code>ZRANGEBYSCORE</code> 来打通信息屏障，通过差异化和颗粒度达到引爆点来聚焦用户感知赛道。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZREVRANGEBYSCORE zset_one 4 1</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANGEBYSCORE zset_one 4 (1</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANGEBYSCORE zset_one +inf -inf</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;day&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZREVEANGE"><a href="#ZREVEANGE" class="headerlink" title="ZREVEANGE"></a>ZREVEANGE</h4><p>ZREVRANGE 是一个更加纯粹的返回字典序列的一个命令，他比 ZRANGE 这群命令显得更加的纯粹和干练，同样是返回集合的作用，该命令只需要指定索引即可，不支持任何华丽胡少的表达式（但支持 redis 自带的）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZREVRANGE zset_one 0 -1</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;day&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZINCRBY"><a href="#ZINCRBY" class="headerlink" title="ZINCRBY"></a>ZINCRBY</h3><p>ZINCRBY 简单来讲就是对集合元素中的数组进行增加，假设集合中元素的数组为 0，那么即可通过 ZINCRBY 来进行增加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZINCRBY key_zset 10 &quot;three&quot;</span><br><span class="line">&quot;13&quot;</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;1&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;2&quot;</span><br><span class="line">7) &quot;three&quot;</span><br><span class="line">8) &quot;13&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZINCRBY key_zset -10 &quot;three&quot;</span><br><span class="line">&quot;3&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="并集-x2F-合集"><a href="#并集-x2F-合集" class="headerlink" title="并集&#x2F;合集"></a>并集&#x2F;合集</h3><h4 id="ZINTERSTORE（合集）"><a href="#ZINTERSTORE（合集）" class="headerlink" title="ZINTERSTORE（合集）"></a>ZINTERSTORE（合集）</h4><p>将两个集合之间的交集存储到另一个集合中，需要指定两个集合中相同数的数值（也就是最终相同数所存储到另一个集合中的数量），默认情况下，结果集中的元素数值是这些集合中元素数值之和。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZINTERSTORE zset_key 2 zset_one zset_two</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE zset_key 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;2&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;4&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZUNIONSTORE-（并集）"><a href="#ZUNIONSTORE-（并集）" class="headerlink" title="ZUNIONSTORE （并集）"></a>ZUNIONSTORE （并集）</h4><p>ZUNIONSTORE 与 <code>ZINTERSTORE</code> 的区别就是一个是合集另一个是并集的一字之差，说简单一点就是将两个集合进行合并，相同的元素剔除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE zset_two 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br><span class="line">5) &quot;four&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE zset_one 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZUNIONSTORE zset_key 2 zset_one zset_two</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE zset_key 0 -1 WITHSCORES</span><br><span class="line"> 1) &quot;day&quot;</span><br><span class="line"> 2) &quot;0&quot;</span><br><span class="line"> 3) &quot;one&quot;</span><br><span class="line"> 4) &quot;2&quot;</span><br><span class="line"> 5) &quot;four&quot;</span><br><span class="line"> 6) &quot;4&quot;</span><br><span class="line"> 7) &quot;two&quot;</span><br><span class="line"> 8) &quot;4&quot;</span><br><span class="line"> 9) &quot;three&quot;</span><br><span class="line">10) &quot;6&quot;</span><br></pre></td></tr></table></figure>
+
+<p>但这样会造成集合中索引的相同，为了避免这类事情的发生我们可以自定义权重或和来解决 <code>ZUNIONSTORE zset_key 2 zset_one zest_two WEIGHTS 2 3 [key ...] [WEIGHTS weight] [AGGREGATE SUM|MIN|MAX]</code>，这同样在 <code>ZINTERSTORE</code> 命令中适用。</p>
+<h3 id="ZRANK"><a href="#ZRANK" class="headerlink" title="ZRANK"></a>ZRANK</h3><p>ZRANK 简单来说就单纯的是一个可以根据其集合成员来返回其索引的作用，如果其成员不存在则会返回 <code>nil</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANK zset_one &quot;day&quot;</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; ZRANK zset_one &quot;one&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE zset_one 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;1&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;2&quot;</span><br><span class="line">7) &quot;three&quot;</span><br><span class="line">8) &quot;3&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZREM"><a href="#ZREM" class="headerlink" title="ZREM"></a>ZREM</h3><p>ZREM 没有像后续几条命令一样那么否有诗书气自华，他主要根据成员来针对单个集合进行删除，在 Redis &#x3D;&gt; 2.4 版本中支持删除多个成员。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZADD key_zset 0 day 1 one 2 two 3 three 3 four</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;four&quot;</span><br><span class="line">5) &quot;three&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREM key_zset &quot;four&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;three&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+
+<h4 id="ZREMRANGEBYLEX"><a href="#ZREMRANGEBYLEX" class="headerlink" title="ZREMRANGEBYLEX"></a>ZREMRANGEBYLEX</h4><p>该命令与 <code>ZREM</code> 相比起来就非常的丰富，他支持了一些较为简单的 Redis 表达式（<code>[</code> 包括自己），适合多个成员一起删除，当然你也可以选择删除单个（弊端就是你删除不了第一个和倒数第二个成员）。</p>
+<p>但是 <code>ZREMRANGEBYLEX</code> 的弊端就是需要该集合索引都是一样的才可以进行删除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line"> 1) &quot;day&quot;</span><br><span class="line"> 2) &quot;0&quot;</span><br><span class="line"> 3) &quot;four&quot;</span><br><span class="line"> 4) &quot;0&quot;</span><br><span class="line"> 5) &quot;one&quot;</span><br><span class="line"> 6) &quot;0&quot;</span><br><span class="line"> 7) &quot;three&quot;</span><br><span class="line"> 8) &quot;0&quot;</span><br><span class="line"> 9) &quot;two&quot;</span><br><span class="line">10) &quot;0&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREMRANGEBYLEX key_zset [day [one</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;0&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="ZREMRANGEBYRANK"><a href="#ZREMRANGEBYRANK" class="headerlink" title="ZREMRANGEBYRANK"></a>ZREMRANGEBYRANK</h4><p>该命令同样非产简约优雅，通过 <code>start\stop</code> 的操作可以快速删除多个集合中的成员，但劣势也一样展现出来，他并不能删除单个成员。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line"> 1) &quot;day&quot;</span><br><span class="line"> 2) &quot;0&quot;</span><br><span class="line"> 3) &quot;one&quot;</span><br><span class="line"> 4) &quot;1&quot;</span><br><span class="line"> 5) &quot;two&quot;</span><br><span class="line"> 6) &quot;2&quot;</span><br><span class="line"> 7) &quot;three&quot;</span><br><span class="line"> 8) &quot;3&quot;</span><br><span class="line"> 9) &quot;four&quot;</span><br><span class="line">10) &quot;5&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREMRANGEBYRANK key_zset 3 5</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;1&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;2&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ZREMRANGEBYSCORE"><a href="#ZREMRANGEBYSCORE" class="headerlink" title="ZREMRANGEBYSCORE"></a>ZREMRANGEBYSCORE</h4><p>到 <code>ZREMRANGEBYSCORE</code> Reids 的有序列表删除命令就发展的非常特别且简单优雅，他同样适合于多个成员的删除操作，与前者不同的是到他这开始支持了 <code>-inf</code> 和 <code>（</code> (不包含该成员) 这类的表达式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;day&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">4) &quot;1&quot;</span><br><span class="line">5) &quot;two&quot;</span><br><span class="line">6) &quot;2&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREMRANGEBYSCORE key_zset -inf (1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE key_zset 0 -1 WITHSCORES</span><br><span class="line">1) &quot;one&quot;</span><br><span class="line">2) &quot;1&quot;</span><br><span class="line">3) &quot;two&quot;</span><br><span class="line">4) &quot;2&quot;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/redis/4.Redis%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

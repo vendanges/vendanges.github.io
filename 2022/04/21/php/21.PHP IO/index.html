@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP I/O | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP I/O</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>I&#x2F;O即输出流和输入流，通常I&#x2F;O流在开发语言之中非常常见，如Java、Python都支持I&#x2F;O流。所谓I&#x2F;O流无非就是输出文件、写入文件，通常I&#x2F;O流包含了<strong>打开、读取、关闭、删除</strong>等常用操作。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h4 id="创建目录与获取目录及删除目录"><a href="#创建目录与获取目录及删除目录" class="headerlink" title="创建目录与获取目录及删除目录"></a>创建目录与获取目录及删除目录</h4><h5 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h5><h6 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir()"></a>mkdir()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		if (mkdir(demo)) &#123;</span><br><span class="line">			echo &quot;创建成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;创建失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; 	</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="删除目录"><a href="#删除目录" class="headerlink" title="删除目录"></a>删除目录</h5><h6 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir()"></a>rmdir()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		mkdir(&quot;test&quot;);</span><br><span class="line">		if (rmdir(&quot;test&quot;)) &#123;</span><br><span class="line">			echo &quot;删除成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;删除失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="工作目录的获取与修改"><a href="#工作目录的获取与修改" class="headerlink" title="工作目录的获取与修改"></a>工作目录的获取与修改</h5><h6 id="getcwd"><a href="#getcwd" class="headerlink" title="getcwd()"></a>getcwd()</h6><p>getcwd()函数可以获取当前程序所处的目录，使用此函数可以获取到当前的工作目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo getcwd();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="chdir"><a href="#chdir" class="headerlink" title="chdir()"></a>chdir()</h6><p>chidir()函数可以直接设置当前的工作目录，也就是说使用此函数可以指定工作目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		mkdir(&quot;/test&quot;);</span><br><span class="line">		chdir(&#x27;/test&#x27;);</span><br><span class="line">		echo getcwd();</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="打开与关闭目录句柄"><a href="#打开与关闭目录句柄" class="headerlink" title="打开与关闭目录句柄"></a>打开与关闭目录句柄</h4><p>当文件和目录的访问都是通过句柄来实现的，而句柄就是打开一个文件所产生的变量$n即称之为句柄，操作完成后为了避免系统资源的小号应关闭句柄。如打开成功则返回TRUE，否则返回FALSE。而在PHP I&#x2F;O中，打开句柄通常使用**opendir()<strong>来表示，而关闭句柄使用</strong>closedir()**来实现。</p>
+<h5 id="打开句柄"><a href="#打开句柄" class="headerlink" title="打开句柄"></a>打开句柄</h5><h6 id="opendir"><a href="#opendir" class="headerlink" title="opendir()"></a>opendir()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$mkdir = &quot;/Users&quot;;</span><br><span class="line">		$mkdir_open = opendir($mkdir);</span><br><span class="line">		if ($mkdir_open) &#123;</span><br><span class="line">			echo &quot;目录句柄打开成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;目录句柄打开失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="关闭句柄"><a href="#关闭句柄" class="headerlink" title="关闭句柄"></a>关闭句柄</h5><h6 id="closedir"><a href="#closedir" class="headerlink" title="closedir()"></a>closedir()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$mkdir = &quot;/Users&quot;;</span><br><span class="line">		$mkdir_open = opendir($mkdir);</span><br><span class="line">		if ($mkdir_open) &#123;</span><br><span class="line">			echo &quot;目录句柄打开成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;目录句柄打开失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		closedir($mkdir_open);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="读取目录内容"><a href="#读取目录内容" class="headerlink" title="读取目录内容"></a>读取目录内容</h4><p>PHP主要为开发者提供了**readdir()**函数用于读取目录内容，该参数是一个已经打开的目录句柄。在每次调用时返回目录下一个文件的文件名，列出来所有的文件名后，函数将返回FALSE，所以readdir()函数也可用于进行目录遍历。</p>
+<h5 id="读取目录内容-1"><a href="#读取目录内容-1" class="headerlink" title="读取目录内容"></a>读取目录内容</h5><h6 id="readdir"><a href="#readdir" class="headerlink" title="readdir()"></a>readdir()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$dir = &quot;/test&quot;;</span><br><span class="line">		$dir_open = opendir($dir);			// 打开目录句柄</span><br><span class="line">		if ($dir_open) &#123;</span><br><span class="line">			// 通过readdir()函数返回值是否为FALSE，直到判断至最后一个文件</span><br><span class="line">			while (false !== ($file = readdir($dir_open))) &#123;</span><br><span class="line">				echo $file,&quot;&lt;br&gt;&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			closedir($dir_open);			// 关闭目录句柄</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;打开目录失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="获取指定的目录和文件"><a href="#获取指定的目录和文件" class="headerlink" title="获取指定的目录和文件"></a>获取指定的目录和文件</h5><h6 id="scandir"><a href="#scandir" class="headerlink" title="scandir()"></a>scandir()</h6><p>scandir()函数主要用于列出指定路径中的目录和文件，如果函数运行成功则返回该路径下的所有目录和文件名的数组，失败则返回FALSE。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$dir = &quot;/&quot;;</span><br><span class="line">		$one = scandir($dir);</span><br><span class="line">		if ($one == FALSE) &#123;</span><br><span class="line">			echo &quot;读取失败&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			print_r($one);</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>文件和目录之间的操作有一定的类似，一般操作文件方法主要分为<strong>打开、读取、写入、关闭</strong>等，与目录一样，如果要写入文件，则需要打开文件，之后为了避免占用太多资源则会关闭文件，在PHP文件流之中，主要可以使用**fopen()、fclose()**函数分别进行打开文件和关闭流操作</p>
+<h4 id="文件打开与关闭"><a href="#文件打开与关闭" class="headerlink" title="文件打开与关闭"></a>文件打开与关闭</h4><h5 id="文件访问权限"><a href="#文件访问权限" class="headerlink" title="文件访问权限"></a>文件访问权限</h5><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>只读方式打开文件[^从头读写]</td>
+<td>r</td>
+</tr>
+<tr>
+<td>r+</td>
+<td>读写方式打开文件[^从头读写]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>w</td>
+<td>写入方式打开文件[^从头读写,如果文件存在则删除，不存在则创建]</td>
+<td>w</td>
+</tr>
+<tr>
+<td>w+</td>
+<td>读写方式打开文件[^从头读写,如果文件存在则删除，不存在则创建]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>a</td>
+<td>写入方式打开文件[^从末尾读写,如果文件存在则删除，不存在则创建]</td>
+<td>a</td>
+</tr>
+<tr>
+<td>a+</td>
+<td>读写方式打开文件[^从末尾读写,如果文件存在则删除，不存在则创建]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>x</td>
+<td>创建并以写入方式打开文件[^从头读写,如果文件存在则删除，不存在则创建]</td>
+<td>x</td>
+</tr>
+<tr>
+<td>x+</td>
+<td>创建并以读写方式打开文件[^从头读写,如果文件存在则删除，不存在则创建]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>b</td>
+<td>二进制模式，主要用于连接在其他模式后面[^Windows 区分、Linux&#x2F;UNIX不区分。如果文件系统能够区分二进制文件和文本文件，则需要使用到此选项]</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h5><h6 id="fopen"><a href="#fopen" class="headerlink" title="fopen()"></a>fopen()</h6><p>在PHP中主要使用fopen()函数打开文件，而fopen()函数可支持打开本地文件和以URL形式读取文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = fopen(&quot;l.php&quot;, &quot;r+&quot;);</span><br><span class="line">		if ($one) &#123;</span><br><span class="line">			echo &quot;打开成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;打开失败&quot;;</span><br><span class="line">		&#125; </span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="URL-fopen"><a href="#URL-fopen" class="headerlink" title="URL fopen()"></a>URL fopen()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$URL_open = fopen(&quot;http://clockshan.cn&quot;, &quot;r&quot;);</span><br><span class="line">		if ($URL_open) &#123;</span><br><span class="line">			echo &quot;打开成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;打开失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h5><h6 id="fclose"><a href="#fclose" class="headerlink" title="fclose()"></a>fclose()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$open = fopen(&quot;l.php&quot;, &quot;w&quot;);</span><br><span class="line">		if (fclose($open)) &#123;</span><br><span class="line">			echo &quot;关闭成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;关闭失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="文件写创建与操作"><a href="#文件写创建与操作" class="headerlink" title="文件写创建与操作"></a>文件写创建与操作</h4><h5 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h5><h6 id="fopen-1"><a href="#fopen-1" class="headerlink" title="fopen()"></a>fopen()</h6><p>在PHP中没有指定的创建文件函数，一般使用fopen()函数加文件模式（**”w”、”w+、“a”、”a+“**）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = fopen(&quot;deme.txt&quot;, &quot;w&quot;);</span><br><span class="line">		if ($one) &#123;</span><br><span class="line">			echo &quot;创建成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;创建失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h5><h6 id="fwrite"><a href="#fwrite" class="headerlink" title="fwrite()"></a>fwrite()</h6><p>fwrite()函数可以向文件写入内容[^在文件已经打开的前提下。文件关闭后则不进行写入]<strong>，由于UTF-8中文字符一个占两个字节，所以显示写入字节数为15</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$dir = fopen(&quot;demo.txt&quot;, &quot;w+&quot;);</span><br><span class="line">		$write = fwrite($dir, &quot;你好世界！&quot;);</span><br><span class="line">		if ($write) &#123;</span><br><span class="line">			echo &quot;写入成功&quot;;</span><br><span class="line">			echo &quot;写入字节数为：&quot;,$write;</span><br><span class="line">			fclose($dir);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;文件写入失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h5><h6 id="fread"><a href="#fread" class="headerlink" title="fread()"></a>fread()</h6><p>fread()函数可以用于读取文件中的内容，在PHP中，fread()函数可以指定最大字节数，<strong>默认最大取值为8192</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$data = fopen(&quot;deme.txt&quot;, &quot;r&quot;);</span><br><span class="line">		$one = &quot;&quot;;		// 初始化为空</span><br><span class="line">		while (!feof($data)) &#123;</span><br><span class="line">			$dataone = fread($data, 8192);</span><br><span class="line">			$one = $dataone;</span><br><span class="line">		&#125;</span><br><span class="line">		echo $one;</span><br><span class="line">		fclose($data);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="file"><a href="#file" class="headerlink" title="file()"></a>file()</h6><p>file()函数可以用于将整个文件读取到数组之中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$wire = file(&quot;deme.txt&quot;);</span><br><span class="line">		foreach ($wire as $key) &#123;</span><br><span class="line">			echo $key;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="readfile"><a href="#readfile" class="headerlink" title="readfile()"></a>readfile()</h6><p>readfile()函数主要用于输出文件内容到浏览器之中，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;deme.txt&quot;;</span><br><span class="line">		$data = readfile($file);</span><br><span class="line">    	echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		echo &quot;|- 当前字节数为&quot;,$data;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="fpassthru"><a href="#fpassthru" class="headerlink" title="fpassthru()"></a>fpassthru()</h6><p>fpassthru()函数可以将指定的文件指针从当前未知读取到EOF（文档结尾），并把结果输出到缓冲区。使用fpassthru()函数需要先打开文件流、并将参数传递给fpassthru()函数，并到标准输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$name = &quot;deme.txt&quot;;</span><br><span class="line">		$data = fopen($name, &quot;r&quot;);</span><br><span class="line">		$num = fpassthru($data);</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">			echo &quot;读取字节数为：&quot;,$num;</span><br><span class="line">		fclose($data);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="file-get-contents"><a href="#file-get-contents" class="headerlink" title="file_get_contents()"></a>file_get_contents()</h6><p>file_get_contents()函数可以将整个或部分文件内容读取到一个字符串值中，整个执行过程共调用：<strong>fopen &#x3D; 开启 、fread &#x3D; 读取 、fclose &#x3D; 关闭</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$filename = file_get_contents(&quot;deme.txt&quot;);</span><br><span class="line">		echo $filename;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="读取EOF数据"><a href="#读取EOF数据" class="headerlink" title="读取EOF数据"></a>读取EOF数据</h5><p>EFO是(“资料源无更多资料获取，End Of File”)，在操作系统之中主要表示<strong>当前源无更多资料获取</strong>，<strong>所以在此表达含义为”最后一行数据</strong>：“</p>
+<h6 id="fgets"><a href="#fgets" class="headerlink" title="fgets()"></a>fgets()</h6><p>fgets()函数的作用是可以<strong>读出一行文本逐一进行输出</strong>，而不像上述函数一样整合为一行进行输出[^默认的长度为1024个字节]，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = fopen(&quot;deme.txt&quot;, &quot;r&quot;);</span><br><span class="line">		if ($file) &#123;</span><br><span class="line">			while (!feof($file)) &#123;</span><br><span class="line">				$bufer = fgets($file);</span><br><span class="line">				echo $bufer,&quot;&lt;br&gt;&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			fclose($file);</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="fgetss"><a href="#fgetss" class="headerlink" title="fgetss()"></a>fgetss()</h6><p>fgetss()函数的主要作用与fgets()作用基本相同，也是从文件指针处读取一行数据，fgetss()会尝试格式化HTML、Javascript、php等代码输出[^图1为fgetss()函数输出，图二为fgets函数输出。]；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = fopen(&quot;deme.txt&quot;, &quot;r&quot;);</span><br><span class="line">		if ($file) &#123;</span><br><span class="line">			while (!feof($file)) &#123;</span><br><span class="line">				$bufer = fgetss($file);</span><br><span class="line">				echo $bufer,&quot;&lt;br&gt;&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			fclose($file);</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h5><h6 id="unlink"><a href="#unlink" class="headerlink" title="unlink()"></a>unlink()</h6><p>在php之中，可使用unlink()函数进行删除不需要的文件，如果删除成功则返回TRUE、否则删除失败则返回FALSE；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		// 删除文件</span><br><span class="line">		unlink($file);</span><br><span class="line"></span><br><span class="line">		// 检测文件是否存在</span><br><span class="line">		if (file_exists($file)) &#123;</span><br><span class="line">			echo &quot;文件存在&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;文件不存在&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h5><h6 id="copy"><a href="#copy" class="headerlink" title="copy()"></a>copy()</h6><p>PHP开发语言主要使用copy()来进行文件的复制：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		$filedst = &quot;D:/Program Files (x86)/phpStudy/WWW/text/one.gif&quot;;</span><br><span class="line">		if (copy($file, $filedst)) &#123;</span><br><span class="line">			echo &quot;文件复制成功！&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="移动和重命名文件"><a href="#移动和重命名文件" class="headerlink" title="移动和重命名文件"></a>移动和重命名文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$file = &quot;D:/Program Files (x86)/phpStudy/WWW/text/1593173883_1490.gif&quot;;</span><br><span class="line">		$filedst = &quot;D:/Program Files (x86)/phpStudy/WWW/text/two.gif&quot;;</span><br><span class="line">		if (rename($file, $filedst)) &#123;</span><br><span class="line">			echo &quot;重命名成功&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;重命名失败&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="第一个字符"><a href="#第一个字符" class="headerlink" title="第一个字符"></a>第一个字符</h5><h6 id="fgetc"><a href="#fgetc" class="headerlink" title="fgetc()"></a>fgetc()</h6><p>fgetc()函数主要用于从文件开头到文件结尾处进行输出，所以与上述fgetss()、fgets()函数输出差不多：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$data = fopen(&quot;deme.txt&quot;, &quot;r&quot;);</span><br><span class="line">		while (!feof($data)) &#123;</span><br><span class="line">			$char = fgetc($data);</span><br><span class="line">			echo ($char == &quot;\n&quot;?&#x27;&lt;br&gt;&#x27;:$char);</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mdkir()</td>
+<td>创建目录</td>
+<td>目录</td>
+</tr>
+<tr>
+<td>rmdir()</td>
+<td>删除目录</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>getcwd()</td>
+<td>获取当前所在目录</td>
+<td></td>
+</tr>
+<tr>
+<td>chdir()</td>
+<td>是指当前所在的工作目录[^即指定目录]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>opendir()</td>
+<td>打开句柄</td>
+<td></td>
+</tr>
+<tr>
+<td>closedir()</td>
+<td>关闭句柄</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>raddir()</td>
+<td>读取目录内容</td>
+<td></td>
+</tr>
+<tr>
+<td>scandir()</td>
+<td>获取指定的目录和文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>fopen()</td>
+<td>打开文件[^fopen(URL)支持读取URL形式文件，fopen()可以搭配文件模式进行创建文件]</td>
+<td>文件打开于关闭[^含创建]</td>
+</tr>
+<tr>
+<td>fclose()</td>
+<td>关闭文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>fwrite()</td>
+<td>文件写入</td>
+<td>文件读取</td>
+</tr>
+<tr>
+<td>fread()</td>
+<td>文件读取</td>
+<td></td>
+</tr>
+<tr>
+<td>file()</td>
+<td>将整个文件读取到数组</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>readfile()</td>
+<td>输出文件到浏览器中</td>
+<td></td>
+</tr>
+<tr>
+<td>fpassthru()</td>
+<td>从指定文件指针中从开头读取到EOF</td>
+<td></td>
+</tr>
+<tr>
+<td>file_get_contents()</td>
+<td>可以将整个或部分文件内容读取到一个字符串值中[^fopen &#x3D; 开启 、fread &#x3D; 读取 、fclose &#x3D; 关闭]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>fgets()</td>
+<td>读出一行文本逐一进行输出，而不像上述函数一样整合为一行进行输出[^默认的长度为1024个字节]</td>
+<td>读取EOF数据</td>
+</tr>
+<tr>
+<td>fgetss()</td>
+<td>fgetss()函数的主要作用与fgets()作用基本相同，也是从文件指针处读取一行数据，fgetss()会尝试格式化HTML、Javascript、php等代码输出[^图1为fgetss()函数输出，图二为fgets函数输出。]；</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>fgetc()</td>
+<td>从文件的开头到结尾处进行输出[^所以与上述fgetss()、fgets()函数输出差不多]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>unlink()</td>
+<td>删除文件</td>
+<td>文件删除</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>copy()</td>
+<td>复制文件</td>
+<td>文件复制</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rename()</td>
+<td>文件重命名</td>
+<td>重命名文件</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/21.PHP%20IO/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

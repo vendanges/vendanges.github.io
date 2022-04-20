@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Shell 基础及代码规范 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Shell 基础及代码规范</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="article__tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>与许多开发或脚本语言一样，许多语言在第一次接触的时候都以“Hello,world”作为入门的第一课，目前我们需要介绍下Shell（命令过程，Shell Script）脚本语言也是一样。</p>
+<h2 id="本书的作用"><a href="#本书的作用" class="headerlink" title="本书的作用"></a>本书的作用</h2><p>本书总体上向读者简述了Shell脚本开发，主要列举了Shell解释其的Bash（Bourne Only Shell），和其他常见的Shell（列如sh、run）。</p>
+<h2 id="Shell语言的用处"><a href="#Shell语言的用处" class="headerlink" title="Shell语言的用处"></a>Shell语言的用处</h2><p>Shell语言是用C语言编写的脚本语言，通常Shell即是命令语言，也是设计型语言。主要用于脚本开发，且经常出现在Linux环境下，大量的减少了相关命令参数（如批量apt-get install、或rm -rf）。</p>
+<h2 id="如何使用Shell"><a href="#如何使用Shell" class="headerlink" title="如何使用Shell"></a>如何使用Shell</h2><p>Shell脚本通常开发完时保存为“.sh”后缀“，并且给文件加上”chmod 777 file.sh“的可读写权限，之后使用”.&#x2F;file.sh“以运行Shell脚本。</p>
+<h2 id="Shell-代码规范"><a href="#Shell-代码规范" class="headerlink" title="Shell 代码规范"></a>Shell 代码规范</h2><h3 id="sha-bang"><a href="#sha-bang" class="headerlink" title="sha-bang"></a>sha-bang</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br></pre></td></tr></table></figure>
+<p>通常，shell脚本文件都以上述注释进行开头，”#!”后面跟着shell解释器所在的完整路径，<strong>该路径主要告诉当前操作系统，该文件是一种命令</strong>，我们主要称他为”sha-bang“即Shell脚本文件的第一行。</p>
+<p>如果”sha-bang“目录不正确，则会出现一种错误的信息，如**”未找到命令”<strong>，通常我们开发完后都将以</strong>”.sh“**来命名。</p>
+<h3 id="输出Hello-world"><a href="#输出Hello-world" class="headerlink" title="输出Hello,world!"></a>输出Hello,world!</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;Hello,world!&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行-sh"><a href="#运行-sh" class="headerlink" title="运行 .sh"></a>运行 .sh</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 test.sh</span><br><span class="line">./test.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;Hello,world&quot;        # 输出&quot;Hello,world!&quot;</span><br></pre></td></tr></table></figure>
+<p> 与其他脚本语言一样，shell作为主流的脚本语言，通常以”#“进行注释，而脚本开发语言Python也和Shell脚本语言一样，使用”#“作为注释。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/shell/1.Shell%20%E5%9F%BA%E7%A1%80/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

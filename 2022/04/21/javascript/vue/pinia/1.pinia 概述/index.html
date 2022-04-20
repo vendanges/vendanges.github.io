@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>pinia 基础 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>pinia 基础</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/pinia/" rel="tag">pinia</a> <a class="article__tag-none-link" href="/tags/vue/" rel="tag">vue</a> <a class="article__tag-none-link" href="/tags/vue3-0/" rel="tag">vue3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h1 id="pinia-overview"><a href="#pinia-overview" class="headerlink" title="pinia overview"></a>pinia overview</h1><p>Pinia 是一个适用于 Vue2~3 <strong>的跨组件共享状态维持</strong>项目，与 vuex、bus 等原理类似，但都比前者简单高效许多，在 2019 年 11 年重新被设计使用，其维护团队为 Vuejs。</p>
+<p>特点在于更加容易调试，可以使得 <code>store</code> 出现在其他组件中并使用，以及在不重新加载页面的情况下修改 <code>store</code> 共享数据，并保持现有状态，同时占用空间小的特点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">反观 Vuex 和专注于兄弟组件之间通信的 Bus 相比，Pinia 根据简单和[官方](https://github.com/vuejs/pinia)团队维护等特点深受开发人员喜爱。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><p>首先，Pinia 拥有和 Vuex 类似的特性及功能（毕竟是同类型项目），而 Store 的定义主要是可以让该数据被所有组件共享。</p>
+<p>在本文中，我们主要通过 vue-cli 来构建 vue3 project，并使用 <code>vue add vue-cli-plugin-pinia</code> 来添加 pinia 支持。</p>
+<p>之后可以在 <code>src/store/</code> 下看到其自动帮我们所创建的 pinia store，之后我们可以重命名或者直接在此基础上进行开发，来进行共享数据。</p>
+<p>同时他也会在 <code>mian.js</code> 文件下为我们引入 pinia 并使用，返回给 Vue。</p>
+<p>在使用的时候，你需要记得，在 <a target="_blank" rel="noopener" href="https://pinia.vuejs.org/core-concepts/">store</a> 目录下的共享数据内的方里，默认的会为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;counter&#x27;</span>, &#123;  </span><br><span class="line">  <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;  </span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span>  </span><br><span class="line"> &#125;),  </span><br><span class="line">  <span class="attr">getters</span>: &#123;  </span><br><span class="line">    <span class="attr">double</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">count</span> * <span class="number">2</span>,  </span><br><span class="line">  &#125;,  </span><br><span class="line">  <span class="attr">actions</span>: &#123;  </span><br><span class="line">    <span class="title function_">increment</span>(<span class="params"></span>) &#123;  </span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">count</span>++  </span><br><span class="line">    &#125;,  </span><br><span class="line">  &#125;,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>我们需要记得导出的方法，也就是 <code>useCounterStore</code> 之后在组件中直接 <code>import &#123; useCounterStore &#125;  from &quot;@/stores/index&quot;</code> 这么引用，然后在 <code>setup()</code> 语法糖下赋值给 <code>store</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  <span class="title function_">setup</span>(<span class="params"></span>) &#123;  </span><br><span class="line">    <span class="keyword">const</span> store = <span class="title function_">useCounterStore</span>()  </span><br><span class="line">    <span class="keyword">return</span> &#123;  </span><br><span class="line">      store,  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这之后在 <code>template</code> 下，就可以通过插值 <code>&#123;&#123; store.count &#125;&#125;</code> 来直接进行使用了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这在官方文档关于定义 Store 中有详细的描述：“并且它需要一个唯一的名称，作为第一个参数传递”</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p><a target="_blank" rel="noopener" href="https://pinia.vuejs.org/core-concepts/state.html">State</a> 是 <code>Stores</code> 所定义的中心部分，也就是共享数据\状态的起点，在 PInia 中会被定义为返回初始的状态函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useTabStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;tab&#x27;</span>, &#123;  </span><br><span class="line">  <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;  </span><br><span class="line">	<span class="comment">/*  </span></span><br><span class="line"><span class="comment">		return &#123;Array&#125; </span></span><br><span class="line"><span class="comment">	*/</span> </span><br><span class="line">	<span class="attr">rowItems</span>: []  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Getters-amp-Actions"><a href="#Getters-amp-Actions" class="headerlink" title="Getters &amp; Actions"></a>Getters &amp; Actions</h2><h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><p>在此之前，我们需要知道，<code>getters</code> 是被动获取，也就是说需要有组件取调用这个方法。而 <a target="_blank" rel="noopener" href="https://pinia.vuejs.org/core-concepts/actions.html">Actions</a> 则是可以实现在文章开头，Pinia 所说的特性之一：”Stores appear in components where they are used”，即可以在组件中实现将组件的数据，传入到 State 中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">需要注意的是，在一般情况下，Vuex、和 Bus 很难去解决组件和组件之间的传值，需要通过 emit，props 等方法，先将兄弟组件的数据传给父组件，父组件再将数据传给兄弟组件，以此来实现传值。</span><br></pre></td></tr></table></figure>
+
+<p>在组件传值之前，我们首先需要在 <code>store</code> 下定义参数，准备接受组件所传来的数据，并之后传给 <code>state()</code> 下的共享状态变量 <code>rowItems</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useTabStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;tab&#x27;</span>, &#123;  </span><br><span class="line">  <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;  </span><br><span class="line">    <span class="comment">/*  </span></span><br><span class="line"><span class="comment"> return &#123;Array&#125; */</span> <span class="attr">rowItems</span>: []  </span><br><span class="line">  &#125;),  </span><br><span class="line">  <span class="attr">actions</span>: &#123;  </span><br><span class="line">      <span class="title function_">addItem</span>(<span class="params">name</span>) &#123;  </span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">rowItems</span>.<span class="title function_">push</span>(name)  </span><br><span class="line">    &#125;,  </span><br><span class="line">  &#125;,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在真实的开发环境中，一般先定义 ```state``` 下的共享变量，再去定义 ```actions```，之后才是 ```getters```</span><br></pre></td></tr></table></figure>
+
+<p>上述 Code 中，我们主要通过 <code>this.rowItems.push</code> 方法，来将获取到的 <code>name</code> 参数传递给 <code>state</code>，之后 <code>getters</code> 来获取 <code>state</code> 下的共享数据&#x2F;状态变量。</p>
+<p>下面，我们需要通过在传递数据的组件内，引入 <code>import &#123; useTabStore &#125; from &quot;@/stores&quot;;</code>，之后按照 <code>setup()</code> 语法糖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;  </span><br><span class="line">  setup (props, &#123;emit&#125;) &#123;  </span><br><span class="line">    <span class="keyword">const</span> tab = <span class="title function_">useTabStore</span>()  </span><br><span class="line">    <span class="keyword">return</span> &#123;  </span><br><span class="line">	  tab</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>由于我们是按照 <code>setup()</code> 语法糖的 Vue3 的写法，那么基本上数据是在 <code>setup()</code> 下的 <code>return</code> 来进行编写，我们需要做的就是通过 <code>tab.addItem(value)</code> 将数据传递给 <code>stores</code>，之后就完成了组件的传递。</p>
+<h3 id="Getters"><a href="#Getters" class="headerlink" title="Getters"></a>Getters</h3><figure class="highlight plaintext"><figcaption><span>可以理解为获得数据，他与 ```state``` 所定义的数据/状态是完全等价的，且处于被动，也就是说可以通过组件访问 ```getters``` 所关联的 ```state``` ：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">import &#123; defineStore &#125; from &#x27;pinia&#x27;  </span><br><span class="line">  </span><br><span class="line">export const useTabStore = defineStore(&#x27;tab&#x27;, &#123;  </span><br><span class="line">  state: () =&gt; (&#123;  </span><br><span class="line">    /*  </span><br><span class="line"> return &#123;Array&#125; */ rowItems: []  </span><br><span class="line">  &#125;),  </span><br><span class="line">  getters: &#123;  </span><br><span class="line">    items: (state) =&gt;  </span><br><span class="line">        state.rowItems.reduce((items, item) =&gt; &#123;  </span><br><span class="line">            console.log(&#123;name: item&#125;,&#x27;&#123;name: item&#125;&#x27;)  </span><br><span class="line">            items.push(&#123;name: item&#125;)  </span><br><span class="line">          return items  </span><br><span class="line">        &#125;, []),  </span><br><span class="line">  &#125;,  </span><br><span class="line">  actions: &#123;  </span><br><span class="line">      addItem(name) &#123;  </span><br><span class="line">        this.rowItems.push(name)  </span><br><span class="line">        console.log(name,&#x27;-&gt;&gt;&gt;&gt;&gt;&gt;YES&#x27;)  </span><br><span class="line">    &#125;,  </span><br><span class="line">  &#125;,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 Code 中，我们首先在 <code>state</code> 先定义共享状态 <code>rowItems</code> 变量，当获取数据的时候，我们需要他可以循环遍历，那么就通过 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/array/reduce">reduce</a>之后 方法来按照数组的顺序来进行返回。</p>
+<p>然后通过 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push">push</a> 方法将元素添加至数组的末尾，最后返回 <code>items</code> 变量，这是通过 <code>actions</code> 所获取到的数据并输出。</p>
+<p>在数据的获取部分，我们需要在组件中同样引入 <code>import &#123; useTabStore &#125;  from &quot;@/stores/index&quot;</code>，然后按照 <code>setup()</code> 语法糖的写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;  </span><br><span class="line">  setup (props, &#123;emit&#125;) &#123;  </span><br><span class="line">    <span class="keyword">const</span> tab = <span class="title function_">useTabStore</span>()  </span><br><span class="line">    <span class="keyword">return</span> &#123;  </span><br><span class="line">	  tab</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>之后通过 <code>template</code> 的模板语法以及 <code>v-for</code> 和 <code>v-bind</code> 就可以完成共享数据的循环输出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&quot;item in store.items&quot;</span> :key=<span class="string">&quot;item.name&quot;</span>&gt;  </span><br><span class="line">  &#123;&#123; item.<span class="property">name</span> &#125;&#125;  </span><br><span class="line">&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/pinia/1.pinia%20%E6%A6%82%E8%BF%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

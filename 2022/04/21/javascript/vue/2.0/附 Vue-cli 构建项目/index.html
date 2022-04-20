@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue-cli | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue-cli</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Vue CLI 是一个由vue.js官方所发布的一个快速构建 vue 项目的脚手架，通过使用 vue-cli可以构建一个标准的 vue 项目。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h3><p>安装 Vue 我们主要通过脚手架来进行，vue 为此提供了两种可需方案，分别为<code>nmp install -g vue-cli</code> 或使用<code>cnpm install -g vue-cli</code>来进行安装，我们可以配置下全局安装 <code>cnpm</code></p>
+<h3 id="cnpm"><a href="#cnpm" class="headerlink" title="cnpm"></a>cnpm</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cnpm -g --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>当安装完成之后可以使用<code> vue --version</code>来查看是否安装成功，如安装成功之后则进行下一步。</p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>在vue-cli中，分别有两种方式，可使用<code>vue create project-name</code>来构建一个 vue-cli项目，也可以通过使用 <code>vue ui</code>及 web gui 的形式来进行构建。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>当构建完成一个 vue 项目之后，我们可以通过<code>npm</code>脚手架来进行运行服务也可以通过使用 vue 进行，两者之间的区别就是通过使用 <code>npm  run serve</code>脚手架运行不需要安装<code>@vue/cli-service-global</code>依赖，而 通过使用 <code>vue serve</code>来运行会经过漫长的等待来安装依赖，但等待并不是没有用的，vue 的用户体验是很棒的。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>build</td>
+<td>项目构建时的相关代码</td>
+<td>项目构建</td>
+</tr>
+<tr>
+<td></td>
+<td>build.js</td>
+<td>生产环境构建代码</td>
+</tr>
+<tr>
+<td></td>
+<td>check-version.js</td>
+<td>用于检查 node,npm 版本</td>
+</tr>
+<tr>
+<td></td>
+<td>utils.js</td>
+<td>构建工具</td>
+</tr>
+<tr>
+<td></td>
+<td>vue-loader.conf.js</td>
+<td>loader 配置</td>
+</tr>
+<tr>
+<td></td>
+<td>webpack.base.conf.js</td>
+<td>webpack 基础配置</td>
+</tr>
+<tr>
+<td></td>
+<td>webpack.dev.conf.js</td>
+<td>webpack 开发环境配置，用于构建本地服务器</td>
+</tr>
+<tr>
+<td></td>
+<td>webpack.prod.conf.js</td>
+<td>webpack 生产环境配置</td>
+</tr>
+<tr>
+<td>config</td>
+<td>项目开发环境配置</td>
+<td>项目配置</td>
+</tr>
+<tr>
+<td></td>
+<td>dev.env.js</td>
+<td>开发环境变量</td>
+</tr>
+<tr>
+<td></td>
+<td>index.js</td>
+<td>项目配置变量</td>
+</tr>
+<tr>
+<td></td>
+<td>prod.env.js</td>
+<td>生产环境变量</td>
+</tr>
+<tr>
+<td>src</td>
+<td>源码目录</td>
+<td>工作空间</td>
+</tr>
+<tr>
+<td></td>
+<td>components</td>
+<td>公共组件</td>
+</tr>
+<tr>
+<td></td>
+<td>router</td>
+<td>路由管理</td>
+</tr>
+<tr>
+<td></td>
+<td>App.vue</td>
+<td>页面入口文件</td>
+</tr>
+<tr>
+<td></td>
+<td>main.js</td>
+<td>程序入口文件</td>
+</tr>
+<tr>
+<td>static</td>
+<td>静态文件资源存放</td>
+<td></td>
+</tr>
+<tr>
+<td>.babelrc</td>
+<td>ES6 语法编译配置</td>
+<td></td>
+</tr>
+<tr>
+<td>.editorconfig</td>
+<td>定义代码格式</td>
+<td></td>
+</tr>
+<tr>
+<td>.gitignore</td>
+<td>git 上传需要忽略的文件格式</td>
+<td></td>
+</tr>
+<tr>
+<td>.postcssrc</td>
+<td>postcss 配置文件</td>
+<td></td>
+</tr>
+<tr>
+<td>README.md</td>
+<td>说明文件</td>
+<td></td>
+</tr>
+<tr>
+<td>index.html</td>
+<td>入口文件</td>
+<td></td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>项目基本信息 ，包依赖信息……</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/%E9%99%84%20Vue-cli%20%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

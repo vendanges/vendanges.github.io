@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Config | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Config</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210726153838.png"><br>Spring Cloud Config 可以为分布式系统中外部化配置提供服务器端和客户端的支持，通过 Config Service 即配置中心，可以集中管理所有环境中应用程序配置，这其中主要用于集中管理信息的组件，用于提供配置变更、配置推送、历史版本管理以及灰度发布、配置变更审计等主要的功能，以此来降低分布式系统中所管理和配置信息的成本。</p>
+<p>其实 Spring Cloud Config 说简单一点就是通过本地（含 Git&#x2F;远程代码仓库）来获取配置信息，然后服务提供者A、B…… 从配置中心获取服务，在这个过程中有一个 <code>Spring Cloud Bus</code> 即消息总线，用于通知服务提供者需要获取配置。</p>
+<p>目前主流的配置中心有 Spring Cloud Config、Apollo、Nacos、Disconf 等项目，其中 Spring Cloud Config 与 Disconf 是这些项目中最早开源的项目。</p>
+<p>但这些项目中，Spring Cloud Config 他的功能全面，以及无缝贴合 Spring 体系，因此大受欢迎。</p>
+<h2 id="Config-Server"><a href="#Config-Server" class="headerlink" title="Config Server"></a>Config Server</h2><h3 id="localhost"><a href="#localhost" class="headerlink" title="localhost"></a>localhost</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210726153948.png"><br>目前主要且流行的方式就是通过 git 仓库来获取多个或多个配置文件，并通过对称&#x2F;非对称加密来对密文转为明文，这都的易于 Spring Cloud Config 的特性，如果只满足简单的获取配置文件只需要添加 <code>spring-cloud-config-server</code> 依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后在其启动类中加入注解 <code>@EnableConfigServer</code>，并通过 <code>application.yml</code> 全局 Spring 配置中设置仓库地址和帐号密码</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-server</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">git:</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">https://gitee.com/sif_one/spring-cloud-config</span></span><br><span class="line">          <span class="attr">search-paths:</span> <span class="string">config-repositories</span></span><br><span class="line">          <span class="attr">username:</span> <span class="string">xxx</span></span><br><span class="line">          <span class="attr">password:</span> <span class="string">xxx</span></span><br><span class="line">        <span class="attr">encrypt:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span>   <span class="comment"># 是否进行解密</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="git"><a href="#git" class="headerlink" title="git"></a>git</h3><p>对于 git 仓库中的配置文件，需要注意的是 <code>-</code> 在访问时会被 <code>/</code> 所代替，如你的配置文件名为 <code>config-dev.properties</code>，那么所请求的 URI 就为 <a target="_blank" rel="noopener" href="http://localhost:8210/config/dev">http://localhost:8210/config/dev</a>，当然这是 json 格式的，如果想以常用的格式进行返回，可将 URI 改为其配置文件名 <a target="_blank" rel="noopener" href="http://localhost:8210/config-dev.properties">http://localhost:8210/config-dev.properties</a> 即可。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app.version</span>=<span class="string">dev</span></span><br><span class="line"><span class="attr">message</span>=<span class="string">Spring Cloud Config Demo</span></span><br><span class="line"><span class="attr">password</span>=<span class="string">&#123;cipher&#125;32fd20f46a9c00238236ff530349eefb1dbaad99374c62276f266c326fa8e1ec</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8017</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Config-Server-Client"><a href="#Config-Server-Client" class="headerlink" title="Config Server Client"></a>Config Server Client</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210729211317.png"><br>Spring cloud config client  的主要作用就是通过配置中心来获取配置并使用，主要通过 <code>spring-cloud-starter-config</code> 依赖来进行实现，并通过 <code>bootstrap.yml</code> 文件来达到配置文件切换的效果，最后在使用控制器进行输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-config&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="bootstrap-yml-and-application-yml"><a href="#bootstrap-yml-and-application-yml" class="headerlink" title="bootstrap.yml and application.yml"></a>bootstrap.yml and application.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">      <span class="attr">profile:</span> <span class="string">rsa</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">http://localhost:8210</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>在 bootstrap.yml 文件中，你可以通过 <code>profile</code> 来切换配置文件的数据，也就是 <code>name(config)</code> 和 <code>profile(rsa)</code>，这也是我们配置文件 <code>config-rsa</code> 拼合而成。当然你也可以在 <code>application.yml</code> Spring 全局配置文件中来为其添加应用名称，毕竟他才是权重第一的配置文件。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">SpringCloudConfigClient</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取配置中心的数据</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kunlun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/7/26</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">heyController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;app.version&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String version;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;message&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/hey&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hey</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> <span class="string">&quot;message:&quot;</span> + message + <span class="string">&quot;:&quot;</span> + <span class="string">&quot; version:&quot;</span> + version;</span><br><span class="line">        <span class="keyword">return</span> string;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="配置文件的加密"><a href="#配置文件的加密" class="headerlink" title="配置文件的加密"></a>配置文件的加密</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210726153913.png"></p>
+<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210726154017.png"></p>
+<p>Config Server 除了管理配置文件和版本管理之外，还支持对文件的对称和非对称加密，其中对称加密简单的来将就是采用单个密钥的方式进行加密，也就是说一个密钥可以加密和解密。</p>
+<p>而非对称加密就与对称加密不同了，非对称加密算法分为公钥和私钥，如果用公钥对数据进行加密，那么只能通过私钥才可解密。目前有很多文章说需要使用新版本的 JDK 或者通过 JCE 来进行解决，当然这也是解决方法之一，在新版的 Spring 中，需要引入除 <code>spring-cloud-config-server</code> 之外的新依赖，即 <code>spring-cloud-starter-bootstrap</code> 依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时 <code>spring-cloud-starter-bootstrap</code> 会提供三个端口，分别用于加密、解密、检查等方式进行对称加密的操作：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Uri</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>&#x2F;encrypt&#x2F;status</td>
+<td>检查加密密钥是否设置成功</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/encrypt/status">http://localhost:8210/encrypt/status</a></td>
+<td>GET</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x2F;encrypt</td>
+<td>加密内容</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/encrypt">http://localhost:8210/encrypt</a></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&#x2F;decrypt</td>
+<td>解密内容</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/decrypt">http://localhost:8210/decrypt</a></td>
+<td>POST</td>
+</tr>
+</tbody></table>
+<p>在原有的 Spring Cloud Config 基础上，我们只需要新建一个 <code>bootstrap.properties</code> 文件并写入密钥，这主要的作用就是，你请求这个接口显示的是明文，而没有密钥的客户端发起请求返回的则是密文。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">encrypt.key</span>=<span class="string">hey</span></span><br></pre></td></tr></table></figure>
+
+<p>当然你如果有不良癖好喜欢密文的话，也可以通过 <code>encrypt</code> 来停止 Spring cloud config 的直接翻译，这时返回的则是密文信息：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">encrypt:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span>   <span class="comment"># 是否进行解密</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210726154028.png"><br>至于非对称加密则需要通过 <code>keytools </code> 来新建一个密钥，之后生成一个密钥移动到 <code>resourcs</code> 目录下，并在 bootstrap 全局配置文件 <code>bbootstrap.applicatiyon</code> 下填写相关的配置信息即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkeypair -alias &quot;spring-cloud-config&quot; -keypass &quot;keypass&quot; -keyalg &quot;RSA&quot; -storepass &quot;stropess&quot; -keystore &quot;spring-cloud-config.jks&quot;</span><br></pre></td></tr></table></figure>
+
+<p>其中上述命令最为关键的部分则是 <code>alias（别名）</code> 、<code>keypass（密钥口令）</code>、<code>storepass（密钥库口令）</code> 这三类主要配置，将会在配置文件中进行使用以验证身份，而 <code>-keylag</code> 则主要表示密钥的类型为 RSA 加密算法。</p>
+<blockquote>
+<p>RSA是由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）在1977年一起提出的，当时他们三人都在麻省理工学院工作，RSA 就是他们三人姓氏开头字母拼在一起组成的。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 密钥位置</span><br><span class="line">encrypt.key-store.location=classpath:/spring-cloud-config.jks</span><br><span class="line"># 密钥别名</span><br><span class="line">encrypt.key-store.alias=spring-cloud-config</span><br><span class="line"># 密钥库密码</span><br><span class="line">encrypt.key-store.secret=</span><br><span class="line"># 密钥密码</span><br><span class="line">encrypt.key-store.password=</span><br></pre></td></tr></table></figure>
+
+<p>与对称加密一样，可以通过之前的三个端点来进行加密、解密、状态检查等服务：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Uri</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>&#x2F;encrypt&#x2F;status</td>
+<td>检查加密密钥是否设置成功</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/encrypt/status">http://localhost:8210/encrypt/status</a></td>
+<td>GET</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x2F;encrypt</td>
+<td>加密内容</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/encrypt">http://localhost:8210/encrypt</a></td>
+<td>POST</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&#x2F;decrypt</td>
+<td>解密内容</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8210/decrypt">http://localhost:8210/decrypt</a></td>
+<td>POST</td>
+</tr>
+</tbody></table>
+<p>我们在 git 仓库重新建立一个配置文件，他主要通过非对称加密作为密文，之后通过我们的密钥来进行解密的这么一个流程：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app.version</span>=<span class="string">rsa</span></span><br><span class="line"><span class="attr">message</span>=<span class="string">Spring Cloud Config Demo</span></span><br><span class="line"><span class="attr">password</span>=<span class="string">&#123;cipher&#125;AQA15miINQvSMr5kJorYoX2MLH+1XgjBAGrJKPJWzAvaUhxfrd6So0skCEXjiidn/Vgf+aWCcz17pugBoRqEeDU6XLyu1tS3dAyNE/z7vbyEcp+DsJOEqHiHnr3VqzrhQTJheJOibkskvd8kJt6WP4F9Tl8qyen6mOz+4/Ce4x9iCzPoWTO2Yc+jXJFAjOSB02/kh1wnqAdyc0s7cDYLjjR+FBSMFjFJXV0Qax28hZNjjdlUb/Hy+8mPaSAQbipc9FIKB+dQaSAABYCviscHz7XkjpfmQN3qOAYiMum851OP1OOn8KHGpUu1u7D8ET+404iAHjNPTKh/As8T9A92Av73YE6b8Dj3m9wZf4hCUyEMFUpo0kffw9ThOAzVgR1RnNY=</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8017</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Spring-Cloud-Bus"><a href="#Spring-Cloud-Bus" class="headerlink" title="Spring Cloud Bus"></a>Spring Cloud Bus</h2><p>Spring Cloud Bus 将会用于自动刷新配置，并且可以管理和传播分布式项目中的消息，利用消息中间件广播的机制传播可以实现将消息连接整个集群，他目前支持 Kafka 和 RabbitMQ，其中目前主要流行的就是这两个项目。</p>
+<h3 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210729211335.png"><br>RabbitMQ 是一个开源的消息代理项目，即面向消息的中间件，采用 Erlang 语言来进行编写，因此我们除了安装 RabbitMQ 之外还需要安装 Erlang 。</p>
+<p>对于使用 debian 系的 Linux 用户，可以通过使用 <code>apt-get install erlang</code> 直接进行安装 erl，之后同样的安装 RabbitMQ Server 并运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install rabbitmq-server</span><br><span class="line">systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<p>运行之后就开始进行配置 RabbitMQ 了，这里面主要的就是配置帐号密码以及权限和安装可视化插件：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>rabbitmq-plugins enable rabbitmq_management</code></td>
+<td>安装可视化插件</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>rabbitmqctl add_user root toor</code></td>
+<td>添加 root 帐号密码为 toor</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>set_user_tags root administrator</code></td>
+<td>将 root 帐号设置为管理</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>set_permissions -p / root &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</code></td>
+<td>为 root 帐号添加写入权限</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>rabbitmqctl list_permissions</code></td>
+<td>查看当前的当前的权限列表</td>
+</tr>
+</tbody></table>
+<p>值得注意的是，当 RabbimtMQ 配置完成后，他会提供三个非常重要的端口，分别为 <code>5672\25672\15672</code> 在本文中主要使用 <code>5672</code> 端口来进行 AMQP 连接接口，而 <code>15672</code> 用于 HTTP 访问接口，也就是监控中心，之后你可以将这个接口添加到 Config Server &amp; Client 配置文件中：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">SpringCloudConfigClient</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">toor</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">xxx</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Config-Server-1"><a href="#Config-Server-1" class="headerlink" title="Config Server"></a>Config Server</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210729211346.gif"><br>对于 Config Server ，我们可以理解在原有的基础上，增加了 Spring Cloud Config Bus 来实现配置文件更新和广播的作用，简单来讲就是默认情况下 Config Client 是无法实现自动更新的，只可以通过 Spring Config Bus 来进行实现发送 POST 来进行刷新客户端配置文件的应用，因此我们需要添加如下依赖（在原有的非对称加密的基础上配置 Config Server）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-bus-amqp&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.integration&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-integration-amqp&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.5.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210729211355.png"></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-server</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">git:</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">https://gitee.com/sif_one/spring-cloud-config</span></span><br><span class="line">          <span class="attr">search-paths:</span> <span class="string">config-repositories</span></span><br><span class="line">          <span class="attr">username:</span> <span class="string">xxx</span></span><br><span class="line">          <span class="attr">password:</span> <span class="string">xxx</span></span><br><span class="line">        <span class="attr">encrypt:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span>   <span class="comment"># 是否进行解密</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">toor</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">xxx</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8210</span></span><br><span class="line"></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">&quot;bus-refresh&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>之后打包上传到服务器之中，运行后即可通过使用 <code>http://111.67.201.159:8210/actuator/busrefresh</code> 接口来进行刷新客户端的配置，这是新版本中所提供的接口，当然你如果使用的是其他版本也可以通过访问 <code>/actuator</code> 端口来查看目前所支持的 Spring-Cloud-Bus 接口。</p>
+<h3 id="Config-Client"><a href="#Config-Client" class="headerlink" title="Config Client"></a>Config Client</h3><p>Config Client 的主要作用就是获取到 Config Server 从 Git 仓库中的配置文件并运用，但是在不使用 Spring-Cloud-Config-Bus 的情况下，即使你将最新的配置文件上传了 Config Config 也不会进行更新，因此需要通过 Spring Cloud Config Bus 来进行实现，在原有的 Config CLient 基础上进行添加即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-client --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-config-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.0.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-bus-amqp&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.integration&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-integration-amqp&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.5.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="RefreshScope"><a href="#RefreshScope" class="headerlink" title="@RefreshScope"></a>@RefreshScope</h4><figure class="highlight plaintext"><figcaption><span>依赖主要的作用就是当 git 仓库发生改变或更新后，我们通过 Config server 所提供的 ```actuator/busrefresh``` POST 请求来刷新 Config Client 的配置文件，因此这个依赖主要的作用就是刷新的范围，我们在原有的 Config Server Client 基础上添加即可：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```java</span><br><span class="line">package com.example.demo.controller;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.cloud.context.config.annotation.RefreshScope;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 获取配置中心的数据</span><br><span class="line"> *</span><br><span class="line"> * @author kunlun</span><br><span class="line"> * @date 2021/7/26</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">@RefreshScope</span><br><span class="line">public class heyController &#123;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;app.version&#125;&quot;)</span><br><span class="line">    private String version;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;message&#125;&quot;)</span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;/hey&quot;)</span><br><span class="line">    public String hey() &#123;</span><br><span class="line">        String string = &quot;message:&quot; + message + &quot;:&quot; + &quot; version:&quot; + version;</span><br><span class="line">        return string;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当然你也可以在启动类中进行添加  </p>
+</blockquote>
+<h4 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">SpringCloudConfigClient</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">toor</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">xxx</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span></span><br><span class="line"></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">&quot;bus-refresh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置文件中的 <code>management</code> 为开启此接口，默认的情况下是关闭的，需要通过配置文件中进行配置，之后即可访问，虽然在最新版本中不知道有没有什么作用，但是为了保险期间还是添加为好。</p>
+<blockquote>
+<p>新版本中 Spring Cloud Config Bus 所提供的 POST 更新接口为 <code>actuator/busrefresh</code></p>
+</blockquote>
+<h4 id="bootstrap-yml"><a href="#bootstrap-yml" class="headerlink" title="bootstrap.yml"></a>bootstrap.yml</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">      <span class="attr">profile:</span> <span class="string">rsa</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">http://xxx:8210</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>bootstrap 配置文件主要做的就是通过 <code>spring.cloud.config</code> 来链接配置中心，并通过配置中心所获取的配置文件来进行运用，最后配置完成后我们可以尝试修改配置文件信息，你可以全部接口都访问一遍看看最初的效果（除了 <code>actuator/busrefresh</code>），之后通过 <code>actuator/busrefresh</code> 接口以 POST 方式进行刷新，最后访问 Spring Cloud Config Client 所提供的 <code>/hey</code> 接口来查看是否刷新成功。</p>
+<h3 id="WebHooks"><a href="#WebHooks" class="headerlink" title="WebHooks"></a>WebHooks</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210729211421.png"></p>
+<p>WebHooks 主要的作用就是当推送到 git 仓库的时候 WebHooks 服务会将 POST 请求到对应的 uri 中，从而实现我们手动请求 POST 来刷新服务配置文件的效果。但在新版本中却请求失败，考虑其他不可抗拒的因素建议国内读者选择 Gitte，但 WebHooks 依然请求返回 <code>400</code> 如有读者解决可在下放进行评论。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/11.Spring%20cloud%20Config/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

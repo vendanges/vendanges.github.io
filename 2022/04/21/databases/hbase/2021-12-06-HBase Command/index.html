@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>HBase 基础语法 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>HBase 基础语法</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/hbase/" rel="tag">hbase</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="CURD"><a href="#CURD" class="headerlink" title="CURD"></a>CURD</h2><h3 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h3><h4 id="Create-and-Table-of-Coumn-familu-or-Column"><a href="#Create-and-Table-of-Coumn-familu-or-Column" class="headerlink" title="Create and Table of Coumn familu or Column"></a>Create and Table of Coumn familu or Column</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/databases/hbash/3.hbase%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.md/509553510229673.png"><br>Hbase 的表都是由列和族（Column Family）所组成的，列是列族的子项，而每个列或多个列会形成一行(row)。在 HBase 中可以使用 <code>create</code> 创建一个表。</p>
+<blockquote>
+<p>在创建的途中可能会遇到 Hadoop 集群的报错: “util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable” 来导致最终 <code>create</code> 语法无法成功插入的报错，此问题的解决就是清除 Hadoop 除去 myid 和 version 相关的集群数据目录，然后重启并格式化即可，在重新启动下 Hbase 集群即可。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;cf&#x27;</span></span><br><span class="line">Created <span class="keyword">table</span> test</span><br><span class="line">Took <span class="number">11.8491</span> seconds</span><br><span class="line"><span class="operator">=</span><span class="operator">&gt;</span> Hbase::<span class="keyword">Table</span> <span class="operator">-</span> test</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>create</code> 所创建的，一个是表(table)，另一个则是列族(column family)，而列(Column)定义是在插入第一条数据的时候才会创建，也就是单元格(call)。所创建的所有数据都定义在列族上，而表的本身则是存放列族和列。</p>
+<h4 id="Create-Table-of-Column-family"><a href="#Create-Table-of-Column-family" class="headerlink" title="Create Table of Column family"></a>Create Table of Column family</h4><p>通过 <code>describe &#39;table&#39;</code>  可以看之前所创建的 <code>cf</code> 列族，而实际上 <code>describe</code> 大部分都是列族的属性，这体现在 <code>alter &#39;text&#39;, &#39;cf2&#39;</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">describe &#x27;test&#x27;</span><br><span class="line">Table test is ENABLED</span><br><span class="line">test</span><br><span class="line">COLUMN FAMILIES DESCRIPTION</span><br><span class="line">&#123;NAME =&gt; &#x27;cf&#x27;, BLOOMFILTER =&gt; &#x27;ROW&#x27;, IN_MEMORY =&gt; &#x27;false&#x27;, VERSIONS =&gt; &#x27;1&#x27;, KEEP_DELETED_CELLS =&gt; &#x27;FALSE&#x27;, DATA_BLOCK_ENCODING =&gt; &#x27;NONE&#x27;, COMPRESSION =&gt; &#x27;NONE&#x27;, TTL =&gt; &#x27;FOREVER&#x27;, MIN_VERSIONS =&gt; &#x27;0&#x27;, BLOCKCACHE =&gt; &#x27;true&#x27;, BLOCKSIZE =&gt; &#x27;65536&#x27;, REPLICATION_SCOPE =&gt; &#x27;0&#x27;&#125;</span><br><span class="line"></span><br><span class="line">&#123;NAME =&gt; &#x27;cf2&#x27;, BLOOMFILTER =&gt; &#x27;ROW&#x27;, IN_MEMORY =&gt; &#x27;false&#x27;, VERSIONS =&gt; &#x27;1&#x27;, KEEP_DELETED_CELLS =&gt; &#x27;FALSE&#x27;, DATA_BLOCK_ENCODING =&gt; &#x27;NONE&#x27;, COMPRESSION =&gt; &#x27;NONE&#x27;, TTL =&gt; &#x27;FOREVER&#x27;, MIN_VERSIONS =&gt; &#x27;0&#x27;, BLOCKCACHE =&gt; &#x27;true&#x27;, BLOCKSIZE =&gt; &#x27;65536&#x27;, REPLICATION_SCOPE =&gt; &#x27;0&#x27;&#125;</span><br><span class="line"></span><br><span class="line">2 row(s)</span><br><span class="line">Quota is disabled</span><br><span class="line">Took 0.0608 seconds</span><br></pre></td></tr></table></figure>
+
+<p>可以看出 describe 所列出的表属性大多数都是根据列族而进行输出的，涉及到表的属性很少。</p>
+<h4 id="Put"><a href="#Put" class="headerlink" title="Put"></a>Put</h4><p>Hbase 的插入数据也体现在出了高离散的特点，其格式也是 <strong>表, 行, 列族:列名, 数据值</strong>，也就是必须指定数据值要插入到那一行，那一列当中，对应的命令是: <code>put &#39;test&#39;, &#39;row1&#39;, &#39;cf:name&#39;, &#39;hello,world!&#39;</code>，即使用 <code>put</code> 向 test 表中的第一行，列族为 cf 插入了列明为 name 的 hello,world 数据值。之后通过 <code>scan &#39;test&#39;</code> 可扫描出：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> scan <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"> row1                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">14</span>:<span class="number">24.144</span>, <span class="keyword">value</span><span class="operator">=</span>hello,world<span class="operator">!</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.2802</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>scan</code> 可以扫描出该表的所有数据，可以看出对照关系是：</p>
+<table>
+<thead>
+<tr>
+<th>ROW</th>
+<th>COLUMN+CELL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rowkey</td>
+<td>column&#x3D;列族:列名, timestamp&#x3D;时间戳, value&#x3D;数据值</td>
+</tr>
+</tbody></table>
+<p>值得注意的是单元格可以通过 timestamp 来多个版本的值，通俗来点的说他也起到了版本号(version)的作用，而 HBase 会取版本号最大的数据版本进行输出，但同时在默认情况下 timestamp 是由系统自动生成的，当然我们也可以自行定义时间戳。</p>
+<p>在自定义时间戳之前我们需要通过 <code>alter &#39;test&#39;,&#123;NAME=&gt;&#39;cf&#39;,VERSIONS=&gt;5&#125;</code> 来修改版本数。</p>
+<blockquote>
+<p>这样一来就算在一个单元格无论修改多少次，HBase 也会保存最后一个版本，如：</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;row2,&#x27;</span>cf:name<span class="string">&#x27;,&#x27;</span>date_time<span class="string">&#x27;,1638909613</span></span><br><span class="line"><span class="string">put &#x27;</span>test<span class="string">&#x27;, &#x27;</span>row2<span class="string">&#x27;, &#x27;</span>cf:name<span class="string">&#x27;,&#x27;</span>date_update<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么通过 <code>scan</code> 的方式肯定会现实时间戳最高的一位进行输出，也就是 date_update，这是因为 date_time 的时间戳转换后是 1970-01-20T08:00:45.613 而，date_update 的时间戳是 2021-12-07T20:40:52.334，所以没有输出 date_time</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0128 seconds</span><br></pre></td></tr></table></figure>
+
+<p>不过我们如果真的需要查询 date_time 的话，可以通过 get 的表达式来获取单元格的数据，也就是 <code>get &#39;test&#39;,&#39;row2&#39;,&#123;COLUMN=&gt;&#39;cf:name&#39;, VERSIONS=&gt;3&#125;</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;row2&#x27;</span>,&#123;<span class="keyword">COLUMN</span><span class="operator">=</span><span class="operator">&gt;</span><span class="string">&#x27;cf:name&#x27;</span>, VERSIONS<span class="operator">=</span><span class="operator">&gt;</span><span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">COLUMN</span>                          CELL</span><br><span class="line"> cf:name                        <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">40</span>:<span class="number">52.334</span>, <span class="keyword">value</span><span class="operator">=</span>date_update</span><br><span class="line"> cf:name                        <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-20</span>T08:<span class="number">00</span>:<span class="number">45.613</span>, <span class="keyword">value</span><span class="operator">=</span>data_timestamp</span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br></pre></td></tr></table></figure>
+
+<p>对于上述这种表达式，同样的 scan 以及大部分的 hbase 语法都支持，比如我们可以通过 scan 起始行(STARTROW)和结束行(ENDROW)的表达式来进行筛选：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;,&#123;STARTROW=&gt;&#x27;row1&#x27;,ENDROW=&gt;&#x27;row2&#x27;&#125;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0793 seconds</span><br></pre></td></tr></table></figure>
+
+<p>同样的基于这种表达式，也赋予了和 Put 一教高下的能力，比如同样的可以使用表达式来查询出多个单元块的版本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;,&#123;VERSIONS=&gt;5&#125;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line"> row2                           column=cf:name, timestamp=1970-01-20T08:00:45.613, value=data_timestamp</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0773 seconds</span><br></pre></td></tr></table></figure>
+
+<h3 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h3><h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>通过 <code>list</code> 或 <code>list &lt;table_name&gt;</code> 的方式来查询当前库中有多少个表以及查询单个表，列出刚刚所创建的表是否存在</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">list <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="keyword">TABLE</span></span><br><span class="line">test</span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.3364</span> seconds</span><br><span class="line"><span class="operator">=</span><span class="operator">&gt;</span> [&quot;test&quot;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="describe"><a href="#describe" class="headerlink" title="describe"></a>describe</h4><p>查看表和列族的详细信息，实际上有很大一部分的信息输出都是针对列族的，主要的原因是 HBase 中的表上只有几个属性，大部分的属性都在列族上而已。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">describe</span> <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="keyword">Table</span> test <span class="keyword">is</span> ENABLED</span><br><span class="line">test</span><br><span class="line"><span class="keyword">COLUMN</span> FAMILIES DESCRIPTION</span><br><span class="line">&#123;NAME <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;cf&#x27;</span>, BLOOMFILTER <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;ROW&#x27;</span>, IN_MEMORY <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;false&#x27;</span>, VERSIONS <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;1&#x27;</span>, KEEP_DELETED_CELLS <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;FALSE&#x27;</span>, DATA_BLOCK_ENCODING <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;NONE&#x27;</span>, COMPRESSION <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;NONE&#x27;</span>, TTL <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;FOREVER&#x27;</span>, MIN_VERSIONS <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;0&#x27;</span>, BLOCKCACHE <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;true&#x27;</span>, BLOCKSIZE <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;65536&#x27;</span>, REPLICAT</span><br><span class="line">ION_SCOPE <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">&#x27;0&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Quota <span class="keyword">is</span> disabled</span><br><span class="line">Took <span class="number">2.1830</span> seconds</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Name_cn</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NAME</td>
+<td>Name family 名</td>
+<td>Name_family 的名</td>
+</tr>
+<tr>
+<td>BLOOMFILTER</td>
+<td>布隆过滤</td>
+<td>在 1970 年由 Burton Howard Bloom 所提出，用于测试一个元素是否在特定集中。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ROW 提高随机读取性能</td>
+</tr>
+<tr>
+<td>IN_MEMORY</td>
+<td>是否在内存中</td>
+<td>HBase 所提供的缓存选择，默认为 “false”</td>
+</tr>
+<tr>
+<td>VERSIONS</td>
+<td>版本数</td>
+<td>记录单元格所插入的数据，只保留最后一个版本并记录所有版本的数据</td>
+</tr>
+<tr>
+<td>KEEP_DELETED_CELLS</td>
+<td>删除标记</td>
+<td>是否保留已经删除的单元格，默认为 “false”</td>
+</tr>
+<tr>
+<td>DATA_BLOCK_ENCODING</td>
+<td>数据块编码</td>
+<td>数据块编码，可自行进行选择，默认 “none”</td>
+</tr>
+<tr>
+<td>COMPRESSION</td>
+<td>压缩算法</td>
+<td>决定是否启用压缩算法，默认 “none”</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>生存时间</td>
+<td>制定后可以达到过期事件后自动删除行，默认为 “FOREVER”</td>
+</tr>
+<tr>
+<td>MIN_VERSIONS</td>
+<td>最小版本</td>
+<td>存储列中的最小版本号，默认为 “0”，也意味着该功能处于禁用状态</td>
+</tr>
+<tr>
+<td>BLOCKCACHE</td>
+<td>块缓存</td>
+<td>Hbase 提供了 LruBlockCache 和 BucketCache 两种缓存机制,通常是 off-heap</td>
+</tr>
+<tr>
+<td>BLOCKSIZE</td>
+<td>块大小</td>
+<td>HDFS 块，单元格越带，块大小就越大，默认值为 64k</td>
+</tr>
+<tr>
+<td>REPLICATION_SCOPE</td>
+<td>复制范围</td>
+<td>允许使用源集群预写日志来传播更改，使一个集群的状态与零一个集群的状态保持同步</td>
+</tr>
+</tbody></table>
+<h4 id="scan"><a href="#scan" class="headerlink" title="scan"></a>scan</h4><p>通过 <code>scan</code> 可以扫描出该表的所有数据，可以看出对照关系是：</p>
+<table>
+<thead>
+<tr>
+<th>ROW</th>
+<th>COLUMN+CELL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rowkey</td>
+<td>column&#x3D;列族:列名, timestamp&#x3D;时间戳, value&#x3D;数据值</td>
+</tr>
+</tbody></table>
+<p>值得注意的是单元格可以通过 timestamp 来多个版本的值，通俗来点的说他也起到了版本号(version)的作用，而 HBase 会取版本号最大的数据版本进行输出，但同时在默认情况下 timestamp 是由系统自动生成的，当然我们也可以自行定义时间戳。</p>
+<p>在自定义时间戳之前我们需要通过 <code>alter &#39;test&#39;,&#123;NAME=&gt;&#39;cf&#39;,VERSIONS=&gt;5&#125;</code> 来修改版本数。</p>
+<blockquote>
+<p>这样一来就算在一个单元格无论修改多少次，HBase 也会保存最后一个版本，如：</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;row2,&#x27;</span>cf:name<span class="string">&#x27;,&#x27;</span>date_time<span class="string">&#x27;,1638909613</span></span><br><span class="line"><span class="string">put &#x27;</span>test<span class="string">&#x27;, &#x27;</span>row2<span class="string">&#x27;, &#x27;</span>cf:name<span class="string">&#x27;,&#x27;</span>date_update<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么通过 <code>scan</code> 的方式肯定会现实时间戳最高的一位进行输出，也就是 date_update，这是因为 date_time 的时间戳转换后是 1970-01-20T08:00:45.613 而，date_update 的时间戳是 2021-12-07T20:40:52.334，所以没有输出 date_time</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0128 seconds</span><br></pre></td></tr></table></figure>
+
+<p>基于表达式的应用，也赋予了和 Put 一教高下的能力，比如同样的可以使用表达式来查询出多个单元块的版本数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;,&#123;VERSIONS=&gt;5&#125;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line"> row2                           column=cf:name, timestamp=1970-01-20T08:00:45.613, value=data_timestamp</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0773 seconds</span><br></pre></td></tr></table></figure>
+
+<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><h4 id="Delete-of-data-and-tombstone-marker"><a href="#Delete-of-data-and-tombstone-marker" class="headerlink" title="Delete of data and tombstone marker"></a>Delete of data and tombstone marker</h4><p>Delete 其如其名就是删除，同样的根据高离散的格式来定义表达式，如 <code>delete &#39;test&#39;,&#39;row1&#39;,&#39;cf:name&#39;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; scan &#x27;test&#x27;,&#123;VERSIONS=&gt;5&#125;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row1                           column=cf:name, timestamp=2021-12-07T20:14:24.144, value=hello,world!</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line"> row2                           column=cf:name, timestamp=1970-01-20T08:00:45.613, value=data_timestamp</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.0181 seconds</span><br><span class="line"></span><br><span class="line">&gt; delete &#x27;test&#x27;,&#x27;row1&#x27;,&#x27;cf:name&#x27;</span><br><span class="line">Took 0.0246 seconds</span><br><span class="line"></span><br><span class="line">&gt; scan &#x27;test&#x27;,&#123;VERSIONS=&gt;5&#125;</span><br><span class="line">ROW                             COLUMN+CELL</span><br><span class="line"> row2                           column=cf:name, timestamp=2021-12-07T20:40:52.334, value=date_update</span><br><span class="line"> row2                           column=cf:name, timestamp=1970-01-20T08:00:45.613, value=data_timestamp</span><br><span class="line">1 row(s)</span><br><span class="line">Took 0.0080 seconds</span><br></pre></td></tr></table></figure>
+
+<p>而这个时候就会牵扯到版本记录，如我们将 row2 的时间戳 1641645000 删除，则可以构造表达式 <code>delete &#39;test&#39;,&#39;row2&#39;,&#39;cf:name&#39;,1670445613</code></p>
+<blockquote>
+<p>很多时候 Hbase 的时间戳转换的格式为 <code>yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSS</code>，我们可以直接在 hbase shell 中来进行转换：</p>
+<ol>
+<li>import java.text.SimpleDateFormat</li>
+<li>import java.text.ParsePosition</li>
+<li>SimpleDateFormat.new(“yyyy-MM-dd’T’HH:mm:ss.SSS”).parse(“1970-01-20T08:00:45.613”,ParsePosition.new(0<br>)).getTime()</li>
+</ol>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> scan <span class="string">&#x27;test&#x27;</span>,&#123;VERSIONS<span class="operator">=</span><span class="operator">&gt;</span><span class="number">5</span>&#125;</span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">40</span>:<span class="number">52.334</span>, <span class="keyword">value</span><span class="operator">=</span>date_update</span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.0449</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>上述提到的墓碑标记(tombstone marker) 即被删除的数据，他并不是被真正的删除而是被打上了一个墓碑标记，打上后会连同之前的版本也会被标记为不可见。</p>
+<p>同时为了性能着想他并不会马上清除，而是定期的去清理这些已经被删除的记录，而所谓的定期则是在 HBase 做自动合并的时候将墓碑合并到一起进行删除，以此来将 HBase 的消耗降到最低，我们可以通过 <code>scan &#39;test&#39;,&#123;RAW=&gt;true,VERSIONS=&gt;5&#125;</code> 来进行查看被打赏墓碑标记的数据 ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> scan <span class="string">&#x27;test&#x27;</span>,&#123;RAW<span class="operator">=</span><span class="operator">&gt;</span><span class="literal">true</span>,VERSIONS<span class="operator">=</span><span class="operator">&gt;</span><span class="number">5</span>&#125;</span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"> row1                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">14</span>:<span class="number">24.144</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row1                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">14</span>:<span class="number">24.144</span>, <span class="keyword">value</span><span class="operator">=</span>hello,world<span class="operator">!</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">40</span>:<span class="number">52.334</span>, <span class="keyword">value</span><span class="operator">=</span>date_update</span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-20</span>T08:<span class="number">00</span>:<span class="number">45.613</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-20</span>T08:<span class="number">00</span>:<span class="number">45.613</span>, <span class="keyword">value</span><span class="operator">=</span>data_timestamp</span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-20</span>T00:<span class="number">00</span>:<span class="number">45</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-19</span>T23:<span class="number">15</span>:<span class="number">09.613</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-19</span>T23:<span class="number">14</span>:<span class="number">40.852</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-01</span>T00:<span class="number">27</span>:<span class="number">21.645</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">1970</span><span class="number">-01</span><span class="number">-01</span>T00:<span class="number">27</span>:<span class="number">18.911</span>, type<span class="operator">=</span><span class="keyword">Delete</span></span><br><span class="line"><span class="number">2</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.0579</span> seconds</span><br></pre></td></tr></table></figure>
+
+<h4 id="deleteall"><a href="#deleteall" class="headerlink" title="deleteall"></a>deleteall</h4><p>deteall 与单纯的 detell 的区别是他是删除整行目录的，也就是说他无需指定列族，指定到 rowkey 即可进行删除该 rowkey 下的数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> scan <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"> row2                           <span class="keyword">column</span><span class="operator">=</span>cf:name, <span class="type">timestamp</span><span class="operator">=</span><span class="number">2021</span><span class="number">-12</span><span class="number">-07</span>T20:<span class="number">40</span>:<span class="number">52.334</span>, <span class="keyword">value</span><span class="operator">=</span>date_update</span><br><span class="line"><span class="number">1</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.1310</span> seconds</span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> deleteall <span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;row2&#x27;</span></span><br><span class="line">Took <span class="number">0.0148</span> seconds</span><br><span class="line"></span><br><span class="line">hbase(main):<span class="number">062</span>:<span class="number">0</span><span class="operator">&gt;</span> scan <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line"><span class="number">0</span> <span class="type">row</span>(s)</span><br><span class="line">Took <span class="number">0.0095</span> seconds</span><br></pre></td></tr></table></figure>
+
+<h4 id="disable"><a href="#disable" class="headerlink" title="disable"></a>disable</h4><p>disable 的命令作用是停用表，也就是更加真实应对分布式数据库高并发高和高性能下所提供的一个命令，<strong>在删除  HBase 表的时候强烈建议西安 disable 在 drop 删除表。</strong></p>
+<blockquote>
+<p>如果 disable 目标表下线的时候很快则表明这个表的依赖度不高，但如果假设依赖度很高的话则会很慢，因为他会通知所有 RegisionServer 来下线该表，以保证完全不参与任何工作了在进行下线。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):<span class="number">063</span>:<span class="number">0</span><span class="operator">&gt;</span> disable <span class="string">&#x27;test&#x27;</span></span><br><span class="line">Took <span class="number">15.3142</span> seconds</span><br><span class="line">hbase(main):<span class="number">064</span>:<span class="number">0</span><span class="operator">&gt;</span> scan <span class="string">&#x27;test&#x27;</span></span><br><span class="line"><span class="type">ROW</span>                             <span class="keyword">COLUMN</span><span class="operator">+</span>CELL</span><br><span class="line">org.apache.hadoop.hbase.TableNotEnabledException: test <span class="keyword">is</span> disabled.</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.ConnectionImplementation.relocateRegion(ConnectionImplementation.java:<span class="number">770</span>)</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.RpcRetryingCallerWithReadReplicas.getRegionLocations(RpcRetryingCallerWithReadReplicas.java:<span class="number">330</span>)</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.ScannerCallable.prepare(ScannerCallable.java:<span class="number">139</span>)</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.ScannerCallableWithReplicas$RetryingRPC.prepare(ScannerCallableWithReplicas.java:<span class="number">408</span>)</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.RpcRetryingCallerImpl.callWithRetries(RpcRetryingCallerImpl.java:<span class="number">105</span>)</span><br><span class="line">        <span class="keyword">at</span> org.apache.hadoop.hbase.client.ResultBoundedCompletionService$QueueingFuture.run(ResultBoundedCompletionService.java:<span class="number">80</span>)</span><br><span class="line">        <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1149</span>)</span><br><span class="line">        <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">624</span>)</span><br><span class="line">        <span class="keyword">at</span> java.lang.Thread.run(Thread.java:<span class="number">748</span>)</span><br><span class="line"></span><br><span class="line">ERROR: <span class="keyword">Table</span> test <span class="keyword">is</span> disabled<span class="operator">!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> usage try <span class="string">&#x27;help &quot;scan&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>当该表下线后则无法使用 <code>scan</code> 命令进行查询，并会输出错误信息，来表示当前表已经被关闭，无法 scan。</p>
+<h4 id="drop"><a href="#drop" class="headerlink" title="drop"></a>drop</h4><p>当使用 disable 停用表后，则开始基于 drop 进行删除表，在此之前我们使用 <code>list</code> 还是可以发现 <code>test</code> 表存在的，但如果使用 <code>drop &#39;test&#39;</code> 后，则真的无法使用 <code>list</code> 查看到 test 表的任何痕迹了。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/hbase/2021-12-06-HBase%20Command/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

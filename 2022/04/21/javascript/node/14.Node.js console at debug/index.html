@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js console at debug | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js console at debug</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="console-API"><a href="#console-API" class="headerlink" title="console API"></a>console API</h2><h3 id="log-error-info-warn"><a href="#log-error-info-warn" class="headerlink" title="log\error\info\warn"></a>log\error\info\warn</h3><p>Node 主要提供了四种常用的 API，其中主要分为 <code>console.log</code> 、<code>console.error</code>、<code>console.info</code>、<code>console.warn</code> 等&#x2F;14.Node.js%20console%20at%20debug.html)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    log: hey</span></span><br><span class="line"><span class="comment">    log: hey world</span></span><br><span class="line"><span class="comment">    log: hey world</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    error: hey</span></span><br><span class="line"><span class="comment">    error: hey error</span></span><br><span class="line"><span class="comment">    error: hey error</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    info: hey</span></span><br><span class="line"><span class="comment">    info: world</span></span><br><span class="line"><span class="comment">    info: world</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    warn: hey</span></span><br><span class="line"><span class="comment">    warn: hey error</span></span><br><span class="line"><span class="comment">    warn: hey error</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;log: hey&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;log: hey&#x27;</span>, <span class="string">&#x27;world&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;log: hey %s&#x27;</span>, <span class="string">&#x27;world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error: hey&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error: hey&#x27;</span>, <span class="string">&#x27;error&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error: hey %s&#x27;</span>, <span class="string">&#x27;error&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;info: hey&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;info: world&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;info: %s&#x27;</span>,<span class="string">&#x27;world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&#x27;warn: hey&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&#x27;warn: hey&#x27;</span>, <span class="string">&#x27;error&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&#x27;warn: hey %s&#x27;</span>, <span class="string">&#x27;error&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在这 <code>console.log</code> 同等于  <code>console.error</code> 、<code>console.info</code>、<code>console.warn</code> 等 API，当然可根据不同的场景和语法结构使用响应的方法。</p>
+<h3 id="console-time-at-timeEnd"><a href="#console-time-at-timeEnd" class="headerlink" title="console.time at timeEnd"></a>console.time at timeEnd</h3><p>通常 <code>console.time</code> 和 <code>console.timeEnd</code> 将用于评估 <code>time</code> 和 <code>timeEnd</code> 两点之间的时间差（单位为：毫秒）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// timeLabel: 0.069ms</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">time</span>(<span class="string">&#x27;timeLabel&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(<span class="string">&#x27;timeLabel&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="console-assert"><a href="#console-assert" class="headerlink" title="console.assert"></a>console.assert</h3><p>该 API 方法主要使用其 <code>console.assert</code> 进行断言（assertion），而断言主要是一种放在程序中的一阶逻辑，也就是结果为真或假的逻辑判断式。目的是为了表示与验证程序预期的结果，当程序运行到断言位置时，对应断言应为 <code>true</code>，假设程序终止并给出错误信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Assertion failed: start wrong</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">assert</span>(<span class="literal">true</span>,<span class="string">&#x27;start&#x27;</span>,<span class="string">&#x27;wrong&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">assert</span>(<span class="literal">false</span>,<span class="string">&#x27;start&#x27;</span>,<span class="string">&#x27;wrong&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或者直接通过异常进行处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assertion failed: error</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">assert</span>(<span class="literal">false</span>,<span class="string">&#x27;error&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="console-trace"><a href="#console-trace" class="headerlink" title="console.trace"></a>console.trace</h3><p>这主要用于将字符串打印到 stderr（标准错误）中，然后以 <code>util.format()</code> 格式的消息和代码到当前的位置堆栈跟踪</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Trace: This will output one end of the error stack</span></span><br><span class="line"><span class="comment">        at Object.&lt;anonymous&gt; (/home/kunlun/Development/Web/Demo/node/app.js:1:9)</span></span><br><span class="line"><span class="comment">        at Module._compile (internal/modules/cjs/loader.js:1072:14)</span></span><br><span class="line"><span class="comment">        at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)</span></span><br><span class="line"><span class="comment">        at Module.load (internal/modules/cjs/loader.js:937:32)</span></span><br><span class="line"><span class="comment">        at Function.Module._load (internal/modules/cjs/loader.js:778:12)</span></span><br><span class="line"><span class="comment">        at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)</span></span><br><span class="line"><span class="comment">        at internal/main/run_main_module.js:17:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">trace</span>(<span class="string">&#x27;This will output one end of the error stack&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="console-dir"><a href="#console-dir" class="headerlink" title="console.dir"></a>console.dir</h3><p>该方法主要用于深层次的打印，其中可以通过 <code>depth</code> 进行深层次的打印层级。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">main</span>: &#123;</span><br><span class="line">            <span class="attr">info</span>: &#123;</span><br><span class="line">                <span class="attr">hey</span>: <span class="string">&#x27;hey.dir&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    &#123; data: &#123; main: &#123; info: [Object] &#125; &#125; &#125;</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">      data: &#123; main: &#123; info: &#123; hey: &#x27;hey.dir&#x27; &#125; &#125; &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(obj)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(obj, &#123;<span class="attr">depth</span>:<span class="number">3</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="自定义-stdout"><a href="#自定义-stdout" class="headerlink" title="自定义 stdout"></a>自定义 stdout</h2><p>自定义 stdocut 即标准输出，基于 <code>console.Console</code> 将数据输出到指定的文件中，当然这其中会使用到 <code>fs</code> 模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> file = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;desfile.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> logger = <span class="keyword">new</span> <span class="variable language_">console</span>.<span class="title class_">Console</span>(file, file);</span><br><span class="line">logger.<span class="title function_">log</span>(<span class="string">&#x27;hello,world&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当运行之后，通过 <code>logger.log</code> 的内容数据将会直接写入到 <code>fs.createWriteStream</code> 方法中的 <code>path</code> 参数路径中。</p>
+<blockquote>
+<p>desfile.txt：“hello,world”</p>
+</blockquote>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>对于日志的调试，可以通过 <code>console.log</code> 输出调试日志，由于 <code>console.log</code> 可以支持服务端以及浏览器中使用，且非常的简洁易用，因此这种方法对日志的调试很好。</p>
+<p>在开发中由于需要调试就需要多个 <code>console.log</code> 进行输出，之后上传到服务端中又注释 <code>console.log</code>，因此这就是一个加注释和去注释的过程。</p>
+<p>但由于上述方法太过于低效，因此 <code>debug</code> 库就可以实现控制输出的调试，他主要的作用就是判断 <code>DEBUG</code> 环境变量，来调整程序的运行环境即可控制日志的是否输出，但他最为核心的还是对 <code>DEBUG</code> 环境变量进行解析，允许开发者选性的控制输出日志。</p>
+<h3 id="project"><a href="#project" class="headerlink" title="project"></a>project</h3><h4 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debug = <span class="built_in">require</span>(<span class="string">&#x27;debug&#x27;</span>)(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line">    , http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    $ DEBUG=worker:* node app.js</span></span><br><span class="line"><span class="comment">      worker:a This is worka +0ms</span></span><br><span class="line"><span class="comment">      worker:b This is workb +0ms</span></span><br><span class="line"><span class="comment">      worker:a This is worka +239ms</span></span><br><span class="line"><span class="comment">      worker:a This is worka +40ms</span></span><br><span class="line"><span class="comment">    $ DEBUG=worker:a node app.js</span></span><br><span class="line"><span class="comment">      worker:a This is worka +0ms</span></span><br><span class="line"><span class="comment">      worker:a This is worka +260ms</span></span><br><span class="line"><span class="comment">      worker:a This is worka +42ms</span></span><br><span class="line"><span class="comment">    $ DEBUG=worker:b node app.js</span></span><br><span class="line"><span class="comment">      worker:b This is workb +0ms</span></span><br><span class="line"><span class="comment">      worker:b This is workb +1s</span></span><br><span class="line"><span class="comment">      worker:b This is workb +976ms</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">http.<span class="title function_">createServer</span>(<span class="keyword">function</span>(<span class="params">req, res</span>)&#123;</span><br><span class="line">    <span class="title function_">debug</span>(req.<span class="property">method</span> + <span class="string">&#x27; &#x27;</span> + req.<span class="property">url</span>);</span><br><span class="line">    res.<span class="title function_">end</span>(<span class="string">&#x27;hello\n&#x27;</span>);</span><br><span class="line">&#125;).<span class="title function_">listen</span>(<span class="number">3000</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">debug</span>(<span class="string">&#x27;listening&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引入 console.log 工厂</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./worker&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="worker-js"><a href="#worker-js" class="headerlink" title="worker.js"></a>worker.js</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var a = require(&#x27;debug&#x27;)(&#x27;worker:a&#x27;)</span><br><span class="line">    , b = require(&#x27;debug&#x27;)(&#x27;worker:b&#x27;);</span><br><span class="line"></span><br><span class="line">function work() &#123;</span><br><span class="line">    a(&#x27;doing lots of uninteresting work&#x27;);</span><br><span class="line">    setTimeout(work, Math.random() * 1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">work();</span><br><span class="line"></span><br><span class="line">function workb() &#123;</span><br><span class="line">    b(&#x27;doing some work&#x27;);</span><br><span class="line">    setTimeout(workb, Math.random() * 2000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">workb();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="条件的定义"><a href="#条件的定义" class="headerlink" title="条件的定义"></a>条件的定义</h3><p>有些方法和事件可以通过 <code>--conditions flag</code> 进行使用，但同样可以在 <code>debug</code> 下进行引入参数，来实现对生产环境日志开启条件，在本地环境下开启日志：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>browser(浏览器)</td>
+<td>任何环境，实现了 Web 浏览器中 JavaScript 所提供的全局浏览器 API</td>
+</tr>
+<tr>
+<td>2</td>
+<td>development(开发环境&#x2F;本地环境)</td>
+<td>可用于开发环境入口点，必须始终不与生产环境互斥</td>
+</tr>
+<tr>
+<td>3</td>
+<td>production(生产环境)</td>
+<td>用于定义生产环经的切入点，并与本地&#x2F;开发环境互斥</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">&#x27;lodash&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> debug = <span class="built_in">require</span>(<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> debugA = <span class="title function_">debug</span>(<span class="string">&#x27;A:&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> debugB = <span class="title function_">debug</span>(<span class="string">&#x27;B:&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">$ DEBUG=A: NODE_ENV=production node app.js</span></span><br><span class="line"><span class="comment">  A: hey,world! +0ms</span></span><br><span class="line"><span class="comment">$ DEBUG=B: NODE_ENV=production node app.js</span></span><br><span class="line"><span class="comment">  B: I am new to debug +0ms</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span>) &#123;</span><br><span class="line">    debugA.<span class="property">enable</span> = <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">debugA</span>(<span class="string">&#x27;hey,world!&#x27;</span>)</span><br><span class="line"><span class="title function_">debugB</span>(<span class="string">&#x27;I am new to debug&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>Node debug 支持对日志进行分类打印以及命名空间及通佩符，在下文中 <code>DEBUG=ap*</code> 表示将所有以 <code>ap</code> 为开头的调试日志都将会被打印</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> debug = <span class="built_in">require</span>(<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> appDebug = <span class="title function_">debug</span>(<span class="string">&#x27;app&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> apiDebug = <span class="title function_">debug</span>(<span class="string">&#x27;api&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">$ DEBUG=api node app.js</span></span><br><span class="line"><span class="comment">  api hey,ApiDebug +0ms</span></span><br><span class="line"><span class="comment">$ DEBUG=app node app.js</span></span><br><span class="line"><span class="comment">  app hey,AppDebug +0ms</span></span><br><span class="line"><span class="comment">$ DEBUG=app,api node app.js</span></span><br><span class="line"><span class="comment">  app hey,AppDebug +0ms</span></span><br><span class="line"><span class="comment">  api hey,ApiDebug +0ms</span></span><br><span class="line"><span class="comment">$ DEBUG=ap* node app.js</span></span><br><span class="line"><span class="comment">  app hey,AppDebug +0ms</span></span><br><span class="line"><span class="comment">  api hey,ApiDebug +0ms</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">appDebug</span>(<span class="string">&#x27;hey,AppDebug&#x27;</span>)</span><br><span class="line"><span class="title function_">apiDebug</span>(<span class="string">&#x27;hey,ApiDebug&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/14.Node.js%20console%20at%20debug/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

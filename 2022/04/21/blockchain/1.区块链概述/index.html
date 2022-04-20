@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>区块链概述 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>区块链概述</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/blockchain/" rel="tag">blockchain</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>区块链（block chain）是由密码学与共识机制等技术所创建的庞大的交易资料区块链的点对点网络。我们可以理解为区块链中的每一个 “区块” 都蕴含着交易资料，以及前一个区块的加密散列、相应时间戳等信息。</p>
+<p>区块链的形成主要分为主链，然后分出块，然后是存在于主链外的孤儿链，需要注意的是，每次更新都是一个新的块，添加至链的末端。</p>
+<p>欧盟在<a target="_blank" rel="noopener" href="https://publications.jrc.ec.europa.eu/repository/bitstream/JRC108255/jrc108255_blockchain_in_education%281%29.pdf">区块链教育</a>中，将区块链比喻成一种分布式的账本，为社区记录和共享信息所提供了一种方式。</p>
+<p>在这各社区中每个成员可以维护他自己的副本，而所有的成员必须集体验证任何更新，通常这些信息可以表示交易、合约、资产、身份或者实际上人何以数字所描述的东西。这些信息是永久且透明的，可搜索使得社区成员可以完整的查看交易历史。</p>
+<h3 id="节点-gt-链-gt-区块"><a href="#节点-gt-链-gt-区块" class="headerlink" title="节点 -&gt; 链 -&gt; 区块"></a>节点 -&gt; 链 -&gt; 区块</h3><p>一个节点中是一个完整的单元，节点里面的链上拥有着多个区块，而区块中存放着多个数据，每一个节点或者说一个链中都拥有不同的共识机制，公有链中，所采用的共识机制主要是 PoW&#x2F;PoS 等，是一个去中心化的节点，同时也是所有人都可以参与的。</p>
+<p>而联盟链来说，他的参议机制是联盟成员，采用的共识机制是分布式一致性算法，通常用于供应链的管理和金融服务、医疗保健等。最后私有链则是 skik&#x2F;pbft 等作为共识机制，参与者通常是链的所有者。</p>
+<h2 id="共识机制"><a href="#共识机制" class="headerlink" title="共识机制"></a>共识机制</h2><p>共识机制(consensus) 可以理解为达成共识的机制，在分布式系统中最为常见，同时依据故障组的容错能力，常被分为崩溃容错协议(crash fault tolerant) 以及拜占庭容错协议(Byzantine fault tolerant)</p>
+<h3 id="PoW"><a href="#PoW" class="headerlink" title="PoW"></a>PoW</h3><p>我们以公有链中的共识机制为切入点，工作量(proof of work)证明主要被称之为挖矿，之后获胜者以或者代币做为食用计算能力的激励措施，耗费大量的电力和实践以及性能，来生成区块，</p>
+<h3 id="PoS"><a href="#PoS" class="headerlink" title="PoS"></a>PoS</h3><p>权益证明(Proof-of-Stake) 于 PoW 相比，这种是发通过其账户余额来选择节点，通常是最富有经验者或者来主导网络，它的好处在于，减少了能源的使用并改善于 PoW 相关的电力效率低下而创建的。</p>
+<p>于 PoW 之间的区别在于选举他们所代表来验证区块，因此不诚实的代表容易被投票淘汰，相反于 PoS 每个利益相关者都会验证交易，因此 PoS 更加严格。</p>
+<h3 id="容错类型"><a href="#容错类型" class="headerlink" title="容错类型"></a>容错类型</h3><p>计算系统由大量的硬件和软件组成，特别是在区块链的场景中，一旦某个块出现了问题，那么将会对整个网络发生较为较为不可恢复性的伤害，因此在设计中每个区块拥有良好的故障处理行为，尽管发生故障，他们仍然可以继续提供特定的标准服务，</p>
+<p>然而对于越来越多的用户群体来说这些不可预测和潜在的危险故障导致服务的不可用的代价可能非常大，因此就需要依赖于容错服务。我们在接触分布系统中，对容错的类型都因有大致的了解。</p>
+<p>我们需要了解的一个概念是，为了实现容错，分布式系统架构中采用了沉余的处理方式，也就是集群，在 HBASE 分布式数据库中就大致的依赖 Zookeeper + Hadoop 中的 datanode和 namenode 来设计的容错模式。</p>
+<p>对于服务的崩溃，我们可以通过 Flaviu Cristian 所写的 <a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.30.591&rep=rep1&type=pdf">Understanding Fault-Tolerant Distributed Systems</a> 来理解容错分布式系统。</p>
+<h4 id="CFT"><a href="#CFT" class="headerlink" title="CFT"></a>CFT</h4><p>分布式系统中面临着很多问题，某个节点中出现问题或者故障，又或者是网络出现了问题，那么对于生产环境来说，共识算法必须可以应对这种故障。</p>
+<p>CFT(Crash fault tolerant，崩溃容错协议) 在协议中构建了一定的复原能力，通过算法正确的推进进程以此来达到共识，即使某些组件出现了故障。</p>
+<p>通过 # <a target="_blank" rel="noopener" href="https://www.uiowa.edu/">The University of Iowa</a> 内，关于<a target="_blank" rel="noopener" href="http://homepage.divms.uiowa.edu/~ghosh/16612.week10.pdf">故障和容错的</a> 章节中我们可以明白崩溃容错协议的主要用处，由此可知，崩溃失败就是进程停止，他是无法逆转的，如果一个系统无法容忍失败，也就是崩溃，也就是停止失败，他也无法容忍崩溃。</p>
+<h4 id="BFT"><a href="#BFT" class="headerlink" title="BFT"></a>BFT</h4><p>拜占庭容错(Byzantine fault tolerant)是容错分布式计算及系统对组件故障的抵抗</p>
+<p>拜占庭容错(BFT) 是分布式网络的功能，即使网络中某些节点无法响应或者相应不正确，也可以达成某种狗狗是，通古果采用集体决策来防止系统故障，以此来减少影响，对于拜占庭故障的类型主要分为两类，一种是故障的停止，或者是节点的故障，如今他已经被应用在区块链的交易中<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/computer-science/byzantine-fault">拜占庭断层 - 概述|科学直接主题 (sciencedirect.com)</a></p>
+<p>区块链平台将其作为共识的机制，通常拜占庭还包括的拜占庭容错(BFT)和实用拜占庭容错(pBFT)。</p>
+<p>拜占庭错误的定义为分布式系统在执行算法是所发生的任意错误，当拜占庭式错误发生时，系统可能会以任意的形式进行反应，这是传统的拜占庭错误。</p>
+<p>但当我们使用拜占庭容错时，主要会涉及到同步和异步，因此，同步时系统在已知有限时间内所作出相应的系统，而异步则不是。</p>
+<p>自 Miguel Castro 与 Barbara Liskov 等人在 1999 年 2 月所提出的<a target="_blank" rel="noopener" href="https://pmg.csail.mit.edu/papers/osdi99.pdf">实用拜占庭容错(BFT)</a> 他们通过实用数字签名来跨多个跳认证用户，即密码学需要一个可信的基础设施来发放他们的公钥和私钥，因此假设这项基础问题处发现问题，则整个网络也会失败。</p>
+<p>对于拜占庭分层，我们可以通过阅读 MA Nasreen，Amal Ganesh, Sunitha C 等人在 2016 年第四届计算机科学与工程最新趋势国际会议所提出的<a target="_blank" rel="noopener" href="https://pdf.sciencedirectassets.com/280203/1-s2.0-S1877050916X00117/1-s2.0-S1877050916304641/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPz//////////wEaCXVzLWVhc3QtMSJIMEYCIQCzJ/mKwlxBnd/50YwVOC0IlYICsdy4WToomOOlRp4bKwIhANm71aP//04jeNVPh/YDdgWBEpwJ6IDN7wsvquywKBPdKvoDCFUQBBoMMDU5MDAzNTQ2ODY1IgxgyZNfuN3LxyxvGB0q1wPATIuIP+e9obwnhOZwHZmX3gEVBxY8CvO/9tNMC9K4NgFFn25+gy+L9KpUuUuCOwZQL83AVHF2tOL7l+B/dugIvOCGCYW5PXqPhCbpQWLjWtsb4+oq1TNQxlWWjLFF/JS190JgFlZWGn9yNJjPUB19s6ZmBPELhEmhs+2krLNHdkSTXFr0RrHEvJUwB4j7Dt8aK2RXIbvIEqHcG0M4XdgYwSoXf3V6W2tufNfUXMc0k6tqJScUS1KTTSFyueQKLVtzUwHpiCG1FdZJCGZdeQXCcqpUfHCsw7eicETnwm97wflwMKGOajDcX2acnLGWXORv+jLjNumLP5o6fSxGWWluj1LyC3aO59iT3F9d+S/Z6Xm2v+Z4cA9OYrBtBWYluKB8mYLs4ncwQ0JuU3/o8hrec/yWBCSgwErbsB0VlwCSkwwSGHJWEq2MKfC+eeFMLPFJ6tjUEr1TxXRglZ/eEGzY6mipKViGM0kjkWw20KZvO0er0NUtHYrT2zdWMk2qSKQMHoiQEfOnetwlu1j7sSuLwThCX80/HFg1XJ8TbpwRbFcSidbt+wr9C0tnghGmzOzbYwNDyS4GJyN3nTowbGJNvPbxHgwD1mOewjHzc09pTujPzCnS3tswnbXRkAY6pAGm0Z4f80e5CC9HsK/ML79/rLkmsqVTRa94r7f77WBm0V6uIBe9ZSZMCwhgfN72ECDgOT+eDFRGsFcDIayKlDG1gDry1bccWMkwDSOmB6po2PQKYUs2XUkS+lvdt03Nu4FPGTp8PZf6jZ8EnJzX7YpRGUTGWmsq8AYzJ/WVFOcPrbI/7TcJTS3tev3k1pNHzreI6ltHmOEM0O1V/Ap4L3tXzhL3sw==&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220222T041640Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTY76FWXQJH/20220222/us-east-1/s3/aws4_request&X-Amz-Signature=d599560eb90284ab9c8e0589cef1f2dcb4e1359c62b1cf0f37b6a201f5cc0193&hash=b86ab8e9bf375d876657bd5f434224ce5ea662f07f040a11a6f8283ab86616dc&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S1877050916304641&tid=spdf-01afc33f-9458-4bcd-91e2-99e9f29f9b22&sid=221a2f768513b24874286fb359bc8311c8afgxrqa&type=client&ua=5001525b53585601500c&rr=6e15667c4c457b19">A Study on Byzantine Fault Tolerance Methods in Distributed Networks (sciencedirectassets.com)</a></p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/Group%201.png"></p>
+<p>为了达成一个安全的共识协议，他必须是容错的，所以 BFT 中开发了实用拜占庭容错(PBFT)，这种是基于BFT原则的验证，<strong>并且使用选举过程中的块是在验证之后所进行的</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">共识，即在添加分类帐上所有的条目在此之前都需要进行某种形式的共识，**并且通过已知参与者之间的算法进行投标来达成某种共识**，诸如工作量证明(Pow)和权益证明(Pos)分别在验证工作和交易的共识协议，同样的还有其他方法，如实用拜占庭容错(BPFT)和委托权益证明(DPos) 都是用于达成某种共识的。</span><br><span class="line"></span><br><span class="line">对于 BFT 可以阅读拜占庭将军的问题，同时拜占庭容错是一个定义容许拜占庭将军问题失败的了别的系统特征，同时还有拜占庭故障(Byzantine Failure)</span><br></pre></td></tr></table></figure>
+
+<p>实用拜占庭容错是设计在为异步请求的响应中没有上线的系统中高效工作，阵地低开开销时间进行 优化，目标是解决已经可用的拜占庭容错解决方案中的多个问题，通常应用于分布式计算中和区块链。</p>
+<h2 id="合约"><a href="#合约" class="headerlink" title="合约"></a>合约</h2><p>智能合约是一种自动执行的合同，由买卖双方之间的协议条款直接写入代码行中，分散在区块链网络中，通过代码控制执行，他也允许在不同的匿名方之间执行可信交易和协议，无需中央机构进行管理，符合去中心化的理论和趋势。</p>
+<p>智能合约也是一种计算机程序或交易程序，目的是减少可信中介人的需求，仲裁和执行成本，用来减少恶意的异常，他只是区块链中上存储的程序，在满足一定条件的时候执行，通常用于自动执行协议，以便所有参与者都可以立即确定结果，而不需要中介人的参与来减少时间损失。</p>
+<p>合约可以在满足条件的时候触发下一个操作并且开发者通过 ABI 来进行接口的调用和操作，在目前，智能合约的概念已经被运用到供应商关系的信任和国际贸易，使得交易双方更快、更高效。</p>
+<p>智能合约是区块链中的基础技术，同时也是以太坊网络中的关键要素，智能合约是自动执行的一组 Code，然后在区块链上进行验证。可以将智能合约理解成传统意义上的合同，同样是多方之间的协议，其中以方向另一方提供有价值的东西，而且交易双方要被智能合约所约束。</p>
+<p>他与传统的交易来进行对比，不同之处在于，智能合约可以自动执行协议条款中的 Code，然后 Code 会发送到区块链上的地址，由该区块的共识机制进行验证，一旦交易包含在此区块中，那么就会执行智能合约且发生不可挽回的操作。</p>
+<p>在智能合约中，消除了传统 CeFi 中的中介以及合同的执行需求，简化了合同的谈判过程，主要通过 Code 来定义交易的机制，从而成为条款的仲裁者。</p>
+<p>但智能合约也有缺点，就是如果智能合约中的 Code 出现或存在错误，则会使得智能合约无效，且不可更改。因为智能合约是无信任、自主、分散且透明的，一旦部署他就是不可逆以及不可修改的存在。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/blockchain/1.%E5%8C%BA%E5%9D%97%E9%93%BE%E6%A6%82%E8%BF%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

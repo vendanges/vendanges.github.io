@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 behavior | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 behavior</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v3/" rel="tag">d3 v3</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>behavior，即“<code>行为</code>”，他主要包含了<code>d3.behavior.drag</code>以及<code>d3.behavior.zoom</code>来分别实现和处理<strong>拖拽和缩放</strong>的交互形式。</p>
+<h2 id="click"><a href="#click" class="headerlink" title="click"></a>click</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210408031338.png"><br>在先介绍 <code>behavior</code>前，我们需要了解到基本的鼠标事件，鼠标事件主要分为<code>6</code>种，主要是辨别鼠标的<code>按下、触点</code>等两种：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>click</td>
+<td>鼠标单击某元素时（被 <code>mousedown（鼠标按下） and mouseup（鼠标松开）</code>组合在一起）</td>
+</tr>
+<tr>
+<td>mouseover</td>
+<td>当接收到<code>光标触点时</code> ……</td>
+</tr>
+<tr>
+<td>mouseout</td>
+<td>当光标从 …… <code>移出时</code></td>
+</tr>
+<tr>
+<td>mousemove</td>
+<td>当鼠标<code>移动</code>时 ……</td>
+</tr>
+<tr>
+<td>mousedown</td>
+<td>当鼠标 <code>按下</code> 时 ……</td>
+</tr>
+<tr>
+<td>mouseup</td>
+<td>当鼠标<code>按下松开</code>时 ……</td>
+</tr>
+</tbody></table>
+<p>在下述的 code 中我们组要实现了鼠标的<code>按下（mousedown \ click)、鼠标松开（mouseup）、光标接触（mouseover）、光标移出（mouseout）</code>的例子，并配合<code>过渡效果</code>来分别的进行显示，需要值得注意的是<code>click与 mousedown</code>并<strong>不是完全一样</strong>的，可以从下述 code 看出差别。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">append</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;x&quot;</span>,<span class="number">200</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;y&quot;</span>,<span class="number">20</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        |- mouseover 收到光标时</span></span><br><span class="line"><span class="comment">        |- mouseout 当光标移出时</span></span><br><span class="line"><span class="comment">        |- mousedown 当鼠标按下时 / click 当鼠标按下时</span></span><br><span class="line"><span class="comment">        |- mouseup 当鼠标松下时</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;mouseover&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;red&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;mouseout&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">200</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;mouseup&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,<span class="number">100</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="drag"><a href="#drag" class="headerlink" title="drag"></a>drag</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210408031347.png"><br>拖拽 (<code>drag</code>) 主要通过使用<code>d3.behavior.drag</code>来进行实现，是指通过鼠标将元素从一个位置到另一位置，通常主要分为<code>按下鼠标、鼠标移动、鼠标松开</code>等三个步骤，D3 为此提供了一种更为简单方法 :</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.behavior.drag()</td>
+<td>创建一个拖拽</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>drag.on(<code>type[,listener</code>])</td>
+<td>设置时间监听器，主要支持三种类型，分别为：“<code>dragstart（拖拽开始）、drag（拖拽中）、dragend（拖拽结束）</code>“，而<code>listener</code>是监听函数，默认返回当前指定事件监听器</td>
+</tr>
+<tr>
+<td></td>
+<td>drag.origin()</td>
+<td>设置拖拽起点，<strong>可以使得鼠标与被平移元素以相对不变的偏移量进行移动</strong> ，如果设置了起点，那么将会在<code>鼠标按下（mousedown）</code>事件发生时进行调用</td>
+</tr>
+<tr>
+<td></td>
+<td>on.dragstart</td>
+<td>监听 drag 拖动<code>是否开始</code></td>
+</tr>
+<tr>
+<td></td>
+<td>on.dragend</td>
+<td>监听 dran 拖动<code>是否结束</code></td>
+</tr>
+</tbody></table>
+<p>在下述的 code 中，我们主要通过使用<code>drag</code>来进行移动，当移动的时候将数据<code>cy\cx</code>数据赋值到当前<code>svg</code>图像的<code>x\y</code>轴中，并通过使用<code>dragstart</code>与<code>dragend</code>来进行监听<code>drag</code>是否被拖动，从而添加<code>过渡属性</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 样式 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 圆数据与位置 */</span></span><br><span class="line"><span class="keyword">var</span> circles = [</span><br><span class="line">    &#123;<span class="attr">cx</span>: <span class="number">50</span>, <span class="attr">cy</span>: <span class="number">50</span>, <span class="attr">r</span>:<span class="number">20</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    |_ 起点坐标 origin</span></span><br><span class="line"><span class="comment">    |_ 将拖拽时的坐标赋值给 event.x \ event.y</span></span><br><span class="line"><span class="comment">    |_ 当拖拽开始时将颜色设置为 red 并将圆弧半径设置为 50 dragstart</span></span><br><span class="line"><span class="comment">    |_ 拖拽结束后将颜色与半径设置原来的样子  dragend</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> drag = d3.<span class="property">behavior</span>.<span class="title function_">drag</span>()</span><br><span class="line">    .<span class="title function_">origin</span>(<span class="keyword">function</span> (<span class="params">d,i</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">x</span>: d.<span class="property">cx</span>, <span class="attr">y</span>: d.<span class="property">cy</span>&#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;drag&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="variable language_">this</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, d.<span class="property">cx</span> = d3.<span class="property">event</span>.<span class="property">x</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>, d.<span class="property">cy</span> = d3.<span class="property">event</span>.<span class="property">y</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;dragstart&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;red&quot;</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="number">50</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;dragend&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>,<span class="number">20</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 绘制圆 */</span></span><br><span class="line">svg.<span class="title function_">selectAll</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(circles)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">cx</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">cy</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">r</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">    .<span class="title function_">call</span>(drag)</span><br></pre></td></tr></table></figure>
+
+<h2 id="zoom"><a href="#zoom" class="headerlink" title="zoom"></a>zoom</h2><p>缩放（<code>zoom</code>）是在数据可视化中较为常用的小细节之一，因此 d3 为我们提供了<code>d3.behavior.zoom</code>方法来用于构建缩放行为。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d3.behavior.zoom</td>
+<td>构建一个缩放行为</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>zoom(selection)</td>
+<td>将此行为应用到选择集中</td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.translate()</td>
+<td>设置缩放的平移量，默认为<code>0</code>，并返回当前的平移向量</td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.scale()</td>
+<td>设置初始<code>放大、缩小</code>量的最大值，默认为<code>0～∞</code></td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.center()</td>
+<td>设置缩放的<code>中心点</code>，默认为<strong>鼠标的位置</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.x()</td>
+<td>设置一个 <code>x</code>方向比例尺，比例尺会随着<strong>放大、缩小改变定义域</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.y()</td>
+<td>设置一个 <code>y</code>方向比例尺，比例尺会随着<strong>放大、缩小改变定义域</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>zoom.on</td>
+<td>设置<code>事件类型</code>，主要分为：”<code>zoomstart（缩放开始）、zoom（正在缩放）、zoomend（缩放结束）</code>“三种</td>
+</tr>
+</tbody></table>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210408031401.png"><br>通过<code>on.zoom</code>来计算出缩放的开始并因此得到圆的大小和坐标信息，之后绑定数据进行绘制，在这其中主要通过使用<code>scaleExtent</code>来设置缩放的倍数，其方法主要分为<code>最小值、最大值</code>，下述code中的缩放最大为<code>2</code>倍，最小为<code>1</code>倍，并设置基础的<code>比例尺</code>，通过缩放来观察比例尺的<code>缩放变化</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基本 svg 结构 */</span></span><br><span class="line"><span class="keyword">var</span> padding = &#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">800</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.<span class="title function_">select</span>(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;svg&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;width&quot;</span>,padding.<span class="property">width</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;height&quot;</span>,padding.<span class="property">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> circles = [</span><br><span class="line">    &#123;<span class="attr">cx</span>: <span class="number">150</span>, <span class="attr">cy</span>: <span class="number">200</span>, <span class="attr">r</span>:<span class="number">30</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 比例尺 */</span></span><br><span class="line"><span class="keyword">var</span> x = d3.<span class="property">scale</span>.<span class="title function_">linear</span>()</span><br><span class="line">    .<span class="title function_">domain</span>([<span class="number">0</span>, padding.<span class="property">width</span>])</span><br><span class="line">    .<span class="title function_">range</span>([<span class="number">0</span>, padding.<span class="property">width</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> y = d3.<span class="property">scale</span>.<span class="title function_">linear</span>()</span><br><span class="line">    .<span class="title function_">domain</span>([<span class="number">0</span>, padding.<span class="property">height</span>])</span><br><span class="line">    .<span class="title function_">range</span>([<span class="number">0</span>, padding.<span class="property">height</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 计算出基本缩放后大小与位置 */</span></span><br><span class="line"><span class="keyword">var</span> zoom = d3.<span class="property">behavior</span>.<span class="title function_">zoom</span>()</span><br><span class="line">    .<span class="title function_">x</span>(x)</span><br><span class="line">    .<span class="title function_">y</span>(y)</span><br><span class="line">    .<span class="title function_">scaleExtent</span>([<span class="number">1</span>,<span class="number">2</span>])</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        |_ 缩放开始进行颜色过渡 zoomstart</span></span><br><span class="line"><span class="comment">        |_ 缩放中计算出位置与大小 zoom</span></span><br><span class="line"><span class="comment">        |_ 缩放结束进行控制台输出 zoomend</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;zoomstart&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">            .<span class="title function_">transition</span>()</span><br><span class="line">            .<span class="title function_">duration</span>(<span class="number">2000</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>,<span class="string">&quot;red&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;zoom&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="variable language_">this</span>)</span><br><span class="line">            .<span class="title function_">attr</span>(<span class="string">&quot;transform&quot;</span>,<span class="string">&quot;translate(&quot;</span> + d3.<span class="property">event</span>.<span class="property">translate</span> + <span class="string">&quot;)&quot;</span> +     <span class="comment">/* 平移位置 */</span></span><br><span class="line">            <span class="string">&quot;scale(&quot;</span> + d3.<span class="property">event</span>.<span class="property">scale</span> + <span class="string">&quot;)&quot;</span>)    <span class="comment">/* 缩放大小 */</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;x 的定义域&quot;</span> + x.<span class="title function_">domain</span>())</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;y 的值域&quot;</span> + y.<span class="title function_">domain</span>())</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">on</span>(<span class="string">&quot;zoomend&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        d3.<span class="title function_">select</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;缩放结束&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 绑定位置数据到 元素 &lt;g&gt; */</span></span><br><span class="line"><span class="keyword">var</span> g = svg.<span class="title function_">append</span>(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .<span class="title function_">call</span>(zoom)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 绘制圆 */</span></span><br><span class="line">g.<span class="title function_">selectAll</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">    .<span class="title function_">data</span>(circles)</span><br><span class="line">    .<span class="title function_">enter</span>()</span><br><span class="line">    .<span class="title function_">append</span>(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;cx&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">cx</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;cy&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">cy</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;r&quot;</span>, <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> d.<span class="property">r</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">attr</span>(<span class="string">&quot;fill&quot;</span>, <span class="string">&quot;blue&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3/24.D3%20behavior/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

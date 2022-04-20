@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Web3.0 概述 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Web3.0 概述</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/blockchain/" rel="tag">blockchain</a> <a class="article__tag-none-link" href="/tags/python/" rel="tag">python</a> <a class="article__tag-none-link" href="/tags/web3-0/" rel="tag">web3.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Web 3.0 又被称之为 Web3，是 WWW 发展的一个概念，主要是基于区块链的去中心化，和非同质化代币(Non-Fungible Token) 有关，是一种区块两数字账本上的数据单位。</p>
+<p>这个概念于 2014年由以太坊联合创始人 Gavin Wood 提出，并在 2021 年受到大量的科技公司和加密货币爱好者所关注。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Web3.0 不仅仅只包含了区块链的去中心化，他拥有多个含义，用来概括互联网发展的过程中出现不同的特征，包括泛型数据库、跨浏览器、人工智能技术应用等</span><br></pre></td></tr></table></figure>
+
+<h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2><p>Providers(提供者) 通过接受 JSON-PRC 请求并返回响应，通常是基于 HTTP 或 IPC 套接字的服务器提交请求来达成目。</p>
+<p>目前最常见的连接结点的方式有很多，可以根据自身的需求以及项目的应用场景进行搭配和选择：</p>
+<ol>
+<li>IPC(uses local filesystem:fastest and most secure, 使用本地文件系统，最快和最安全)</li>
+<li>Websockets(works remotely, faster than HTTP, 远程工作，比 HTTP 块许多)</li>
+<li>HTTP(more nodes support it, 更多的节点都支持)</li>
+</ol>
+<p>当我们可以选择于节点相同的计算机中运行 web3.py 那么我们就采用 IPC 方式，但我们要连接另一台计算机上的节点，那么可以使用 Websockets，又或者我们的节点不支持 websocket，那么就用 HTTP。</p>
+<p>之后，我们就可以通过 web3 来配置我们的 Provider 也就是供应商或是内容提供者：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果你是 Linux 开发环境或者通过 WSL 虚拟映射到 Windows 进行开发的，那么我们还需要通过 pip 安装 ```setuptools``` 才可使用 ```web3``` 的库 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3  </span><br><span class="line">  </span><br><span class="line">w3 = Web3(Web3.HTTPProvider(<span class="string">&#x27;URI&#x27;</span>))  </span><br><span class="line">res = w3.isConnected()</span><br></pre></td></tr></table></figure>
+
+<p>之后，我们可以通过 <code>w3.isConnected()</code> 来初始化连接，以此来获取一个最新的块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3  </span><br><span class="line">  </span><br><span class="line">w3 = Web3(Web3.HTTPProvider(<span class="string">&#x27;URI&#x27;</span>))  </span><br><span class="line">res = w3.isConnected()  </span><br><span class="line">  </span><br><span class="line">latest_block = w3.eth.get_block(<span class="string">&#x27;latest&#x27;</span>)  </span><br><span class="line"><span class="built_in">print</span>(latest_block)</span><br></pre></td></tr></table></figure>
+
+<p>那么根据 <code>w3.eth.get_block</code> 来获取一个最新的块，也就是说我们已经连接到 ETH 的全球网络中，可以获取很多的信息：</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220223122854.png"></p>
+<p>在此，每一个块都有它与之前所产生块的引用，通常被 web3 称之为 “和”，它主要由哈希值进行表明，包含在 <code>parentHash</code>  键值内。</p>
+<p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20220223163954.png"></p>
+<p>需要注意的是区块链本质上是一个链表，每一个快都有对前一个块的引用，这种数据结构在点对点网络中很是新颖，使得其他人都会知道，当向朋友汇款时，我们需要将交易光波到网络中，然后其他人就会知道，这就是类似于这个概念。</p>
+<h2 id="查找块"><a href="#查找块" class="headerlink" title="查找块"></a>查找块</h2><p>块可以通过 API 或者其他编号散列进行查看，一个块的哈希是十六进制表示的形式，块是可以通过 <code>hash</code> 或者 <code>number</code> 来进行查找的，同样的我们也可以实用 <code>latest</code> 来获取最新的快。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    &#x27;author&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xad5C1768e5974C231b2148169da064e61910f31a</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;difficulty&#x27;<span class="punctuation">:</span> <span class="number">735512610763</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;extraData&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x476574682f76312e302e302f6c696e75782f676f312e342e32</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;gasLimit&#x27;<span class="punctuation">:</span> <span class="number">5000</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;gasUsed&#x27;<span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;hash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x767c2bfb3bdee3f78676c1285cd757bcd5d8c272cef2eb30d9733800a78c0b6d</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;logsBloom&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;miner&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xad5c1768e5974c231b2148169da064e61910f31a</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;mixHash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x31d9ec7e3855aeba37fd92aa1639845e70b360a60f77f12eff530429ef8cfcba</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;nonce&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x549f882c5f356f85</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;number&#x27;<span class="punctuation">:</span> <span class="number">12345</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;parentHash&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x4b3c1d7e65a507b62734feca1ee9f27a5379e318bd52ae62de7ba67dbeac66a3</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;receiptsRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;sealFields&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span>&#x27;<span class="number">0x31d9ec7e3855aeba37fd92aa1639845e70b360a60f77f12eff530429ef8cfcba</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;<span class="number">0x549f882c5f356f85</span>&#x27;<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;sha3Uncles&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;size&#x27;<span class="punctuation">:</span> <span class="number">539</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;stateRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0xca495e22ed6b88c61714d129dbc8c94f5bf966ac581c09a57c0a72d0e55e7286</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;timestamp&#x27;<span class="punctuation">:</span> <span class="number">1438367030</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;totalDifficulty&#x27;<span class="punctuation">:</span> <span class="number">3862140487204603</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;transactions&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;transactionsRoot&#x27;<span class="punctuation">:</span> &#x27;<span class="number">0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;uncles&#x27;<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>于 <code>latest</code> 类似的还有 <code>eth.bllock_number</code>  来获取最新的块号，之后通过 <code>eth.get_block</code> 来获取详细信息。</p>
+<h2 id="查询余额"><a href="#查询余额" class="headerlink" title="查询余额"></a>查询余额</h2><p>在上述中我们通过 <code>eth.get_block</code> 来获取块的详细信息中，所返回的 <code>miner</code> 内包含了钱包的数据，之后我们可以通过 <code>eth.get_balance</code> 来获取钱包账号，之后我们还需要i通过实用 <code>Web3.fromWei</code> 来进行转换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3  </span><br><span class="line">  </span><br><span class="line">w3 = Web3(Web3.HTTPProvider(<span class="string">&#x27;URI&#x27;</span>))  </span><br><span class="line">res = w3.isConnected()  </span><br><span class="line">  </span><br><span class="line">latest_block = w3.eth.get_balance(<span class="string">&#x27;0x3EcEf08D0e2DaD803847E052249bb4F8bFf2D5bB&#x27;</span>)  </span><br><span class="line"><span class="built_in">print</span>(latest_block)  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">print</span>(Web3.fromWei(<span class="number">2922220972276471416291</span>, <span class="string">&#x27;ether&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>或者通过其他方法一下子直接进行过滤，以此来查看数据的帐号余额等信息来进行输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">check_sun = w3.toChecksumAddress(<span class="string">&#x27;0x3EcEf08D0e2DaD803847E052249bb4F8bFf2D5bB&#x27;</span>)  </span><br><span class="line">balance = w3.eth.get_balance(check_sun)  </span><br><span class="line">  </span><br><span class="line">ether_value = w3.fromWei(balance,<span class="string">&quot;ether&quot;</span>)  </span><br><span class="line"><span class="built_in">print</span>(ether_value)</span><br></pre></td></tr></table></figure>
+
+<p>之后通过 <code>Web.fromWei</code> 来对获取的数据进行转译为 ether 的货币面值，来进行转化，针对货币的面值，可以通过 <a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/examples.html#converting-currency-denominations">Examples — Web3.py 5.28.0 documentation (web3py.readthedocs.io)</a> 来进行查看 。</p>
+<h2 id="交易"><a href="#交易" class="headerlink" title="交易"></a>交易</h2><p>在交易方面，主要通过 <code>send_transcation()</code> 和 <code>send_raw_transaction()</code> 还有合约以及中间件等，以此来应对多种不同的场景，通过指定或者类似的场景来来选择不同的交易方法：</p>
+<ol>
+<li><p>假设我们只需要将以太币从一个账号中发送到另一个账号中，那么使用 <code>send_transaction()</code> 方法就可以实现需求。</p>
+</li>
+<li><p>再或者我们需要在其他地方签署交易，需要使用硬件钱包和其他提供商等进行广播交易和更大灵活性更高的高级用例，可以选择 <code>send_raw_transaction()</code>。</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.send_transaction(&#123;</span><br><span class="line">  <span class="string">&#x27;to&#x27;</span>: <span class="string">&#x27;0xd3CdA913deB6f67967B99D67aCDFa1712C293601&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;from&#x27;</span>: web3.eth.coinbase,</span><br><span class="line">  <span class="string">&#x27;value&#x27;</span>: <span class="number">12345</span>,</span><br><span class="line">  <span class="string">&#x27;gas&#x27;</span>: <span class="number">21000</span>,</span><br><span class="line">  <span class="string">&#x27;maxFeePerGas&#x27;</span>: web3.toWei(<span class="number">250</span>, <span class="string">&#x27;gwei&#x27;</span>),</span><br><span class="line">  <span class="string">&#x27;maxPriorityFeePerGas&#x27;</span>: web3.toWei(<span class="number">2</span>, <span class="string">&#x27;gwei&#x27;</span>),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上述的 code 中，主要是将以太坊发送到零一个账号中，那么使用的就是 <code>send_transaction</code> 方法来进行构造，他的主要参数如下：</p>
+<ul>
+<li>to: 对方钱包地址</li>
+<li>form: 校验地址，通过 <code>web3.eth.coinbase</code> 以此返回当前对方地址</li>
+<li>value: 于事务一起发送的整数</li>
+<li>gas: 还未使用的以太坊手续费</li>
+<li>maxFeePerGas: 愿意支付的最高金额，包括和之间的差额将会会退给用户</li>
+<li>maxPriorityFeePerGas: 矿工费用的一部分</li>
+</ul>
+<p>同时，我们还可以通过 <code>web3.eth.get_transaction</code> 来查找交易记录以及 <code>get_transaction_receipt</code> 查找收据，具体的可以查阅官方文档 <a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/examples.html#looking-up-transactions">示例 — Web3.py 5.28.0 文档 (web3py.readthedocs.io)</a></p>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><p>过滤器的实现主要可以通过 <code>web3.eth.Eth.filter()</code> 方法来设置一个过滤器，通过相应的参数来组合一个新的过滤器，因此我们可以通过 <code>eth&gt;filter(&#39;latest&#39;)</code> 来获取新的块信息，16 进制的消息头：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3.auto <span class="keyword">import</span> Web3  </span><br><span class="line">  </span><br><span class="line">w3 = Web3(Web3.HTTPProvider(<span class="string">&#x27;URI&#x27;</span>))  </span><br><span class="line">  </span><br><span class="line">res = w3.isConnected()  </span><br><span class="line">  </span><br><span class="line">new_block_filter = w3.eth.<span class="built_in">filter</span>(<span class="string">&#x27;latest&#x27;</span>)  </span><br><span class="line"><span class="built_in">print</span>(new_block_filter.get_new_entries())</span><br></pre></td></tr></table></figure>
+
+<p>此外，Web3 还为我们提供了新的过滤器，如 <code>fo;ter.filter_id</code> 来获取并创建一个 RPC 方法打来返回新的筛选器，或者检索新的条目，可以阅览<a target="_blank" rel="noopener" href="https://web3py.readthedocs.io/en/stable/filters.html">筛选 — Web3.py 5.28.0 文档 (web3py.readthedocs.io)</a></p>
+<h2 id="合约"><a href="#合约" class="headerlink" title="合约"></a>合约</h2><p>智能合约是一种自动执行的合同，由买卖双方之间的协议条款直接写入代码行中，分散在区块链网络中，通过代码控制执行，他也允许在不同的匿名方之间执行可信交易和协议，无需中央机构进行管理，符合去中心化的理论和趋势。</p>
+<p>智能合约也是一种计算机程序或交易程序，目的是减少可信中介人的需求，仲裁和执行成本，用来减少恶意的异常，他只是区块链中上存储的程序，在满足一定条件的时候执行，通常用于自动执行协议，以便所有参与者都可以立即确定结果，而不需要中介人的参与来减少时间损失。</p>
+<p>合约可以在满足条件的时候触发下一个操作并且开发者通过 ABI 来进行接口的调用和操作，在目前，智能合约的概念已经被运用到供应商关系的信任和国际贸易，使得交易双方更快、更高效。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/blockchain/web3.0/python/1.Web3.0%20%E6%A6%82%E8%BF%B0/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

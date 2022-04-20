@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Redis 安装与简介 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Redis 安装与简介</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/redis/" rel="tag">redis</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210717203722.png"></p>
+<p>Redis 是一个遵循 BSD 协议，高性能且灵活的 key-value 数据结构存储，通常可以用于作为数据库、缓存和消息队列等应用，由于遵循的是 key-value 数据结构存储，他对比其他产品的特点在于：</p>
+<ol>
+<li>支持数据的持久话，可以将数据保存内存或者磁盘中，重启时可以可以加载到缓存或者内存中使用</li>
+<li>支持简单的 key-value 类型数据的数据（同时提供了 list、set、zset、hash 结构存储）</li>
+<li>高性能： redis 的一大特点，一个入门级的 Linux 服务器中可以每秒写入（SET）11w次，读取（GET）8.1w次，同时还支持 Pipeling 命令。</li>
+<li>持久化：也就是说数据都存在内存中的时候，可以根据上次保存的到目前的时间来更新次数，以此他通过异步保存到磁盘上。</li>
+<li>数据结构：Redis 所支持的数据结构有很多，除了常见的字符串、散列、集合、列表等还带有了数据集、位图、超级日志和担忧半径查询的地理空间索引等……</li>
+<li>主&#x2F;从复制：Redis 分为 client&#x2F;server，主&#x2F;从复制只需要一行配置文件即可达成</li>
+<li>生态支持：Redis 支持多个语言，如 Java、JavaScript（含 node.js）、Lua、Objective-C、PHP、Perl、R、Ruby、Scale、Go、C、C++、Python 等主流语言……</li>
+</ol>
+<h2 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h2><p>本文即主要介绍 Linux redis 的安装与启动，redis 的安装非常简单，需要通过下载在解压之后重新编译即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-6.0.8.tar.gz</span><br><span class="line">cd redis-6.0.8</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>之后编译完成即可通过通过 <code>cd src</code> 命令进入目录，来启动 redis-server&#x2F;client 客户端</p>
+<blockquote>
+<p>进入后先启动服务端在启动客户端</p>
+<blockquote>
+<p><code>./redis-server</code> 以及 <code>./redis-client</code>，当然这种启动的方式是使用默认配置文件的，如果你对服务也有调整即可使用制定的配置文件启动 <code>./redis-server ../redis.conf</code></p>
+</blockquote>
+</blockquote>
+<p>当然既然有了服务端，那么你也可以将服务端在远程服务器启动，之后通过下述命令启动 redis-client：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h host -p port - a &quot;password&quot;</span><br></pre></td></tr></table></figure>
+
+<p>当上述的命令执行完后，在客户端中输入 <code>PING</code> 来查看是否正常启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; PING</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
+
+<p>当返回的是 <code>PONG</code> 的时候即代表服务正常，如果所返回的是 <code>Could not connect to Redis at 127.0.0.1:6379: Connection refused</code> 将会代表服务端出现了问题或断开，这时请仔细检查服务端运行情况。</p>
+<h2 id="配置-Redis"><a href="#配置-Redis" class="headerlink" title="配置 Redis"></a>配置 Redis</h2><p>在默认的情况下，Redis 是没有密码的，如果需要检测目前是否设置密码，需要通过 <code>CONFIG GET requirepass</code> 进行检测，如果属性为空，则可以通过下述命令来设置密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; CONFIG SET requirepass &quot;toor&quot;</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; CONFIG GET requirepass</span><br><span class="line">1) &quot;requirepass&quot;</span><br><span class="line">2) &quot;toor&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这时候我们重新启动 redis-cli 后创建一个键，会返回 <code>(error) NOAUTH Authentication required.</code>，这将表示我们之前所整的操作已经被应用，只需要进行身份验证即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; AUTH &quot;toor&quot;</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/redis/1.Redis%20%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

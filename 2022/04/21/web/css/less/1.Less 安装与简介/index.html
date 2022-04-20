@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Less 安装与简介 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Less 安装与简介</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/css/" rel="tag">css</a> <a class="article__tag-none-link" href="/tags/less/" rel="tag">less</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Less与sass、stylus的区别之处在于支持浏览器支持，Less官方为此推出了专门的<code>less.js</code>，用于处理<code>.less</code>语法，并将此转换为<code>浏览器</code>可认知的语法格式。而Sass、stylus之类的只能通过使用<code>node.js</code>来进行预处理，或者你可以通过使用相关语法转换为<code>.css</code>，这都是以上语言所支持的。</p>
+<p>Less与Sass、Stylus等CSS扩展语言一样，都支持<code>变量、函数以及Mixin</code>等特征，使得CSS更加容易维护可扩展，而Less虽然语法上没有Sass、Stylus等具有特征，<strong>但支持浏览器支持是他的特点之一</strong>。</p>
+<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><p>通常安装 less 的方法可以通过使用脚手架进行安装，即<code>npm install -g less</code>来进行全局安装，通过 less 可将 <code>.less</code>转换为<code>.css</code>文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">less styles.less styles.css</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过-lessc-来进行转换为-css"><a href="#通过-lessc-来进行转换为-css" class="headerlink" title="通过 lessc 来进行转换为 css"></a>通过 lessc 来进行转换为 css</h3><p>将<code>.less</code>转换为<code>.css</code>，则需要使用<code>lessc style.less style.css</code>来进行转换，转换后的信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@kunlun less]# lessc style.less style.css</span><br><span class="line">[root@kunlun less]# more style.css </span><br><span class="line">p &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">[root@kunlun less]# more style.less </span><br><span class="line">@red: red;</span><br><span class="line">p &#123;</span><br><span class="line">        color: @red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="lessc-不存在"><a href="#lessc-不存在" class="headerlink" title="lessc 不存在"></a>lessc 不存在</h4><p>如果lessc不存在的话可通过在 <code>node_modules</code>即Node模块中下载是否存在，可使用<code>sudo find / -name lessc</code>来搜索less文件是否存在。如果存在则可通过下方命令进行建立：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s &#123;user&#125;node_modules/less/bin/lessc /usr/local/bin/lessc</span><br></pre></td></tr></table></figure>
+<p>将<code>&#123;user&#125;</code>替换为你的<code>node_modules</code>之前的目录即可，之后通过使用<code>lessc</code>来检测是否关联成功。</p>
+<h2 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>Lass的浏览器支持需要引入官方的<code>lass.js</code>文件来进行渲染，lass与其他css扩展的区别就是可以在非<code>node.js</code>环境中运行(主要是因为node.js支持欲渲染功能)。</p>
+<p>通过“<a target="_blank" rel="noopener" href="https://codeload.github.com/less/less.js/zip/master%E2%80%9D%E6%9D%A5%E8%BF%9B%E8%A1%8C%E4%B8%8B%E8%BD%BD%EF%BC%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%90%8E%E5%B0%86%60%60%60dist/less.js%60%60%60%E6%96%87%E4%BB%B6%E5%BC%95%E5%85%A5%E5%88%B0%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%8D%B3%E5%8F%AF%E3%80%82">https://codeload.github.com/less/less.js/zip/master”来进行下载，解压缩后将```dist/less.js```文件引入到项目文件中即可。</a></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614910068_20210305100740940_348915521.png" alt="效果"><br>本文通过使用 Laravel 框架进行运行(也可支持将扩展名改为<code>.html</code>)，并通过引入<code>less.js</code>来进行支持<code>.less</code>渲染：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/less&quot;</span> <span class="attr">href</span>=<span class="string">&quot;less/style.less&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/less.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@red:</span> red;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">@red</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/css/less/1.Less%20%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

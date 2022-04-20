@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>CSS 盒子模型 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>CSS 盒子模型</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/css/" rel="tag">css</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">	<span class="selector-tag">p</span> &#123;</span><br><span class="line">		<span class="attribute">background-color</span>: aliceBlue ;</span><br><span class="line">		<span class="comment">/*宽*/</span></span><br><span class="line">		<span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">		<span class="comment">/*边框*/</span></span><br><span class="line">		<span class="attribute">border</span>: <span class="number">1px</span> solid salmon;</span><br><span class="line">		<span class="comment">/*边距*/</span></span><br><span class="line">		<span class="attribute">padding</span>: <span class="number">100px</span>;</span><br><span class="line">		<span class="comment">/*右下移动*/</span></span><br><span class="line">		<span class="attribute">margin</span>: <span class="number">10px</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span> style=&quot;<span class="attribute">text-align</span><span class="selector-pseudo">:left</span>;&quot;&gt;Hello,Box model.&lt;br&gt;其实他就是一个盒子，将文字什么的包装到了一起&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>盒子模型是CSS中的一个典型的页面不住，其本质就是一个盒子。主要包涵边缘、边界、填充、内容的呢高相关信息。</p>
+<h2 id="1-1-边缘（轮廓）"><a href="#1-1-边缘（轮廓）" class="headerlink" title="1.1 边缘（轮廓）"></a>1.1 边缘（轮廓）</h2><h3 id="1-2-1-边框样式"><a href="#1-2-1-边框样式" class="headerlink" title="1.2.1 边框样式"></a>1.2.1 边框样式</h3><h4 id="1-1-虚线轮廓（dotted）"><a href="#1-1-虚线轮廓（dotted）" class="headerlink" title="1.1 虚线轮廓（dotted）"></a>1.1 虚线轮廓（dotted）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: dotted;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-2-虚线轮廓（dashed）"><a href="#1-1-2-虚线轮廓（dashed）" class="headerlink" title="1.1.2 虚线轮廓（dashed）"></a>1.1.2 虚线轮廓（dashed）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p2</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: dashed;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-实线轮廓（solid）"><a href="#1-2-实线轮廓（solid）" class="headerlink" title="1.2 实线轮廓（solid）"></a>1.2 实线轮廓（solid）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p3</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: solid;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-双实线轮廓（double）"><a href="#1-3-双实线轮廓（double）" class="headerlink" title="1.3 双实线轮廓（double）"></a>1.3 双实线轮廓（double）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p4</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: double;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-凹槽轮廓（groove）"><a href="#1-4-凹槽轮廓（groove）" class="headerlink" title="1.4 凹槽轮廓（groove）"></a>1.4 凹槽轮廓（groove）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p5</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: groove;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-奎状轮廓（ridge）"><a href="#1-5-奎状轮廓（ridge）" class="headerlink" title="1.5 奎状轮廓（ridge）"></a>1.5 奎状轮廓（ridge）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p6</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: ridge;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-嵌入轮廓（inset）"><a href="#1-6-嵌入轮廓（inset）" class="headerlink" title="1.6 嵌入轮廓（inset）"></a>1.6 嵌入轮廓（inset）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p7</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: inset;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-外凸轮廓（outset）"><a href="#1-7-外凸轮廓（outset）" class="headerlink" title="1.7 外凸轮廓（outset）"></a>1.7 外凸轮廓（outset）</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p8</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: outset;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="轮廓颜色"><a href="#轮廓颜色" class="headerlink" title="轮廓颜色"></a>轮廓颜色</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: double;</span><br><span class="line">	<span class="attribute">outline-color</span>: <span class="number">#0000CD</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="轮廓大小"><a href="#轮廓大小" class="headerlink" title="轮廓大小"></a>轮廓大小</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">outline-style</span>: solid;</span><br><span class="line">	<span class="attribute">outline-width</span>: <span class="number">10px</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dotted</td>
+<td>虚线轮廓</td>
+<td>outline-style</td>
+</tr>
+<tr>
+<td>dashed</td>
+<td>虚线轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>solid</td>
+<td>实线轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>double</td>
+<td>双实线轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>groove</td>
+<td>凹槽轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>ridge</td>
+<td>奎状轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>inset</td>
+<td>嵌入轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td>outset</td>
+<td>外凸轮廓</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>轮廓颜色</td>
+<td>outline-color</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>轮廓大小</td>
+<td>outline-width</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-边界（边框）"><a href="#1-2-边界（边框）" class="headerlink" title="1.2 边界（边框）"></a>1.2 边界（边框）</h2><h3 id="1-2-1-边框样式-1"><a href="#1-2-1-边框样式-1" class="headerlink" title="1.2.1 边框样式"></a>1.2.1 边框样式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: dotted;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p2</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: dashed;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p3</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: solid;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p4</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: double;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p5</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: groove;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p6</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: ridge;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p7</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: inset;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p8</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: outset;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p9</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: hidden;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="comment">/*上*/</span></span><br><span class="line">	<span class="attribute">border-top-style</span>:dotted;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*右*/</span></span><br><span class="line">	<span class="attribute">border-right-style</span>:dashed;</span><br><span class="line">		</span><br><span class="line">	<span class="comment">/*下*/</span></span><br><span class="line">	<span class="attribute">border-bottom-style</span>:solid;</span><br><span class="line">		</span><br><span class="line">	<span class="comment">/*左*/</span></span><br><span class="line">	<span class="attribute">border-left-style</span>:double;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">p</span> class=&quot;p1&quot;&gt;Hello&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: outset;</span><br><span class="line">	<span class="attribute">border-color</span>: blue;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">p</span> class=&quot;p1&quot;&gt;Hello&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">1px</span> solid blue;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">p</span> class=&quot;p1&quot;&gt;Hello&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dotted</td>
+<td>虚线边框</td>
+<td>border-style</td>
+</tr>
+<tr>
+<td>dashed</td>
+<td>虚线边框</td>
+<td></td>
+</tr>
+<tr>
+<td>solid</td>
+<td>实线边框</td>
+<td></td>
+</tr>
+<tr>
+<td>double</td>
+<td>双实线边框</td>
+<td></td>
+</tr>
+<tr>
+<td>groove</td>
+<td>凹槽边框</td>
+<td></td>
+</tr>
+<tr>
+<td>ridge</td>
+<td>垄状边框</td>
+<td></td>
+</tr>
+<tr>
+<td>inset</td>
+<td>嵌入边框</td>
+<td></td>
+</tr>
+<tr>
+<td>outset</td>
+<td>外凸边框</td>
+<td></td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>无边框</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>border-top-style</td>
+<td>上</td>
+<td>边界样式</td>
+</tr>
+<tr>
+<td>border-right-style</td>
+<td>右</td>
+<td></td>
+</tr>
+<tr>
+<td>border-bottom-style</td>
+<td>下</td>
+<td></td>
+</tr>
+<tr>
+<td>border-left-style</td>
+<td>左</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>border-color</td>
+<td></td>
+<td>设置颜色</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>border</td>
+<td></td>
+<td>边框大小\格式\颜色</td>
+</tr>
+</tbody></table>
+<h2 id="1-5-填充"><a href="#1-5-填充" class="headerlink" title="1.5 填充"></a>1.5 填充</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#AFEEEE</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="comment">/*头部距离填充*/</span></span><br><span class="line">	<span class="attribute">padding-top</span>: <span class="number">120px</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*底部距离填充*/</span></span><br><span class="line">	<span class="attribute">padding-bottom</span>: <span class="number">100px</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*左距填充*/</span></span><br><span class="line">	<span class="attribute">padding-left</span>: <span class="number">120px</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*右距填充*/</span></span><br><span class="line">	<span class="attribute">padding-right</span>: <span class="number">120px</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;新闻:&lt;/p&gt;</span><br><span class="line">&lt;p class=<span class="string">&quot;p1&quot;</span>&gt;作为全球领先的水晶制造商之一，施华洛世奇目前旗下主要分为Swarovski Crystal Business（施华洛世奇水晶）、Tyrolit（泰利莱固结磨具）、Swarovski Optik（光学仪器）三大业务线。<span class="number">2019</span>年，施华洛世奇集团年销售额为<span class="number">35</span>亿欧元，其中水晶业务的年销售额为<span class="number">27</span>亿欧元。&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>top</td>
+<td>头部距离填充</td>
+<td>padding</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>底部距离填充</td>
+<td></td>
+</tr>
+<tr>
+<td>left</td>
+<td>左距填充</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="1-4-布局"><a href="#1-4-布局" class="headerlink" title="1.4 布局"></a>1.4 布局</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-class">.p1</span> &#123;</span><br><span class="line">	<span class="comment">/*头部距离*/</span></span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*底部距离*/</span></span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">1px</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*左距*/</span></span><br><span class="line">	<span class="attribute">margin-left</span>: <span class="number">20px</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;新闻:&lt;/p&gt;</span><br><span class="line">&lt;p class=<span class="string">&quot;p1&quot;</span>&gt;作为全球领先的水晶制造商之一，施华洛世奇目前旗下主要分为Swarovski Crystal Business（施华洛世奇水晶）、Tyrolit（泰利莱固结磨具）、Swarovski Optik（光学仪器）三大业务线。<span class="number">2019</span>年，施华洛世奇集团年销售额为<span class="number">35</span>亿欧元，其中水晶业务的年销售额为<span class="number">27</span>亿欧元。&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DE</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>top</td>
+<td>头部距离</td>
+<td>margin</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>底部距离</td>
+<td></td>
+</tr>
+<tr>
+<td>left</td>
+<td>左距</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/web/css/6.CSS%20%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 格式与注释 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 格式与注释</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h3><h4 id="通用代码格式-（-lt-php）"><a href="#通用代码格式-（-lt-php）" class="headerlink" title="通用代码格式 （&lt;?php）"></a>通用代码格式 （&lt;?php）</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="简便代码格式-（-lt-）-默认禁止"><a href="#简便代码格式-（-lt-）-默认禁止" class="headerlink" title="简便代码格式 （&lt;?）[^默认禁止]"></a>简便代码格式 （&lt;?）[^默认禁止]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span></span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="百分号代码格式-lt-默认禁止"><a href="#百分号代码格式-lt-默认禁止" class="headerlink" title="百分号代码格式 (&lt;%) [^默认禁止]"></a>百分号代码格式 (&lt;%) [^默认禁止]</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">	<span class="comment">// ……</span></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="JavaScript-元素标记-language-x3D-”php”"><a href="#JavaScript-元素标记-language-x3D-”php”" class="headerlink" title="JavaScript 元素标记 (language&#x3D;”php”)"></a>JavaScript 元素标记 (language&#x3D;”php”)</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><h4 id="单行注释-（-x2F-x2F-）"><a href="#单行注释-（-x2F-x2F-）" class="headerlink" title="单行注释 （&#x2F;&#x2F;）"></a>单行注释 （&#x2F;&#x2F;）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192151427_1412988718.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); <span class="comment">// 你好世界！</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="单行注释-（"><a href="#单行注释-（" class="headerlink" title="单行注释 （##)"></a>单行注释 （##)</h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192221349_150294211.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); <span class="comment">## 你好世界！</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="多行注释-（-x2F"><a href="#多行注释-（-x2F" class="headerlink" title="多行注释 （&#x2F;*)"></a>多行注释 （&#x2F;*)</h4><h4 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/1.php%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A.md/20201105192242968_652099615.png"></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        时间：15点51分</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">	<span class="keyword">echo</span> (<span class="string">&quot;Hello,world!&quot;</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;&#x2F;</td>
+<td>注释</td>
+<td>单行注释</td>
+</tr>
+<tr>
+<td>#</td>
+<td>注释</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&#x2F;*</td>
+<td>多行注释</td>
+<td>多行注释</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/1.PHP%20%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%B3%A8%E9%87%8A/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

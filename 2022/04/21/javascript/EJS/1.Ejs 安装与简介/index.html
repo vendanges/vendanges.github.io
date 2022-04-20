@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Ejs 安装与简介 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Ejs 安装与简介</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/ejs/" rel="tag">ejs</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Ejs，是一个纯 JavaScript所开发的一种高校式JavaScript模板引擎，其中“E”来代表可嵌入、高效、优雅、简单。可以帮助普通的JavaScript 代码来生成 HTML页面，EJS由于缓存和快速开发、用于调试以及语法简单和社区活跃备受开发者所喜爱。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="全局安装与浏览器支持安装"><a href="#全局安装与浏览器支持安装" class="headerlink" title="全局安装与浏览器支持安装"></a>全局安装与浏览器支持安装</h3><p>安装 EJS的方法分为两种，一种为通过使用 <code>npm install ejs</code>来安装，而另一种也可以通过ejs 仓库内的发行版来进行直接的引用，即全局安装和浏览器支持版本等。这里我们附上 EJS 仓库URL：<a target="_blank" rel="noopener" href="https://github.com/mde/ejs%EF%BC%8C%E4%BD%A0%E5%8F%AF%E9%80%9A%E8%BF%87%E4%BD%BF%E7%94%A8">https://github.com/mde/ejs，你可通过使用</a> <a target="_blank" rel="noopener" href="https://github.com/mde/ejs/releases/tag/v3.1.6">https://github.com/mde/ejs/releases/tag/v3.1.6</a> 来下载 EJS 3.1 版本。</p>
+<h4 id="全局安装"><a href="#全局安装" class="headerlink" title="全局安装"></a>全局安装</h4><p>在一般的情况下，会使用<code>npm install ejs</code>来进行安装ejs，但本文中使用<strong>ejs-cli</strong>，即<code>npm install ejs-cli</code>，ejs与ejs-cli的区别就是 ejs-cli更加的简洁实在，没有 ejs那样的繁琐。通过使用ejs和ejs-cli的一段时间，将 .ejs 输出转换为 .html，ejs 基本上全部出错，而 ejs-cli则是一路绿灯，所以本文使用 ejs-cli 作为演示。</p>
+<h5 id="安装过程中的报错解决"><a href="#安装过程中的报错解决" class="headerlink" title="安装过程中的报错解决"></a>安装过程中的报错解决</h5><h6 id="package-json-没有的问题"><a href="#package-json-没有的问题" class="headerlink" title="package.json 没有的问题"></a>package.json 没有的问题</h6><p>如果在执行<code>npm install ejs-cli</code>的时候出现有类似与 <code>package.json</code>没有的问题，我们可以使用 <code>npm init</code>来执行生成<code>package.json</code>文件。</p>
+<p>这个是会他会提示你进行配置，基本上我们可以直接全部使用回车键来进行跳过，也可以使用<code>npm init -y</code>来使用默认配置。</p>
+<h6 id="npm-ERR-code-ETIMEDOUT-npm-ERR-errno-ETIMEDOUT"><a href="#npm-ERR-code-ETIMEDOUT-npm-ERR-errno-ETIMEDOUT" class="headerlink" title="npm ERR! code ETIMEDOUT \ npm ERR! errno ETIMEDOUT"></a>npm ERR! code ETIMEDOUT \ npm ERR! errno ETIMEDOUT</h6><p>如果在安装中出现这种错误，我们可以使用<code>npm install -g ejs-cli</code>进行全局安装来解决此问题。</p>
+<p><strong>全局安装与本地安装的区别</strong><br>在默认的情况下我们会使用本地安装，通过使用本地安装会在当前目录下生成一个 <code>node_modules</code>的目录，而全局安装则是将模块安装到全局，不会在项目的 <code>node_modules</code>目录下保存模块包。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><h3 id="ejs-cli"><a href="#ejs-cli" class="headerlink" title="ejs-cli"></a>ejs-cli</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614756051_20210303151405696_171664100.png"><br>当安装完成之后，我们可以通过使用 <code>ejs-cli -h</code>来查看ejs-cli的安装是否成功，如果没有成功可以查看npm是否安装失败来最后判断问题，当安装完成之后，我们可以在本地新建项目，且建立 <code>index.ejs</code> 文件，并写入（在此之前先建立一个<code>/ejs</code>目录用于存储ejs转换html后的文件）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% title=&quot;Hello,world&quot; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;</span><br><span class="line">    Title: &lt;%= title %&gt;</span><br><span class="line">&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最后我们可以通过使用 <code>ejs-cli -f index.ejs -o ejs/</code>来在 &#x2F;ejs 目录下生成 <code>index.html</code>文件文件。</p>
+<h3 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1614756052_20210303151837423_1405860974.png"><br>除了通过使用 ejs-cli 的方式来将 <code>.ejs</code>文件转换成 <code>.html</code>的方式，处于这种方式开发团队表示很繁琐，所以推出了另一种通过直接引入就可以写 ejs 语法的js扩展，再次我们需要新建一个<code>index.html</code>文件并写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;hello&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p id=&quot;title&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;script src=&quot;js/ejs.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var html = ejs.render(&#x27;&lt;%=&quot;Hello,world!&quot; %&gt;&#x27;,&#x27;&#x27;);</span><br><span class="line">        document.getElementById(&#x27;title&#x27;).innerHTML = html;</span><br><span class="line">    &lt;/script&gt;        </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/EJS/1.Ejs%20%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

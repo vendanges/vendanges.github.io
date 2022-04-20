@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js TCP Server | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js TCP Server</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>TCP Server 通过 Node 中的 <code>net</code> 模块来实现 TCP 四层模型（应用层、传输层、网络层、链路层）</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Protocol</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>链路层（Link layer）</td>
+<td>负责在以太网、Wifi 底层网络发送数据包，并通过网卡、使用 MAC 地址来标记网络上的设备</td>
+<td>GPRS、IEEE、IPoe、Localhost、TRILL、IPoAC、FDDI、NAK\NACK、SEND、frame\frame relay、ATM、Data Link Layer、PPP、STP、L2TP、ARQ、CDPD、LLDP、LCP、Link Aggregation、HDLC</td>
+</tr>
+<tr>
+<td>2</td>
+<td>网络层\网络互联层（Internet layer）</td>
+<td>定义了 IP 地址的概念，通过 IP 地址取代 MAC 地址，并将局域网、广域网链接成一个虚拟网络，主要目的就是 <strong>将 IP 地址翻译成 MAC 地址就可查找设备</strong></td>
+<td>IPsec、IPv4\IPv5\IPv6\IPv9、 IP Address、x.25、IPX、ICMP\ICMPv6、IGMP、DDP、Mobile IP、Network Layer、PPP、RSVP、Anti-replay</td>
+</tr>
+<tr>
+<td>3</td>
+<td>传输层（Transport layer）</td>
+<td>保证数据在 IP 地址标记的两点之间进行传输</td>
+<td>TCP、UDP、TLS\SSL、DCCP、SCTP、RSVP</td>
+</tr>
+<tr>
+<td>4</td>
+<td>应用层（Application layer）</td>
+<td>直接与应用程序和接口结合，并提供常见的应用服务</td>
+<td>DHCP、DNS、FTP、gopher、HTTP\HTTP-2、IMAP4、IRC、NNTP、XMPP、POP3、SIP、SMTP、SNMP、SSH、TELNET、RPC、RTCP、RTP、RTSP、SDP、SOAP、GTP、STUN、NTP、SSDP</td>
+</tr>
+</tbody></table>
+<p>对于每个网络层次，Node 都提供了相应的模块，如 http、net、tls&#x2F;crypto、dgram 等，其中 net、http、dgram 模块分别实现和提供 TCP、HTTP 的通信，其中 <code>http</code> 为应用层模块，而 <code>net</code> 为传输层模块。</p>
+<figure class="highlight plaintext"><figcaption><span>是一个综合模块，包含了 ```http/tls/crypto``` 等，这将用于确保传输的安全性。其中 ```net``` 模块是 node 中的核心模块，严谨的来说 ```http.Server``` 继承了 ```net.Server```，除此之外 ```HTTP SERVER/CLIENT``` 都以来与 ```net.Socket```，而 net 模块主要分为：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. net.Server：通过其内部的 ```socket``` 来提供客户端的通信</span><br><span class="line">2. net.Socket：TCP/Localhost socket 的实现，并提供了全双工的 stream 接口</span><br><span class="line"></span><br><span class="line">&gt; Network socket （网络套接字）是指网络中不同主机上应用程序之间的通信端点对象，一个套接字就是一个的另一端，也就是以 IP 及端口所组成的地址被称之为套接字地址（socket address）</span><br><span class="line"></span><br><span class="line">## Create TCP Server</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">var net = require(&#x27;net&#x27;)</span><br><span class="line"></span><br><span class="line">var server = net.createServer(function (socket) &#123;</span><br><span class="line">    console.log(&#x27;someone sonnects&#x27;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(8210, function () &#123;</span><br><span class="line">    console.log(&#x27;Create server on http://127.0.0.1:8210&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>创建一个 TCP 服务可以通过 <code>net.createServer</code> 方法进行创建，可通过 <code>server.listen</code> 来设置服务的监听端口以及，当然一旦运行服务时除发的还是 server 下的 <code>listening</code> 事件，因此也支持另一种写法：</p>
+<h3 id="net-Server"><a href="#net-Server" class="headerlink" title="net.Server()"></a>net.Server()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = net.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">socket</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;someone sonnects&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8210</span>)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;listening&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Create server on http://127.0.0.1:8210/&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>除此之外 <code>server</code> 还支持另外几种 TCP 事件：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>listening</td>
+<td>调用 server.listen()，即当开始监听时候除发</td>
+</tr>
+<tr>
+<td>2</td>
+<td>connection</td>
+<td>当有新创建时后除发，回调的参数是 socket 连接的对象</td>
+</tr>
+<tr>
+<td>3</td>
+<td>close</td>
+<td>当关闭时触发，回调函数没有参数</td>
+</tr>
+<tr>
+<td>4</td>
+<td>error</td>
+<td>当 TCP 服务发生错误时触发，回调参数为 error</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = <span class="keyword">new</span> net.<span class="title class_">Server</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听新的请求时返回回调函数</span></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;connection&quot;</span>, <span class="keyword">function</span> (<span class="params">socket</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;connects someone&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8210</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听时触发</span></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;listening&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Create server on http://127.0.0.1:8210/&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭触发回调函数</span></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;close&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;close server&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误时返回</span></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;server error!&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="server-address"><a href="#server-address" class="headerlink" title="server.address()"></a>server.address()</h3><p>如果需要监听 IP 套接字，也就是套接字地址（socket address），可以通过 <code>server.address()</code> 方法来实现，他主要提供了三个服务器绑定的 <code>address</code> 以及 <code>family</code> 和 <code>port</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = net.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">socket</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;connects someone&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8210</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> address = server.<span class="title function_">address</span>()</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;TCP Server 所监听的端口号：&quot;</span> + address.<span class="property">port</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;TCP Server 所监听的地址：&quot;</span> + address.<span class="property">address</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;TCP Server IPv4 or IPv6：&quot;</span> + address.<span class="property">family</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是如果监听的端口号是 IPv6 地址，那么 <code>address</code> 则返回 <code>::</code></p>
+</blockquote>
+<h3 id="server-getConnections"><a href="#server-getConnections" class="headerlink" title="server.getConnections()"></a>server.getConnections()</h3><p>.<code>server.getConnections</code> 方法用于异步获取服务器上的并发连接数，回调参数分为 <code>err</code> 和 <code>count</code> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">&quot;net&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Create server on http://127.0.0.1:8210</span></span><br><span class="line"><span class="comment">    someone connects</span></span><br><span class="line"><span class="comment">    This is client count: 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> server = net.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">socket</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;someone connects&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    server.<span class="property">maxConnections</span>=<span class="number">3</span></span><br><span class="line">    server.<span class="title function_">getConnections</span>(<span class="keyword">function</span> (<span class="params">err,count</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is client count: &quot;</span> + count)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8210</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Create server on http://127.0.0.1:8210&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>之后我们分别通过 GET 请求 <a target="_blank" rel="noopener" href="http://127.0.0.1:8210/">http://127.0.0.1:8210/</a> 并通过代理访问 uri 则有三个 IP 访问，因此分别依次循环输出 This is Client count: 1~3 </p>
+<h2 id="Server-at-Client-之间的通信"><a href="#Server-at-Client-之间的通信" class="headerlink" title="Server at Client 之间的通信"></a>Server at Client 之间的通信</h2><h3 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h3><p>服务端主要用于接收客户端所发送的消息，因此只需要通过 <code>data</code> 事件来接收数据时进行输出，在收到数据之前首先通过 <code>address()</code> 来将转换为 <code>JSON</code> 格式并输出，并通过 <code>socket.bytesWritten</code> 来计算客户端所发送的字节数，最后通过 <code>socket.bytesRead</code> 方法来统计书数据的大小。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Create server on http://127.0.0.1/8210</span></span><br><span class="line"><span class="comment">    The is address is &#123;&quot;address&quot;:&quot;::&quot;,&quot;family&quot;:&quot;IPv6&quot;,&quot;port&quot;:8210&#125; 以发送</span></span><br><span class="line"><span class="comment">    消息大小为 62</span></span><br><span class="line"><span class="comment">    Massage from client</span></span><br><span class="line"><span class="comment">    数据的大小为：19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> server = net.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">socket</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> addresss = server.<span class="title function_">address</span>()</span><br><span class="line">    <span class="keyword">var</span> message = <span class="string">&quot;The is address is &quot;</span> + <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(addresss)</span><br><span class="line"></span><br><span class="line">    socket.<span class="title function_">write</span>(message,<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> writeSize = socket.<span class="property">bytesWritten</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(message + <span class="string">&quot; 以发送&quot;</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;消息大小为 &quot;</span> + writeSize)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 收到数据时回调</span></span><br><span class="line">    socket.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>())</span><br><span class="line">        <span class="keyword">var</span> readSize = socket.<span class="property">bytesRead</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;数据的大小为：&quot;</span> + readSize)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8210</span>,<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Create server on http://127.0.0.1/8210&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h3><p>在 Server 与 Client 建立链接的过程中，客户端扮演的是数据发送者的身份，而他主要的作用就是与服务端建立链接并发送数据，之后监听服务端的状态，在这期间主通过 <code>client.connect</code> 来链接服务，之后使用其 <code>client.write</code> 来写入数据并发送。</p>
+<h4 id="net-Socket-类"><a href="#net-Socket-类" class="headerlink" title="net.Socket 类"></a>net.Socket 类</h4><h5 id="API"><a href="#API" class="headerlink" title="API"></a>API</h5><p>对于 <code>net.Socket</code> 相关的 API  Node 提供了多种方法：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>socket.address()</td>
+<td>返回操作系统报告并绑定 address，和套接字的 port 以及 family 等</td>
+</tr>
+<tr>
+<td>2</td>
+<td>socket.bytesRead()</td>
+<td>接收的字节数</td>
+</tr>
+<tr>
+<td>3</td>
+<td>socket.bytesWritten()</td>
+<td>发送的字节数</td>
+</tr>
+<tr>
+<td>4</td>
+<td>socket.connect(options[,sonnectListener])</td>
+<td>指定套接字链接</td>
+</tr>
+<tr>
+<td></td>
+<td>options</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>port</code> 套接字应该链接到的端口（必填）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>host</code> 套接字应连接到的主机（默认为 <code>localhost</code>）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>localAddress</code> 套接字应该链接到本地地址</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>localPort</code> 套接字应链接本地端口</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>family</code> IP 堆栈的版本（通常是 IPv6、IPv4或0，而 0 表示 允许 IPv4&#x2F;6 地址）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>hints</code> 可选的 <code>dns.lookup()</code> 提示(主机名)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>lookup</code> 自定义查找函数（默认 <code>dns.lookup()</code>）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>socket.connect(port[,host][,connectListener])</td>
+<td>指定套接字链接</td>
+</tr>
+<tr>
+<td></td>
+<td><code>port</code> 客户端应该链接到的端口</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>host</code> 客户端应该链接到的主机</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>connectListener</code> 方法的常用参数，将被添加为 <code>connect</code> 事件监听</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>socket.destroyed</code> 半关闭套接字，服务端关闭时发送数据包给客户端，客户端关闭</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>socket.localAddress</td>
+<td>远程客户端链接本地 IP 地址（以 IP 地址的字符串形式表示，如 <code>0.0.0.0</code>）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>socket.localPort（socket.remotePort）</td>
+<td>本地端口数字表示（如 <code>8210</code>）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>socket.remoteAddress</td>
+<td>远程 IP 地址的字符串形式输出（如 <code>74.125.127.100</code> 或 <code>2001:4860:a005::68</code>）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>socket.remoteFamily</td>
+<td>远程 IP 系列的字符串形式表示（如 <code>IPv6</code> 或 <code>IPv4</code>）</td>
+</tr>
+<tr>
+<td>11</td>
+<td>socket.setTimeout（socket.timeout）</td>
+<td>用于进行设置连接（如果 <code>timeout</code> 为 0,则禁用空闲超时）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>socket.setKeepAlive()</td>
+<td>用于设置和i长连接</td>
+</tr>
+<tr>
+<td>13</td>
+<td>socket.destroy()\socket.destroyed</td>
+<td>当错误发生时，用于销毁 socket，以确保这个 socket 上不会有其他 IO 操作</td>
+</tr>
+</tbody></table>
+<h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>close</td>
+<td>当链接断开时触发，假设因为传输错误导致断开，则参数为 err</td>
+</tr>
+<tr>
+<td>2</td>
+<td>connect</td>
+<td>当建立成功套接字链接时触发</td>
+</tr>
+<tr>
+<td>3</td>
+<td>data</td>
+<td>接收到数据时触发</td>
+</tr>
+<tr>
+<td>4</td>
+<td>drain</td>
+<td>当写缓存空了时触发</td>
+</tr>
+<tr>
+<td>5</td>
+<td>end</td>
+<td>当另一端结束时触发</td>
+</tr>
+<tr>
+<td>6</td>
+<td>error</td>
+<td>当错误时触发</td>
+</tr>
+<tr>
+<td>7</td>
+<td>lookup</td>
+<td>当解析完主机名后触发</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ready</td>
+<td>当套接字准备好使用时触发</td>
+</tr>
+<tr>
+<td>9</td>
+<td>timeout</td>
+<td>提示用户 socket 超时，需要手动关闭链接</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Connnect to Server</span></span><br><span class="line"><span class="comment">    The is address is &#123;&quot;address&quot;:&quot;::&quot;,&quot;family&quot;:&quot;IPv6&quot;,&quot;port&quot;:8210&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> client = <span class="keyword">new</span> net.<span class="title class_">Socket</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 链接服务器，&quot;connect&quot; 是指当成功建立连接时触发</span></span><br><span class="line">client.<span class="title function_">connect</span>(<span class="number">8210</span>,<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Connnect to Server&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 与 Server 建立链接</span></span><br><span class="line">    client.<span class="title function_">write</span>(<span class="string">&quot;Massage from client&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">client.<span class="title function_">on</span>(<span class="string">&quot;data&quot;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>())</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当套接字另一端断开链接时出发回调，从而结束套接字可读端</span></span><br><span class="line">client.<span class="title function_">on</span>(<span class="string">&quot;end&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;end Server&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/9.Node.js%20TCP%20Server/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

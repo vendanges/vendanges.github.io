@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Laravel 文件结构 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Laravel 文件结构</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/laravel/" rel="tag">laravel</a> <a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>在不同的开发环境和项目中，文件结构是一个非常重要的一点，如maven的文件结构可以分为src&#x2F;main&#x2F;等等，在这些结构中都会有一个默认的“潜规则”。如你在开发项目的时候，还在本地测试阶段，而你却将项目源代码放到了&#x2F;src&#x2F;main目录下，这则会让同事觉得你有点问题。Laravel的文件结构也一样，如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>app</td>
+<td>用于包含应用程序的核心代码</td>
+<td>开发项目的时候所有类都将存放于此</td>
+</tr>
+<tr>
+<td></td>
+<td>Console</td>
+<td>包含应用程序中所有自定义的Artisan命令</td>
+</tr>
+<tr>
+<td></td>
+<td>Events*</td>
+<td>默认情况并不存在，主要用于放置<strong>事件类</strong>，用于警告应用程序和其他部分发生了一个给定的操作</td>
+</tr>
+<tr>
+<td></td>
+<td>Exceptions</td>
+<td>包含应用程序的异常处理，也可放置应用程序跑出的任何异常</td>
+</tr>
+<tr>
+<td></td>
+<td>Http</td>
+<td>包含<strong>控制器、中间件、表单</strong>请求，处理应用程序请求的所有逻辑基本都将放置在此目录</td>
+</tr>
+<tr>
+<td></td>
+<td>Jobs*</td>
+<td>jobs目录是一般情况下并不存在的，用于包含应用程序的队列</td>
+</tr>
+<tr>
+<td></td>
+<td>Listeners*</td>
+<td>默认情况下并不存在，主要用于包含事件处理类</td>
+</tr>
+<tr>
+<td></td>
+<td>Mail*</td>
+<td>Mail目录并不存在，主要用于包含应用程序发送邮件的类</td>
+</tr>
+<tr>
+<td></td>
+<td>Notifications*</td>
+<td>默认情况下不存在，用于包含应用程序发送的所有事物同志</td>
+</tr>
+<tr>
+<td></td>
+<td>Policies*</td>
+<td>默认情况下并不存在，主要用于包含授权策略类，即用户是否可以对一个资源进行访问等</td>
+</tr>
+<tr>
+<td></td>
+<td>Providers</td>
+<td>用于包含应用程序的所有服务提供者，服务提供者将通过服务容器绑定服务引导程序。在新的Laravel应用中，此项目母吕将会包含一些应用提供者，可根据自己的需求将自己添加到此母吕中</td>
+</tr>
+<tr>
+<td></td>
+<td>Rules*</td>
+<td>默认情况并不存在，主要包含应用程序自定义验证规则对象</td>
+</tr>
+<tr>
+<td>bootstrap</td>
+<td>主要包含app.php以及cache目录</td>
+<td>cache用于存放框架所自动生成来提升整体性能文件</td>
+</tr>
+<tr>
+<td>Config</td>
+<td>即配置包含了配置文件</td>
+<td>可阅读这些配置文件来掌握Laravel</td>
+</tr>
+<tr>
+<td>database</td>
+<td>即数据填充和模型工厂类</td>
+<td>当然顾名思义你也可以用于放置数据库文件？</td>
+</tr>
+<tr>
+<td>public</td>
+<td>public目录包含了首页文件<code>index.php</code></td>
+<td>还可用于放置资源文件如<code>js/css/img</code>等</td>
+</tr>
+<tr>
+<td>resources</td>
+<td>包含了图像和一些未编译的文件</td>
+<td>你可用于存放SASS这些</td>
+</tr>
+<tr>
+<td>routes</td>
+<td>routes 目录包含了所有的路由定义类</td>
+<td>此外还有默认存在的<code>api.php  channels.php  console.php  web.php</code>路由文件。</td>
+</tr>
+<tr>
+<td></td>
+<td>web.php</td>
+<td>放置在了web中间件组的路由，提供了会话状态、CSRF防护和cookie加密</td>
+</tr>
+<tr>
+<td></td>
+<td>api.php</td>
+<td>放置在api中间件组的路由，提供频率限制，通过路由进入应用请求通过令牌进行认证</td>
+</tr>
+<tr>
+<td></td>
+<td>console.php</td>
+<td>定义所有基于终端命令闭包汉书的文件，每个闭包汉书都被绑定到了一个命令示例且允许命令号IO方法的进行简单交互</td>
+</tr>
+<tr>
+<td>storage</td>
+<td>哟用于存储编译后的blade、session、缓存、框架生成的文件</td>
+<td>内包含了<code>app、framework、logs</code>三个子目录，分别对应<strong>应用生成、框架生成、日志生成</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>storage&#x2F;app&#x2F;public</td>
+<td>用于包含用户生成的文件</td>
+</tr>
+<tr>
+<td>tests</td>
+<td>即用于包含自动化测试文件</td>
+<td>此处潜规则是每个自测试类都以<code>test</code>作为后缀</td>
+</tr>
+<tr>
+<td>vendor</td>
+<td>包含项目中所有的 composer 依赖包</td>
+<td></td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/laravel/2.Laravel%20%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

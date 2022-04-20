@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>JSP 内置对象 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>JSP 内置对象</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/java-server-pages/" rel="tag">java server pages</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>内置对象是值这些对象在Java Server Pages页面中不需要声明和实例化，可以直接在Java程序片和Java表达式中部分使用，通常这种对象被称之为“Jsp内置对象”。</p>
+<p>常用的JSP内置对象主要分为request、responese、out、session、application、pageContent、page、config、exception等内置对象的使用方法。</p>
+<h2 id="四大类，九大对象"><a href="#四大类，九大对象" class="headerlink" title="四大类，九大对象"></a>四大类，九大对象</h2><p>JSP内置对象由WEB服务器负责实现和股哪里，JSP九个功能强大的内置对象，主要分为四大类</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>input &#x2F; output</td>
+<td>request 、response、out</td>
+<td>作为客户端和服务器之间的通信桥梁</td>
+</tr>
+<tr>
+<td></td>
+<td>request</td>
+<td>表示客户端对服务器端发送请求</td>
+</tr>
+<tr>
+<td></td>
+<td>response</td>
+<td>表示服务器对客户端的响应</td>
+</tr>
+<tr>
+<td></td>
+<td>out</td>
+<td>负责吧处理结果输出到客户端</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>context</td>
+<td>session、application、pageContext</td>
+<td>与上下文（Context）有关的内置对象</td>
+</tr>
+<tr>
+<td></td>
+<td>session</td>
+<td>表示浏览器与服务器会话的上下文环境</td>
+</tr>
+<tr>
+<td></td>
+<td>application</td>
+<td>表示应用程序的上下文环境</td>
+</tr>
+<tr>
+<td></td>
+<td>pageContext</td>
+<td>表示当前JSP页面上的上下文环境</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>servlet</td>
+<td>page、config</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>page</td>
+<td>表示JSP文件转换为Java文件后的Servlet对象</td>
+</tr>
+<tr>
+<td></td>
+<td>config</td>
+<td>表示JSP 文件转换JAVA文件后的服务连接器（Servlet）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>error</td>
+<td>exception</td>
+<td>当JSP页面发生错误时将产生异常，而该对象就是用于处理这个异常的</td>
+</tr>
+</tbody></table>
+<h3 id="request"><a href="#request" class="headerlink" title="request"></a>request</h3><h4 id="request-内置对象常用方法"><a href="#request-内置对象常用方法" class="headerlink" title="request 内置对象常用方法"></a>request 内置对象常用方法</h4><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Object getAttribute(String name)</td>
+<td>返回制定属性的属性值</td>
+</tr>
+<tr>
+<td>Enumeration getAttributeNames()</td>
+<td>返回所有可用的属性名枚举</td>
+</tr>
+<tr>
+<td>String getCharacterEncoding()</td>
+<td>返回字符编码格式</td>
+</tr>
+<tr>
+<td>int getContentLength()</td>
+<td>返回请求体字节数</td>
+</tr>
+<tr>
+<td>String getContentType()</td>
+<td>返回请求体的MIME类型</td>
+</tr>
+<tr>
+<td>ServletInputStream getInputStream()</td>
+<td>返回请求提中一行的二进制流</td>
+</tr>
+<tr>
+<td>String getParameter(String name)</td>
+<td>获取提交数据</td>
+</tr>
+<tr>
+<td>Enumeration getParameterNames()</td>
+<td>可用参数名的枚举</td>
+</tr>
+<tr>
+<td>String[] getParameterValues(String name)</td>
+<td>返回包含参数Name所有值的数组</td>
+</tr>
+<tr>
+<td>String getProtocol()</td>
+<td>返回请求用的协议类型及版本号</td>
+</tr>
+<tr>
+<td>String getServerName()</td>
+<td>返回接受请求 服务器主机名</td>
+</tr>
+<tr>
+<td>int getServerPort()</td>
+<td>返回服务器接受此请求所用的端口号</td>
+</tr>
+<tr>
+<td>String getRemoteAddr()</td>
+<td>返回发送此请求的客户端IP地址</td>
+</tr>
+<tr>
+<td>String getRemoteHost()</td>
+<td>返回发送此请求的客户端主机名</td>
+</tr>
+<tr>
+<td>void setAttribute (String key,Object obj)</td>
+<td>设置属性的属性值</td>
+</tr>
+<tr>
+<td>String getRealPatch(String path)</td>
+<td>返回一个虚拟路径的真实路径</td>
+</tr>
+</tbody></table>
+<h5 id="request-getParameter-String-name-获取提交数据"><a href="#request-getParameter-String-name-获取提交数据" class="headerlink" title="request.getParameter(String name) 获取提交数据"></a>request.getParameter(String name) 获取提交数据</h5><h6 id="NewFile-jsp"><a href="#NewFile-jsp" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;NewFile1.jsp&quot;</span>&gt;                </span><br><span class="line">	&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;data&quot;</span>&gt;                            </span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;up&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="NewFile1-jsp"><a href="#NewFile1-jsp" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="type">String</span> <span class="variable">requestdata</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;data&quot;</span>);            <span class="comment">// 返回data输入的信息</span></span><br><span class="line">	out.println(requestdata);                                                       <span class="comment">// 输出返回时的信息</span></span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="String-getParameterValues-String-args-返回参数名称的所有参数名"><a href="#String-getParameterValues-String-args-返回参数名称的所有参数名" class="headerlink" title="String[] getParameterValues(String args) 返回参数名称的所有参数名"></a>String[] getParameterValues(String args) 返回参数名称的所有参数名</h5><h6 id="NewFile-jsp-1"><a href="#NewFile-jsp-1" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;NewFile1.jsp&quot;</span>&gt;</span><br><span class="line">	城市:&lt;br/&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;checkbox&quot;</span> name=<span class="string">&quot;data&quot;</span> value=<span class="string">&quot;Beijing&quot;</span>/&gt;Beijing</span><br><span class="line">	&lt;input type=<span class="string">&quot;checkbox&quot;</span> name=<span class="string">&quot;data&quot;</span> value=<span class="string">&quot;Shenzhen&quot;</span>/&gt;Shenzhen</span><br><span class="line">	&lt;input type=<span class="string">&quot;checkbox&quot;</span> name=<span class="string">&quot;data&quot;</span> value=<span class="string">&quot;Jilin&quot;</span>/&gt;Jilin</span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;up&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="NewFile1-jsp-1"><a href="#NewFile1-jsp-1" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">城市:&lt;br&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	String Cities[] = request.getParameterValues(<span class="string">&quot;data&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">one</span> <span class="operator">=</span><span class="number">0</span>; one &lt; Cities.length; one++) &#123;</span><br><span class="line">		out.println(Cities[one] + <span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="response"><a href="#response" class="headerlink" title="response"></a>response</h3><p>当客户端请求服务器的一个页面时会提交一个HTTP请求，服务器收到请求后返回一个HTTP响应。之后<code>request</code>进行封装，与request对象相互映照的是<code>response</code>对象。</p>
+<h4 id="动态改变-contentType值-setContentType"><a href="#动态改变-contentType值-setContentType" class="headerlink" title="动态改变 contentType值 (setContentType)"></a>动态改变 contentType值 (setContentType)</h4><p>JSP页面使用Page指令标记了设置页面的contentType属性值，response对象按照此属性值的方式对客户端作出相应，page指令中只能为contentType属性指定一个值，如果改变值可以通过response对象调用一个<code>setContentTyoe(String s)</code>方法来重新设置contentType的属性值。<br>客户端通过单击页面上的不同按钮可以改变页面响应的MIME类习惯，当点击word按钮时，jsp页面动态改变contentType的属性值为<code>application/msword</code>，从而启动本地Word软件来显示当前页面内容：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">&lt;p&gt;Hello,response&lt;/p&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;word&quot;</span> name=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">	<span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;submit&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (<span class="string">&quot;word&quot;</span>.equals(str)) &#123;</span><br><span class="line">	    <span class="comment">// 修改response响应为msword</span></span><br><span class="line">		response.setContentType(<span class="string">&quot;application/msword&quot;</span>);                </span><br><span class="line">	&#125;</span><br><span class="line">	%&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="setHeader-String-name-String-value-响应表头"><a href="#setHeader-String-name-String-value-响应表头" class="headerlink" title="setHeader(String name,String value) 响应表头"></a>setHeader(String name,String value) 响应表头</h4><p>response可以通过setHeader(String name,String value)来设置指定名字的HTML文件头值，以用于操作HTTP文件头。如实现每页三秒刷新一次，那么可以使用&#96;&#96;&#96;setHeader(“refesh”,”3”)即可。</p>
+<h5 id="每三秒刷新一次-setHeader"><a href="#每三秒刷新一次-setHeader" class="headerlink" title="每三秒刷新一次 (setHeader)"></a>每三秒刷新一次 (setHeader)</h5><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;Hello,world&quot;</span>);</span><br><span class="line">	response.setHeader(<span class="string">&quot;refresh&quot;</span>,<span class="string">&quot;3&quot;</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="三秒跳转"><a href="#三秒跳转" class="headerlink" title="三秒跳转"></a>三秒跳转</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;3m -&gt;NewFile.jsp&quot;</span>);</span><br><span class="line">	response.setHeader(<span class="string">&quot;refresh&quot;</span>,<span class="string">&quot;3;url=NewFile.jsp&quot;</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<p>利用response对象的<code>setHeader</code>方法来实现3秒后跳转至“NewFile.jsp”文件之中。</p>
+<h5 id="重定向-sendRedirect"><a href="#重定向-sendRedirect" class="headerlink" title="重定向 (sendRedirect)"></a>重定向 (sendRedirect)</h5><p>需要将当前页面跳转至另外一个页面时，即实现HTML中的<code>&lt;a&gt;</code>效果，可以使用reponse对象的<code>sendRedirect(String url)</code>方法进行重定向。</p>
+<h6 id="NewFile-jsp-2"><a href="#NewFile-jsp-2" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;NewFile1.jsp&quot;</span> method=<span class="string">&quot;post&quot;</span> name=form&gt;</span><br><span class="line">	&lt;p&gt;password&lt;/p&gt;</span><br><span class="line">	&lt;br&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;password&quot;</span> name=<span class="string">&quot;pass&quot;</span>&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;up&quot;</span>&gt;</span><br><span class="line">	&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="NewFile1-jsp-2"><a href="#NewFile1-jsp-2" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	<span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;pass&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!<span class="string">&quot;12345&quot;</span>.equals(str)) &#123;</span><br><span class="line">		response.sendRedirect(<span class="string">&quot;NewFile.jsp&quot;</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		out.println(<span class="string">&quot;Hello,world!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="forward"><a href="#forward" class="headerlink" title="forward"></a>forward</h5><p>forward和上述response对象的区别在于，<code>forward</code>可以不用跳转单纯的在本页显示另一个页面的信息，而<code>response</code>必须以跳转的形式才可以显示另一个解界面信息。</p>
+<h6 id="NewFile-jsp-3"><a href="#NewFile-jsp-3" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:forward page=<span class="string">&quot;NewFile1.jsp&quot;</span>&gt;</span><br><span class="line">&lt;jsp:param value=<span class="string">&quot;hello&quot;</span> name=<span class="string">&quot;user&quot;</span>/&gt;</span><br><span class="line">&lt;/jsp:forward&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="NewFile1-jsp-3"><a href="#NewFile1-jsp-3" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;NewFile1.jsp&lt;/p&gt;</span><br><span class="line">&lt;%=</span><br><span class="line">	request.getParameter(<span class="string">&quot;user&quot;</span>)</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setContentType</td>
+<td>修改response响应</td>
+<td></td>
+</tr>
+<tr>
+<td>setHeader</td>
+<td>操作页面消息头</td>
+<td>刷新、跳转</td>
+</tr>
+<tr>
+<td>sendRedirect</td>
+<td>实现页面跳转</td>
+<td>重定向</td>
+</tr>
+<tr>
+<td>forward</td>
+<td>服务器端跳转、但URL保持不变</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="out"><a href="#out" class="headerlink" title="out"></a>out</h3><p>在input&#x2F;output类别之中，out主要功能就是负责把处理结果输出到客户端主要共五个方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>DF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void clear()</td>
+<td>清除缓存区内容</td>
+<td></td>
+</tr>
+<tr>
+<td>void clearBuffer()</td>
+<td>清除缓存区当前内容</td>
+<td></td>
+</tr>
+<tr>
+<td>void flush()</td>
+<td>清空流</td>
+<td></td>
+</tr>
+<tr>
+<td>void close()</td>
+<td>关闭输出流</td>
+<td></td>
+</tr>
+<tr>
+<td>void println()</td>
+<td>输出各种数据类型</td>
+<td></td>
+</tr>
+<tr>
+<td>void newLine()</td>
+<td>输出一个换行符号</td>
+<td></td>
+</tr>
+<tr>
+<td>int getBufferSize()</td>
+<td>返回缓存区字节数</td>
+<td>如不设缓存数则为0</td>
+</tr>
+<tr>
+<td>int getRemaining()</td>
+<td>返回缓存区剩余大小</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean isAutoFlush()</td>
+<td>返回缓存区满时是自动清空还是输出异常</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="缓存区剩余大小-（out-Remaining）"><a href="#缓存区剩余大小-（out-Remaining）" class="headerlink" title="缓存区剩余大小 （out.Remaining）"></a>缓存区剩余大小 （out.Remaining）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%=out.getRemaining()%&gt; <span class="type">byte</span>&lt;br&gt;&lt;%--返回缓存区剩余大小	 --%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="输出各种类型（println）"><a href="#输出各种类型（println）" class="headerlink" title="输出各种类型（println）"></a>输出各种类型（println）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.println(<span class="string">&quot;&lt;p&gt;Hello,world!&lt;/p&gt;&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>浏览器会与Web服务器之间使用HTTP协议进行通信，客户端向服务器发出Request（请求）服务器返回response（响应），之后链接就会被关闭了。而这时，在服务端不必保留链接的相关信息，所以当时的开发人员就想法设想采取某种手段来<code>记录</code>每个客户端的<code>连接信息</code>。通常我们可以使用<code>session</code>来存放有关的链接信息</p>
+<h4 id="session对象ID"><a href="#session对象ID" class="headerlink" title="session对象ID"></a>session对象ID</h4><p>当访问一个Web服务器的时候，Web服务器会给每个访问的用户分配和自动创建一个session对象，每个session标识都是一个在当时期间内都具有唯一性的</p>
+<h5 id="获取session-ID-getId"><a href="#获取session-ID-getId" class="headerlink" title="获取session ID (getId)"></a>获取session ID (getId)</h5><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	<span class="comment">// Sessiong ID</span></span><br><span class="line">	<span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> session.getId();</span><br><span class="line">	out.println(string);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	<span class="comment">// Sessiong ID</span></span><br><span class="line">	<span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> session.getId();</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%=string %&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，session Id在当前服务内是具有唯一性的，比如在“<a target="_blank" rel="noopener" href="http://zsdk.org.cn/%E2%80%9D%E4%B8%8B%E7%9A%84session">http://zsdk.org.cn/”下的session</a> ID是&#96;&#96;&#96;7170F444E491358B191187B0400291C6&#96;&#96;，则在另一个服务器下（<a target="_blank" rel="noopener" href="http://jiangxue.org.cn/%EF%BC%89%E5%8F%88%E6%98%AF%E5%8F%A6%E4%B8%80%E4%B8%AAsession">http://jiangxue.org.cn/）又是另一个session</a> ID了</p>
+<h4 id="session-获取与存储数据"><a href="#session-获取与存储数据" class="headerlink" title="session 获取与存储数据"></a>session 获取与存储数据</h4><h6 id="提交数据-NewFile-jsp"><a href="#提交数据-NewFile-jsp" class="headerlink" title="提交数据 (NewFile.jsp)"></a>提交数据 (NewFile.jsp)</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;NewFile1.jsp&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;tame&quot;</span>&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;up&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="存储数据-NewFile1-jsp"><a href="#存储数据-NewFile1-jsp" class="headerlink" title="存储数据 (NewFile1.jsp)"></a>存储数据 (NewFile1.jsp)</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    <span class="comment">// 存储tame名称标签内数据</span></span><br><span class="line">	<span class="type">String</span> <span class="variable">tame</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;tame&quot;</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="输出session-数据-NewFile-jsp"><a href="#输出session-数据-NewFile-jsp" class="headerlink" title="输出session 数据 (NewFile.jsp)"></a>输出session 数据 (NewFile.jsp)</h6><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%=tame %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="session-生命周期"><a href="#session-生命周期" class="headerlink" title="session 生命周期"></a>session 生命周期</h4><p>session的生命周期主要依赖于以下几个方式：</p>
+<ol>
+<li>session对象是否调用<code>invalidata()</code>方法使session ID 失效；</li>
+<li>session 对象是否达到session ID的最长等待时间;</li>
+<li>用户是否关闭浏览器<br>在session中，也为开发者提供了很多关于session生命周期的对象于方法，分别为：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>long getCreation Time()</td>
+<td>返回session创建的时间</td>
+<td></td>
+</tr>
+<tr>
+<td>long getLastAccessedTime()</td>
+<td>返回session用户最后一次请求的时间</td>
+<td></td>
+</tr>
+<tr>
+<td>void invalidate()</td>
+<td>使session ID失效</td>
+<td></td>
+</tr>
+<tr>
+<td>void setMaxInactiveInterval()</td>
+<td>设置两次请求的间隔时间</td>
+<td>默认为秒</td>
+</tr>
+<tr>
+<td>boolean isNew()</td>
+<td>判断用户是否已经进入服务器创建的session</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="session-创建时间-（long-getCreation-Time）"><a href="#session-创建时间-（long-getCreation-Time）" class="headerlink" title="session 创建时间 （long getCreation Time）"></a>session 创建时间 （long getCreation Time）</h5><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.text.*&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">		<span class="comment">//  获取session的创建时间</span></span><br><span class="line">   <span class="type">Date</span> <span class="variable">createTime</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(session.getCreationTime());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 输出session的创建时间</span></span><br><span class="line">		out.println(createTime);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.text.*&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">		<span class="comment">//  获取session的创建时间</span></span><br><span class="line">   <span class="type">long</span> <span class="variable">sessiontime</span> <span class="operator">=</span> session.getCreationTime();</span><br><span class="line">		<span class="type">Date</span> <span class="variable">timeout</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(sessiontime);</span><br><span class="line">		out.println(timeout);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意，在此段代码块之中我们引入了<code>&lt;%@ page import=&quot;java.util.*&quot;%&gt;</code>包和<code>&lt;%@ page import=&quot;java.text.*&quot;&gt;</code>。主要用于将获取的session id创建时间转换为Date可读且标准的时间形式。</p>
+<h3 id="application"><a href="#application" class="headerlink" title="application"></a>application</h3><p>application主要表示应用程序的上下文环境，而application也提供了一个存储数据的支持，而application可以提供一个共享的对象，这弥补了<code>session</code>的存储对象不足的问题。application用于任何用户访问同一个application对象，而生存周期直到服务器关闭这个application才会被取消：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public void setAttribute(String key, Object obj)</td>
+<td>将参数obj保指定保存在key中</td>
+<td>key 为所保存对象的一个关键字</td>
+</tr>
+<tr>
+<td>public void getAttribute(String key)</td>
+<td>获取application中关键字是key 的对象</td>
+<td></td>
+</tr>
+<tr>
+<td>public void removeAttibute(String key)</td>
+<td>从application关键字中删除key所对应的对象</td>
+<td></td>
+</tr>
+<tr>
+<td>public Enumeration getAttributeNames()</td>
+<td>产生一个枚举对象</td>
+<td>该对象可以使用nextElements()遍历</td>
+</tr>
+<tr>
+<td>getMajorVersion()</td>
+<td>获取服务器支持Servlet主版本号</td>
+<td></td>
+</tr>
+<tr>
+<td>getMinorVersion()</td>
+<td>获取服务器支持 Servlet版本号</td>
+<td></td>
+</tr>
+<tr>
+<td>getServerInfo()</td>
+<td>Java Server pages Tomcat 版本号</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="Java-Server-pages-Tomcat-版本号-（getServerInfo）"><a href="#Java-Server-pages-Tomcat-版本号-（getServerInfo）" class="headerlink" title="Java Server pages Tomcat 版本号 （getServerInfo）"></a>Java Server pages Tomcat 版本号 （getServerInfo）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Java Server pages Tomcat 版本号&lt;/p&gt;</span><br><span class="line">&lt;%=application.getServerInfo()%&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取当前访问数据"><a href="#获取当前访问数据" class="headerlink" title="获取当前访问数据"></a>获取当前访问数据</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line"><span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (application.getAttribute(<span class="string">&quot;num&quot;</span>)==<span class="literal">null</span>)</span><br><span class="line">	n=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//  获取application中关键字是num 的对象</span></span><br><span class="line">	<span class="type">String</span> <span class="variable">string</span> <span class="operator">=</span> application.getAttribute(<span class="string">&quot;num&quot;</span>).toString();</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">	n=Integer.valueOf(string).intValue()+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">	application.setAttribute(<span class="string">&quot;num&quot;</span>,n);        <span class="comment">// 设置属性的属性值为“num”</span></span><br><span class="line">	out.println(<span class="string">&quot;您是：&quot;</span> + application.getAttribute(<span class="string">&quot;num&quot;</span>) + <span class="string">&quot;位用户&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="pageContext"><a href="#pageContext" class="headerlink" title="pageContext"></a>pageContext</h3><p>pageContext主要表示当前JSP页面上的上下文对象，也表示当前页面运行环境，也就是说，<strong>PageContext可以访问本页面所有的session</strong>，也可以获取本页面所在的application的某一些属性值，虽然是这样，<code>但是在实际的开发过程之中，很少使用pageContexrt</code>调用对象。。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ServletRequest getRequest()</td>
+<td>获取当前JSP页面的请求(request)对象</td>
+</tr>
+<tr>
+<td>ServletResponse getResponse()</td>
+<td>获取当前JSP页面的响应(response)对象</td>
+</tr>
+<tr>
+<td>ServletContext getServleContext()</td>
+<td>返回当前页面的application对象</td>
+</tr>
+<tr>
+<td>HttpSession getSession()</td>
+<td>返回当前页的session对象</td>
+</tr>
+<tr>
+<td>Object getpPage()</td>
+<td>返回当前页的page对象</td>
+</tr>
+<tr>
+<td>Exception getException()</td>
+<td>返回当前页的Exception对象</td>
+</tr>
+</tbody></table>
+<h4 id="获取-session-数据-（getSession）"><a href="#获取-session-数据-（getSession）" class="headerlink" title="获取 session 数据 （getSession）"></a>获取 session 数据 （getSession）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%    </span><br><span class="line">    <span class="comment">// 设定 session 值</span></span><br><span class="line">	session.setAttribute(<span class="string">&quot;one&quot;</span>,<span class="string">&quot;pageContext&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">    <span class="comment">// 输出session值</span></span><br><span class="line">&lt;%=pageContext.getSession().getAttribute(<span class="string">&quot;one&quot;</span>) %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="page"><a href="#page" class="headerlink" title="page"></a>page</h3><p>page主要表示JSP文件转换为Java文件后的Servlet对象，代表JSP页面本身（即this），因此他可以调用Servlet(服务器连接端)类所定义的方法，在实际的开发过程中，基本上很少使用<code>page</code>对象。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getServletInfo()</td>
+<td>使用this获取本页面说明信息</td>
+</tr>
+<tr>
+<td>((HttpsJspPage)page)getServletInfo()</td>
+<td>使用page获取本页的说明信息</td>
+</tr>
+<tr>
+<td>getClass()</td>
+<td>返回当前Object类</td>
+</tr>
+<tr>
+<td>int hashCode</td>
+<td>返回Object的hash代码</td>
+</tr>
+</tbody></table>
+<h4 id="获取本页面说明信息-（this）"><a href="#获取本页面说明信息-（this）" class="headerlink" title="获取本页面说明信息 （this）"></a>获取本页面说明信息 （this）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%=<span class="built_in">this</span>.getServletInfo() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="返回当前Object类-（getClass）"><a href="#返回当前Object类-（getClass）" class="headerlink" title="返回当前Object类 （getClass）"></a>返回当前Object类 （getClass）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%=page.getClass() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><p>config即页面配置对象，表示JSP 文件转换JAVA文件后的服务连接器（Servlet）的ServletConfig对象，<code>主要存储一些初始数据</code>。config和page对象一样，相比之前的九大对象很少被用到。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getServletName()</td>
+<td>获得JSP页面转义后Servlet服务器连接端的对象名</td>
+</tr>
+<tr>
+<td>getInitParameter()</td>
+<td>返回指定名字的初始参数值</td>
+</tr>
+</tbody></table>
+<h4 id="获得JSP页面转义后Servlet服务器连接端的对象名-（getServletName）"><a href="#获得JSP页面转义后Servlet服务器连接端的对象名-（getServletName）" class="headerlink" title="获得JSP页面转义后Servlet服务器连接端的对象名 （getServletName）"></a>获得JSP页面转义后Servlet服务器连接端的对象名 （getServletName）</h4><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%=config.getServletName() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="exception"><a href="#exception" class="headerlink" title="exception"></a>exception</h3><p>exception主要用于当JSP页面发生错误时将产生异常，而该对象就是用于处理这个异常的，如果JSP页面需要使用该对象，必须将该页面的page指令的inErrorPage属性设置为<code>true</code>，否则无法编译。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getMessage()</td>
+<td>返回描述异常的消息</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>返回关于异常的简短描述消息</td>
+</tr>
+<tr>
+<td>printStackTrace()</td>
+<td>显示异常及栈轨迹</td>
+</tr>
+<tr>
+<td>FillInStackTrace()</td>
+<td>重写异常的执行栈轨迹</td>
+</tr>
+</tbody></table>
+<h4 id="返回描述异常的消息"><a href="#返回描述异常的消息" class="headerlink" title="返回描述异常的消息"></a>返回描述异常的消息</h4><h5 id="NewFile-jsp-4"><a href="#NewFile-jsp-4" class="headerlink" title="NewFile.jsp"></a>NewFile.jsp</h5><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> errorPage=<span class="string">&quot;NewFile1.jsp&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="type">int</span> <span class="variable">one</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">	<span class="type">int</span> <span class="variable">two</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%=</span><br><span class="line">    (one/two)            <span class="comment">// 制造一场错误</span></span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="NewFile1-jsp-4"><a href="#NewFile1-jsp-4" class="headerlink" title="NewFile1.jsp"></a>NewFile1.jsp</h5><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> isErrorPage=<span class="string">&quot;true&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;获取错误&lt;/p&gt;</span><br><span class="line">&lt;%=exception.getMessage() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/Java%20server%20pages/4.JSP%20%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

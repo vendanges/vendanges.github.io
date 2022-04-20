@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>D3 简介 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>D3 简介</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/d3-v4/" rel="tag">d3 v4</a> <a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210426032630.png"><br>D3 version 4 版本由 Mike Bostock 在 2016年 7 月 28号正式发布了此版本，与 version 3 不同的是 D3 目前是<strong>模块化</strong>，并由许多小库组成的，可以独立的进行使用，而且每个库都有自己的存储库和发行周期。</p>
+<p>这也和D3 version 3 版本不同，在 D3 中开发者可能会从之前从0开始到现在的通过各种库来<strong>调用</strong>几个库来进行完成一个图表的绘制。</p>
+<p>在此基础上虽然 D3 version 4 是模块化开发的，但是与之前其他的<code>Highcharts、Echarts、Chart</code>框架不同，在模块化的基础上保证了代码的可扩展性和自定义等。</p>
+<blockquote>
+<p>需要注意的是，D3 是鼓励使用者来使用现成图表来进行绘制数据的，您只需要修改下数据和参数即可，官方认为这样可以帮助读者学习。</p>
+<p>D3 的最好学习方法就是浏览他们的图库，这些例子可以照样重新利用来减少大量的从零学习的成本。</p>
+<p>虽然你可能感觉这是 CV工程师所做的，但这没有关系，这些例子不仅仅是一个模板，而是一个学习的工具，通过改变这些参数来看看发生什么，比被动阅读更加的可以帮助理解。<br>—— Mike Bostock</p>
+</blockquote>
+<p>模块化开发的好处还不仅仅只是方便开发，他还有一个对项目开发中较为友好的处理。在 d3 version3 版本中，的版本容量为<strong>148KB</strong>，而在 d3 version 4 中，容量则为<code>12.8KB</code>。</p>
+<p>这也归功与模块化开发，将功能分开，各模块单独发展、单独使用，这里就不会考虑容量的问题。</p>
+<blockquote>
+<p>D3 version 4 是各个独立模块间协同工作的，而不是一个单独的库。可以根据需要而夹杂独立的模块，默认的完整资源包包含了大约 30 子模块：<br><code> &lt;script src=&quot;https://d3js.org/d3.v4.0.0-alpha.50.min.js&quot;&gt;&lt;/script&gt;</code></p>
+<p>如果需要按照项目需要而单独加载模块，比如使用一个颜色生成器，则需要单独引入：<br><code>&lt;script src=&quot;https://d3js.org/d3-scale-chromatic.v0.3.min.js&quot;&gt;&lt;/script&gt;</code></p>
+</blockquote>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/d3%20v4/1.D3%20%E7%AE%80%E4%BB%8B/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

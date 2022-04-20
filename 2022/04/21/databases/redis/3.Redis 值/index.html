@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Redis value | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Redis value</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/databases/" rel="tag">databases</a> <a class="article__tag-none-link" href="/tags/redis/" rel="tag">redis</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Redis 除了对键的操作，当然也有不少对值的操作，通常，就比如 <code>GETRANGE</code> 即截取一部分变量&#x2F;值信息，在 python 等语言中可以通过 <code>[key:n]</code> 来进行访问。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; GETRANGE key_name 1 4</span><br><span class="line">&quot;1234&quot;</span><br></pre></td></tr></table></figure>
+
+<p>就如上述 code 中，<code>1</code> 是一个起始数，而 <code>4</code> 是一个结尾数，该键的值为 <code>0123456</code>，因此该命令可以实现出截取键值的效果。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>GETRANGE</td>
+<td>截取键值并返回</td>
+<td><code>GETRANGE key_name start end</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>GETSET</td>
+<td>重新设置键值的时候返回旧的键值数据</td>
+<td><code>GETSET key_name &quot;Hello,world&quot;</code> （上一个 <code>key_name</code> 的值是 <code>0123456</code>，因此返回的也是他）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GETBIT</td>
+<td>获取 key 所存储字符串的偏移量上的位（bit）</td>
+<td><code>SETBIT value offset</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>SETRANGE</td>
+<td>通过偏移量来修改 key 中的值</td>
+<td><code>SETRANGE key_name 5 &quot; World!&quot;</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>SETBIT</td>
+<td>修改 key 所存储的字符串上的偏移量 (bit)</td>
+<td><code>SETBIT key_name 2 1</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>MGET</td>
+<td>获取一个或多个 key</td>
+<td><code> MGET key_name1 key_name2</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>MSET</td>
+<td>设置多个 key（依然会通过新值替换旧值）</td>
+<td><code>MSET key_one &quot;one&quot; key_two &quot;two&quot;</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>MSETNX</td>
+<td>用于设置多个 key，遵循原子性操作（0失败，1成功）</td>
+<td><code>MSETNX key_one &quot;one&quot; key_two &quot;two&quot;</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>SETNX</td>
+<td>如果 key 存在则什么都不做，不存在则插入</td>
+<td><code>SETNX key_name &quot;1&quot;</code> （如果 <code>key_name</code> 存在则返回 0，否则返回 1）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>STRLEN</td>
+<td>返回 key 值的字符串长度（如果存储的不是字符串类型则报错）</td>
+<td><code>STRLEN key_name</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>APPEND</td>
+<td>该命令的好处就是直接在原有的键值中直接拼合</td>
+<td><code>APPEND key_one &quot;Hello&quot;</code> and <code>APPEND key_one &quot; World!&quot;</code> show <code>Hello World!</code></td>
+</tr>
+</tbody></table>
+<h2 id="获取或存储偏移量上的位"><a href="#获取或存储偏移量上的位" class="headerlink" title="获取或存储偏移量上的位"></a>获取或存储偏移量上的位</h2><p>偏移量（Offset）简单概括就是存储地址和实际地址之间所存在的空段之间的距离，这通常被称之为有效地址或偏移量。</p>
+<h3 id="GETSET"><a href="#GETSET" class="headerlink" title="GETSET"></a>GETSET</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210717221900.png"><br> 我们以 <code>GETSET</code> 命令为例，首先 <strong>H 的二进制数为：01001000</strong> ，通过 <code>GETSET</code> 分别输出一组后可以看到结果正是二进制数，因此本命令也就是获取 value 内的偏移量位数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; GETBIT key_name 0</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 2</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 3</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 4</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 5</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 6</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GETBIT key_name 7</span><br><span class="line">(integer) 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="SETBIT"><a href="#SETBIT" class="headerlink" title="SETBIT"></a>SETBIT</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210718011955.png"></p>
+<p>.<code>SETBIT</code> 在 redis 中，主要用于更改 key 的存储偏移量，如 <code>SETBIT key_name 2 1</code> 则表示将从0，左到右开始计数，替换原有的位数从而替换为 <code>1</code>，让其从 <code>H</code> 改为 <code>h</code></p>
+<p>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SETBIT key_name 2 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; GET key_name</span><br><span class="line">&quot;hello,world&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SETRANGE"><a href="#SETRANGE" class="headerlink" title="SETRANGE"></a>SETRANGE</h3><p><img src="https://gitee.com/analysis-of-river-snow/drawing-bed/raw/master/20210718012004.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET key_name &quot;Hello&quot;</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; SETRANGE key_name 5 &quot; World!&quot;</span><br><span class="line">(integer) 12</span><br><span class="line">127.0.0.1:6379&gt; GET key_name</span><br><span class="line">&quot;Hello World!&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+
+<h2 id="自增与自减"><a href="#自增与自减" class="headerlink" title="自增与自减"></a>自增与自减</h2><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>INCR</td>
+<td>将数值自曾（key 不存在时为 0，假设运行100次 INCR 则 数值也会被自曾到 100，每运行一次数值 +1）</td>
+<td><code>INCR key_one</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>INCRBY</td>
+<td>在原有数值的基础上指定增加数值</td>
+<td><code>INCRBY key_one 10</code>（假设 <code>key</code> 内值为2，则通过该命令增加 10，即12）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DECR</td>
+<td>在原有数值基础上来进行值减</td>
+<td><code>DECR key_one</code> （假设key内值为100，运行100次则为0）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>DECRBY</td>
+<td>在原有基础上自定义减值数</td>
+<td><code>DECRBY key_one 9</code> (假设 key 值内为 10，则直接减为 9)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>INCRBYFLOAT</td>
+<td>为键的存储值中增加，可以执行像 <code>1.03e+08</code> 这样的科学计数法</td>
+<td><code>INCRBYFLOAT key_name -0.01</code> \ <code>INCRBYFLOAT key_name 1.03e08</code></td>
+</tr>
+</tbody></table>
+<h3 id="INCRBYFLOAT"><a href="#INCRBYFLOAT" class="headerlink" title="INCRBYFLOAT"></a>INCRBYFLOAT</h3><p>INCRBYFLOAT 的主要作用就是可以浮点数的增量以及支持诸如 <code>1.03E+08</code> 这样的科学计数法，此外无论加法计算所得到的精度实际长度有多长，该命令最终的结果只保留小数点后十七位数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET key_name 1.04</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INCRBYFLOAT key_name -0.01</span><br><span class="line">&quot;1.03&quot;</span><br><span class="line">127.0.0.1:6379&gt; INCRBYFLOAT key_name 1.03e08</span><br><span class="line">&quot;103000001.02999999999883585&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>e 是一个科学计数法符号，通常以 “E” 表示，在科学计数法中为了公式的简便，可以将 1.03 x10的次方简写为 1.03E+08 的形式</p>
+<blockquote>
+<p>1.03 x 10的8次方，也就是 8个10相乘，之后在乘于 1.03，只保留十七位小数则应为 <code>103000001.02999999999883585</code></p>
+</blockquote>
+</blockquote>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/databases/redis/3.Redis%20%E5%80%BC/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

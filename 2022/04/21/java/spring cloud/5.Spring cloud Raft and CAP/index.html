@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Spring cloud Raft and CAP | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Spring cloud Raft and CAP</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/java/" rel="tag">java</a> <a class="article__tag-none-link" href="/tags/spring-cloud/" rel="tag">spring cloud</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="拜占庭容错算法（Byzantine-Generals-Problem）"><a href="#拜占庭容错算法（Byzantine-Generals-Problem）" class="headerlink" title="拜占庭容错算法（Byzantine Generals Problem）"></a>拜占庭容错算法（Byzantine Generals Problem）</h2><h3 id="理想流程"><a href="#理想流程" class="headerlink" title="理想流程"></a>理想流程</h3><p>拜占庭容错算法也叫拜占庭将军问题（Byzantine Generals Problem），由莱斯利-兰波特在论文中所提出的分布式对等网络通信容错问题。</p>
+<p>假设一组罗马（拜占庭）将军各率领一直军队 <strong>共同</strong> 围攻一座城市，为简化问题，各种军队的行动策略分别为 <strong>进攻与撤退</strong> 两种。</p>
+<p>每个支部队的将军必须通过投票来达成一致策略（所有军队一起进攻或撤退），因为没支部队位置不同，所以需要 <strong>信使</strong> 来进行没支部队的互相联系。</p>
+<p>此时每支部队将军可以根据自己的投票和其他将军投票的信息来共同知道所决定的行动策略。</p>
+<h3 id="实际问题"><a href="#实际问题" class="headerlink" title="实际问题"></a>实际问题</h3><h4 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h4><p>假设在这些8个将军中出现了1叛徒，他们不仅可能向较为糟糕的策略进行投票，还可能选择性的传递投票信息（假设4位将军投的进攻，4位将军投的撤退，那么给进攻的将军说他们投的都是进攻，给投撤退的将军说投的都是撤退）。</p>
+<p><strong>那么这样各支军队的一直协调即一致性遭到了破坏</strong></p>
+<h4 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h4><p>由于各个将军需要通过 <strong>信使进行通讯</strong>，那么叛徒将军可能通过伪造的信件以及以其他将军的身份发送假的投票。</p>
+<p>即使我们保证了所有将军都可靠的情况下，也不能排除信使被敌人截杀或叛变以及替换等情况，因此很闹保证人员的 <strong>可靠性</strong>。：</p>
+<h3 id="拜占庭容错"><a href="#拜占庭容错" class="headerlink" title="拜占庭容错"></a>拜占庭容错</h3><p>假设整套体系都按照理想化正常情况下，将军们仍然可以通过 <strong>多数决定战略</strong>，而这将会被称之为 <strong>拜占庭容错</strong></p>
+<h2 id="Raft（Reliable-Replicated-Redundant-And-Fault-Tolerant）"><a href="#Raft（Reliable-Replicated-Redundant-And-Fault-Tolerant）" class="headerlink" title="Raft（Reliable,Replicated,Redundant,And Fault-Tolerant）"></a>Raft（Reliable,Replicated,Redundant,And Fault-Tolerant）</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Raft 集群（Reaf cluster）中主要分为 <strong>领袖（leader）、追随者（follower）、候选人（candidate）</strong>。</p>
+<p>在一个 Raft 集群中，正常情况下都会有一个领袖，其他都是追随者，领袖会负责所有的外部请求（如果不是领袖机器收到，则请求将会被导到领袖中）。</p>
+<p>领袖会有一个固定时间发送消息，即 “心跳（heartbeat）”，让追随者知道领袖还在正常运作。每个追随者都会设计一个计时机制（timeout），当超过一定（通常在 150ms、300ms）时间没有收到领袖的心跳，那么集群将会进入到选举状态。</p>
+<h3 id="领导选举"><a href="#领导选举" class="headerlink" title="领导选举"></a>领导选举</h3><p>假设领袖机器死机，那么就需要选择新的领袖。此时进入一个新的任期开始选举，成功当选的领袖开始工作，知道他死了出现故障为止，此时将开启新的一轮选举。</p>
+<p>选举是 <strong>候选人</strong> 所发动的，当领导心跳超时的时候追随者就会将自己的任期编号+1，来表示自己参加竞选并投自己一票，并向其他服务器拉票（每台服务器任期只会投一票，<strong>固定给最早拉票追随者</strong>）</p>
+<p>如果候选人收到了其他候选人的拉票，且拉票的任期编号大于自己的任期编号，就会人定位落选并成为追随者，以此认为来拉票的候选人为领袖，如果有候选人收到了过半的宣判就当选为新的领袖</p>
+<blockquote>
+<p>假设在 REST 服务器超时期限过了还没有选出新的领袖时，那么任期将会自动终止，开启新的一场选举。</p>
+<blockquote>
+<p>Raft 的每台服务器超时期限都是随机的，这也降低了同时竞选的几率，也降低了两个竞选人得票不过半的选举失败几率。</p>
+<blockquote>
+<p>这场选举也许不是最为公平的，因为当领袖死机的时候，每个已存储指令必定在服务器中已经写入过半。而选举流程则是会让记录较为完整的候选人来胜选，因为在候选人拉票的时候会透漏自己记录的最新信息。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="记录复写"><a href="#记录复写" class="headerlink" title="记录复写"></a>记录复写</h3><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210615040340.png"><br>记录复写主要的主角在领袖身上，在 Raft 集群中有一个复写的状态机（State machine）来执行外来的指令，而领袖接受指令来写入记录中。</p>
+<p>之后将指令转发给追随者，如果追随者没有反应，领袖会不断的重新发送指令给每个追随者，直到每个追随者将新指令写入记录中为止。</p>
+<p>最后领袖收到过半追随者确认写入的信息后，将会将指令视为已存储（committed），追随者发现状态变成已存储，将会在状态机上执行该命令。</p>
+<blockquote>
+<p>当领袖死机的时候，领袖的某些新指令还没有到写入集群当中，因此会造成集群记录处于不一致的问题，因此为解决此问题：</p>
+<blockquote>
+<p>新领袖会担有重返一致性的责任，让每个追随者记录都和他一致。他将每个追随者记录进行比较，找出两者一致的最后一个不一致的指令进行删除，将自己之后的指令拷贝个追随者。<br>假设追随者司机，那么给他转发的所有指令都会被回应失败，而发送端会持续重新发送。当这台追随者重新加入集群时，就会收到这些指令并重新回应（已经写入的指令不会被重新写入）。</p>
+</blockquote>
+</blockquote>
+<h2 id="布鲁尔定理（Brewer’s-theorem）"><a href="#布鲁尔定理（Brewer’s-theorem）" class="headerlink" title="布鲁尔定理（Brewer’s theorem）"></a>布鲁尔定理（Brewer’s theorem）</h2><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/20210615040330.png"></p>
+<h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>布鲁尔定理（Brewer’s theorem）也被称之为CAP定理（CAP theorem），主要指出咋分布式系统中的：</p>
+<ol>
+<li>一致性（Consistency），执行同一个举动</li>
+<li>可用性（Availability），每次请求都能获取到正确的响应</li>
+<li>分区容错性（Partition tolerance），保证服务宕机时其他服务依然可以正常提供服务（系统中任意信息丢失或失败不会影响系统的继续运作）。</li>
+</ol>
+<h3 id="三个场景"><a href="#三个场景" class="headerlink" title="三个场景"></a>三个场景</h3><p>通过 CAP 定理，我们无法同时满足一致性、可用性、分区容错性这三个特性，因此我们假设：</p>
+<h4 id="CP-（-一致性和分区容错性）"><a href="#CP-（-一致性和分区容错性）" class="headerlink" title="CP （ 一致性和分区容错性）"></a>CP （ 一致性和分区容错性）</h4><p>CP 即 一致性、分区容错性，牺牲掉了可用性保证了一致性，可能会有几个节点不可用，通常适用与银行系统。</p>
+<h4 id="AP（可用性和分区容错性）"><a href="#AP（可用性和分区容错性）" class="headerlink" title="AP（可用性和分区容错性）"></a>AP（可用性和分区容错性）</h4><p>AP 是可用性和分区容错性，舍弃掉了一致性，保障服务可用但可能会造成数据的冲突，可适用流量访问大对系统正常提供服务要求较高的系统;</p>
+<h4 id="CA（一致性和可用性）"><a href="#CA（一致性和可用性）" class="headerlink" title="CA（一致性和可用性）"></a>CA（一致性和可用性）</h4><p>一旦集群中一台服务无法正常提供服务则会造成当前集群完全崩溃，适用与挑战者。</p>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/java/spring%20cloud/5.Spring%20cloud%20Raft%20and%20CAP/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

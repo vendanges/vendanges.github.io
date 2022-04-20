@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Vue 实例与 MVVM | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Vue 实例与 MVVM</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/vue2-0/" rel="tag">vue2.0</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>MVVM是<code>Model-View-ViewModel</code>的缩写，即<code>模型-视图-视图模型</code>，MVVM最早是由微软所提出，主要借鉴了MVC的思想，前端页面中，将<strong>模型用Javascript对象表示</strong>，View负责显示，<strong>而将模型与视图关联起来的叫 ViewModel</strong>，ViewModel负责将<code>模型</code>数据同步到<code>视图</code>显示。</p>
+<p>如果说到Vue前面为什么要举那么多修改DOM的例子，那无非就是之为读者学习 Vue 实例所铺路，虽然Vue并没有完全的遵守 <code>MVVM模型</code>但是Vue受到了启发。</p>
+<p>如果你说jquery与vue来修改DOM节点的区别那么我们可以使用以下例子来进行分别，你会发现vue的确是受到了 MVVM 的启发：</p>
+<h3 id="jquery"><a href="#jquery" class="headerlink" title="jquery"></a>jquery</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var name = &#x27;jquery&#x27;;</span><br><span class="line">$(&#x27;#name&#x27;).text(name);</span><br></pre></td></tr></table></figure>
+<h3 id="MVVM-1"><a href="#MVVM-1" class="headerlink" title="MVVM"></a>MVVM</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var person = &#123;</span><br><span class="line">    name: &#x27;Bart&#x27;,</span><br><span class="line">&#125;;</span><br><span class="line">```    </span><br><span class="line">当改变 JavaScript对象的时候，也将会导致DOM结构或数据作出相应的变化，MVVM的出现让我们的从如何操作DOM变成了**如何改变JavaScript**对象数据或状态，这也是MVVM的设计思想之一。</span><br><span class="line"></span><br><span class="line">## 创建一个 Vue 实例</span><br><span class="line">Vue的应用创建可以通过 Vueh函数来创建一个新的实例开始，如:</span><br><span class="line">```vue</span><br><span class="line">            var vm = new Vue(&#123;</span><br><span class="line">                // code</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>虽然 Vue并没有完全遵循 MVVM模型，但是其设计也收到了启发，所以在其官方文档中依然会使用<code>vm</code>即（ViewModel）缩写来作为 Vue 的实例。</p>
+<h3 id="数据与方法"><a href="#数据与方法" class="headerlink" title="数据与方法"></a>数据与方法</h3><p>在Vue实例被创建的时候，他会将 <code>data</code>对象中的所有属性加入到 vue内，当这些属性的值发生改变的时候，试图将会产生一个<code>响应</code>，来匹配更新为新的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: &quot;#app&quot;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        message: &#x27;Hello,world&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当这些数据被改变的时候，视图会进行重新渲染</p>
+</blockquote>
+<p>只有当实例被创建的时候就已经存在<code>data</code>中的<strong>属性才是响应式的</strong>，如果你在控制台内想新添加一个属性，且一开始他为空且不存在，那么将不会触发任何的视图更新，此时需要设置初始值，详情可以查看官方文档内的 : <a target="_blank" rel="noopener" href="https://vuejs.bootcss.com/guide/instance.html">https://vuejs.bootcss.com/guide/instance.html</a> 章节。</p>
+<p>当然有了初始值，以及修改的，自然会出现一个组织修改现有属性的方法即<code>Object.freeze()</code>，即:<br><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/1615197218_20210308175327365_83849977.png" alt="效果"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: &quot;#app&quot;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        message: &#x27;Hello,world&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">Object.freeze(vm)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/vue/2.0/2.Vue%20%E5%AE%9E%E4%BE%8B%E4%B8%8E%20MVVM/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

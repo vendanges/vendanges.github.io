@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>Node.js File System | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>Node.js File System</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/javascript/" rel="tag">javascript</a> <a class="article__tag-none-link" href="/tags/node-js/" rel="tag">node.js</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>Node.js fs(file system) 即是内置的文件系统模块，用于负责文件的到做以及读取等，可通过 <code>console fs = require(&quot;fs&quot;)</code> 直接进行引入，因此为了更详细的分清该模块所提供的 API，主要分为：“文件属性读写、文件内容读写、文件操作” 等三种。</p>
+<blockquote>
+<p>fs 模块所提供的方法最大不同之处在于同时还提供了 <strong>异步、同步</strong> 两个方法，这体现在了 <code>fs.readFile()</code> 和 <code>fs.readFileSync()</code></p>
+<blockquote>
+<figure class="highlight plaintext"><figcaption><span>options], callback)```  异步读取文件的全部内容</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">```fs.readFileSync(path[, options])``` 用于返回 path 内容即同步</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">| Id  |                          Name                           |                                        Info                                         |                         Type                         |</span><br><span class="line">| --- | ------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------- |</span><br><span class="line">| 1   | fs.readFile(path[, options], callback)                  | 用于异步读取文件                                                                     | 文件内容读写                                          |</span><br><span class="line">| 2   | fs.readFileSync(path[, options])                        | 同步读取文件                                                                         | 文件内容读写                                          |</span><br><span class="line">| 3   | fs.read(fd, buffer, offset, length, position, callback) | 在异步模式下更加合理的读取文件                                                        | 文件内容读写                                          |</span><br><span class="line">|     | fd                                                      | 通过 ```fs.open()``` 所返回的文件描述                                                 |                                                      |</span><br><span class="line">|     | buffer                                               | 数据写入缓冲区                                                                       |                                                      |</span><br><span class="line">|     | offset                                               | 缓冲区写入数据写入的偏移量                                                            |                                                      |</span><br><span class="line">|     | length                                               | 需要读取的字节数                                                                     |                                                      |</span><br><span class="line">|     | position                                             | 文件读取的起始位置                                                                   |                                                      |</span><br><span class="line">|     | callback                                             | 回调函数                                                                            |                                                      |</span><br><span class="line">|     |                                                      | err                                                                                 | 返回错误信息                                          |</span><br><span class="line">|     |                                                      | bytesRead                                                                           | 所读取的字节数                                        |</span><br><span class="line">|     |                                                      | buffer                                                                              | 缓冲区对象                                            |</span><br><span class="line">| 4   | fs.open(path[, flags[, mode]], callback)                | 异步打开文件                                                                             | 底层文件操作                                            |</span><br><span class="line">|     | path                                                    | 文件路径                                                                                 |                                                         |</span><br><span class="line">|     | flags                                                   | 文件的打开行为                                                                           |                                                         |</span><br><span class="line">|     |                                                         | ```a```                                                                                  | 如果文件不存在则创建文件                                |</span><br><span class="line">|     |                                                         | ```ax```                                                                                 | 在 ```a``` 的基础上，如果文件路径不存在，就失败         |</span><br><span class="line">|     |                                                         | ```a+```                                                                                 | 如果文件不存在就创建                                    |</span><br><span class="line">|     |                                                         | ```ax+```                                                                                | 在 ```a+``` 的基础上，如果文件路径不存在，则读取失败    |</span><br><span class="line">|     |                                                         | ```r```                                                                                  | 以读取的方式打开文件，如果文件不存在则异常              |</span><br><span class="line">|     |                                                         | ```r+```                                                                                 | 以读写模式打开文件，如果文件不存在就抛出异常            |</span><br><span class="line">|     |                                                         | ```rs```                                                                                 | 以同步的方式读取文件                                    |</span><br><span class="line">|     |                                                         | ```rs+```                                                                                | 以同步的方式读取和写入文件                              |</span><br><span class="line">|     |                                                         | ```w```                                                                                  | 以写入模式打开文件，文件不存在则创建                    |</span><br><span class="line">|     |                                                         | ```wx```                                                                                 | 在 ```w``` 的基础上，如果文件路径存在，文件将会写入失败 |</span><br><span class="line">|     |                                                         | ```w+```                                                                                 | 以读写模式打开文件，如果文件不存在则创建                |</span><br><span class="line">|     |                                                         | ```wx+```                                                                                | 在 ```w+``` 的基础上，如果文件路径存在，则文件写入失败  |</span><br><span class="line">|     | mode                                                    | 打开的权限                                                                               |                                                         |</span><br><span class="line">|     | callback                                                | 回调参数                                                                                 |                                                         |</span><br><span class="line">| 5   | fs.writeFile(file, data[, options], callback)           | 通过异步的方式写入文件                                                                   | 文件内容读写                                            |</span><br><span class="line">|     | file                                                    | 文件名                                                                                   |                                                         |</span><br><span class="line">|     | data                                                    | 需要写入的数据                                                                           |                                                         |</span><br><span class="line">|     | options                                                 | 一个参数对象，包含了编码模式（utf-8）以及 flags（w，写入模式打开文件，文件不存在则创建） |                                                         |</span><br><span class="line">| 6   | fs.writeFileSync()                                      | 通过同步的方式写入文件                                                                   | 文件内容读写                                            |</span><br><span class="line">| 7   | fs.stat()                                               | 用于读取文件属性                                                                         | 文件属性读写                                            |</span><br><span class="line">## readFile at readFileSync 读取文件</span><br><span class="line">### fs.readFile()</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">const fs = require(&#x27;fs&#x27;)</span><br><span class="line"></span><br><span class="line">fs.readFile(&#x27;data.txt&#x27;, &#x27;utf-8&#x27;, function (err, data) &#123;</span><br><span class="line">   if (err) &#123;</span><br><span class="line">       console.log(err)</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">       // File system!</span><br><span class="line">       console.log(data.toString())</span><br><span class="line">   &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>data.txt</p>
+<blockquote>
+<p>File system!</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plaintext"><figcaption><span>与 ```fs.readFileSync()``` 的主要区别就是一个支持异步而另一个仅仅是同步方法，这主要可以根据其 ```callback()``` 就可以分辨出两者的作用与功能上的区分。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这主要涉及到 ```err``` 和 ```data``` 两个参数，后者为 ```undefined```，也就是其 ```path``` 内的数据以字符串的形式进行读取，当发生错误时将会输出 ```err``` 对象。</span><br><span class="line"></span><br><span class="line">### fs.readFIleSync()</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">const fs = require(&#x27;fs&#x27;)</span><br><span class="line"></span><br><span class="line">var data = fs.readFileSync(&#x27;data.txt&#x27;, &#x27;utf-8&#x27;)</span><br><span class="line"></span><br><span class="line">// File system!</span><br><span class="line">console.log(data)</span><br></pre></td></tr></table></figure>
+
+<p>通常默认情况下单个 <code>fs.readFIleSync()</code> 参数是不支持输出错误的，因此我们还需要输出函数的方式输出数据，可配合 <code>try...catch</code> 的方式来实现错误输出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> data = fs.<span class="title function_">readFileSync</span>(<span class="string">&#x27;data.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="fs-read-fd-buffer-offset-length-position-callback-at-fs-open-and-fs-close"><a href="#fs-read-fd-buffer-offset-length-position-callback-at-fs-open-and-fs-close" class="headerlink" title="fs.read(fd, buffer, offset, length, position, callback) at fs.open and fs.close"></a>fs.read(fd, buffer, offset, length, position, callback) at fs.open and fs.close</h3><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>fs.read(fd, buffer, offset, length, position, callback)</td>
+<td>在异步模式下更加合理的读取文件</td>
+<td>文件内容读写</td>
+</tr>
+<tr>
+<td></td>
+<td>fd</td>
+<td>通过 <code>fs.open()</code> 所返回的文件描述</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>buffer</td>
+<td>数据写入缓冲区</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>offset</td>
+<td>缓冲区写入数据写入的偏移量</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>length</td>
+<td>需要读取的字节数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>文件读取的起始位置</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>callback</td>
+<td>回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>err</td>
+<td>返回错误信息</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>bytesRead</td>
+<td>所读取的字节数</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>buffer</td>
+<td>缓冲区对象</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><figcaption><span>可用于更加合理的文件操作，这其中主要包括了 **文件打开 -> 文件写入 —> 文件读取 -> 关闭文件** 的整一套流程，让整个对文件的操作更加合理和直观</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">const fs = require(&#x27;fs&#x27;)</span><br><span class="line">const buf = new Buffer.alloc(1024)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">    准备打开文件</span><br><span class="line">    文件打开成功</span><br><span class="line">    开始准备读取文件</span><br><span class="line">    文件内容为： Hello, File system</span><br><span class="line">    文件关闭成功</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">console.log(&quot;准备打开文件&quot;)</span><br><span class="line"></span><br><span class="line">fs.open(&#x27;data.txt&#x27;, &#x27;r+&#x27;, function (err,fd) &#123;</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(&#x27;文件打开成功\n开始准备读取文件&#x27;)</span><br><span class="line">    fs.read(fd, buf, 0, buf.length, 0, function (err, bytesRead) &#123;</span><br><span class="line">        if (err) &#123;</span><br><span class="line">            console.log(err)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (bytesRead&gt;0) &#123;</span><br><span class="line">            console.log(&#x27;文件内容为：&#x27;,buf.slice(0,bytesRead).toString())</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fs.close(fd, function (err) &#123;</span><br><span class="line">            if (err) &#123;</span><br><span class="line">                console.log(err)</span><br><span class="line">            &#125;</span><br><span class="line">            console.log(&#x27;文件关闭成功&#x27;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="fs-open"><a href="#fs-open" class="headerlink" title="fs.open()"></a>fs.open()</h3><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>fs.open(path[, flags[, mode]], callback)</td>
+<td>异步打开文件</td>
+<td>底层文件操作</td>
+</tr>
+<tr>
+<td></td>
+<td>path</td>
+<td>文件路径</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>flags</td>
+<td>文件的打开行为</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>a</code></td>
+<td>如果文件不存在则创建文件</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>ax</code></td>
+<td>在 <code>a</code> 的基础上，如果文件路径不存在，就失败</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>a+</code></td>
+<td>如果文件不存在就创建</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>ax+</code></td>
+<td>在 <code>a+</code> 的基础上，如果文件路径不存在，则读取失败</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>r</code></td>
+<td>以读取的方式打开文件，如果文件不存在则异常</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>r+</code></td>
+<td>以读写模式打开文件，如果文件不存在就抛出异常</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>rs</code></td>
+<td>以同步的方式读取文件</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>rs+</code></td>
+<td>以同步的方式读取和写入文件</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>w</code></td>
+<td>以写入模式打开文件，文件不存在则创建</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>wx</code></td>
+<td>在 <code>w</code> 的基础上，如果文件路径存在，文件将会写入失败</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>w+</code></td>
+<td>以读写模式打开文件，如果文件不存在则创建</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>wx+</code></td>
+<td>在 <code>w+</code> 的基础上，如果文件路径存在，则文件写入失败</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件打开成功</span></span><br><span class="line">fs.<span class="title function_">open</span>(<span class="string">&#x27;data.txt&#x27;</span>, <span class="string">&#x27;r+&#x27;</span>, <span class="keyword">function</span> (<span class="params">err, fd</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;文件打开成功&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="fs-writeFile"><a href="#fs-writeFile" class="headerlink" title="fs.writeFile()"></a>fs.writeFile()</h3><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>fs.writeFile(file, data[, options], callback)</td>
+<td>通过异步的方式写入文件</td>
+<td>文件内容读写</td>
+</tr>
+<tr>
+<td></td>
+<td>file</td>
+<td>文件名</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>data</td>
+<td>需要写入的数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>options</td>
+<td>一个参数对象，包含了编码模式（utf-8）以及 flags（w，写入模式打开文件，文件不存在则创建）</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写入成功： Hello, File system</span></span><br><span class="line">fs.<span class="title function_">writeFile</span>(<span class="string">&#x27;data.txt&#x27;</span>, data, <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> write = fs.<span class="title function_">readFileSync</span>(<span class="string">&#x27;data.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;写入成功：&#x27;</span> ,write)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="fs-writeFileSync"><a href="#fs-writeFileSync" class="headerlink" title="fs.writeFileSync()"></a>fs.writeFileSync()</h4><p>.<code>fs.writeFileSync()</code> 是 <code>fs.writeFile()</code> 的同步方法，同样也可以使用 <code>try...catch</code> 来支持返回 <code>err</code> 信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = <span class="string">&quot;Hello, File system&quot;</span></span><br><span class="line"></span><br><span class="line">fs.<span class="title function_">open</span>(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;r+&#x27;</span>, <span class="keyword">function</span> (<span class="params">err,fd</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        fs.<span class="title function_">writeFileSync</span>(<span class="string">&#x27;data.txt&#x27;</span>, data)</span><br><span class="line">					<span class="comment">// 写入成功 Hello, File system</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;写入成功&#x27;</span>, data )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取文件属性-fs-stat"><a href="#获取文件属性-fs-stat" class="headerlink" title="获取文件属性 (fs.stat())"></a>获取文件属性 (fs.stat())</h2><p>“获取文件属性”是指文件的大小、创建时间、修改时间等信息，可以通过 <code>fs.stat(path[, options], callback)</code> 来进行实现，在这个方法中存在着 <code>fs.stats</code> 类，用于获取文件的属性，常用的为：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>stat.isFile()</td>
+<td>是否是文件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>stat.isDirectory()</td>
+<td>是否是目录</td>
+</tr>
+<tr>
+<td>3</td>
+<td>stat.size()</td>
+<td>文件大小（以字节为单位）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>stat.birthtime()</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>5</td>
+<td>stat.mtime()</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>6</td>
+<td>stat.ctime()</td>
+<td>最后一次更改时间</td>
+</tr>
+<tr>
+<td>7</td>
+<td>stat.atimeMS()</td>
+<td>最后一次访问时间</td>
+</tr>
+<tr>
+<td>8</td>
+<td>stat.mtimeMS()</td>
+<td>最后一次修改时间</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    是否是文件: true</span></span><br><span class="line"><span class="comment">    文件大小: 18</span></span><br><span class="line"><span class="comment">    创建时间: 2021-09-01T02:23:04.637Z</span></span><br><span class="line"><span class="comment">    修改时间: 2021-09-01T02:23:04.637Z</span></span><br><span class="line"><span class="comment">    最后访问: 2021-09-01T02:23:04.949Z</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">fs.<span class="title function_">stat</span>(<span class="string">&#x27;data.txt&#x27;</span>, <span class="keyword">function</span> (<span class="params">err, stat</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;是否是文件:&quot;</span>, stat.<span class="title function_">isFile</span>())</span><br><span class="line">        <span class="keyword">if</span> (stat.<span class="title function_">isFile</span>()) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;文件大小:&#x27;</span>, stat.<span class="property">size</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;创建时间:&#x27;</span>, stat.<span class="property">birthtime</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;修改时间:&#x27;</span>, stat.<span class="property">mtime</span>) <span class="comment">// stat.ctime</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最后一次访问时间:&#x27;</span>, stat.<span class="property">atime</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/javascript/node/6.Node.js%20File%20System/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

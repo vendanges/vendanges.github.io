@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>PHP 数组 | 琼瑶</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="琼瑶" type="application/atom+xml">
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/" class="header__link" style="color: #fff">Home</a>
+			
+				<a href="/archives" class="header__link" style="color: #fff">Archive</a>
+			
+				<a href="/about" class="header__link" style="color: #fff">About</a>
+			
+		</nav>
+		<!-- <h1 class="header__title"><a href="/">琼瑶</a></h1> -->
+		<h1 class="header__title"><a href="/"><img style="width: 290px;" src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/202204152017786.png"></a></h1>
+		<h2 class="header__subtitle">梦入琼楼寒有月，行过石树冻无烟</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>PHP 数组</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2022-04-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-none-link" href="/tags/php/" rel="tag">php</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<p>数组是对大量数据进行组织和管理的主要和有效手段之一，许多信息都已数组作为数据的载体，经常需要使用数组进行处理数据。在PHP中，数组主要包含<strong>键</strong>和<strong>值</strong>两个参数。</p>
+<h3 id="数组的创建与初始化和输出"><a href="#数组的创建与初始化和输出" class="headerlink" title="数组的创建与初始化和输出"></a>数组的创建与初始化和输出</h3><h4 id="Array-数组创建"><a href="#Array-数组创建" class="headerlink" title="Array 数组创建"></a>Array 数组创建</h4><h5 id="array-标准数组-（键名、键值）"><a href="#array-标准数组-（键名、键值）" class="headerlink" title="array() 标准数组 （键名、键值）!"></a>array() 标准数组 （键名、键值）!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105195859328_250843666.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$arrayName = array(&quot;ONE&quot; =&gt; &quot;one&quot;, &quot;TWO&quot; =&gt; &quot;two&quot;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="array-键值数组-键值"><a href="#array-键值数组-键值" class="headerlink" title="array() 键值数组  (键值)!"></a>array() 键值数组  (键值)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105195921943_961799700.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$one = array(1,2,3,4);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="array-省略键名-省略键名-键值"><a href="#array-省略键名-省略键名-键值" class="headerlink" title="array() 省略键名 (省略键名+键值)!"></a>array() 省略键名 (省略键名+键值)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105195934815_584354207.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$array = array(&#x27;1&#x27; =&gt; 2, 2 =&gt; 4, 3 =&gt; 6,7,8);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><h5 id="变量创建数组-compact"><a href="#变量创建数组-compact" class="headerlink" title="变量创建数组 (compact)!"></a>变量创建数组 (compact)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105195945639_164222752.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$a = 10;</span><br><span class="line">		$b = &quot;one&quot;;</span><br><span class="line">		$c = array(1,2,3);</span><br><span class="line">		$array = compact(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;);</span><br><span class="line">		print_r($array);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="两个键值创建一个数组-array-combine"><a href="#两个键值创建一个数组-array-combine" class="headerlink" title="两个键值创建一个数组 (array_combine)!"></a>两个键值创建一个数组 (array_combine)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105195956415_834320715.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&quot;one&quot;,&quot;two&quot;,&quot;three&quot;);</span><br><span class="line">		$two = array(&quot;ONE&quot;,&quot;TWO&quot;,&quot;THREE&quot;);</span><br><span class="line">		$three = array_combine($one, $two);</span><br><span class="line">		print_r($three);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="自动建立数组-arr-n"><a href="#自动建立数组-arr-n" class="headerlink" title="自动建立数组 (arr[n])!"></a>自动建立数组 (arr[n])!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200010142_1734401574.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arr[0] = &quot;a&quot;;</span><br><span class="line">		$arr[1] = &quot;b&quot;;</span><br><span class="line">		$arr[2] = &quot;c&quot;;</span><br><span class="line">		print_r($arr);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="将数组赋值给指定变量-list"><a href="#将数组赋值给指定变量-list" class="headerlink" title="将数组赋值给指定变量 (list)!"></a>将数组赋值给指定变量 (list)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200022495_1648400259.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&quot;红&quot;,&quot;白&quot;,&quot;蓝&quot;,&quot;橙&quot;);</span><br><span class="line">		list($one,$two,$three,$four) = $one;</span><br><span class="line">			echo &quot;$one&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><h5 id="print-r"><a href="#print-r" class="headerlink" title="print_r"></a>print_r<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200038231_1364813545.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$array = array(&#x27;1&#x27; =&gt; 2, 2 =&gt; 4, 3 =&gt; 6,7,8);</span><br><span class="line">			print_r($array);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="array-“键名”"><a href="#array-“键名”" class="headerlink" title="$array[“键名”];"></a>$array[“键名”];<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200047617_411308029.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$one = array(&quot;蓝&quot; =&gt; &quot;蓝色&quot;,&quot;白&quot; =&gt; &quot;白色&quot;,&quot;红&quot; =&gt; &quot;红色&quot;,&quot;绿&quot; =&gt; &quot;绿色&quot;);</span><br><span class="line">	echo $one[&quot;蓝&quot;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="array-“键值”"><a href="#array-“键值”" class="headerlink" title="$array[“键值”];"></a>$array[“键值”];<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200059518_763551344.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$one = array(&quot;红色&quot;,&quot;蓝色&quot;,&quot;绿色,&quot;,&quot;黑色&quot;,&quot;白色&quot;);</span><br><span class="line">	echo $one[0];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="输出数组中的所有键名-array-keys"><a href="#输出数组中的所有键名-array-keys" class="headerlink" title="输出数组中的所有键名 (array_keys) !"></a>输出数组中的所有键名 (array_keys) !<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200118566_125092763.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;two&#x27; =&gt; 2,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		$one = array_keys($arrayName);</span><br><span class="line">		print_r($one);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="输出数组中所有的键值-array-values"><a href="#输出数组中所有的键值-array-values" class="headerlink" title="输出数组中所有的键值 (array_values) "></a>输出数组中所有的键值 (array_values) <img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200140110_1776231056.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;two&#x27; =&gt; 2,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		$one = array_values($arrayName);</span><br><span class="line">		print_r($one);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="移除数组中重复的值-array-unique"><a href="#移除数组中重复的值-array-unique" class="headerlink" title="移除数组中重复的值 (array_unique)!"></a>移除数组中重复的值 (array_unique)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200154199_17214054.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;one&#x27; =&gt; 1,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		$one = array_unique($arrayName);</span><br><span class="line">		print_r($one);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="键名和键值的操作"><a href="#键名和键值的操作" class="headerlink" title="键名和键值的操作"></a>键名和键值的操作</h4><h5 id="检查键值是否存在-in-array"><a href="#检查键值是否存在-in-array" class="headerlink" title="检查键值是否存在  (in_array)"></a>检查键值是否存在  (in_array)</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200205735_2010912892.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;two&#x27; =&gt; 2,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		if (in_array(1, $arrayName)) &#123;</span><br><span class="line">			echo &quot;存在键值1&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;不存在&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="检查键名是否存在-array-key-exists"><a href="#检查键名是否存在-array-key-exists" class="headerlink" title="检查键名是否存在 (!array_key_exists)"></a>检查键名是否存在 (!array_key_exists)</h5><p><img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200219622_367881685.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;two&#x27; =&gt; 2,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		if (array_key_exists(&#x27;one&#x27;, $arrayName)) &#123;</span><br><span class="line">				echo &quot;存在键名&quot;;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				echo &quot;不存在键名&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="检测是否存在-array-search"><a href="#检测是否存在-array-search" class="headerlink" title="检测是否存在 (array_search)!"></a>检测是否存在 (array_search)!<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200231039_474539592.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&#x27;one&#x27; =&gt; 1,&#x27;two&#x27; =&gt; 2,&#x27;three&#x27; =&gt; 3);</span><br><span class="line">		$key = array_search(&#x27;1&#x27;, $arrayName);</span><br><span class="line">		if ($key == NULL) &#123;</span><br><span class="line">			echo &quot;数组不存在&quot;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			echo &quot;$key&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>array_search与上述方法不同，上述方法如果<strong>键值存在则返回true，不存在则返回false</strong>，而array_search则是根据键值是否存在，<strong>如果键值存在则返回键名，如果不存在则返回NULL</strong></p>
+<h4 id="数组的遍历与输出"><a href="#数组的遍历与输出" class="headerlink" title="数组的遍历与输出"></a>数组的遍历与输出</h4><h5 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200242222_1440066530.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = array(1,2,3,4,5,6);</span><br><span class="line">		while (list($key,$value) = each($one)) &#123;</span><br><span class="line">			echo &quot;$value&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>while循环、list和each方法的结合使用可以实现对数组的遍历<strong>，list方法重要的作用是将数组中的键值赋值给变量。</strong>，<strong>each方法主要作用是返回当前的键名和值</strong>（并将数组指针移到下一位）</p>
+<h5 id="foreach-循环"><a href="#foreach-循环" class="headerlink" title="foreach 循环"></a>foreach 循环<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200312774_1553299887.png"></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">	$arrayName = array(&#x27;one&#x27; =&gt; &#x27;one&#x27;,&#x27;two&#x27; =&gt; &#x27;two&#x27;);</span><br><span class="line">	foreach ($arrayName as $value) &#123;</span><br><span class="line">		# code...</span><br><span class="line">	&#125;</span><br><span class="line">	foreach ($arrayName as $key =&gt; $value) &#123;</span><br><span class="line">		# code...</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = array(&#x27;one&#x27; =&gt; &#x27;ONE&#x27;,&#x27;two&#x27; =&gt; &#x27;TWO&#x27;,&#x27;three&#x27; =&gt; &#x27;THREE&#x27; );</span><br><span class="line">		foreach ($one as $value) &#123;				// 输出数组的键值</span><br><span class="line">			echo &quot;$value&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">			echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		foreach ($one as $key =&gt; $value) &#123;		// 输出数组的键名和键值</span><br><span class="line">			echo $key. &quot;=&gt;&quot;.$value. &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>function循环时专门用于遍历数组的循环<strong>，每次循环的同时，当前单元的值会被付给$value，并且将数组内部的指针向前移动一步.<strong>，然后第二次循环和第一次循环一样，只不过当前单元的键名也会在每次</strong>循环变量中赋值给 $key</strong></p>
+<h4 id="数组的排序"><a href="#数组的排序" class="headerlink" title="数组的排序"></a>数组的排序</h4><h5 id="升序"><a href="#升序" class="headerlink" title="升序"></a>升序</h5><h6 id="sort"><a href="#sort" class="headerlink" title="sort()"></a>sort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200331934_2094794019.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&#x27;a&#x27; =&gt; 1,&#x27;c&#x27; =&gt; 3,&#x27;b&#x27; =&gt; 2);</span><br><span class="line">		if (sort($one)) &#123;</span><br><span class="line">			print_r($one);</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>sort()函数不仅仅对数组进行了<strong>重新排序，同时还删除了原来数组的键名，并重新分配索引。</strong></p>
+<h6 id="asort"><a href="#asort" class="headerlink" title="asort()"></a>asort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200413581_1387088507.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&#x27;c&#x27; =&gt; &#x27;cccc&#x27;, &#x27;d&#x27; =&gt; &#x27;ddddd&#x27;,&#x27;a&#x27; =&gt; &#x27;aaaaaa&#x27;,&#x27;e&#x27; =&gt; &#x27;eeee&#x27;);</span><br><span class="line">		asort($one);</span><br><span class="line">		print_r($one);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>asort()函数与sort()函数不同，<strong>数组重新排序后仍然还保持着键名和键值之间的关联</strong>，而不像sort()被拆分。</p>
+<h6 id="ksort"><a href="#ksort" class="headerlink" title="ksort()"></a>ksort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200427293_1904175231.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&#x27;f&#x27; =&gt; &#x27;fffff&#x27;, &#x27;d&#x27; =&gt; &#x27;dddd&#x27;,&#x27;a&#x27; =&gt; &#x27;aaaa&#x27;,&#x27;g&#x27; =&gt; &#x27;gggg&#x27;);</span><br><span class="line">		ksort($one);</span><br><span class="line">		print_r($one);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ksort()函数与asort()函数一样，<strong>对数组的键名进行重新排序，排序后的键名仍然与键值关联</strong>。</p>
+<h5 id="降序"><a href="#降序" class="headerlink" title="降序"></a>降序</h5><p>在PHP中，升序的函数都有一个对应的降序排序，主要是 rsort、arsort、krsort三个，分别对应sort、asort、ksort三个函数：</p>
+<h6 id="sort-1"><a href="#sort-1" class="headerlink" title="sort()"></a>sort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200439029_1995000354.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$arrayName = array(&#x27;c&#x27; =&gt; &#x27;cccc&#x27;,&#x27;a&#x27; =&gt;&#x27;aaaa&#x27;,&#x27;b&#x27; =&gt; &#x27;bbbb&#x27;);</span><br><span class="line">		rsort($arrayName);</span><br><span class="line">		print_r($arrayName);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="arsort"><a href="#arsort" class="headerlink" title="arsort()"></a>arsort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200452446_1052905513.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$arrayName = array(&#x27;c&#x27; =&gt; &#x27;cccc&#x27;,&#x27;a&#x27; =&gt;&#x27;aaaa&#x27;,&#x27;b&#x27; =&gt; &#x27;bbbb&#x27;);</span><br><span class="line">		arsort($arrayName);</span><br><span class="line">		print_r($arrayName);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="krsort"><a href="#krsort" class="headerlink" title="krsort()"></a>krsort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200503253_306544474.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$arrayName = array(&#x27;c&#x27; =&gt; &#x27;cccc&#x27;,&#x27;a&#x27; =&gt;&#x27;aaaa&#x27;,&#x27;b&#x27; =&gt; &#x27;bbbb&#x27;);</span><br><span class="line">		krsort($arrayName);</span><br><span class="line">		print_r($arrayName);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="多数组排序"><a href="#多数组排序" class="headerlink" title="多数组排序"></a>多数组排序</h5><h6 id="array-multisort"><a href="#array-multisort" class="headerlink" title="array_multisort()"></a>array_multisort()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200521669_1045976624.png"></h6><p>array_multsiort函数可以一次对多个数组进行排序，或根据多个数组的一个或多个多个数组进行排序，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php </span><br><span class="line">		$one = array(3,5,2,4,1);</span><br><span class="line">		$two = array(6,7,8,9,10);</span><br><span class="line">		array_multisort($one,$two);</span><br><span class="line">		print_r($one);</span><br><span class="line">		echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		print_r($two);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="数组的重新排序"><a href="#数组的重新排序" class="headerlink" title="数组的重新排序"></a>数组的重新排序</h5><h6 id="shuffle"><a href="#shuffle" class="headerlink" title="shuffle()"></a>shuffle()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200537540_849592487.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(1,20);				// 产生有序数组</span><br><span class="line">			foreach ($one as $value)			</span><br><span class="line">				echo &quot;$value&quot;;				// 输出有序数组</span><br><span class="line">		shuffle($one);						// 打乱数组顺序			</span><br><span class="line">			foreach ($one as $value) &#123;</span><br><span class="line">				echo &quot;$value&quot;;				// 输出新的数组顺序</span><br><span class="line">				echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用shuffle函数可以将数组按照随机的顺序进行排列，并删除原有的键名从而自动建立自动索引。</p>
+<h6 id="array-reverse"><a href="#array-reverse" class="headerlink" title="array_reverse()"></a>array_reverse()<img src="https://49812933408852955071488026628034-1301075051.cos.ap-nanjing.myqcloud.com/markdown/web/php/php/18.php%20%E6%95%B0%E7%BB%84.md/20201105200556014_183733218.png"></h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$one = array(&#x27;a&#x27; =&gt; 1,2,3,4,5);</span><br><span class="line">		$two = array_reverse($one,TRUE);</span><br><span class="line">		print_r($two);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>array_reverse()函数主要作用是将数组按照相反的顺序进行排序。<strong>如果array_reverse()函数的参数是TRUE则保留原来的键值，但为FALSE则为数组重新建立索引，而array_reverse()函数默认为FALSE;</strong></p>
+<h5 id="自然排序"><a href="#自然排序" class="headerlink" title="自然排序"></a>自然排序</h5><h6 id="natsort"><a href="#natsort" class="headerlink" title="natsort()"></a>natsort()</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		$arrayName = array(&quot;data-2&quot;,&quot;data-1&quot;,&quot;data-3&quot;,&quot;data-4&quot;);</span><br><span class="line">		natsort($arrayName);</span><br><span class="line">		print_r($arrayName);</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>自然排序，是指natsort函数对<strong>字母、数字、字符串进行排序，并保持源于的键&#x2F;值的关联即称之为自然排序</strong></p>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><h6 id="计算并根据分数进行排序和提交"><a href="#计算并根据分数进行排序和提交" class="headerlink" title="计算并根据分数进行排序和提交"></a>计算并根据分数进行排序和提交</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"> html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;demos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		echo &quot;&lt;form method=post&gt;&quot;;</span><br><span class="line">		for($i=1;$i&lt;6;$i++) &#123;</span><br><span class="line">			// 名字框的名字即数组名</span><br><span class="line">			echo &quot;学生&quot;.$i.&quot;的分数为&lt;input type=text name=&#x27;stu[]&#x27;&gt;&lt;br&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		echo &quot;&lt;input type=submit name=sumb value=&#x27;开始提交&#x27;&gt;&quot;;</span><br><span class="line">		echo &quot;&lt;/form&gt;&quot;;</span><br><span class="line">		echo &quot;&lt;br&gt;&quot;;</span><br><span class="line"></span><br><span class="line">		if (isset($_POST[&#x27;sumb&#x27;])) &#123;</span><br><span class="line">			$sum = 0;                        // 总成绩初始化为0</span><br><span class="line">			$min = 0;                        // 分数小于60的人初始化为0</span><br><span class="line">			$stu = $_POST[&#x27;stu&#x27;];            // 取得所有分本框值并赋值给数组$stu</span><br><span class="line">			$num = count($stu);              // 计算数组$stu元素的个数</span><br><span class="line">			echo &quot;本次总共录入的成绩有：&lt;br&gt;&quot;;	     </span><br><span class="line">		&#125;</span><br><span class="line"> 		foreach ($stu as $score) &#123;           // 循环遍历数组 $stu</span><br><span class="line">			echo $score.&quot;&amp;nbsp;&quot;;            // 输出数组的接收值</span><br><span class="line">			$sum = $sum + $score;            // 计算总成绩</span><br><span class="line">				if ($score &lt; 60) &#123;           // 判断分数小于 60 的情况</span><br><span class="line">					$sco[$min] = $score;     // 将分数小于60的值赋给数组$min</span><br><span class="line">					$min++;                  // 分数小于60的人数+1</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		rsort($stu);</span><br><span class="line">		echo &quot;&lt;br&gt;&lt;hr&gt;成绩由高到低的排名如下：&lt;br&gt;&quot;;</span><br><span class="line"></span><br><span class="line">		foreach ($stu as $valuetwo) &#123;</span><br><span class="line">		echo $valuetwo.&quot;&amp;nbsp;&quot;;                            // 输出降序排列数据</span><br><span class="line">		echo &quot;&lt;br&gt;&lt;hr&gt;成绩低于60分的如下：&lt;br&gt;&quot;;</span><br><span class="line">			for ($min=0;$min &lt; count(&#x27;sco&#x27;);$min++)          // 使用for循环输出$sco数组</span><br><span class="line">				echo $sco[$min].&quot;&amp;nbsp;&quot;;</span><br><span class="line">				$average = $sum/$num;			            // 计算平均成绩</span><br><span class="line">				echo &quot;&lt;br&gt;&lt;hr&gt;总共平均分为：&lt;br&gt;$average&quot;;		// 输出平均成绩</span><br><span class="line">				echo &quot;&lt;hr&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>DA</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>array_keys</td>
+<td>输出数组中所有的键名</td>
+<td>数值</td>
+</tr>
+<tr>
+<td>array_values</td>
+<td>输出数组中所有的数值</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>array_unique</td>
+<td>移除数组中重复的值</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>in_array</td>
+<td>检测键值是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>array_key_exists</td>
+<td>检测键名是否存在</td>
+<td></td>
+</tr>
+<tr>
+<td>array_search</td>
+<td>检测是否存在[^如果键值存在则返回键名，不存在则返回NULL]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>数组的升序[^重新排序，同时删除原来的键名，重新分配索引]</td>
+<td>排序的升序</td>
+</tr>
+<tr>
+<td>asort()</td>
+<td>数组的升序[^数组重新排序后仍然保持着键名与键值的关联]</td>
+<td></td>
+</tr>
+<tr>
+<td>ksort()</td>
+<td>数组的升序[^对数组的键名进行重新排序，排序后仍然保持着键名与键值的关联]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>数组的降序[^重新排序，同时删除原来的键名，重新分配索引]</td>
+<td>排序的降序</td>
+</tr>
+<tr>
+<td>arsort()</td>
+<td>数组的降序[^数组重新排序后仍然保持着键名与键值的关联]</td>
+<td></td>
+</tr>
+<tr>
+<td>krsort()</td>
+<td>数组的降序[^对数组的键名进行重新排序，排序后仍然保持着键名与键值的关联]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>array_multisort()</td>
+<td>一次对多个或一个数组进行排序</td>
+<td>数组的多排序</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>shuffle()</td>
+<td>数组的重新排序[^删除原有的键名从而自动建立索引]</td>
+<td>数组的重新排序</td>
+</tr>
+<tr>
+<td>array_reverse()</td>
+<td>将数组按照相反的顺序进行排序[^如果参数为“TRUE”则保留原来的键值，但为“FALSE”参数则重新建立索引，默认为FALSE]</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>natsort()</td>
+<td>自然排序[^对字母、数字、字符串进行排序，并保持原来的键值关联即称之为“自然排序”]</td>
+<td>数组的自然排序</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>list</td>
+<td>List主要的作用实现数组的循环遍历</td>
+<td>循环</td>
+</tr>
+</tbody></table>
+
+	
+
+	
+		<span class="different-posts"><a href="/2022/04/21/php/18.PHP%20%E6%95%B0%E7%BB%84/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>欢迎来到我的 blog <br><br> 通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a> 进行构建的，存放在 <a target="_blank" rel="noopener" href="https://github.com/vendanges/vendanges.github.io">Github</a> 上。</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2022 John Doe | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>
